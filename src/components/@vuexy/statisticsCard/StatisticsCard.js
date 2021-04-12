@@ -15,7 +15,7 @@ class StatisticsCards extends React.Component {
               : this.props.hideChart && !this.props.iconRight
               ? "justify-content-center flex-column text-center"
               : null
-          } ${!this.props.hideChart ? "pb-0" : "pb-2"} pt-2`}
+          } ${!this.props.hideChart ? "pb-0" : "pb-2"} pt-2 ${this.props.bg_color ? "gradient-light-"+ this.props.bg_color : null}`}
         >
           <div className="icon-section">
             <div

@@ -177,6 +177,12 @@ const register = lazy(() =>
 const accessControl = lazy(() =>
   import("./extensions/access-control/AccessControl")
 )
+
+
+//pharma you part 
+const Ordonnances_recue = lazy(()=> import("./views/Ordonnances/Recues/Ordonnance_recue"))
+
+
 // Set Layout and Component Using App Route
 const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
   <Route
@@ -225,7 +231,7 @@ class AppRouter extends React.Component {
           />
             {/* setting PharmaYou routes for structuring the work */}
           <AppRoute exact path="/stats" component={() => <h1>Component of the statistiques </h1>} />
-          <AppRoute exact path="/ordonnance/recues" component={() => <h1>Component of the Ordonnance recues </h1>} />
+          <AppRoute exact path="/ordonnance/recues" component={Ordonnances_recue} />
           <AppRoute exact path="/client/particuliers" component= {() => <h1>component of the client-Particulier </h1>} />
           <AppRoute exact path="/client/professionnelles" component= {() => <h1>Component of the client_professionnelles </h1>} />
           <AppRoute exact path="/partenaires" component= {() => <h1>Componenet of the partenaires</h1>} />
