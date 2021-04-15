@@ -1,13 +1,21 @@
-import React from "react"
-import { Card, CardBody } from "reactstrap"
-import Chart from "react-apexcharts"
+import React from "react";
+import { Card, CardBody } from "reactstrap";
+import Chart from "react-apexcharts";
 
 class StatisticsCards extends React.Component {
   render() {
     return (
-      <Card>
+      <Card
+        style={{
+          borderRadius: "28px",
+          width: "180px",
+        }}
+      >
         <CardBody
-          className={`${this.props.className ? this.props.className : "stats-card-body"} d-flex ${
+          style={{ borderRadius: "28px" }}
+          className={`${
+            this.props.className ? this.props.className : "stats-card-body"
+          } d-flex ${
             !this.props.iconRight && !this.props.hideChart
               ? "flex-column align-items-start"
               : this.props.iconRight
@@ -15,7 +23,9 @@ class StatisticsCards extends React.Component {
               : this.props.hideChart && !this.props.iconRight
               ? "justify-content-center flex-column text-center"
               : null
-          } ${!this.props.hideChart ? "pb-0" : "pb-2"} pt-2 ${this.props.bg_color ? "gradient-light-"+ this.props.bg_color : null}`}
+          } ${!this.props.hideChart ? "pb-0" : "pb-2"}  pt-1 ${
+            this.props.bg_color ? "gradient-light-" + this.props.bg_color : null
+          }`}
         >
           <div className="icon-section">
             <div
@@ -30,7 +40,7 @@ class StatisticsCards extends React.Component {
           </div>
           <div className="title-section">
             <h2 className="text-bold-600 mt-1 mb-25">{this.props.stat}</h2>
-            <p className="mb-0">{this.props.statTitle}</p>
+            <p className="mb-0 p-0">{this.props.statTitle}</p>
           </div>
         </CardBody>
         {!this.props.hideChart && (
@@ -42,7 +52,7 @@ class StatisticsCards extends React.Component {
           />
         )}
       </Card>
-    )
+    );
   }
 }
-export default StatisticsCards
+export default StatisticsCards;

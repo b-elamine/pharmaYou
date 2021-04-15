@@ -19,9 +19,9 @@ $light: (
   "base": theme-color("light"),
   "gradient-bg": #640064
 );
-$warning: (
+$primary: (
   "gradient-light":
-    lighten(saturate(adjust-hue((theme-color("primary")), 25), 11.9), 13.33),
+    lighten(saturate(adjust-hue((theme-color("warning")),25), 25), 100),
   "light-badge": lighten(theme-color("primary"), 25%),
   "lighten-5": lighten(theme-color("primary"), 25%),
   "lighten-4": lighten(theme-color("primary"), 20%),
@@ -33,10 +33,10 @@ $warning: (
   "darken-2": darken(theme-color("primary"), 10%),
   "darken-3": darken(theme-color("primary"), 15%),
   "darken-4": darken(theme-color("primary"), 20%),
-  "accent-1": #bdfdff,
-  "accent-2": #8afbff,
-  "accent-3": #57faff,
-  "accent-4": #3df9ff,
+  "accent-1": #feffff,
+  "accent-2": #cbf5ff,
+  "accent-3": #98ecff,
+  "accent-4": #7fe7ff,
   "gradient-bg": #640064
 );
 $secondary: (
@@ -57,7 +57,7 @@ $secondary: (
 );
 $success: (
   "gradient-light":
-    lighten(saturate(adjust-hue((theme-color("success")), 25), 11.9), 13.33),
+    lighten(saturate(adjust-hue((theme-color("success")), 25), 11.9), 100),
   "light-badge": lighten(theme-color("success"), 40%),
   "lighten-5": lighten(theme-color("success"), 25%),
   "lighten-4": lighten(theme-color("success"), 20%),
@@ -95,9 +95,9 @@ $info: (
   "accent-4": #7fe7ff,
   "gradient-bg": #640064
 );
-$primary: (
+$warning: (
   "gradient-light":
-    lighten(saturate(adjust-hue((theme-color("warning")), 25), 11.9), 13.33),
+    lighten(saturate(adjust-hue((theme-color("warning")), 25), 11.9), 100),
   "light-badge": lighten(theme-color("warning"), 25%),
   "lighten-5": lighten(theme-color("warning"), 25%),
   "lighten-4": lighten(theme-color("warning"), 20%),
@@ -117,7 +117,7 @@ $primary: (
 );
 $danger: (
   "gradient-light":
-    lighten(saturate(adjust-hue((theme-color("danger")), 25), 11.9), 13.33),
+    lighten(saturate(adjust-hue((theme-color("danger")), 25), 11.9), 100),
   "light-badge": lighten(theme-color("danger"), 30%),
   "lighten-5": lighten(theme-color("danger"), 25%),
   "lighten-4": lighten(theme-color("danger"), 20%),
@@ -141,10 +141,10 @@ $colors: (
   "black": $black,
   "dark": $dark,
   "light": $light,
-  "primary": $primary,
+  "primary": $warning,
   "secondary": $secondary,
   "success": $success,
   "info": $info,
-  "warning": $warning,
+  "warning": $primary,
   "danger": $danger
 );
