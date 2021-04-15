@@ -1,10 +1,10 @@
 import React from "react"
-import { X, Tag } from "react-feather"
+import { X } from "react-feather"
 import {
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
+  // UncontrolledDropdown,
+  // DropdownItem,
+  // DropdownMenu,
+  // DropdownToggle,
   FormGroup,
   Input,
   Label,

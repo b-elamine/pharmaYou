@@ -1,16 +1,16 @@
 import React, { Component } from "react"
 import { NavLink } from "react-router-dom"
-import { Disc, X, Circle } from "react-feather"
+// import { Disc, X, Circle } from "react-feather"
 import classnames from "classnames"
 import Logo from "../../../../assets/img/logo/logo_pharmaYou.PNG"
 class SidebarHeader extends Component {
   render() {
     let {
-      toggleSidebarMenu,
-      activeTheme,
-      collapsed,
-      toggle,
-      sidebarVisibility,
+      // toggleSidebarMenu,
+      // activeTheme,
+      // collapsed,
+      // toggle,
+      // sidebarVisibility,
       menuShadow
     } = this.props
     return (
@@ -18,12 +18,12 @@ class SidebarHeader extends Component {
         <ul className="nav navbar-nav flex-row">
           <li className="nav-item mr-auto">
             <NavLink to="/" className="navbar-brand">
-              <img src={Logo} style={{width:"90%",height:"90%"}} alt="PharmaYouLogo"  />
+              <img src={Logo} style={{width:"100%",height:"100%"}} alt="PharmaYouLogo"  />
               {/* <div className="brand-logo" /> */}
               {/* <h2 className="brand-text mb-0">Vuexy</h2> */}
             </NavLink>
           </li>
-          <li className="nav-item nav-toggle">
+          {/* <li className="nav-item nav-toggle">
             <div className="nav-link modern-nav-toggle">
               {collapsed === false ? (
                 <Disc
@@ -81,7 +81,7 @@ class SidebarHeader extends Component {
                 size={20}
               />
             </div>
-          </li>
+          </li> */}
         </ul>
         <div
           className={classnames("shadow-bottom", {
