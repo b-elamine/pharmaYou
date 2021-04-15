@@ -12,14 +12,14 @@ import {
 } from "reactstrap"
 import Flatpickr from "react-flatpickr";
 
-import "flatpickr/dist/themes/light.css";
+import "flatpickr/dist/themes/confetti.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss"
 
 const eventColors = {
-  business: "chip-success",
-  work: "chip-warning",
-  personal: "chip-danger",
-  others: "chip-primary"
+  // business: "chip-success",
+  // work: "chip-warning",
+  // personal: "chip-danger",
+  créneau_de_livraison: "chip-primary"
 }
 class AddEvent extends React.Component {
   state = {
@@ -55,7 +55,7 @@ class AddEvent extends React.Component {
       title: this.state.title,
       start: this.state.startDate,
       end: this.state.endDate,
-      label: this.state.label === null ? "others" : this.state.label,
+      label: this.state.label === null ? "créneau_de_livraison" : this.state.label,
       allDay: this.state.allDay,
       selectable: this.state.selectable
     })
@@ -125,7 +125,7 @@ class AddEvent extends React.Component {
                 </div>
               ) : null}
             </div>
-            <div className="category-dropdown">
+            {/* <div className="category-dropdown">
               <UncontrolledDropdown>
                 <DropdownToggle tag="div" className="cursor-pointer">
                   <Tag size={18} />
@@ -161,7 +161,7 @@ class AddEvent extends React.Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-            </div>
+            </div> */}
           </div>
           <div className="add-event-fields mt-2">
             <FormGroup className="form-label-group">
@@ -172,26 +172,27 @@ class AddEvent extends React.Component {
                 value={this.state.title}
                 onChange={e => this.setState({ title: e.target.value })}
               />
-              <Label for="EventTitle">Event Title</Label>
+              <Label for="EventTitle">Titre du creneau</Label>
             </FormGroup>
             <FormGroup>
-              <Label for="startDate">Start Date</Label>
+              <Label for="startDate">Date début</Label>
               <Flatpickr
                 id="startDate"
                 className="form-control"
                 value={this.state.startDate}
                 onChange={date => this.handleDateChange(date)}
-                options={{ altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", }}
+                options={{ enableTime: true, dateFormat: "Y-m-d H:i" }}
+                // options={{ altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", }}
               />
             </FormGroup>
             <FormGroup>
-              <Label for="endDate">End Date</Label>
+              <Label for="endDate">Date fin</Label>
               <Flatpickr
                 id="endDate"
                 className="form-control"
                 value={this.state.endDate}
                 onChange={date => this.handleEndDateChange(date)}
-                options={{ altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", }}
+                options={{ enableTime: true, dateFormat: "Y-m-d H:i"}}
               />
             </FormGroup>
           </div>
@@ -221,8 +222,8 @@ class AddEvent extends React.Component {
             >
               {this.props.eventInfo !== null &&
               this.props.eventInfo.title.length > 0
-                ? "Update Event"
-                : "Add Event"}
+                ? "Modifier créneau"
+                : "Ajouter créneau"}
             </Button.Ripple>
             <Button.Ripple
               className="ml-1"
