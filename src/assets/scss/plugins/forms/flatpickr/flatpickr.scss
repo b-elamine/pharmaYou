@@ -22,7 +22,7 @@
   &.arrowTop{
     &:before,
     &:after{
-      border-bottom-color: $primary;
+      border-bottom-color: $warning;
     }
   }
   .flatpickr-months {
@@ -34,7 +34,7 @@
       color : $white;
     }
     .flatpickr-month{
-      background: $primary;
+      background: $warning;
       select:hover{
         background: $white;
       }
@@ -50,7 +50,7 @@
   }
   .flatpickr-weekdays,
   .flatpickr-weekday{        
-    background: $primary;
+    background: $warning;
     color : $white;
   }
   .flatpickr-days{
@@ -58,8 +58,8 @@
       .flatpickr-day{
         &.selected,
         &.selected:hover{
-          background : $primary;
-          border-color : $primary;
+          background : $warning;
+          border-color : $warning;
         }
         &:hover,
         &.inRange{
