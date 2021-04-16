@@ -41,7 +41,7 @@ $primary: (
 );
 $secondary: (
   "gradient-light":
-    lighten(saturate(adjust-hue((theme-color("secondary")), 25), 11.9), 13.33),
+    lighten(saturate(adjust-hue((theme-color("secondary")), 25), 11.9), 0.2),
   "light-badge": lighten(theme-color("secondary"), 35%),
   "lighten-5": lighten(theme-color("secondary"), 25%),
   "lighten-4": lighten(theme-color("secondary"), 20%),
@@ -77,7 +77,7 @@ $success: (
 );
 $info: (
   "gradient-light":
-    lighten(saturate(adjust-hue((theme-color("info")), 25), 11.9), 13.33),
+    lighten(saturate(adjust-hue((theme-color("info")), 25), 11.9), 100),
   "light-badge": lighten(theme-color("info"), 40%),
   "lighten-5": lighten(theme-color("info"), 25%),
   "lighten-4": lighten(theme-color("info"), 20%),
@@ -117,7 +117,7 @@ $warning: (
 );
 $danger: (
   "gradient-light":
-    lighten(saturate(adjust-hue((theme-color("danger")), 25), 11.9), 100),
+    lighten(saturate(adjust-hue((theme-color("danger")), 25), 20), 100),
   "light-badge": lighten(theme-color("danger"), 30%),
   "lighten-5": lighten(theme-color("danger"), 25%),
   "lighten-4": lighten(theme-color("danger"), 20%),
