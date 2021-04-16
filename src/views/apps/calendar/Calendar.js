@@ -6,6 +6,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar"
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop"
 import moment from "moment"
 import { connect } from "react-redux"
+import Checkbox from "../../../components/@vuexy/checkbox/CheckboxesVuexy"
 import {
   fetchEvents,
   handleSidebar,
@@ -15,7 +16,7 @@ import {
   updateDrag,
   updateResize
 } from "../../../redux/actions/calendar/index"
-import { ChevronLeft, ChevronRight } from "react-feather"
+import { ChevronLeft, ChevronRight,Check } from "react-feather"
 
 import "react-big-calendar/lib/addons/dragAndDrop/styles.scss"
 import "react-big-calendar/lib/css/react-big-calendar.css"
@@ -23,59 +24,19 @@ import "../../../assets/scss/plugins/calendars/react-big-calendar.scss"
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment)
 const eventColors = {
-  business: "bg-success",
-  work: "bg-warning",
-  personal: "bg-danger",
-  others: "bg-primary"
+  // business: "bg-success",
+  // work: "bg-warning",
+  // personal: "bg-danger",
+  créneau_de_livraison: "bg-gradient-primary"
 }
 
 class Toolbar extends React.Component {
   render() {
     return (
       <div className="calendar-header mb-2 d-flex justify-content-between flex-wrap">
-        <div>
+        {/* <div>
           <AddEventButton />
-        </div>
-        <div className="text-center view-options mt-1 mt-sm-0 ml-lg-5 ml-0">
-          <ButtonGroup>
-            <button
-              className={`btn ${
-                this.props.view === "month"
-                  ? "btn-primary"
-                  : "btn-outline-primary text-primary"
-              }`}
-              onClick={() => {
-                this.props.onView("month")
-              }}
-            >
-              Month
-            </button>
-            <button
-              className={`btn ${
-                this.props.view === "week"
-                  ? "btn-primary"
-                  : "btn-outline-primary text-primary"
-              }`}
-              onClick={() => {
-                this.props.onView("week")
-              }}
-            >
-              Week
-            </button>
-            <button
-              className={`btn ${
-                this.props.view === "day"
-                  ? "btn-primary"
-                  : "btn-outline-primary text-primary"
-              }`}
-              onClick={() => {
-                this.props.onView("day")
-              }}
-            >
-              Day
-            </button>
-          </ButtonGroup>
-        </div>
+        </div> */}
         <div className="month-label d-flex flex-column text-center text-md-right mt-1 mt-md-0">
           <div className="calendar-navigation">
             <Button.Ripple
@@ -98,7 +59,7 @@ class Toolbar extends React.Component {
               <ChevronRight size={15} />
             </Button.Ripple>
           </div>
-          <div className="event-tags d-none d-sm-flex justify-content-end mt-1">
+          {/* <div className="event-tags d-none d-sm-flex justify-content-end mt-1">
             <div className="tag mr-1">
               <span className="bullet bullet-success bullet-sm mr-50"></span>
               <span>Business</span>
@@ -115,8 +76,49 @@ class Toolbar extends React.Component {
               <span className="bullet bullet-primary bullet-sm mr-50"></span>
               <span>Others</span>
             </div>
-          </div>
+          </div>*/}
+        </div> 
+        <div className="text-center view-options mt-1 mt-sm-0 ml-lg-5 ml-0">
+          <ButtonGroup>
+            <button
+              className={`btn ${
+                this.props.view === "month"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-warning"
+              }`}
+              onClick={() => {
+                this.props.onView("month")
+              }}
+            >
+              Mois
+            </button>
+            <button
+              className={`btn ${
+                this.props.view === "week"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-warning"
+              }`}
+              onClick={() => {
+                this.props.onView("week")
+              }}
+            >
+              Semaine
+            </button>
+            <button
+              className={`btn ${
+                this.props.view === "day"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-warning"
+              }`}
+              onClick={() => {
+                this.props.onView("day")
+              }}
+            >
+              Jour
+            </button>
+          </ButtonGroup>
         </div>
+        
       </div>
     )
   }
@@ -219,6 +221,32 @@ class CalendarApp extends React.Component {
         ></div>
         <Card>
           <CardBody>
+          <div style={{float:"left",width:"20%",borderRightColor:"grey",borderRightWidth:"1px"}}>
+          <div style={{marginBottom:"20px"}}>
+          <AddEventButton />
+        </div> 
+        <div style={{marginBottom:"20px"}}>
+        <span style={{opacity:.5}}>filter</span>
+        </div>
+        <div style={{marginBottom:"20px"}}>
+        <Checkbox
+            size="sm"
+            color="warning"
+            icon={<Check className="vx-icon" size={12} />}
+            label="tout voir"
+            onChange={() => {}}
+          />
+          </div>
+          <div style={{marginBottom:"20px"}}>
+        <Checkbox
+            size="sm"
+            color="primary"
+            icon={<Check className="vx-icon" size={12} />}
+            label="créneaux livraison"
+            onChange={() => {}}
+          />
+        </div>
+          </div>
             <DragAndDropCalendar
               localizer={localizer}
               events={events}
@@ -259,6 +287,7 @@ class CalendarApp extends React.Component {
           resizable
         />
       </div>
+    
     )
   }
 }

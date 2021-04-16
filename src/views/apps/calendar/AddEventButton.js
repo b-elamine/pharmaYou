@@ -1,6 +1,5 @@
 import React from "react"
 import { Button } from "reactstrap"
-import { Plus } from "react-feather"
 import { connect } from "react-redux"
 import {
   handleSidebar,
@@ -14,10 +13,10 @@ const AddEventButton = props => {
         props.handleSidebar(true)
         props.handleSelectedEvent(null)
       }}
-      className="d-sm-block d-none"
+      size="sm"
+      // className="d-sm-block d-none"
     >
-      {" "}
-      <Plus size={15} /> <span className="align-middle">Add</span>
+      Ajouter un créneau
     </Button.Ripple>
   )
 }
