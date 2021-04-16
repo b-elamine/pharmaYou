@@ -8,12 +8,15 @@ class StatisticsCards extends React.Component {
       <Card
         style={{
           borderRadius: "28px",
-          width: "180px",
+          width : "auto",
+          height : "auto",
+          justifyContent:"space-between"
         }}
       >
         <CardBody
+
           style={{ borderRadius: "28px" }}
-          className={`${
+          className={` ${
             this.props.className ? this.props.className : "stats-card-body"
           } d-flex ${
             !this.props.iconRight && !this.props.hideChart
@@ -23,13 +26,13 @@ class StatisticsCards extends React.Component {
               : this.props.hideChart && !this.props.iconRight
               ? "justify-content-center flex-column text-center"
               : null
-          } ${!this.props.hideChart ? "pb-0" : "pb-2"}  pt-1 ${
-            this.props.bg_color ? "gradient-light-" + this.props.bg_color : null
+          } ${!this.props.hideChart ? "pb-0" : "pb-50"}  pt-1 ${
+            this.props.bg_color ? "gradient-light-" + this.props.bg_color : "bg-rgba-primary"
           }`}
         >
-          <div className="icon-section">
+          <div className="icon-section h-75">
             <div
-              className={`avatar avatar-stats p-50 m-0 ${
+              className={`avatar avatar-stats  ${
                 this.props.iconBg
                   ? `bg-rgba-${this.props.iconBg}`
                   : "bg-rgba-primary"
@@ -39,8 +42,9 @@ class StatisticsCards extends React.Component {
             </div>
           </div>
           <div className="title-section">
-            <h2 className="text-bold-600 mt-1 mb-25">{this.props.stat}</h2>
-            <p className="mb-0 p-0">{this.props.statTitle}</p>
+            <h2 className="text-bold-600 mt-1 mb-25 ">{this.props.stat}</h2>
+
+            <p className="mb-0 p-0 text-dark font-medium-25">{this.props.statTitle}</p>
           </div>
         </CardBody>
         {!this.props.hideChart && (
@@ -56,3 +60,5 @@ class StatisticsCards extends React.Component {
   }
 }
 export default StatisticsCards;
+
+

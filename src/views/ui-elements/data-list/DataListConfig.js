@@ -127,7 +127,7 @@ const CustomHeader = props => {
           </DropdownMenu>
         </UncontrolledDropdown>
         <div className="filter-section">
-          <Input type="text" onChange={e => props.handleFilter(e)} />
+          <Input enterKeyHint='hey' type="text" onChange={e => props.handleFilter(e)} />
         </div>
       </div>
     </div>
@@ -363,6 +363,7 @@ class DataListConfig extends Component {
     history.push(
       `${urlPrefix}list-view?page=${page.selected + 1}&perPage=${perPage}`
     )
+    
     getData({ page: page.selected + 1, perPage: perPage })
     this.setState({ currentPage: page.selected })
   }
