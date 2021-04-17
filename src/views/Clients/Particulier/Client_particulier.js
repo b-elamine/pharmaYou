@@ -1,19 +1,8 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Badge } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
-import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-import Icon from "./Icon.svg";
-import { Badge} from "reactstrap";
-import {CursorFill, EyeFill, ThreeDotsVertical } from "react-bootstrap-icons"
-
-import {
-  Truck,
-  ExclamationTriangleFill,
-  HourglassSplit,
-  Calendar3,
-  Check2All,
-} from "react-bootstrap-icons";
+import { Check, Edit, Trash, AlertTriangle } from "react-feather";
 // fake database
 const data = [
   {
@@ -28,6 +17,9 @@ const data = [
     type: "particulier",
     code: 12345,
     origine: "Partenaire App",
+    ordonnances: 15,
+    carte_vital: true,
+    mutuelle: false,
   },
   {
     id: 2,
@@ -41,6 +33,9 @@ const data = [
     type: "particulier",
     code: 56789,
     origine: "Partenaire infermier",
+    ordonnances: 4,
+    carte_vital: false,
+    mutuelle: true,
   },
   {
     id: 3,
@@ -54,6 +49,9 @@ const data = [
     type: "professionnel",
     code: 1245,
     origine: "Partenaire MEDADOM",
+    ordonnances: 16,
+    carte_vital: false,
+    mutuelle: true,
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
@@ -63,6 +61,8 @@ const data = [
     status: "inactive",
     montant: "$10,000",
     ratings: "bad",
+    carte_vital: true,
+    mutuelle: true,
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
@@ -72,6 +72,8 @@ const data = [
     status: "active",
     montant: "$22,000",
     ratings: "average",
+    ordonnances: 10,
+    mutuelle: true,
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
@@ -81,6 +83,8 @@ const data = [
     status: "inactive",
     montant: "$49,000",
     ratings: "bad",
+    ordonnances: 0,
+    mutuelle: true,
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
@@ -90,6 +94,7 @@ const data = [
     status: "active",
     montant: "$56,000",
     ratings: "good",
+    mutuelle: true,
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
@@ -299,40 +304,13 @@ const data = [
     ratings: "good",
   },
 ];
-const ordonnances = {
-  non_traité: 10,
-  en_attente: 2,
-  en_cours_livraison: 20,
-  livrée: 30,
-  assigner_tournée: 14,
-  dossier_incomplet: 4,
-};
+
 const columns = [
   {
-    name: "#",
-    selector: "id",
+    name: "NOM",
+    selector: "nom",
     sortable: true,
-    minWidth: "10px",
-    cell: (row) => <p className="text-bold-500 mb-0">{row.id}</p>,
-  },
-  {
-    name: "Statut",
-    selector: "status",
-    sortable: true,
-    cell: (row) => (
-      <Badge
-        color={row.status === "inactive" ? "light-danger" : "light-success"}
-        pill
-      >
-        {row.status}
-      </Badge>
-    ),
-  },
-  {
-    name: "Nom Client",
-    selector: "nom_client",
-    sortable: true,
-    minWidth: "200px",
+    minWidth: "230px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -347,128 +325,134 @@ const columns = [
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
-            className="d-block text-bold-500 text-truncate mb-0"
+            className="d-block text-bold-600 text-truncate mb-0 primary font-small-3"
           >
             {row.name}
           </span>
-          <small title={row.email}>{row.email}</small>
         </div>
       </div>
     ),
   },
   {
-    name: "Type",
-    selector: "type",
+    name: "EMAIL",
+    selector: "email",
     sortable: true,
-    cell: (row) => (
-      <Badge
-        color={
-          row.type === "particulier" ? "light-primary" : "light-success"
-        }
-        pill
-      >
-        {row.type}
-      </Badge>
-    ),
+    minWidth: "200px",
+    cell: (row) => <p className="text-bold-200 mb-0">{row.email}</p>,
   },
   {
-    name: "Montant",
-    selector: "montant",
+    name: "VILLE",
+    selector: "ville",
+    minWidth: "150px",
     sortable: true,
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant}</p>,
+    cell: (row) => <p className="text-bold-200 mb-0">{row.status}</p>,
   },
   {
-    name: "Date",
-    selector: "date",
-    sortable: true,
-    cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
-    ),
-  },
-  {
-    name: "Code postal",
+    name: "CODE POSTAL",
     selector: "code_postal",
+    minWidth: "150px",
     sortable: true,
-    cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
-    ),
+    cell: (row) => <p className="text-truncate mb-0">{row.code}</p>,
   },
   {
-    name: "Origine",
+    name: "ORIGINE",
     selector: "origine",
     sortable: true,
     minWidth: "200px",
     cell: (row) => (
       <Badge
-      color="light-success text-wrap text-bold-500 mb-0"
-      style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
-      pill
-    >
-      {row.origine}
-    </Badge>
+        color="light-success text-wrap text-bold-500 mb-0"
+        style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+        pill
+      >
+        {row.origine}
+      </Badge>
     ),
   },
   {
-    name: "Actions",
-    selector: "actions",
-    minWidth :"180px",
+    name: "CLIENT DEPUIS",
+    selector: "date_client",
+    sortable: true,
+    cell: (row) => <p className="text-truncate mb-0">{row.date}</p>,
+  },
+  {
+    name: "ORDONNANCES",
+    selector: "ordonnances",
+    sortable: true,
+    cell: (row) => (
+      <p className="text-bold-700 font-medium-1 text-truncate mb-0">
+        {row.ordonnances}
+      </p>
+    ),
+  },
+  {
+    name: "CARTE VITAL",
+    selector: "carte_vital",
+    sortable: true,
+    cell: (row) => {
+      const core = row.carte_vital ? (
+        <div className="data-list-action">
+          <Check className="cursor-pointer mr-1 success" size={20} />
+        </div>
+      ) : (
+        <div className="data-list-action">
+          <AlertTriangle className="cursor-pointer mr-1 danger" size={20} />
+        </div>
+      );
+      return core;
+    },
+  },
+  {
+    name: "MUTUELLE",
+    selector: "mutuelle",
+    sortable: true,
+    cell: (row) => {
+      const core = row.mutuelle ? (
+        <div className="data-list-action">
+          <Check className="cursor-pointer mr-1 success" size={20} />
+        </div>
+      ) : (
+        <div className="data-list-action">
+          <AlertTriangle className="cursor-pointer mr-1 danger" size={20} />
+        </div>
+      );
+      return core;
+    },
+  },
+  {
+    name: "ACTION",
+    selector: "action",
+    // il faut faire des icons
     cell: (row) => (
       <div className="data-list-action">
-        <CursorFill
+        <Edit
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            alert("Send a message " + row.id);
+            alert("editing the client " + row.id);
           }}
         />
-        <EyeFill
-          className="cursor-pointer mr-1"
-          size={20}
-          onClick={() => {
-            alert("view the ordonnace " + row.id);
-          }}
-        />
-        <ThreeDotsVertical
+        <Trash
           className="cursor-pointer"
           size={20}
           onClick={() => {
-            alert("more " + row.id);
+            alert("deleting the client " + row.id);
           }}
         />
       </div>
     ),
   },
+];
 
-]
-
-class Ordonnances_recue extends React.Component {
+class Client_particuliers extends React.Component {
   state = {
-    columns :[],
     data: [],
-    ordonnances: {
-      non_traité: 0,
-      en_attente: 0,
-      en_cours_livraison: 0,
-      livrée: 0,
-      assigner_tournée: 0,
-      dossier_incomplet: 0,
-    },
   };
 
- 
   componentDidMount() {
     // fetching the data from the database and passing it to the state
     this.setState({
-      columns :columns,
       data: data,
-      ordonnances: {
-        non_traité: ordonnances.non_traité,
-        en_attente: ordonnances.en_attente,
-        en_cours_livraison: ordonnances.en_cours_livraison,
-        livrée: ordonnances.livrée,
-        assigner_tournée: ordonnances.assigner_tournée,
-        dossier_incomplet: ordonnances.dossier_incomplet,
-      },
     });
   }
 
@@ -476,75 +460,12 @@ class Ordonnances_recue extends React.Component {
     return (
       <React.Fragment>
         <Breadcrumbs
-          breadCrumbTitle="Ordonnance Reçues."
-          breadCrumbParent="Ordonnance reçues"
+          breadCrumbTitle=""
+          breadCrumbParent="Clients particuliers"
         />
         <Row>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              
-              hideChart
-              bg_color="danger"
-              iconBg="danger"
-              icon={<ExclamationTriangleFill className="danger" size={25} />}
-              stat={this.state.ordonnances.non_traité}
-              statTitle="Ordonnances Non traité"
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              bg_color="info"
-              iconBg="info"
-              icon={<HourglassSplit className="info" size={25} />}
-              stat={this.state.ordonnances.en_attente}
-              statTitle="Ordonnances attente approvisionnement"
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              bg_color="primary"
-              iconBg="primary"
-              icon={<Calendar3 className="primary" size={25} />}
-              stat={this.state.ordonnances.assigner_tournée}
-              statTitle="Ordonnances assignés a une tournée"
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              bg_color="warning"
-              iconBg="warning"
-              icon={<Truck className="warning" size={25} />}
-              stat={this.state.ordonnances.en_cours_livraison}
-              statTitle="Ordonnances en Cours de livraison"
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              bg_color="success"
-              iconBg="success"
-              icon={<Check2All className="success" size={25} />}
-              stat={this.state.ordonnances.livrée}
-              statTitle="Ordonnances livré Aujourd'hui."
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              iconBg="primary"
-              icon={<img src={Icon} alt="Icon" />}
-              stat={this.state.ordonnances.dossier_incomplet}
-              statTitle="Dossiers Incomplet"
-            />
-          </Col>
-        </Row>
-
-        <Row>
           <Col sm="12">
-            <DataTableCustom  columns = {this.state.columns} data={this.state.data} />
+            <DataTableCustom  add_new columns={columns} data={this.state.data} />
           </Col>
         </Row>
       </React.Fragment>
@@ -552,4 +473,4 @@ class Ordonnances_recue extends React.Component {
   }
 }
 
-export default Ordonnances_recue;
+export default Client_particuliers;

@@ -1,6 +1,6 @@
 import React from "react"
 import { Row, Col } from "reactstrap"
-import ApexColumnCharts from "./ApexColumnCharts"
+// import ApexColumnCharts from "./ApexColumnCharts"
 // import SalesCard from "./SalesCard"
 // import SuberscribersGained from "../../ui-elements/cards/statistics/SubscriberGained"
 // import OrdersReceived from "../../ui-elements/cards/statistics/OrdersReceived"

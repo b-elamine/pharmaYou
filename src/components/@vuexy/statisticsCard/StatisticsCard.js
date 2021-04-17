@@ -8,13 +8,12 @@ class StatisticsCards extends React.Component {
       <Card
         style={{
           borderRadius: "28px",
-          width : "auto",
-          height : "auto",
+          // width : "auto",
+          // height : "auto",
           justifyContent:"space-between"
         }}
       >
         <CardBody
-
           style={{ borderRadius: "28px" }}
           className={` ${
             this.props.className ? this.props.className : "stats-card-body"
