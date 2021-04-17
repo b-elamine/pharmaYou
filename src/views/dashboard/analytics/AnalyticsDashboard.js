@@ -1,6 +1,7 @@
 import React from "react"
 import { Row, Col } from "reactstrap"
-import ApexColumnCharts from "./ApexColumnCharts"
+import ReactApexChart from "react-apexcharts"
+// import ApexColumnCharts from "./ApexColumnCharts"
 // import SalesCard from "./SalesCard"
 // import SuberscribersGained from "../../ui-elements/cards/statistics/SubscriberGained"
 // import OrdersReceived from "../../ui-elements/cards/statistics/OrdersReceived"
@@ -25,6 +26,53 @@ import "../../../assets/scss/pages/dashboard-analytics.scss"
 //   $white = "#fff"
 
 class AnalyticsDashboard extends React.Component {
+  state = {  
+    series: [{
+      data: [21, 22, 10, 28]
+    }],
+    options: {
+      chart: {
+        height: 350,
+        type: 'bar',
+        events: {
+          click: function(chart, w, e) {
+            // console.log(chart, w, e)
+          }
+        }
+      },
+      colors: ["#FFFFFF"],
+      plotOptions: {
+        bar: {
+          columnWidth: '10%',
+          distributed: true,
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: false
+      },
+      xaxis: {
+        categories: [
+          ['John'],
+          ['Joe'],
+          ['Jake'],
+          ['Peter'],
+          
+        ],
+        labels: {
+          style: {
+            // colors: colors,
+            font: 'none'
+          }
+        }
+      }
+    },
+  
+  
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -47,7 +95,7 @@ class AnalyticsDashboard extends React.Component {
           </Col>
         </Row> */}
         <Row>
-          <Col sm="12">
+        <Col sm="12">
           <h5>Particuliers</h5>
             <div 
             style={{
@@ -57,10 +105,31 @@ class AnalyticsDashboard extends React.Component {
             marginRight:"1rem",
             height:"12rem",
             textAlign:"center",
-            paddingTop:"5rem",
+            padding:"1rem",
             marginBottom:"35px",
             }}>
-              {/* <ApexColumnCharts/> */}
+              <div style={{width:"40%"}}>
+              <Row noGutters="false">
+              <Col>
+              <ReactApexChart
+              options={this.state.options}
+              series={this.state.series}
+              type="bar"
+              height={"100%"}
+              width={"90%"}
+              />
+              </Col>
+              <Col>
+              <ReactApexChart
+              options={this.state.options}
+              series={this.state.series}
+              type="line"
+              height={"100%"}
+              width={"90%"}
+              />
+              </Col>
+              </Row>
+              </div>
             </div>
           </Col>
         </Row>
@@ -75,11 +144,31 @@ class AnalyticsDashboard extends React.Component {
             marginRight:"1rem",
             height:"12rem",
             textAlign:"center",
-            paddingTop:"5rem",
+            padding:"1rem",
             marginBottom:"35px",
-            
             }}>
-              
+              <div style={{width:"40%"}}>
+              <Row noGutters="false">
+              <Col>
+              <ReactApexChart
+              options={this.state.options}
+              series={this.state.series}
+              type="bar"
+              height={"100%"}
+              width={"90%"}
+              />
+              </Col>
+              <Col>
+              <ReactApexChart
+              options={this.state.options}
+              series={this.state.series}
+              type="line"
+              height={"100%"}
+              width={"90%"}
+              />
+              </Col>
+              </Row>
+              </div>
             </div>
           </Col>
         </Row>
