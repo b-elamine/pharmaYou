@@ -467,7 +467,7 @@ class Client_particuliers extends React.Component {
         />
         <Row>
          <Col sm="12">
-            <CustomSelects data={this.state.data}  />
+            <CustomSelects  data={this.state.data}  />
           </Col>
           <Col sm="12">
             <DataTableCustom  add_new columns={columns} data={this.state.data} />
