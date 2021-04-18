@@ -46,7 +46,7 @@ class StatisticsCards extends React.Component {
               iconBg="primary"
               icon={<Eye className="primary" size={22} />}
               stat="36.9k"
-              statTitle="Views"
+              statTitle="Ordonnances Non traité"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">

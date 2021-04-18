@@ -186,6 +186,10 @@ const LivreursMap = lazy(()=> import("./views/livreurs/LivreurMap"))
 const Livreurs = lazy(()=> import("./views/livreurs/livreur"))
 const infoLivreurs = lazy(()=> import("./views/livreurs/infoLivreur"))
 
+const Client_particuliers = lazy(()=> import('./views/Clients/Particulier/Client_particulier'))
+
+const Partenaire = lazy(()=> import("./views/Partenaire/Partenaire"))
+
 
 // Set Layout and Component Using App Route
 const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
@@ -236,10 +240,12 @@ class AppRouter extends React.Component {
             {/* setting PharmaYou routes for structuring the work */}
           <AppRoute exact path="/stats" component={() => <h1>Component of the statistiques </h1>} />
           <AppRoute exact path="/ordonnance/recues" component={Ordonnances_recue} />
-          <AppRoute exact path="/client/particuliers" component= {() => <h1>component of the client-Particulier </h1>} />
+          <AppRoute exact path="/client/particuliers" component= {Client_particuliers} />
           <AppRoute exact path="/client/professionnelles" component= {() => <h1>Component of the client_professionnelles </h1>} />
           <AppRoute exact path="/partenaires" component= {() => <h1>Componenet of the partenaires</h1>} />
  
+          <AppRoute exact path="/partenaires" component= {Partenaire} />
+
           <AppRoute exact path="/commande/recues" component= {() => <h1>Componenet of the commande-recues</h1>} />
           <AppRoute exact path="/factures" component= {() => <h1>Component of the factures </h1>} />
           <AppRoute exact path="/support_pro" component= {() => <h1>component of the support_pro </h1>} />

@@ -10,7 +10,8 @@ class ApexColumnCharts extends React.Component {
         bar: {
           horizontal: false,
           endingShape: "rounded",
-          columnWidth: "55%"
+          columnWidth: "55%",
+          distributed:"true",
         }
       },
       dataLabels: {
