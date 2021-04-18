@@ -23,6 +23,8 @@ class StatisticsCards extends React.Component {
               ? "flex-column align-items-start"
               : this.props.iconRight
               ? "justify-content-between flex-row-reverse align-items-center"
+              : this.props.iconLeft
+              ? "justify-content-end flex-row align-items-center"
               : this.props.hideChart && !this.props.iconRight
               ? "justify-content-center flex-column text-center"
               : null
@@ -42,7 +44,7 @@ class StatisticsCards extends React.Component {
             </div>
           </div>
           <div className="title-section">
-            <h2 className="text-bold-600 mt-1 mb-25 ">{this.props.stat}</h2>
+            <h4 className="text-bold-600 mt-1 mb-25 ">{this.props.stat}</h4>
 
             <p className="mb-0 p-0 text-dark font-medium-25">{this.props.statTitle}</p>
           </div>
