@@ -1,9 +1,7 @@
 import React from "react"
 import { Row, Col } from "reactstrap"
-<<<<<<< HEAD
-=======
+
 import ReactApexChart from "react-apexcharts"
->>>>>>> dfd374cb6cb446f0e48eebba19832d394befe012
 // import ApexColumnCharts from "./ApexColumnCharts"
 // import SalesCard from "./SalesCard"
 // import SuberscribersGained from "../../ui-elements/cards/statistics/SubscriberGained"

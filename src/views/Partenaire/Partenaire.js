@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Badge } from "reactstrap";
 import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../DataTableCustom/DataTableCustom";
-import {  Edit, Trash } from "react-feather";
+import {  Edit, Eye } from "react-feather";
 // fake database
 const data = [
   {
@@ -395,14 +395,14 @@ const columns = [
     // il faut faire des icons
     cell: (row) => (
       <div className="data-list-action">
-        <Edit
+        <Eye
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
             alert("editing the client " + row.id);
           }}
         />
-        <Trash
+        <Edit
           className="cursor-pointer"
           size={20}
           onClick={() => {

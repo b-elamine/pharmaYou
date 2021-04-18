@@ -3,6 +3,8 @@ import { Row, Col, Badge } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import { Check, Edit, Trash, AlertTriangle } from "react-feather";
+
+import CustomSelects from "./CustomSelects"
 // fake database
 const data = [
   {
@@ -464,6 +466,9 @@ class Client_particuliers extends React.Component {
           breadCrumbParent="Clients particuliers"
         />
         <Row>
+         <Col sm="12">
+            <CustomSelects data={this.state.data}  />
+          </Col>
           <Col sm="12">
             <DataTableCustom  add_new columns={columns} data={this.state.data} />
           </Col>
