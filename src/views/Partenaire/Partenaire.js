@@ -3,6 +3,16 @@ import { Row, Col, Badge } from "reactstrap";
 import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../DataTableCustom/DataTableCustom";
 import {  Edit, Eye } from "react-feather";
+import Select from "react-select";
+const colourOptions = [
+  { value: "ocean", label: "Ocean" },
+  { value: "blue", label: "Blue" },
+  { value: "purple", label: "Purple" },
+  { value: "red", label: "Red" },
+  { value: "orange", label: "Orange" },
+];
+
+
 // fake database
 const data = [
   {
@@ -417,13 +427,91 @@ const columns = [
 class Partenaire extends React.Component {
   state = {
     data: [],
+    options: {
+      professions: [],
+      origines: [],
+      status: [],
+    },
   };
+
+  extract_distinct_values(data) {
+    const origines = [];
+    const professions = [];
+    const status = [];
+    data.forEach((row) => {
+      if (row.origine) {
+        if (!origines.includes(row.origine)) {
+          origines.push(row.origine);
+        }
+      }
+      if (row.profession) {
+        if (!professions.includes(row.profession)) {
+          professions.push(row.profession);
+        }
+      }
+      if (row.status) {
+        if (!status.includes(row.status)) {
+          status.push(row.status);
+        }
+      }
+    });
+    const origine_options = origines.map((item) => {
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    const profession_options = professions.map((item) => {
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    const status_options = status.map((item) => {
+
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    console.log(profession_options)
+    console.log(origine_options)
+    console.log(status_options)
+  
+    this.setState({
+      options : {
+        professions : profession_options, 
+        origines : origine_options, 
+        status : status_options
+      }
+    })
+  }
 
   componentDidMount() {
     // fetching the data from the database and passing it to the state
     this.setState({
       data: data,
     });
+  }
+  componentDidUpdate() {
+    console.log(this.state)
+    if (
+      this.state.options.professions.length === 0 &&
+      this.state.options.origines.length === 0 &&
+      this.state.options.status.length === 0 &&
+      this.state.data.length !== 0
+    ) {
+      this.extract_distinct_values(this.state.data);
+    }
   }
 
   render() {
@@ -434,6 +522,30 @@ class Partenaire extends React.Component {
           breadCrumbParent="Partenaires."
         />
         <Row>
+           <Col md="4" sm="8">
+              <Select
+                classNamePrefix="select"
+                placeholder="Professions"
+                name="Professions"
+                options={this.state.options.professions}
+              />
+            </Col>
+           <Col md="4" sm="8">
+              <Select
+                classNamePrefix="select"
+                placeholder="Origine"
+                name="Origine"
+                options={this.state.options.origines}
+              />
+            </Col>
+           <Col md="4" sm="8">
+              <Select
+                classNamePrefix="select"
+                placeholder="Status"
+                name="status"
+                options={this.state.options.status}
+              />
+            </Col>
           <Col sm="12">
             <DataTableCustom  add_new columns={columns} data={this.state.data} />
           </Col>
