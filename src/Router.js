@@ -184,6 +184,10 @@ const accessControl = lazy(() =>
 
 //pharma you part 
 const Ordonnances_recue = lazy(()=> import("./views/Ordonnances/Recues/Ordonnance_recue"))
+const CalendrierDesTournes = lazy(()=> import("./views/apps/calendar/Calendar"))
+const LivreursMap = lazy(()=> import("./views/livreurs/LivreurMap"))
+const Livreurs = lazy(()=> import("./views/livreurs/livreur"))
+const infoLivreurs = lazy(()=> import("./views/livreurs/infoLivreur"))
 
 const Client_particuliers = lazy(()=> import('./views/Clients/Particulier/Client_particulier'))
 
@@ -241,14 +245,17 @@ class AppRouter extends React.Component {
           <AppRoute exact path="/ordonnance/recues" component={Ordonnances_recue} />
           <AppRoute exact path="/client/particuliers" component= {Client_particuliers} />
           <AppRoute exact path="/client/professionnelles" component= {() => <h1>Component of the client_professionnelles </h1>} />
+          <AppRoute exact path="/partenaires" component= {() => <h1>Componenet of the partenaires</h1>} />
+ 
           <AppRoute exact path="/partenaires" component= {Partenaire} />
 
           <AppRoute exact path="/commande/recues" component= {() => <h1>Componenet of the commande-recues</h1>} />
           <AppRoute exact path="/factures" component= {() => <h1>Component of the factures </h1>} />
           <AppRoute exact path="/support_pro" component= {() => <h1>component of the support_pro </h1>} />
-          <AppRoute exact path="/calendrier_tournées" component= {() => <h1>component of the Calendrier </h1>} />
-          <AppRoute exact path="/livreurs" component= {() => <h1>component of the livreurs </h1>} />
-          <AppRoute exact path="/livreurs/carte" component= {() => <h1>component of the carte livreur  </h1>} />
+          <AppRoute exact path="/calendrier_tournées" component= {CalendrierDesTournes} />
+          <AppRoute exact path="/livreurs" component= {Livreurs} />
+          <AppRoute exact path="/livreurs/carte" component= {LivreursMap} />
+          <AppRoute exact path="/livreurs/info" component= {infoLivreurs} />
           <AppRoute exact path="/livreurs/salaire" component= {() => <h1>component of the salaire of the livreurs </h1>} />
           <AppRoute exact path="/users" component= {() => <h1>USERS </h1>} />
 

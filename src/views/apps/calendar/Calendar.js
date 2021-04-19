@@ -27,7 +27,7 @@ const eventColors = {
   // business: "bg-success",
   // work: "bg-warning",
   // personal: "bg-danger",
-  créneau_de_livraison: "bg-gradient-primary"
+  créneau_de_livraison: "bg-primary"
 }
 
 class Toolbar extends React.Component {
