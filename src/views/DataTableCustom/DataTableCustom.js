@@ -36,6 +36,7 @@ class DataTableCustom extends React.Component {
   };
 
   componentDidUpdate() {
+    console.log(this.props.columns)
     if (this.state.data.length === 0) {
       this.setState({
         data: this.props.data,
