@@ -12,6 +12,9 @@ import { ContextLayout } from "./utility/context/Layout"
 const analyticsDashboard = lazy(() =>
   import("./views/dashboard/analytics/AnalyticsDashboard")
 )
+const General_View = lazy(() =>
+  import("./views/General_View/General_View")
+)
 const ecommerceDashboard = lazy(() =>
   import("./views/dashboard/ecommerce/EcommerceDashboard")
 )
@@ -232,7 +235,7 @@ class AppRouter extends React.Component {
       // Set the directory path if you are deploying in sub-folder
       <Router history={history}>
         <Switch>
-          <AppRoute exact path="/" component={analyticsDashboard} />
+          <AppRoute exact path="/" component={General_View} />
           <AppRoute
             path="/ecommerce-dashboard"
             component={ecommerceDashboard}
