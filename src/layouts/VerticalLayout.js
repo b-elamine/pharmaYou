@@ -22,7 +22,7 @@ class VerticalLayout extends PureComponent {
     layout: this.props.app.customizer.theme,
     collapsedContent: this.props.app.customizer.sidebarCollapsed,
     sidebarHidden: false,
-    currentLang: "en",
+    currentLang: "fr",
     appOverlay: false,
     customizer: false,
     currRoute: this.props.location.pathname

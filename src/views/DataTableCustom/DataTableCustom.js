@@ -35,11 +35,11 @@ class DataTableCustom extends React.Component {
     data: [],
     filteredData : [],
     value: "",
+    data_fetched : false,
   };
 
-  componentDidUpdate() {    
+  componentDidUpdate() {
     if (this.state.data.length === 0) {
-      console.log(this.state.data.length)
       this.setState({
         data: this.props.data,
       });
@@ -85,10 +85,6 @@ class DataTableCustom extends React.Component {
 
   render() {
     let { value, filteredData } = this.state;
-    console.log(filteredData)
-    console.log("value is ", value)
-    console.log(this.props.data)
-
     return (
       <Card className="mt-5">
         {/* <CardHeader>
@@ -106,6 +102,7 @@ class DataTableCustom extends React.Component {
             data={value.length ? filteredData : this.props.data}
             columns={this.props.columns}
             noHeader
+            clearSelectedRows
             pagination
             paginationIconFirstPage={<ChevronsLeft size={20} />}
             paginationIconLastPage={<ChevronsRight size={20} />}

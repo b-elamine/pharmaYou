@@ -188,6 +188,7 @@ const CalendrierDesTournes = lazy(()=> import("./views/apps/calendar/Calendar"))
 const LivreursMap = lazy(()=> import("./views/livreurs/LivreurMap"))
 const Livreurs = lazy(()=> import("./views/livreurs/livreur"))
 const infoLivreurs = lazy(()=> import("./views/livreurs/infoLivreur"))
+const Commandes_recues = lazy(()=> import("./views/Commandes/Reçue/Commandes_reçues"))
 
 const Client_particuliers = lazy(()=> import('./views/Clients/Particulier/Client_particulier'))
 
@@ -241,7 +242,7 @@ class AppRouter extends React.Component {
             component={ecommerceDashboard}
           />
             {/* setting PharmaYou routes for structuring the work */}
-          <AppRoute exact path="/stats" component={() => <h1>Component of the statistiques </h1>} />
+          <AppRoute  exact path="/stats" component={() => <h1>Component of the statistiques </h1>} />
           <AppRoute exact path="/ordonnance/recues" component={Ordonnances_recue} />
           <AppRoute exact path="/client/particuliers" component= {Client_particuliers} />
           <AppRoute exact path="/client/professionnelles" component= {() => <h1>Component of the client_professionnelles </h1>} />
@@ -249,7 +250,7 @@ class AppRouter extends React.Component {
  
           <AppRoute exact path="/partenaires" component= {Partenaire} />
 
-          <AppRoute exact path="/commande/recues" component= {() => <h1>Componenet of the commande-recues</h1>} />
+          <AppRoute exact path="/commande/recues" component= {Commandes_recues} />
           <AppRoute exact path="/factures" component= {() => <h1>Component of the factures </h1>} />
           <AppRoute exact path="/support_pro" component= {() => <h1>component of the support_pro </h1>} />
           <AppRoute exact path="/calendrier_tournées" component= {CalendrierDesTournes} />
