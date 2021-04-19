@@ -52,7 +52,7 @@ const TypeVéhicule = [
   { value: "Moto", label: "Moto" },
 ];
 
-class DataTableCustom extends React.Component {
+class Livreurs extends React.Component {
   state = {
     columns: [
       {
@@ -115,8 +115,8 @@ class DataTableCustom extends React.Component {
         ),
       },
       {
-        name: "STATU",
-        selector: "statu",
+        name: "STATUT",
+        selector: "statut",
         sortable: true,
         cell: (row) => (
           <Badge
@@ -628,4 +628,4 @@ class DataTableCustom extends React.Component {
   }
 }
 
-export default DataTableCustom;
+export default Livreurs;
