@@ -14,7 +14,9 @@ const CustomHeader = (props) => {
     <div className="d-flex flex-row-reverse">
       <div className="add-new">
         {props.add_new ? (
-          <Button.Ripple color="primary ml-75 text-bold-500">Ajouter un client</Button.Ripple>
+          <Button.Ripple color="primary ml-75 text-bold-500">
+            Ajouter un client
+          </Button.Ripple>
         ) : null}
       </div>
       <div className="position-relative has-icon-left mb-1">
@@ -31,12 +33,13 @@ class DataTableCustom extends React.Component {
   state = {
     columns: [],
     data: [],
-    filteredData: [],
+    filteredData : [],
     value: "",
   };
 
-  componentDidUpdate() {
+  componentDidUpdate() {    
     if (this.state.data.length === 0) {
+      console.log(this.state.data.length)
       this.setState({
         data: this.props.data,
       });
@@ -44,21 +47,15 @@ class DataTableCustom extends React.Component {
   }
 
   componentDidMount() {
-    //set the columns dynamicaly
-    console.log(this.state.data);
-    console.log(this.props.data);
     this.setState({
       data: this.props.data,
     });
-    console.log(this.state.data);
   }
   handleFilter = (e) => {
     let value = e.target.value;
     let data = this.state.data;
     let filteredData = this.state.filteredData;
-    console.log(data);
     this.setState({ value });
-
     if (value.length) {
       filteredData = data.filter((item) => {
         let startsWithCondition =
@@ -66,11 +63,13 @@ class DataTableCustom extends React.Component {
           item.date.toLowerCase().startsWith(value.toLowerCase()) ||
           item.email.toLowerCase().startsWith(value.toLowerCase()) ||
           item.montant.toLowerCase().startsWith(value.toLowerCase()) ||
+          // item.origine.toLowerCase().startsWith(value.toLowerCase()) ||
           item.status.toLowerCase().startsWith(value.toLowerCase());
         let includesCondition =
           item.name.toLowerCase().includes(value.toLowerCase()) ||
           item.date.toLowerCase().includes(value.toLowerCase()) ||
           item.email.toLowerCase().includes(value.toLowerCase()) ||
+          // item.origine.toLowerCase().includes(value.toLowerCase()) ||
           item.montant.toLowerCase().includes(value.toLowerCase()) ||
           item.status.toLowerCase().includes(value.toLowerCase());
 
@@ -86,12 +85,16 @@ class DataTableCustom extends React.Component {
 
   render() {
     let { value, filteredData } = this.state;
+    console.log(filteredData)
+    console.log("value is ", value)
+    console.log(this.props.data)
+
     return (
-      <Card>
+      <Card className="mt-5">
         {/* <CardHeader>
           <CardTitle>Custom</CardTitle>
         </CardHeader> */}
-        <CardBody className="rdt_Wrapper">
+        <CardBody className="rdt_Wrapper pt-75">
           <select>
             <option>hey</option>
             <option>hey</option>

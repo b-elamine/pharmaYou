@@ -54,6 +54,7 @@
     "react-feather": "~2.0.3",
     "react-flatpickr": "^3.9.1",
     "react-hammerjs": "^1.0.1",
+    "react-icons": "^4.2.0",
     "react-id-swiper": "~2.4.0",
     "react-input-mask": "~2.0.4",
     "react-intl": "^3.11.0",
