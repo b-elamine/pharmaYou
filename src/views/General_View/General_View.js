@@ -4,8 +4,10 @@ import ReactApexChart from "react-apexcharts"
 import DataTableCustom from "../DataTableCustom/DataTableCustom"
 import "../../assets/scss/pages/dashboard-analytics.scss"
 import { Badge} from "reactstrap";
-import {CursorFill, EyeFill, ThreeDotsVertical } from "react-bootstrap-icons"
-
+import {CursorFill, EyeFill, Hourglass, HourglassBottom, HourglassSplit, ThreeDotsVertical } from "react-bootstrap-icons"
+import { Truck, User, FileText, DollarSign } from "react-feather";
+import StatisticsCard from "../../components/@vuexy/statisticsCard/StatisticsCard";
+const dt = 333; //test à supprimer 
 const data = [
     {
       id: 1,
@@ -38,12 +40,12 @@ const data = [
       image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
       name: "Gasper Morley",
       email: "gmorley2@chronoengine.com",
-      date: "December 24, 2019",
+      date: "December 20, 2019",
       status: "active",
       montant: "$78,000",
       ratings: "average",
       type: "professionnel",
-      code: 1245,
+      code: 1205,
       origine: "Partenaire MEDADOM",
     },
     {
@@ -164,7 +166,7 @@ const data = [
       ratings: "good",
     },
     {
-      image: require("../../assets/img/portrait/small/avatar-s-24.jpg"),
+      image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
       name: "Amalle Pladen",
       email: "jmaher1@msu.edu",
       date: "March 30, 2018",
@@ -710,65 +712,12 @@ class General_View extends React.Component {
     return (
       <React.Fragment>
         <Row>
-        <Col sm="12">
+        
           <h5>Particuliers</h5>
-            <div 
+          <div 
+            className="d-flex flex-sm-row justify-content-center"
             style={{
-            backgroundImage:"linear-gradient(#F1AE73 , #EEE4DC)",
-            borderRadius:"15px",
-            width:"100%",
-            marginRight:"1rem",
-            height:"15rem",
-            padding:"2rem",
-            marginBottom:"35px",
-            }}>
-              <div style={{width:"40%"}}>
-              <Row noGutters="false">
-              <Col>
-              <div className = "align-items-center justify-content-center d-flex" style={{
-                  backgroundColor : "white",
-                  opacity : "50%",
-                  borderRadius:"18px",
-                  width :"80%",
-                  height:"100%"
-              }}>
-              <ReactApexChart
-              options={this.state.particular_char_bar.options}
-              series={this.state.particular_char_bar.series}
-              type="bar"
-              height={"100%"}
-              width={"70%"}
-              />
-              </div>
-              </Col>
-              <Col>
-              <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "white",
-                  opacity : "50%",
-                  borderRadius:"18px",
-                  width : "80%",
-                  height:"100%"
-              }}>
-              <ReactApexChart
-              options={this.state.particular_char_line.options}
-              series={this.state.particular_char_line.series}
-              type="line"
-              height={"100%"}
-              width={"70%"}
-              />
-              </div>
-              </Col>
-              </Row>
-              </div>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm="12">
-          <h5>Profesionnels</h5>
-            <div 
-            style={{
-            backgroundImage:"linear-gradient(#F1AE73 , #EEE4DC)",
+            backgroundColor:"#ffc4ad",
             borderRadius:"15px",
             width:"100%",
             marginRight:"1rem",
@@ -780,8 +729,7 @@ class General_View extends React.Component {
               <Row noGutters="false">
               <Col>
               <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "white",
-                  opacity : "50%",
+                  backgroundColor : "#ffe3d8",
                   borderRadius:"18px",
                   width : "80%",
                   height:"100%"
@@ -797,8 +745,7 @@ class General_View extends React.Component {
               </Col>
               <Col>
               <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "white",
-                  opacity : "50%",
+                  backgroundColor : "#ffe3d8",
                   borderRadius:"18px",
                   width : "80%",
                   height:"100%",
@@ -816,9 +763,226 @@ class General_View extends React.Component {
               
               </Row>
               </div>
-             
+              <div  
+                style ={{ 
+                    backgroundColor : "#ffe3d8",
+                   borderRadius:"18px",
+                   width :"60%",
+                   height:"100%",
+                   padding : "1rem"
+              }}>
+                  Statistiques particuliers
+                  <div style={{
+                      marginTop:"2rem"
+                  }}
+                  className="d-flex flex-sm-row justify-content-between align-items-center" >
+                
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <FileText  style ={{
+                    marginRight :"10px",
+                   
+                }}
+                    className="primary" size={25} bg_color="black"  />
+                <div>
+                <h7>12</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>Commandes<br/>
+                pro en attente <br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <User  style ={{
+                    marginRight :"10px"
+                }}
+                    className="warning" size={25} />
+                <div>
+                <h7>12</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>Commandes <br/>
+                pro livrés <br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <HourglassSplit  style ={{
+                    marginRight :"10px"
+                }}
+                    className="danger" size={25} />
+                <div>
+                <h7>12</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>client <br/>
+                pro <br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <Truck  style ={{
+                    marginRight :"10px"
+                }}
+                    color="#180852" size={25} />
+                <div>
+                <h7>{dt}</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>Commandes<br/>
+                en livraison<br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <DollarSign  style ={{
+                    marginRight :"10px"
+                }}
+                    className="danger" size={25} />
+                <div>
+                <h7>12</h7> 
+                 
+                <p style={{
+                    fontSize :"12px"
+                }}>moyenne par<br/>
+                commande<br/></p>
+                </div>
+               </div>
+              </div>
             </div>
-          </Col>
+            </div>
+          
+        </Row>
+        <Row>
+          <h5>Profesionnels</h5>
+            <div 
+            className="d-flex flex-sm-row justify-content-center"
+            style={{
+            backgroundColor:"#fdd5a2",
+            borderRadius:"15px",
+            width:"100%",
+            marginRight:"1rem",
+            height:"15rem",
+            padding:"2rem",
+            marginBottom:"35px",
+            }}>
+              <div style={{width:"40%"}}>
+              <Row noGutters="false">
+              <Col>
+              <div className = "align-items-center justify-content-center d-flex"  style={{
+                  backgroundColor : "#fde9d0",
+                  borderRadius:"18px",
+                  width : "80%",
+                  height:"100%"
+              }}>
+              <ReactApexChart
+              options={this.state.pro_chart_bar.options}
+              series={this.state.pro_chart_bar.series}
+              type="bar"
+              height={"100%"}
+              width={"70%"}
+              />
+              </div>
+              </Col>
+              <Col>
+              <div className = "align-items-center justify-content-center d-flex"  style={{
+                  backgroundColor : "#fde9d0",
+                  borderRadius:"18px",
+                  width : "80%",
+                  height:"100%",
+                 
+              }}>      
+              <ReactApexChart
+              options={this.state.pro_chart_line.options}
+              series={this.state.pro_chart_line.series}
+              type="line"
+              height={"100%"}
+              width={"70%"}
+              />
+              </div>
+              </Col>
+              
+              </Row>
+              </div>
+              <div  
+                style ={{ 
+                    backgroundColor : "#fde9d0",
+                   borderRadius:"18px",
+                   width :"60%",
+                   height:"100%",
+                   padding : "1rem"
+              }}>
+                  Statistiques professionnels
+                  <div style={{
+                      marginTop:"2rem"
+                  }}
+                  className="d-flex flex-sm-row justify-content-between align-items-center" >
+                
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <FileText  style ={{
+                    marginRight :"10px",
+                   
+                }}
+                    className="danger" size={25} bg_color="black"  />
+                <div>
+                <h7>12</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>Commandes<br/>
+                pro en attente <br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <User  style ={{
+                    marginRight :"10px"
+                }}
+                    className="primary" size={25} />
+                <div>
+                <h7>12</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>Commandes <br/>
+                pro livrés <br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <HourglassSplit  style ={{
+                    marginRight :"10px"
+                }}
+                   className="danger" size={25} />
+                <div>
+                <h7>12</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>client <br/>
+                pro <br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <Truck  style ={{
+                    marginRight :"10px"
+                }}
+                    color="#180852" size={25} />
+                <div>
+                <h7>{dt}</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>Commandes<br/>
+                en livraison<br/></p>
+                </div>
+               </div>
+               <div className="d-flex flex-sm-row justify-content-between align-items-center">
+                <DollarSign  style ={{
+                    marginRight :"10px"
+                }}
+                    className="danger" size={25} />
+                <div>
+                <h7>12</h7>
+                <p style={{
+                    fontSize :"12px"
+                }}>moyenne par<br/>
+                commande<br/></p>
+                </div>
+               </div>
+              </div>
+            </div>
+            </div>
         </Row>
         <Row>
           <Col>
