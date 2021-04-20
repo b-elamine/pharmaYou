@@ -2,11 +2,20 @@ import React from "react";
 import { Row, Col, Badge } from "reactstrap";
 import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../DataTableCustom/DataTableCustom";
-import {  Edit, Eye } from "react-feather";
+import { Edit, Eye } from "react-feather";
+import Select from "react-select";
+// const colourOptions = [
+//   { value: "ocean", label: "Ocean" },
+//   { value: "blue", label: "Blue" },
+//   { value: "purple", label: "Purple" },
+//   { value: "red", label: "Red" },
+//   { value: "orange", label: "Orange" },
+// ];
+
 // fake database
 const data = [
   {
-    id: 1,
+    // id: 1,
     image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
     name: "Alyss Lillecrop",
     email: "alillecrop0@twitpic.com",
@@ -20,10 +29,10 @@ const data = [
     ordonnances: 150,
     carte_vital: true,
     mutuelle: false,
-    profession : "infirmier",
+    profession: "infirmier",
   },
   {
-    id: 2,
+    // id: 2,
     image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
     name: "Shep Pentlow",
     email: "spentlow1@home.pl",
@@ -37,10 +46,10 @@ const data = [
     ordonnances: 20,
     carte_vital: false,
     mutuelle: true,
-    profession : "infirmier",
+    profession: "infirmier",
   },
   {
-    id: 3,
+    // id: 3,
     image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
     name: "Gasper Morley",
     email: "gmorley2@chronoengine.com",
@@ -54,7 +63,7 @@ const data = [
     ordonnances: 123,
     carte_vital: false,
     mutuelle: true,
-    profession : "Application Externe",
+    profession: "Application Externe",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
@@ -66,7 +75,7 @@ const data = [
     ratings: "bad",
     carte_vital: true,
     mutuelle: true,
-    profession : "Application Externe",
+    profession: "Application Externe",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
@@ -78,6 +87,7 @@ const data = [
     ratings: "average",
     ordonnances: 10,
     mutuelle: true,
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
@@ -89,6 +99,7 @@ const data = [
     ratings: "bad",
     ordonnances: 0,
     mutuelle: true,
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
@@ -99,6 +110,8 @@ const data = [
     montant: "$56,000",
     ratings: "good",
     mutuelle: true,
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
@@ -108,6 +121,8 @@ const data = [
     status: "inactive",
     montant: "$83,000",
     ratings: "bad",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
@@ -117,6 +132,8 @@ const data = [
     status: "active",
     montant: "$26,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
@@ -126,6 +143,7 @@ const data = [
     status: "active",
     montant: "$60,000",
     ratings: "average",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
@@ -135,6 +153,8 @@ const data = [
     status: "active",
     montant: "$21,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
@@ -144,6 +164,9 @@ const data = [
     status: "inactive",
     montant: "$30,000",
     ratings: "bad",
+    profession: "infirmier",
+
+    origine: "Partenaire App",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
@@ -153,6 +176,8 @@ const data = [
     status: "active",
     montant: "$12,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
@@ -162,6 +187,8 @@ const data = [
     status: "active",
     montant: "$40,000",
     ratings: "average",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
@@ -171,6 +198,8 @@ const data = [
     status: "active",
     montant: "$90,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
@@ -180,6 +209,8 @@ const data = [
     status: "active",
     montant: "$38,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-24.jpg"),
@@ -189,6 +220,8 @@ const data = [
     status: "active",
     montant: "$18,000",
     ratings: "average",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
@@ -198,6 +231,9 @@ const data = [
     status: "active",
     montant: "$69,000",
     ratings: "bad",
+    profession: "infirmier",
+
+    origine: "Partenaire App",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
@@ -207,6 +243,8 @@ const data = [
     status: "inactive",
     montant: "$35,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
@@ -216,6 +254,8 @@ const data = [
     status: "active",
     montant: "$35,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
@@ -225,6 +265,8 @@ const data = [
     status: "active",
     montant: "$72,000",
     ratings: "good",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
@@ -233,6 +275,9 @@ const data = [
     date: "May 5, 2019",
     status: "inactive",
     montant: "$13,000",
+    origine: "Partenaire App",
+    profession: "infirmier",
+
     ratings: "bad",
   },
   {
@@ -243,6 +288,9 @@ const data = [
     status: "active",
     montant: "$84,000",
     ratings: "average",
+    profession: "infirmier",
+
+    origine: "Partenaire App",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
@@ -252,6 +300,8 @@ const data = [
     status: "inactive",
     montant: "$15,000",
     ratings: "bad",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
@@ -261,6 +311,9 @@ const data = [
     status: "active",
     montant: "$26,000",
     ratings: "average",
+    profession: "infirmier",
+
+    origine: "Partenaire App",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
@@ -270,6 +323,9 @@ const data = [
     status: "active",
     montant: "$69,000",
     ratings: "good",
+    profession: "infirmier",
+
+    origine: "Partenaire App",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
@@ -279,6 +335,9 @@ const data = [
     status: "active",
     montant: "$65,000",
     ratings: "good",
+    profession: "infirmier",
+
+    origine: "Partenaire App",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
@@ -288,6 +347,8 @@ const data = [
     status: "inactive",
     montant: "$38,000",
     ratings: "bad",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
@@ -297,6 +358,8 @@ const data = [
     status: "active",
     montant: "$62,000",
     ratings: "average",
+    origine: "Partenaire App",
+    profession: "infirmier",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
@@ -306,6 +369,9 @@ const data = [
     status: "active",
     montant: "$60,000",
     ratings: "good",
+    profession: "infirmier",
+
+    origine: "Partenaire App",
   },
 ];
 
@@ -365,7 +431,9 @@ const columns = [
     minWidth: "200px",
     cell: (row) => (
       <Badge
-        color={`light-${row.profession==="infirmier" ? "success":"primary"} text-wrap text-bold-500 mb-0`}
+        color={`light-${
+          row.profession === "infirmier" ? "success" : "primary"
+        } text-wrap text-bold-500 mb-0`}
         style={{ width: "7rem", fontSize: "74%", lineHeight: "1.1" }}
         pill
       >
@@ -384,9 +452,7 @@ const columns = [
     selector: "nbr_patients",
     sortable: true,
     cell: (row) => (
-      <p className="font-small-4 text-truncate mb-0">
-        {row.ordonnances}
-      </p>
+      <p className="font-small-4 text-truncate mb-0">{row.ordonnances}</p>
     ),
   },
   {
@@ -417,7 +483,71 @@ const columns = [
 class Partenaire extends React.Component {
   state = {
     data: [],
+    options: {
+      professions: [],
+      origines: [],
+      status: [],
+    },
+    value: "",
+    filteredData: [],
   };
+
+  extract_distinct_values(data) {
+    const origines = [];
+    const professions = [];
+    const status = [];
+    data.forEach((row) => {
+      if (row.origine) {
+        if (!origines.includes(row.origine)) {
+          origines.push(row.origine);
+        }
+      }
+      if (row.profession) {
+        if (!professions.includes(row.profession)) {
+          professions.push(row.profession);
+        }
+      }
+      if (row.status) {
+        if (!status.includes(row.status)) {
+          status.push(row.status);
+        }
+      }
+    });
+    const origine_options = origines.map((item) => {
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    const profession_options = professions.map((item) => {
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    const status_options = status.map((item) => {
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    this.setState({
+      options: {
+        professions: profession_options,
+        origines: origine_options,
+        status: status_options,
+      },
+    });
+  }
 
   componentDidMount() {
     // fetching the data from the database and passing it to the state
@@ -425,8 +555,70 @@ class Partenaire extends React.Component {
       data: data,
     });
   }
+  componentDidUpdate() {
+    if (
+      this.state.options.professions.length === 0 &&
+      this.state.options.origines.length === 0 &&
+      this.state.options.status.length === 0 &&
+      this.state.data.length !== 0
+    ) {
+      this.extract_distinct_values(this.state.data);
+    }
+  }
+  handle_filter_status = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        let equalCondition = item.status.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
+  handle_filter_origine = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        if (!item.origine) {
+          return null;
+        }
+        let equalCondition = item.origine.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
+  handle_filter_profession = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        if (!item.profession) {
+          return null;
+        }
+        let equalCondition = item.profession.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
 
   render() {
+    const { value, filteredData } = this.state;
     return (
       <React.Fragment>
         <Breadcrumbs
@@ -434,8 +626,39 @@ class Partenaire extends React.Component {
           breadCrumbParent="Partenaires."
         />
         <Row>
+          <Col md="4" sm="8">
+            <Select
+              classNamePrefix="select"
+              placeholder="Professions"
+              name="Professions"
+              onChange={this.handle_filter_profession}
+              options={this.state.options.professions}
+            />
+          </Col>
+          <Col md="4" sm="8">
+            <Select
+              classNamePrefix="select"
+              placeholder="Origine"
+              name="Origine"
+              options={this.state.options.origines}
+              onChange={this.handle_filter_origine}
+            />
+          </Col>
+          <Col md="4" sm="8">
+            <Select
+              classNamePrefix="select"
+              placeholder="Status"
+              name="status"
+              options={this.state.options.status}
+              onChange={this.handle_filter_status}
+            />
+          </Col>
           <Col sm="12">
-            <DataTableCustom  add_new columns={columns} data={this.state.data} />
+            <DataTableCustom
+              add_new
+              columns={columns}
+              data={value.length ? filteredData : this.state.data}
+            />
           </Col>
         </Row>
       </React.Fragment>

@@ -4,11 +4,11 @@ import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import { Check, Edit, Trash, AlertTriangle } from "react-feather";
 
-import CustomSelects from "./CustomSelects"
+import CustomSelects from "./CustomSelects";
 // fake database
 const data = [
   {
-    id: 1,
+    // id: 1,
     image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
     name: "Alyss Lillecrop",
     email: "alillecrop0@twitpic.com",
@@ -22,9 +22,10 @@ const data = [
     ordonnances: 15,
     carte_vital: true,
     mutuelle: false,
+    role: "inferermier",
   },
   {
-    id: 2,
+    // id: 2,
     image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
     name: "Shep Pentlow",
     email: "spentlow1@home.pl",
@@ -38,9 +39,10 @@ const data = [
     ordonnances: 4,
     carte_vital: false,
     mutuelle: true,
+    role: "inferermier",
   },
   {
-    id: 3,
+    // id: 3,
     image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
     name: "Gasper Morley",
     email: "gmorley2@chronoengine.com",
@@ -54,6 +56,7 @@ const data = [
     ordonnances: 16,
     carte_vital: false,
     mutuelle: true,
+    role: "inferermier",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
@@ -65,6 +68,8 @@ const data = [
     ratings: "bad",
     carte_vital: true,
     mutuelle: true,
+    origine: "Partenaire App",
+    role: "inferermier",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
@@ -76,6 +81,8 @@ const data = [
     ratings: "average",
     ordonnances: 10,
     mutuelle: true,
+    origine: "Partenaire App",
+    role: "inferermier",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
@@ -87,6 +94,8 @@ const data = [
     ratings: "bad",
     ordonnances: 0,
     mutuelle: true,
+    origine: "Partenaire App",
+    role: "inferermier",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
@@ -97,6 +106,8 @@ const data = [
     montant: "$56,000",
     ratings: "good",
     mutuelle: true,
+    origine: "Partenaire App",
+    role: "inferermier",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
@@ -106,6 +117,8 @@ const data = [
     status: "inactive",
     montant: "$83,000",
     ratings: "bad",
+    origine: "Partenaire App",
+    role: "inferermier",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
@@ -115,196 +128,198 @@ const data = [
     status: "active",
     montant: "$26,000",
     ratings: "good",
+    origine: "Partenaire App",
+    role: "inferermier",
   },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Tabby Abercrombie",
-    email: "tabercrombie9@statcounter.com",
-    date: "April 1, 2019",
-    status: "active",
-    montant: "$60,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-10.jpg"),
-    name: "	Stella Indruch",
-    email: "sindruch1@mayoclinic.com",
-    date: "Dec 4, 2019",
-    status: "active",
-    montant: "$21,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-17.jpg"),
-    name: "	Aron McNirlin",
-    email: "amcnirlin2@samsung.com",
-    date: "Jan 4, 2018",
-    status: "inactive",
-    montant: "$30,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-20.jpg"),
-    name: "Ange Trenholm",
-    email: "atrenholm4@slideshare.net	",
-    date: "February 23, 2019",
-    status: "active",
-    montant: "$12,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-14.jpg"),
-    name: "Caterina Starkie",
-    email: "cstarkie5@feedburner.com",
-    date: "September 8, 2018",
-    status: "active",
-    montant: "$40,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-25.jpg"),
-    name: "Hugibert McGeagh",
-    email: "hmcgeaghf@smh.com.au",
-    date: "August 20, 2017",
-    status: "active",
-    montant: "$90,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-9.jpg"),
-    name: "Jaime Maher",
-    email: "jmaher1@msu.edu",
-    date: "April 7, 2019",
-    status: "active",
-    montant: "$38,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-24.jpg"),
-    name: "Amalle Pladen",
-    email: "jmaher1@msu.edu",
-    date: "March 30, 2018",
-    status: "active",
-    montant: "$18,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-18.jpg"),
-    name: "Dorris Ferries",
-    email: "dferries7@ucoz.com",
-    date: "August 25, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-23.jpg"),
-    name: "Andy Fettes",
-    email: "afettesh@upenn.edu",
-    date: "September 30, 2017",
-    status: "inactive",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Allene Hughf",
-    email: "ahughf0@dropbox.com",
-    date: "June 21, 2018",
-    status: "active",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Petra Rheubottom",
-    email: "prheubottom0@globo.com",
-    date: "July 4, 2018",
-    status: "active",
-    montant: "$72,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Ambrosius Olyfant",
-    email: "aolyfant1@timesonline.co.uk",
-    date: "May 5, 2019",
-    status: "inactive",
-    montant: "$13,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Letti Trineman",
-    email: "ltrineman2@cnbc.com",
-    date: "February 15, 2017",
-    status: "active",
-    montant: "$84,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Sayer Rodger",
-    email: "srodgerb@rakuten.co.jp",
-    date: "January 30, 2018",
-    status: "inactive",
-    montant: "$15,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Skyler Scotcher",
-    email: "sscotcher3@soup.io",
-    date: "November 3, 2018",
-    status: "active",
-    montant: "$26,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Florette Shotbolt",
-    email: "fshotbolt7@wiley.com",
-    date: "March 12, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Janis Bakhrushkin",
-    email: "jbakhrushkina@epa.gov",
-    date: "July 10, 2017",
-    status: "active",
-    montant: "$65,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Alric Peinton",
-    email: "apeinton0@google.cn",
-    date: "February 6, 2017",
-    status: "inactive",
-    montant: "$38,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Rubie Pitkethly",
-    email: "rpitkethlyf@51.la",
-    date: "February 20, 2018",
-    status: "active",
-    montant: "$62,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Hortensia Soaper",
-    email: "hsoaperh@mapy.cz",
-    date: "June 1, 2017",
-    status: "active",
-    montant: "$60,000",
-    ratings: "good",
-  },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
+  //     name: "Tabby Abercrombie",
+  //     email: "tabercrombie9@statcounter.com",
+  //     date: "April 1, 2019",
+  //     status: "active",
+  //     montant: "$60,000",
+  //     ratings: "average",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-10.jpg"),
+  //     name: "	Stella Indruch",
+  //     email: "sindruch1@mayoclinic.com",
+  //     date: "Dec 4, 2019",
+  //     status: "active",
+  //     montant: "$21,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-17.jpg"),
+  //     name: "	Aron McNirlin",
+  //     email: "amcnirlin2@samsung.com",
+  //     date: "Jan 4, 2018",
+  //     status: "inactive",
+  //     montant: "$30,000",
+  //     ratings: "bad",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-20.jpg"),
+  //     name: "Ange Trenholm",
+  //     email: "atrenholm4@slideshare.net	",
+  //     date: "February 23, 2019",
+  //     status: "active",
+  //     montant: "$12,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-14.jpg"),
+  //     name: "Caterina Starkie",
+  //     email: "cstarkie5@feedburner.com",
+  //     date: "September 8, 2018",
+  //     status: "active",
+  //     montant: "$40,000",
+  //     ratings: "average",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-25.jpg"),
+  //     name: "Hugibert McGeagh",
+  //     email: "hmcgeaghf@smh.com.au",
+  //     date: "August 20, 2017",
+  //     status: "active",
+  //     montant: "$90,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-9.jpg"),
+  //     name: "Jaime Maher",
+  //     email: "jmaher1@msu.edu",
+  //     date: "April 7, 2019",
+  //     status: "active",
+  //     montant: "$38,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-24.jpg"),
+  //     name: "Amalle Pladen",
+  //     email: "jmaher1@msu.edu",
+  //     date: "March 30, 2018",
+  //     status: "active",
+  //     montant: "$18,000",
+  //     ratings: "average",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-18.jpg"),
+  //     name: "Dorris Ferries",
+  //     email: "dferries7@ucoz.com",
+  //     date: "August 25, 2017",
+  //     status: "active",
+  //     montant: "$69,000",
+  //     ratings: "bad",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-23.jpg"),
+  //     name: "Andy Fettes",
+  //     email: "afettesh@upenn.edu",
+  //     date: "September 30, 2017",
+  //     status: "inactive",
+  //     montant: "$35,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
+  //     name: "Allene Hughf",
+  //     email: "ahughf0@dropbox.com",
+  //     date: "June 21, 2018",
+  //     status: "active",
+  //     montant: "$35,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+  //     name: "Petra Rheubottom",
+  //     email: "prheubottom0@globo.com",
+  //     date: "July 4, 2018",
+  //     status: "active",
+  //     montant: "$72,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
+  //     name: "Ambrosius Olyfant",
+  //     email: "aolyfant1@timesonline.co.uk",
+  //     date: "May 5, 2019",
+  //     status: "inactive",
+  //     montant: "$13,000",
+  //     ratings: "bad",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
+  //     name: "Letti Trineman",
+  //     email: "ltrineman2@cnbc.com",
+  //     date: "February 15, 2017",
+  //     status: "active",
+  //     montant: "$84,000",
+  //     ratings: "average",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
+  //     name: "Sayer Rodger",
+  //     email: "srodgerb@rakuten.co.jp",
+  //     date: "January 30, 2018",
+  //     status: "inactive",
+  //     montant: "$15,000",
+  //     ratings: "bad",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
+  //     name: "Skyler Scotcher",
+  //     email: "sscotcher3@soup.io",
+  //     date: "November 3, 2018",
+  //     status: "active",
+  //     montant: "$26,000",
+  //     ratings: "average",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
+  //     name: "Florette Shotbolt",
+  //     email: "fshotbolt7@wiley.com",
+  //     date: "March 12, 2017",
+  //     status: "active",
+  //     montant: "$69,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
+  //     name: "Janis Bakhrushkin",
+  //     email: "jbakhrushkina@epa.gov",
+  //     date: "July 10, 2017",
+  //     status: "active",
+  //     montant: "$65,000",
+  //     ratings: "good",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
+  //     name: "Alric Peinton",
+  //     email: "apeinton0@google.cn",
+  //     date: "February 6, 2017",
+  //     status: "inactive",
+  //     montant: "$38,000",
+  //     ratings: "bad",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
+  //     name: "Rubie Pitkethly",
+  //     email: "rpitkethlyf@51.la",
+  //     date: "February 20, 2018",
+  //     status: "active",
+  //     montant: "$62,000",
+  //     ratings: "average",
+  //   },
+  //   {
+  //     image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
+  //     name: "Hortensia Soaper",
+  //     email: "hsoaperh@mapy.cz",
+  //     date: "June 1, 2017",
+  //     status: "active",
+  //     montant: "$60,000",
+  //     ratings: "good",
+  //   },
 ];
 
 const columns = [
@@ -449,6 +464,8 @@ const columns = [
 class Client_particuliers extends React.Component {
   state = {
     data: [],
+    value: "",
+    filteredData: [],
   };
 
   componentDidMount() {
@@ -457,8 +474,45 @@ class Client_particuliers extends React.Component {
       data: data,
     });
   }
+  handle_filter_status = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        let equalCondition = item.status.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
+  handle_filter_origine = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        console.log(value, item.origine);
+        console.log(item.origine === value);
+        let equalCondition = item.origine === value;
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      console.log(filteredData);
+      this.setState({ filteredData });
+    }
+  };
+// adding handle filter role 
 
   render() {
+    const { value, filteredData } = this.state;
+    console.log(filteredData, value);
+    console.log(value.length ? true : false);
     return (
       <React.Fragment>
         <Breadcrumbs
@@ -466,11 +520,19 @@ class Client_particuliers extends React.Component {
           breadCrumbParent="Clients particuliers"
         />
         <Row>
-         <Col sm="12">
-            <CustomSelects  data={this.state.data}  />
+          <Col sm="12">
+            <CustomSelects
+              handle_filter_status={this.handle_filter_status}
+              handle_filter_origine={this.handle_filter_origine}
+              data={this.state.data}
+            />
           </Col>
           <Col sm="12">
-            <DataTableCustom  add_new columns={columns} data={this.state.data} />
+            <DataTableCustom
+              add_new
+              columns={columns}
+              data={value.length ? filteredData : this.state.data}
+            />
           </Col>
         </Row>
       </React.Fragment>

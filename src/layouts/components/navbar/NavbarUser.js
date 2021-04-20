@@ -3,7 +3,6 @@ import {
   NavItem,
   NavLink,
   UncontrolledDropdown,
-  Dropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
@@ -14,11 +13,9 @@ import PerfectScrollbar from "react-perfect-scrollbar"
 import axios from "axios"
 import * as Icon from "react-feather"
 import classnames from "classnames"
-import ReactCountryFlag from "react-country-flag"
 import Autocomplete from "../../../components/@vuexy/autoComplete/AutoCompleteComponent"
 import { useAuth0 } from "../../../authServices/auth0/auth0Service"
 import { history } from "../../../history"
-import { IntlContext } from "../../../utility/context/Internationalization"
 
 const handleNavigation = (e, path) => {
   e.preventDefault()
@@ -240,7 +237,7 @@ class NavbarUser extends React.PureComponent {
 
     return (
       <ul className="nav navbar-nav navbar-nav-user float-right">
-        <IntlContext.Consumer>
+        {/* <IntlContext.Consumer>
           {context => {
             let langArr = {
               "en" : "English",
@@ -264,7 +261,7 @@ class NavbarUser extends React.PureComponent {
                   className="country-flag"
                     countryCode={
                       context.state.locale === "en"
-                        ? "us"
+                        ? "dz"
                         : context.state.locale
                     }
                     svg
@@ -306,7 +303,7 @@ class NavbarUser extends React.PureComponent {
               </Dropdown>
             )
           }}
-        </IntlContext.Consumer>
+        </IntlContext.Consumer> */}
 
         <NavItem className="nav-search" onClick={this.handleNavbarSearch}>
           <NavLink className="nav-link-search">
@@ -438,14 +435,7 @@ class NavbarUser extends React.PureComponent {
           tag="li"
           className="dropdown-notification nav-item"
         >
-          <DropdownToggle tag="a" className="nav-link position-relative">
-            <Icon.ShoppingCart size={21} />
-            {this.state.shoppingCart.length > 0 ? (
-              <Badge pill color="primary" className="badge-up">
-                {this.state.shoppingCart.length}
-              </Badge>
-            ) : null}
-          </DropdownToggle>
+          
           <DropdownMenu
             tag="ul"
             right
@@ -662,7 +652,7 @@ class NavbarUser extends React.PureComponent {
               <span className="user-name text-bold-600">
                 {this.props.userName}
               </span>
-              <span className="user-status">Available</span>
+              <span className="user-status">Admin</span>
             </div>
             <span data-tour="user">
               <img

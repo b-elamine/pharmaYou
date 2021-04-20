@@ -40,7 +40,6 @@ class CustomSelect extends React.Component {
         }
       }
     });
-    console.log(origines);
     const origine_options = origines.map((item) => {
       return {
         value: item,
@@ -93,7 +92,6 @@ class CustomSelect extends React.Component {
     }
   }
   render() {
-    console.log(this.state.options)
     return (
       <Card>
         <CardBody
@@ -123,6 +121,7 @@ class CustomSelect extends React.Component {
                 placeholder="Origine"
                 name="Origine"
                 options={this.state.options.origines}
+                onChange={this.props.handle_filter_origine}
               />
             </Col>
             <Col md="4" sm="8">
@@ -132,6 +131,7 @@ class CustomSelect extends React.Component {
                 name="Status"
                 placeholder="Status"
                 options={this.state.options.status}
+                onChange={this.props.handle_filter_status}
               />
             </Col>
           </Row>

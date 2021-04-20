@@ -7,7 +7,6 @@ import {
   logoutWithJWT,
   logoutWithFirebase
 } from "../../../redux/actions/auth/loginActions"
-import NavbarBookmarks from "./NavbarBookmarks"
 import NavbarUser from "./NavbarUser"
 import userImg from "../../../assets/img/portrait/small/avatar-s-11.jpg"
 
@@ -24,7 +23,7 @@ const UserName = props => {
       username = props.user.login.values.loggedInUser.name
     }
   } else {
-    username = "John Doe"
+    username = "Zongo Meryoul"
   }
 
   return username
@@ -39,7 +38,7 @@ const ThemeNavbar = props => {
       <div className="header-navbar-shadow" />
       <Navbar
         className={classnames(
-          "header-navbar navbar-expand-lg navbar navbar-with-menu navbar-shadow",
+          "header-navbar navbar-expand-lg navbar navbar-with-menu navbar-shadow w-50",
           {
             "navbar-light": props.navbarColor === "default" || !colorsArr.includes(props.navbarColor),
             "navbar-dark": colorsArr.includes(props.navbarColor),
@@ -73,15 +72,15 @@ const ThemeNavbar = props => {
               id="navbar-mobile"
             >
               <div className="bookmark-wrapper">
-                <NavbarBookmarks
+                {/* <NavbarBookmarks
                   sidebarVisibility={props.sidebarVisibility}
                   handleAppOverlay={props.handleAppOverlay}
-                />
+                /> */}
               </div>
               {props.horizontal ? (
                 <div className="logo d-flex align-items-center">
                   <div className="brand-logo mr-50"></div>
-                  <h2 className="text-primary brand-text mb-0">Vuexy</h2>
+                  <h2 className="text-primary brand-text mb-0">PharmaYou</h2>
                 </div>
               ) : null}
               <NavbarUser
