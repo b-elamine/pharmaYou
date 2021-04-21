@@ -2,13 +2,13 @@ import React from "react";
 import { Card, CardBody, Row, Col } from "reactstrap";
 import Select from "react-select";
 
-const colourOptions = [
-  { value: "ocean", label: "Ocean" },
-  { value: "blue", label: "Blue" },
-  { value: "purple", label: "Purple" },
-  { value: "red", label: "Red" },
-  { value: "orange", label: "Orange" },
-];
+// const colourOptions = [
+//   { value: "ocean", label: "Ocean" },
+//   { value: "blue", label: "Blue" },
+//   { value: "purple", label: "Purple" },
+//   { value: "red", label: "Red" },
+//   { value: "orange", label: "Orange" },
+// ];
 
 class CustomSelect extends React.Component {
   state = {
