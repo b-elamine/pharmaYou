@@ -4,14 +4,13 @@ import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
 import Icon from "./Icon.svg";
-import { Badge} from "reactstrap";
-import {CursorFill, EyeFill, ThreeDotsVertical } from "react-bootstrap-icons"
+import { Badge } from "reactstrap";
+import { CursorFill, EyeFill, CreditCard2Back } from "react-bootstrap-icons";
 
 import {
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
-  Calendar3,
   Check2All,
 } from "react-bootstrap-icons";
 // fake database
@@ -22,12 +21,13 @@ const data = [
     name: "Alyss Lillecrop",
     email: "alillecrop0@twitpic.com",
     date: "May 13, 2018",
-    status: "active",
+    status: "En attente",
     montant: "$32,000",
     ratings: "good",
     type: "particulier",
     code: 12345,
     origine: "Partenaire App",
+    paiment: "En attente",
   },
   {
     id: 2,
@@ -35,12 +35,13 @@ const data = [
     name: "Shep Pentlow",
     email: "spentlow1@home.pl",
     date: "June 5, 2019",
-    status: "active",
+    status: "Non-traité",
     montant: "$50,000",
     ratings: "good",
     type: "particulier",
     code: 56789,
     origine: "Partenaire infermier",
+    paiment: "En attente",
   },
   {
     id: 3,
@@ -48,55 +49,60 @@ const data = [
     name: "Gasper Morley",
     email: "gmorley2@chronoengine.com",
     date: "December 24, 2019",
-    status: "active",
+    status: "Non-traité",
     montant: "$78,000",
     ratings: "average",
     type: "professionnel",
     code: 1245,
     origine: "Partenaire MEDADOM",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
     name: "Phaedra Jerrard",
     email: "pjerrard3@blogs.com",
     date: "November 30, 2018",
-    status: "inactive",
+    status: "en attente",
     montant: "$10,000",
     ratings: "bad",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
     name: "Conn Plose",
     email: "cplose4@geocities.com",
     date: "April 8, 2017",
-    status: "active",
+    status: "En livraison",
     montant: "$22,000",
     ratings: "average",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
     name: "Tootsie Brandsma",
     email: "tbrandsma5@theatlantic.com",
     date: "August 12, 2019",
-    status: "inactive",
+    status: "en attente",
     montant: "$49,000",
     ratings: "bad",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
     name: "Sibley Bum",
     email: "sbum6@sourceforge.net",
     date: "October 1, 2017",
-    status: "active",
+    status: "En livraison",
     montant: "$56,000",
     ratings: "good",
+    paiment: "J+15",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
     name: "Kristoffer Thew",
     email: "kthew7@amazon.com",
     date: "February 28, 2018",
-    status: "inactive",
+    status: "en attente",
     montant: "$83,000",
     ratings: "bad",
   },
@@ -105,61 +111,67 @@ const data = [
     name: "Fay Hasard",
     email: "fhasard8@java.com",
     date: "January 29, 2018",
-    status: "active",
+    status: "En livraison",
     montant: "$26,000",
     ratings: "good",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
     name: "Tabby Abercrombie",
     email: "tabercrombie9@statcounter.com",
     date: "April 1, 2019",
-    status: "active",
+    status: "Livré",
     montant: "$60,000",
     ratings: "average",
+    paiment: "J+18",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-10.jpg"),
     name: "	Stella Indruch",
     email: "sindruch1@mayoclinic.com",
     date: "Dec 4, 2019",
-    status: "active",
+    status: "Livré",
     montant: "$21,000",
     ratings: "good",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-17.jpg"),
     name: "	Aron McNirlin",
     email: "amcnirlin2@samsung.com",
     date: "Jan 4, 2018",
-    status: "inactive",
+    status: "en attente",
     montant: "$30,000",
     ratings: "bad",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-20.jpg"),
     name: "Ange Trenholm",
     email: "atrenholm4@slideshare.net	",
     date: "February 23, 2019",
-    status: "active",
+    status: "En attente",
     montant: "$12,000",
     ratings: "good",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-14.jpg"),
     name: "Caterina Starkie",
     email: "cstarkie5@feedburner.com",
     date: "September 8, 2018",
-    status: "active",
+    status: "En attente",
     montant: "$40,000",
     ratings: "average",
+    paiment: "Reglé",
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-25.jpg"),
     name: "Hugibert McGeagh",
     email: "hmcgeaghf@smh.com.au",
     date: "August 20, 2017",
-    status: "active",
+    status: "En attente",
     montant: "$90,000",
     ratings: "good",
   },
@@ -168,7 +180,7 @@ const data = [
     name: "Jaime Maher",
     email: "jmaher1@msu.edu",
     date: "April 7, 2019",
-    status: "active",
+    status: "En attente",
     montant: "$38,000",
     ratings: "good",
   },
@@ -177,7 +189,7 @@ const data = [
     name: "Amalle Pladen",
     email: "jmaher1@msu.edu",
     date: "March 30, 2018",
-    status: "active",
+    status: "En attente",
     montant: "$18,000",
     ratings: "average",
   },
@@ -186,7 +198,7 @@ const data = [
     name: "Dorris Ferries",
     email: "dferries7@ucoz.com",
     date: "August 25, 2017",
-    status: "active",
+    status: "En attente",
     montant: "$69,000",
     ratings: "bad",
   },
@@ -195,7 +207,7 @@ const data = [
     name: "Andy Fettes",
     email: "afettesh@upenn.edu",
     date: "September 30, 2017",
-    status: "inactive",
+    status: "en attente",
     montant: "$35,000",
     ratings: "good",
   },
@@ -204,7 +216,7 @@ const data = [
     name: "Allene Hughf",
     email: "ahughf0@dropbox.com",
     date: "June 21, 2018",
-    status: "active",
+    status: "En attente",
     montant: "$35,000",
     ratings: "good",
   },
@@ -213,7 +225,7 @@ const data = [
     name: "Petra Rheubottom",
     email: "prheubottom0@globo.com",
     date: "July 4, 2018",
-    status: "active",
+    status: "En attente",
     montant: "$72,000",
     ratings: "good",
   },
@@ -222,7 +234,7 @@ const data = [
     name: "Ambrosius Olyfant",
     email: "aolyfant1@timesonline.co.uk",
     date: "May 5, 2019",
-    status: "inactive",
+    status: "en attente",
     montant: "$13,000",
     ratings: "bad",
   },
@@ -231,7 +243,7 @@ const data = [
     name: "Letti Trineman",
     email: "ltrineman2@cnbc.com",
     date: "February 15, 2017",
-    status: "active",
+    status: "En attente",
     montant: "$84,000",
     ratings: "average",
   },
@@ -240,7 +252,7 @@ const data = [
     name: "Sayer Rodger",
     email: "srodgerb@rakuten.co.jp",
     date: "January 30, 2018",
-    status: "inactive",
+    status: "en attente",
     montant: "$15,000",
     ratings: "bad",
   },
@@ -249,7 +261,7 @@ const data = [
     name: "Skyler Scotcher",
     email: "sscotcher3@soup.io",
     date: "November 3, 2018",
-    status: "active",
+    status: "En attente",
     montant: "$26,000",
     ratings: "average",
   },
@@ -258,7 +270,7 @@ const data = [
     name: "Florette Shotbolt",
     email: "fshotbolt7@wiley.com",
     date: "March 12, 2017",
-    status: "active",
+    status: "En attente",
     montant: "$69,000",
     ratings: "good",
   },
@@ -267,7 +279,7 @@ const data = [
     name: "Janis Bakhrushkin",
     email: "jbakhrushkina@epa.gov",
     date: "July 10, 2017",
-    status: "active",
+    status: "En attente",
     montant: "$65,000",
     ratings: "good",
   },
@@ -276,7 +288,7 @@ const data = [
     name: "Alric Peinton",
     email: "apeinton0@google.cn",
     date: "February 6, 2017",
-    status: "inactive",
+    status: "en attente",
     montant: "$38,000",
     ratings: "bad",
   },
@@ -285,7 +297,7 @@ const data = [
     name: "Rubie Pitkethly",
     email: "rpitkethlyf@51.la",
     date: "February 20, 2018",
-    status: "active",
+    status: "En attente",
     montant: "$62,000",
     ratings: "average",
   },
@@ -294,18 +306,17 @@ const data = [
     name: "Hortensia Soaper",
     email: "hsoaperh@mapy.cz",
     date: "June 1, 2017",
-    status: "active",
+    status: "En attente",
     montant: "$60,000",
     ratings: "good",
   },
 ];
-const ordonnances = {
-  non_traité: 10,
-  en_attente: 2,
-  en_cours_livraison: 20,
-  livrée: 30,
-  assigner_tournée: 14,
-  dossier_incomplet: 4,
+const commandes = {
+  non_traité: 98,
+  en_attente: 14,
+  pro_en_attente: 2,
+  en_cours_livraison: 82,
+  livrée: 51,
 };
 const columns = [
   {
@@ -319,14 +330,53 @@ const columns = [
     name: "Statut",
     selector: "status",
     sortable: true,
-    cell: (row) => (
-      <Badge
-        color={row.status === "inactive" ? "light-danger" : "light-success"}
-        pill
-      >
-        {row.status}
-      </Badge>
-    ),
+    minWidth: "190px",
+    cell: (row) =>
+      row.status === "en attente" ? (
+        <Badge
+          pill
+          style={{ backgroundColor: "yellow", color: "red" }}
+          className="pl-50 pr-50 font-small-1 text-wrap text-bold-500"
+        >
+          <img src={Icon} alt="Icon" height="22" width="22" className="mr-50" />
+          Traité ! Réglement en attente
+        </Badge>
+      ) : row.status === "Non-traité" ? (
+        <Badge color="light-danger pl-50 pr-50 " pill>
+          <ExclamationTriangleFill className="danger mr-50" size={20} />
+          {row.status}
+        </Badge>
+      ) : row.status === "En livraison" ? (
+        <Badge color="light-warning pl-50 pr-50 " pill>
+          <Truck className="warning mr-50" size={20} />
+          {row.status}
+        </Badge>
+      ) : row.status === "Livré" ? (
+        <Badge color="light-success pl-50 pr-50 " pill>
+          <Check2All className="success mr-50" size={20} />
+          {row.status}
+        </Badge>
+      ) : row.status === "En attente" ? (
+        <Badge color="light-primary pl-50 pr-50 " pill>
+          <HourglassSplit className="primary mr-50" size={20} />
+          {row.status}
+        </Badge>
+      ) : null,
+    // {row.status === "en attente" ? (
+    //   <img src={Icon} alt="Icon" height="22" width="22" />
+    // ) : row.status === "En attente" ? (
+    //   <HourglassSplit className="primary" size={20} />
+    // ) : row.status === "En livraison" ? (
+    //   <Truck className="dark" size={20} />
+    // ) : row.status === "Livré" ? (
+    //   <Check2All className="success" size={20} />
+    // ) : row.status === "Non-traité" ? (
+    //   <ExclamationTriangleFill className="danger" size={20} />
+    // ) : null}
+
+    // {row.status === "en attente"
+    //   ? "Traité! Réglement en attente"
+    //   : row.status}
   },
   {
     name: "Nom Client",
@@ -362,9 +412,7 @@ const columns = [
     sortable: true,
     cell: (row) => (
       <Badge
-        color={
-          row.type === "particulier" ? "light-primary" : "light-success"
-        }
+        color={row.type === "particulier" ? "light-primary" : "light-success"}
         pill
       >
         {row.type}
@@ -388,30 +436,68 @@ const columns = [
   {
     name: "Code postal",
     selector: "code_postal",
-    sortable: true,
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
     ),
   },
   {
-    name: "Origine",
-    selector: "origine",
-    sortable: true,
-    minWidth: "200px",
-    cell: (row) => (
-      <Badge
-      color="light-success text-wrap text-bold-500 mb-0"
-      style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
-      pill
-    >
-      {row.origine}
-    </Badge>
-    ),
+    name: "Paiment",
+    selector: "paiment",
+    minWidth: "150px",
+    cell: (row) =>
+      row.paiment === "En attente" ? (
+        <Badge
+          pill
+        //   style={{ color: "red" }}
+          className="gradient-light-primary pl-50 pr-50 text-warning text-wrap font-weight-bold"
+        >
+          <CreditCard2Back className="light-warning mr-50" size={20} />
+          {row.paiment}
+        </Badge>
+      ) : row.paiment === "Reglé" ? (
+        <Badge pill color="light-success pl-50 pr-50  text-success text-wrap font-weight-bold" size={20}>
+          <CreditCard2Back  className="light-success mr-50" size={20} />
+          <strong>{row.paiment}</strong>
+        </Badge>
+      ) : (
+        <Badge
+          pill
+          style={{ backgroundColor: "#fde64b", color: "black" }}
+          className="pl-50 pr-50 font-small-4 text-wrap text-bold-600"
+        >
+          <Truck className="dark mr-50" size={20} />
+          <strong>{row.paiment}</strong>
+        </Badge>
+      ),
+    //   <Badge
+    //     color={`
+    //     light-success text-wrap text-bold-500 mb-0
+    //     gradient-light-${
+    //       row.paiment === "En attente"
+    //         ? "primary"
+    //         : row.paiment === "Reglé"
+    //         ? "success"
+    //         : "secondary"
+    //     }
+    //     `}
+    //     style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+    //     pill
+    //   >
+    //     {row.paiment === "En attente" ? (
+    //       <img src={Icon} alt="Icon" />
+    //     ) : row.status === "Reglé" ? (
+    //       <HourglassSplit className="info" size={25} />
+    //     ) : (
+    //       <Truck className="warning" size={25} />
+    //     )}
+
+    //     {row.paiment}
+    //   </Badge>
   },
   {
     name: "Actions",
     selector: "actions",
-    minWidth :"180px",
+    minWidth: "180px",
     cell: (row) => (
       <div className="data-list-action">
         <CursorFill
@@ -425,49 +511,38 @@ const columns = [
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            alert("view the ordonnace " + row.id);
-          }}
-        />
-        <ThreeDotsVertical
-          className="cursor-pointer"
-          size={20}
-          onClick={() => {
-            alert("more " + row.id);
+            alert("view the Commande " + row.id);
           }}
         />
       </div>
     ),
   },
+];
 
-]
-
-class Ordonnances_recue extends React.Component {
+class Commande_recue extends React.Component {
   state = {
-    columns :[],
+    columns: [],
     data: [],
-    ordonnances: {
+    commandes: {
       non_traité: 0,
       en_attente: 0,
       en_cours_livraison: 0,
       livrée: 0,
-      assigner_tournée: 0,
-      dossier_incomplet: 0,
+      pro_en_attente: 0,
     },
   };
 
- 
   componentDidMount() {
     // fetching the data from the database and passing it to the state
     this.setState({
-      columns :columns,
+      columns: columns,
       data: data,
-      ordonnances: {
-        non_traité: ordonnances.non_traité,
-        en_attente: ordonnances.en_attente,
-        en_cours_livraison: ordonnances.en_cours_livraison,
-        livrée: ordonnances.livrée,
-        assigner_tournée: ordonnances.assigner_tournée,
-        dossier_incomplet: ordonnances.dossier_incomplet,
+      commandes: {
+        non_traité: commandes.non_traité,
+        en_attente: commandes.en_attente,
+        pro_en_attente: commandes.pro_en_attente,
+        en_cours_livraison: commandes.en_cours_livraison,
+        livrée: commandes.livrée,
       },
     });
   }
@@ -476,19 +551,18 @@ class Ordonnances_recue extends React.Component {
     return (
       <React.Fragment>
         <Breadcrumbs
-          breadCrumbTitle="Ordonnance Reçues."
-          breadCrumbParent="Ordonnance reçues"
+          breadCrumbTitle="Commabdes Reçues."
+          breadCrumbParent="Commandes"
         />
         <Row>
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
-              
               hideChart
               bg_color="danger"
               iconBg="danger"
               icon={<ExclamationTriangleFill className="danger" size={25} />}
-              stat={this.state.ordonnances.non_traité}
-              statTitle="Ordonnances Non traité"
+              stat={this.state.commandes.non_traité}
+              statTitle="Commandes pro Non traité"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -496,9 +570,10 @@ class Ordonnances_recue extends React.Component {
               hideChart
               bg_color="info"
               iconBg="info"
-              icon={<HourglassSplit className="info" size={25} />}
-              stat={this.state.ordonnances.en_attente}
-              statTitle="Ordonnances attente approvisionnement"
+              //   icon={<HourglassSplit className="info" size={25} />}
+              icon={<img src={Icon} alt="Icon" />}
+              stat={this.state.commandes.en_attente}
+              statTitle="Commandes en attente de paiment"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -506,9 +581,9 @@ class Ordonnances_recue extends React.Component {
               hideChart
               bg_color="primary"
               iconBg="primary"
-              icon={<Calendar3 className="primary" size={25} />}
-              stat={this.state.ordonnances.assigner_tournée}
-              statTitle="Ordonnances assignés a une tournée"
+              icon={<HourglassSplit className="primary" size={25} />}
+              stat={this.state.commandes.pro_en_attente}
+              statTitle="Commandes pro en attente"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -517,34 +592,18 @@ class Ordonnances_recue extends React.Component {
               bg_color="warning"
               iconBg="warning"
               icon={<Truck className="warning" size={25} />}
-              stat={this.state.ordonnances.en_cours_livraison}
-              statTitle="Ordonnances en Cours de livraison"
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              bg_color="success"
-              iconBg="success"
-              icon={<Check2All className="success" size={25} />}
-              stat={this.state.ordonnances.livrée}
-              statTitle="Ordonnances livré Aujourd'hui."
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              iconBg="primary"
-              icon={<img src={Icon} alt="Icon" />}
-              stat={this.state.ordonnances.dossier_incomplet}
-              statTitle="Dossiers Incomplet"
+              stat={this.state.commandes.en_cours_livraison}
+              statTitle="Commandes pro en Cours de livraison"
             />
           </Col>
         </Row>
 
         <Row>
           <Col sm="12">
-            <DataTableCustom   columns = {this.state.columns} data={this.state.data} />
+            <DataTableCustom
+              columns={this.state.columns}
+              data={this.state.data}
+            />
           </Col>
         </Row>
       </React.Fragment>
@@ -552,4 +611,4 @@ class Ordonnances_recue extends React.Component {
   }
 }
 
-export default Ordonnances_recue;
+export default Commande_recue;

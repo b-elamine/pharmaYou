@@ -146,7 +146,7 @@ class HistoriquePeiment extends React.Component {
  
 
   render() {
-    let { data, columns, value, filteredData } = this.state;
+    let { data, columns, value } = this.state;
     let element = [];
     for (let index = 0; index < data.length; index++) {
       if (index % 5 === 0 && index > 9) {

@@ -9,8 +9,7 @@ import {
   Col,
   //   Input,
 } from "reactstrap";
-import { Truck, Calendar, DollarSign,Check,Phone } from "react-feather";
-import { FaRoad,FaRegBuilding,FaUniversity } from "react-icons/fa";
+import { Truck, Calendar, DollarSign, } from "react-feather";
 import StatisticsCard from "../../components/@vuexy/statisticsCard/StatisticsCard";
 import HistoriquePeiment from "./livreurHistoriquePaiement";
 import CommandesLivres from "./LivreurCommandesLivré";

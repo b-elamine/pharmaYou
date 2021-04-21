@@ -1,12 +1,14 @@
 import React from "react"
 import { Row, Col } from "reactstrap"
 import ReactApexChart from "react-apexcharts"
-import DataTableCustom from "../DataTableCustom/DataTableCustom"
+// import DataTableCustom from "../DataTableCustom/DataTableCustom"
 import "../../assets/scss/pages/dashboard-analytics.scss"
 import { Badge} from "reactstrap";
-import {CursorFill, EyeFill, HourglassSplit, ThreeDotsVertical } from "react-bootstrap-icons"
+import {BellFill, CursorFill, EyeFill, HourglassSplit, ThreeDotsVertical } from "react-bootstrap-icons"
 import { Truck, User, FileText, DollarSign } from "react-feather";
+
 const dt = 333; //test à supprimer 
+
 const data = [
     {
       id: 1,
@@ -675,6 +677,91 @@ class General_View extends React.Component {
             }
           },
     },
+    horizontal_Chart1 : {
+      options: {
+        chart : {
+          toolbar : false,
+          height :"15rem"
+        },
+        colors: ["#fb8705"],
+        plotOptions: {
+          bar: {
+            
+            columnWidth: "20%",
+            distributed: true,
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        xaxis: {
+          categories: [
+            "South Korea",
+            "Canada",
+            "United Kingdom",
+            "Netherlands",
+            "Italy",
+            "France",
+            "Japan",
+            "United States",
+            "China",
+            "Germany"
+          ],
+        }
+      },
+      series: [
+        {
+          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+        }
+      ]
+  },
+  horizontal_Chart2 : {
+    options: {
+      chart : {
+        toolbar : false,
+        height :"15rem"
+      },
+      colors: ["#0981f6"],
+      plotOptions: {
+        bar: {
+          
+          columnWidth: "20%",
+          distributed: true,
+          horizontal: true,
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: false
+      },
+      xaxis: {
+        categories: [
+          "South Korea",
+          "Canada",
+          "United Kingdom",
+          "Netherlands",
+          "Italy",
+          "France",
+          "Japan",
+          "United States",
+          "China",
+          "Germany"
+        ],
+      }
+    },
+    series: [
+      {
+        data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+      }
+    ]
+},
+   
     table : {
     columns :[],
     data: [],
@@ -709,9 +796,8 @@ class General_View extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div>
         <Row>
-        
           <h5>Particuliers</h5>
           <div 
             className="d-flex flex-sm-row justify-content-center"
@@ -853,7 +939,7 @@ class General_View extends React.Component {
             <div 
             className="d-flex flex-sm-row justify-content-center"
             style={{
-            backgroundColor:"#fdd5a2",
+            backgroundImage:"linear-gradient(#a5c8fc, #a1ecf6)",
             borderRadius:"15px",
             width:"100%",
             marginRight:"1rem",
@@ -865,7 +951,7 @@ class General_View extends React.Component {
               <Row noGutters="false">
               <Col>
               <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "#fde9d0",
+                  backgroundColor : "#d1eafc",
                   borderRadius:"18px",
                   width : "80%",
                   height:"100%"
@@ -881,7 +967,7 @@ class General_View extends React.Component {
               </Col>
               <Col>
               <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "#fde9d0",
+                  backgroundColor : "#d1eafc",
                   borderRadius:"18px",
                   width : "80%",
                   height:"100%",
@@ -901,7 +987,7 @@ class General_View extends React.Component {
               </div>
               <div  
                 style ={{ 
-                    backgroundColor : "#fde9d0",
+                    backgroundColor : "#d1eafc",
                    borderRadius:"18px",
                    width :"60%",
                    height:"100%",
@@ -983,13 +1069,61 @@ class General_View extends React.Component {
             </div>
             </div>
         </Row>
-        <Row>
-          <Col>
-          <h1>Dernières commandes reçus</h1>
-            <DataTableCustom columns = {this.state.table.columns} data={this.state.table.data} />
-          </Col>
-        </Row>
-      </React.Fragment>
+        
+        <div style={{
+        height:"100%"
+      }} >
+      <Row>
+        <Col>
+      <h6>Chiffre d'affiares ordonnances par jour</h6>
+      <h5>456,345$</h5>
+      </Col>
+      <Col>
+       <BellFill 
+       style ={{
+         marginRight:"1rem"
+       }}
+       color="#0981f6" size ={"20"}/>
+        22/03/2021
+      </Col>
+      </Row>
+      <ReactApexChart
+            options={this.state.horizontal_Chart1.options}
+            series={this.state.horizontal_Chart1.series}
+            type="bar"
+            height={"200%"}
+            width={"70%"}
+            />
+      </div>
+            
+        
+      <div style={{
+        height:"100%", 
+        marginTop:"4rem"
+      }} >
+      <Row>
+        <Col>
+      <h6>Chiffre d'affiares profesionnel</h6>
+      <h5>456,345$</h5>
+      </Col>
+      <Col>
+       <BellFill 
+       style ={{
+         marginRight:"1rem"
+       }}
+       color="#0981f6" size ={"20"}/>
+        22/03/2021
+      </Col>
+      </Row>
+      <ReactApexChart
+            options={this.state.horizontal_Chart2.options}
+            series={this.state.horizontal_Chart2.series}
+            type="bar"
+            height={"200%"}
+            width={"70%"}
+            />
+      </div>
+      </div>    
     )
   }
 }

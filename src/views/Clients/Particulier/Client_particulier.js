@@ -8,7 +8,7 @@ import CustomSelects from "./CustomSelects";
 // fake database
 const data = [
   {
-    id: 1,
+    // id: 1,
     image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
     name: "Alyss Lillecrop",
     email: "alillecrop0@twitpic.com",
@@ -25,7 +25,7 @@ const data = [
     role: "inferermier",
   },
   {
-    id: 2,
+    // id: 2,
     image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
     name: "Shep Pentlow",
     email: "spentlow1@home.pl",
@@ -42,7 +42,7 @@ const data = [
     role: "inferermier",
   },
   {
-    id: 3,
+    // id: 3,
     image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
     name: "Gasper Morley",
     email: "gmorley2@chronoengine.com",
@@ -491,28 +491,23 @@ class Client_particuliers extends React.Component {
   };
   handle_filter_origine = (e) => {
     let value = e.value;
-
     let data = this.state.data;
     let filteredData = this.state.filteredData;
     this.setState({ value: value });
     if (value.length) {
       filteredData = data.filter((item) => {
-        console.log(value, item.origine);
-        console.log(item.origine === value);
         let equalCondition = item.origine === value;
         if (equalCondition) {
           return equalCondition;
         } else return null;
       });
-      console.log(filteredData);
       this.setState({ filteredData });
     }
   };
 // adding handle filter role 
+
   render() {
-    const { value, filteredData } = this.state;
-    console.log(filteredData, value);
-    console.log(value.length ? true : false);
+    const { value, filteredData } = this.state; 
     return (
       <React.Fragment>
         <Breadcrumbs

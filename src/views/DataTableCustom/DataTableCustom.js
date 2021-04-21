@@ -1,6 +1,9 @@
 import React from "react";
 import { Card, CardBody, Input, Button } from "reactstrap";
 import DataTable from "react-data-table-component";
+import { history } from "../../history";
+import { withRouter } from "react-router-dom";
+
 import {
   Search,
   ChevronLeft,
@@ -33,13 +36,13 @@ class DataTableCustom extends React.Component {
   state = {
     columns: [],
     data: [],
-    filteredData : [],
+    filteredData: [],
     value: "",
+    data_fetched: false,
   };
 
-  componentDidUpdate() {    
+  componentDidUpdate() {
     if (this.state.data.length === 0) {
-      console.log(this.state.data.length)
       this.setState({
         data: this.props.data,
       });
@@ -85,10 +88,10 @@ class DataTableCustom extends React.Component {
 
   render() {
     let { value, filteredData } = this.state;
-    console.log(filteredData)
-    console.log("value is ", value)
-    console.log(this.props.data)
-
+    const ordonnance = (row) => {
+      const url = `/ordonnance/info`;
+      history.push(url, row);
+    };
     return (
       <Card className="mt-5">
         {/* <CardHeader>
@@ -106,6 +109,7 @@ class DataTableCustom extends React.Component {
             data={value.length ? filteredData : this.props.data}
             columns={this.props.columns}
             noHeader
+            clearSelectedRows
             pagination
             paginationIconFirstPage={<ChevronsLeft size={20} />}
             paginationIconLastPage={<ChevronsRight size={20} />}
@@ -113,6 +117,11 @@ class DataTableCustom extends React.Component {
             paginationIconNext={<ChevronRight size={15} />}
             subHeader
             highlightOnHover
+            onRowClicked={
+              this.props.match.url === "/ordonnance/recues"
+                ? ordonnance
+                : () => {}
+            }
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
@@ -127,4 +136,4 @@ class DataTableCustom extends React.Component {
   }
 }
 
-export default DataTableCustom;
+export default withRouter(DataTableCustom);

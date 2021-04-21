@@ -9,11 +9,14 @@ import knowledgeBaseQuestion from "./views/pages/knowledge-base/Questions"
 import { ContextLayout } from "./utility/context/Layout"
 
 // Route-based code splitting
-const analyticsDashboard = lazy(() =>
-  import("./views/dashboard/analytics/AnalyticsDashboard")
-)
+// const analyticsDashboard = lazy(() =>
+//   import("./views/dashboard/analytics/AnalyticsDashboard")
+// )
 const General_View = lazy(() =>
   import("./views/General_View/General_View")
+)
+const Statistiques_Detaillee = lazy(() =>
+  import("./views/StatistiquesDetaillee/Statistiques_Detaillees")
 )
 const ecommerceDashboard = lazy(() =>
   import("./views/dashboard/ecommerce/EcommerceDashboard")
@@ -188,11 +191,17 @@ const CalendrierDesTournes = lazy(()=> import("./views/apps/calendar/Calendar"))
 const CalendrierListe = lazy(()=> import("./views/apps/calendar/Liste"))
 const LivreursMap = lazy(()=> import("./views/livreurs/LivreurMap"))
 const Livreurs = lazy(()=> import("./views/livreurs/livreur"))
+const Commandes_recues = lazy(()=> import("./views/Commandes/Reçue/Commandes_reçues"))
+
 const InfoLivreurs = lazy(()=> import("./views/livreurs/infoLivreur"))
 
 const Client_particuliers = lazy(()=> import('./views/Clients/Particulier/Client_particulier'))
 
 const Partenaire = lazy(()=> import("./views/Partenaire/Partenaire"))
+
+const Ordonnance = lazy(()=> import("./views/Ordonnances/Orodnnance/Ordonnance"));
+
+
 
 
 // Set Layout and Component Using App Route
@@ -242,15 +251,16 @@ class AppRouter extends React.Component {
             component={ecommerceDashboard}
           />
             {/* setting PharmaYou routes for structuring the work */}
-          <AppRoute exact path="/stats" component={() => <h1>Component of the statistiques </h1>} />
+          <AppRoute  exact path="/stats" component={Statistiques_Detaillee} />
           <AppRoute exact path="/ordonnance/recues" component={Ordonnances_recue} />
+          <AppRoute exact path="/ordonnance/info" component={Ordonnance} />
           <AppRoute exact path="/client/particuliers" component= {Client_particuliers} />
           <AppRoute exact path="/client/professionnelles" component= {() => <h1>Component of the client_professionnelles </h1>} />
           {/* <AppRoute exact path="/partenaires" component= {} /> */}
  
           <AppRoute exact path="/partenaires" component= {Partenaire} />
 
-          <AppRoute exact path="/commande/recues" component= {() => <h1>Componenet of the commande-recues</h1>} />
+          <AppRoute exact path="/commande/recues" component= {Commandes_recues} />
           <AppRoute exact path="/factures" component= {() => <h1>Component of the factures </h1>} />
           <AppRoute exact path="/support_pro" component= {() => <h1>component of the support_pro </h1>} />
           <AppRoute exact path="/calendrier_tournées" component= {CalendrierDesTournes} />
