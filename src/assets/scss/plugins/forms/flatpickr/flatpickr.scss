@@ -22,7 +22,7 @@
   &.arrowTop{
     &:before,
     &:after{
-      border-bottom-color: $warning;
+      border-bottom-color: $white;
     }
   }
   .flatpickr-months {
@@ -30,18 +30,18 @@
     .flatpickr-next-month,
     .flatpickr-prev-month:hover svg,
     .flatpickr-next-month:hover svg{
-      fill : $white;
-      color : $white;
+      fill : $black;
+      color : $black;
     }
     .flatpickr-month{
-      background: $warning;
+      background: $white;
       select:hover{
-        background: $white;
+        background: $secondary;
       }
     }
     .numInputWrapper{
       .numInput{
-        color: $white;
+        color: $black;
       }
     }
   }
@@ -50,8 +50,8 @@
   }
   .flatpickr-weekdays,
   .flatpickr-weekday{        
-    background: $warning;
-    color : $white;
+    background: $white;
+    color : $black;
   }
   .flatpickr-days{
     .dayContainer{

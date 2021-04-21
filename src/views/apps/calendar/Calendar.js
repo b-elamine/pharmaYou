@@ -21,6 +21,7 @@ import { ChevronLeft, ChevronRight,Check } from "react-feather"
 import "react-big-calendar/lib/addons/dragAndDrop/styles.scss"
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import "../../../assets/scss/plugins/calendars/react-big-calendar.scss"
+import {history} from "../../../history"
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment)
 const eventColors = {
@@ -34,9 +35,6 @@ class Toolbar extends React.Component {
   render() {
     return (
       <div className="calendar-header mb-2 d-flex justify-content-between flex-wrap">
-        {/* <div>
-          <AddEventButton />
-        </div> */}
         <div className="month-label d-flex flex-column text-center text-md-right mt-1 mt-md-0">
           <div className="calendar-navigation">
             <Button.Ripple
@@ -115,6 +113,18 @@ class Toolbar extends React.Component {
               }}
             >
               Jour
+            </button>
+            <button
+              className={`btn ${
+                (this.props.view !=="day" && this.props.view !=="week" && this.props.view !=="month")
+                  ? "btn-primary"
+                  : "btn-outline-primary text-warning"
+              }`}
+              onClick={() => {
+                history.push("/calendrier/liste")
+              }}
+            >
+              List
             </button>
           </ButtonGroup>
         </div>
