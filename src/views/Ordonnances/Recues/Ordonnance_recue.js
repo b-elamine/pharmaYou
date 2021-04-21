@@ -544,7 +544,7 @@ class Ordonnances_recue extends React.Component {
 
         <Row>
           <Col sm="12">
-            <DataTableCustom  columns = {this.state.columns} data={this.state.data} />
+            <DataTableCustom   columns = {this.state.columns} data={this.state.data} />
           </Col>
         </Row>
       </React.Fragment>

@@ -1,6 +1,9 @@
 import React from "react";
 import { Card, CardBody, Input, Button } from "reactstrap";
 import DataTable from "react-data-table-component";
+import { history } from "../../history";
+import { withRouter } from "react-router-dom";
+
 import {
   Search,
   ChevronLeft,
@@ -33,9 +36,9 @@ class DataTableCustom extends React.Component {
   state = {
     columns: [],
     data: [],
-    filteredData : [],
+    filteredData: [],
     value: "",
-    data_fetched : false,
+    data_fetched: false,
   };
 
   componentDidUpdate() {
@@ -85,6 +88,10 @@ class DataTableCustom extends React.Component {
 
   render() {
     let { value, filteredData } = this.state;
+    const ordonnance = (row) => {
+      const url = `/ordonnance/info`;
+      history.push(url, row);
+    };
     return (
       <Card className="mt-5">
         {/* <CardHeader>
@@ -110,6 +117,11 @@ class DataTableCustom extends React.Component {
             paginationIconNext={<ChevronRight size={15} />}
             subHeader
             highlightOnHover
+            onRowClicked={
+              this.props.match.url === "/ordonnance/recues"
+                ? ordonnance
+                : () => {}
+            }
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
@@ -124,4 +136,4 @@ class DataTableCustom extends React.Component {
   }
 }
 
-export default DataTableCustom;
+export default withRouter(DataTableCustom);

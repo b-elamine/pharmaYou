@@ -496,23 +496,18 @@ class Client_particuliers extends React.Component {
     this.setState({ value: value });
     if (value.length) {
       filteredData = data.filter((item) => {
-        console.log(value, item.origine);
-        console.log(item.origine === value);
         let equalCondition = item.origine === value;
         if (equalCondition) {
           return equalCondition;
         } else return null;
       });
-      console.log(filteredData);
       this.setState({ filteredData });
     }
   };
 // adding handle filter role 
 
   render() {
-    const { value, filteredData } = this.state;
-    console.log(filteredData, value);
-    console.log(value.length ? true : false);
+    const { value, filteredData } = this.state; 
     return (
       <React.Fragment>
         <Breadcrumbs

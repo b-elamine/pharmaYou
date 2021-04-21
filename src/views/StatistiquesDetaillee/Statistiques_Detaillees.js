@@ -1,7 +1,7 @@
 import React from "react"
 import { Row, Col } from "reactstrap"
 import ReactApexChart from "react-apexcharts"
-import DataTableCustom from "../DataTableCustom/DataTableCustom"
+// import DataTableCustom from "../DataTableCustom/DataTableCustom"
 import "../../assets/scss/pages/dashboard-analytics.scss"
 import { Badge} from "reactstrap";
 import {BellFill, CursorFill, EyeFill, HourglassSplit, ThreeDotsVertical } from "react-bootstrap-icons"
