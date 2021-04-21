@@ -15,6 +15,9 @@ import { ContextLayout } from "./utility/context/Layout"
 const General_View = lazy(() =>
   import("./views/General_View/General_View")
 )
+const Statistiques_Detaillee = lazy(() =>
+  import("./views/StatistiquesDetaillee/Statistiques_Detaillees")
+)
 const ecommerceDashboard = lazy(() =>
   import("./views/dashboard/ecommerce/EcommerceDashboard")
 )
@@ -243,7 +246,7 @@ class AppRouter extends React.Component {
             component={ecommerceDashboard}
           />
             {/* setting PharmaYou routes for structuring the work */}
-          <AppRoute  exact path="/stats" component={() => <h1>Component of the statistiques </h1>} />
+          <AppRoute  exact path="/stats" component={Statistiques_Detaillee} />
           <AppRoute exact path="/ordonnance/recues" component={Ordonnances_recue} />
           <AppRoute exact path="/client/particuliers" component= {Client_particuliers} />
           <AppRoute exact path="/client/professionnelles" component= {() => <h1>Component of the client_professionnelles </h1>} />
