@@ -687,7 +687,7 @@ class General_View extends React.Component {
         plotOptions: {
           bar: {
             
-            columnWidth: "20%",
+            // columnWidth: "10%",
             distributed: true,
             horizontal: true,
           }
@@ -854,11 +854,15 @@ class General_View extends React.Component {
                    borderRadius:"18px",
                    width :"60%",
                    height:"100%",
-                   padding : "1rem"
+                   padding : "1rem",
+                   
               }}>
                   Statistiques particuliers
                   <div style={{
-                      marginTop:"2rem"
+                      marginTop:"2rem",
+                      overflowX :"scroll",
+                      
+                     
                   }}
                   className="d-flex flex-sm-row justify-content-between align-items-center" >
                 
@@ -1102,7 +1106,7 @@ class General_View extends React.Component {
         marginTop:"4rem"
       }} >
       <Row>
-        <Col>
+        <Col lg="8">
       <h6>Chiffre d'affiares profesionnel</h6>
       <h5>456,345$</h5>
       </Col>

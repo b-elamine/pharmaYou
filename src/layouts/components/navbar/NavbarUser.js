@@ -7,7 +7,9 @@ import {
   DropdownItem,
   DropdownToggle,
   Media,
-  Badge
+  Badge,
+  Col,
+  Row
 } from "reactstrap"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import axios from "axios"
@@ -16,6 +18,7 @@ import classnames from "classnames"
 import Autocomplete from "../../../components/@vuexy/autoComplete/AutoCompleteComponent"
 import { useAuth0 } from "../../../authServices/auth0/auth0Service"
 import { history } from "../../../history"
+import {BellFill} from "react-bootstrap-icons"
 
 const handleNavigation = (e, path) => {
   e.preventDefault()
@@ -492,17 +495,38 @@ class NavbarUser extends React.PureComponent {
           className="dropdown-notification nav-item"
         >
           <DropdownToggle tag="a" className="nav-link nav-link-label">
-            <Icon.Bell size={21} />
-            <Badge pill color="primary" className="badge-up">
+            <BellFill color="blue" size={21} />
+            <Badge pill color="danger" className="badge-up">
               {" "}
-              5{" "}
+              6{" "}
             </Badge>
           </DropdownToggle>
           <DropdownMenu tag="ul" right className="dropdown-menu-media">
-            <li className="dropdown-menu-header">
-              <div className="dropdown-header mt-0">
-                <h3 className="text-white">5 New</h3>
-                <span className="notification-title">App Notifications</span>
+            <li style={{
+              backgroundColor:"white"
+            }} className="dropdown-menu-header">
+              <div  className="dropdown-header mt-0">
+                <Row sm="2">
+                
+                <Col >
+                <h3>Notifications</h3>
+                </Col>
+                <Col className="d-flex justify-content-end" >
+                <div className="d-flex align-items-center"
+                style={{
+                  backgroundColor:"#EEECFE",
+                  borderRadius:"40px",
+                  height:"fit-content",
+                  paddingLeft:"10px",
+                  paddingRight:"10px",
+                  paddingTop:"5px"
+                }}  >
+                  <h6>6 New</h6>
+                </div>
+                </Col>
+              
+                </Row>
+                
               </div>
             </li>
             <PerfectScrollbar
@@ -641,7 +665,18 @@ class NavbarUser extends React.PureComponent {
             </PerfectScrollbar>
             <li className="dropdown-menu-footer">
               <DropdownItem tag="a" className="p-1 text-center">
-                <span className="align-middle">Read all notifications</span>
+                <span className="align-middle"
+                style={{
+                  backgroundColor:"#7367F0",
+                  fontSize:"14px",
+                  color:"white",
+                  paddingLeft:"60px",
+                  paddingRight:"60px",
+                  paddingTop:"5px",
+                  paddingBottom:"5px",
+                  borderRadius:"5px  "
+                }}
+                >Read all notifications</span>
               </DropdownItem>
             </li>
           </DropdownMenu>
