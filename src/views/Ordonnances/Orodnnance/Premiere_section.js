@@ -10,11 +10,11 @@ class FirstSection extends React.Component {
         <Col xl="8">
           <CardBody className="d-flex pb-0">
 
-            <img src={Logo} alt="PharmaYouLogo"  height="26%" width="26%"/>
+            <img src={Logo} alt="PharmaYouLogo"  height="25px" width="150px"/>
             
             <Badge 
             pill 
-            style={{width:"23%",height:"20%"}}
+            style={{width:"150px",height:"25px"}}
             color="light-danger pl-50 pr-50 text-wrap ml-50">
               <ExclamationTriangleFill  size={17} />
               Non-traité
@@ -22,20 +22,20 @@ class FirstSection extends React.Component {
             
             <Badge 
             pill 
-            style={{width:"21%",height:"20%",fontWeight:"900",fontSize:"14px"}}
+            style={{width:"150px",height:"25px",fontWeight:"900",fontSize:"14px"}}
             className="bg-gradient-primary pl-50 pr-50  text-wrap ml-50">
               Particulier
             </Badge>
             <Badge 
             pill 
-            style={{width:"23%",height:"20%"}}
+            style={{width:"150px",height:"30px"}}
             color="light-success pl-50 pr-50 text-wrap ml-50">
               Partenaire Infirmier
             </Badge>
           </CardBody>
 
 
-          <CardBody style={{ width: "50%" }}>
+          <CardBody style={{ width: "250px" }}>
             <strong>Officine de traitement :</strong>
             <br></br>
             Pharma You, 8 rue de vaucouleurs 75011,Paris
@@ -49,7 +49,7 @@ class FirstSection extends React.Component {
             <FormGroup
             style={{
               marginBottom: "10px",
-              width:"75%",
+              width:"150px",
             }}
             >
                 <Label for="readonlyInput"><strong>Référence</strong></Label>
@@ -64,7 +64,7 @@ class FirstSection extends React.Component {
             <FormGroup
             style={{
               marginBottom: "10px",
-              width:"75%",
+              width:"150px",
             }}
             >
                 <Label for="readonlyInput">Date Commande</Label>
@@ -77,7 +77,7 @@ class FirstSection extends React.Component {
                 />
               </FormGroup>
             <FormGroup 
-            style={{width:"75%",marginBottom:"10px"}}
+            style={{width:"150px",marginBottom:"10px"}}
             >
                 <Label for="readonlyInput">Source de la commande</Label>
                 <Input

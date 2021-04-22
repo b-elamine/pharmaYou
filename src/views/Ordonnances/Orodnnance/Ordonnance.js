@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 
-import { Card, Row, Col, } from "reactstrap";
+import { Card, Row, Col, CardTitle, } from "reactstrap";
 
 import FirstSection from "./Premiere_section"
 import SecondSection from "./Deuxieme_section"
+
+import Troisieme_section from "./Troisieme_section"
 
 class Ordonnance extends Component {
   componentDidMount() {
@@ -22,7 +24,10 @@ class Ordonnance extends Component {
                   <SecondSection />
               </Card>
               <hr />
-              <Card>Section 3</Card>
+              <Card>
+                {/* <CardTitle>Document Client</CardTitle> */}
+                <Troisieme_section /> 
+              </Card>
               <hr />
               <Card>Section 4</Card>
             </Card>
