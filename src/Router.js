@@ -188,6 +188,7 @@ const accessControl = lazy(() =>
 //pharma you part 
 const Ordonnances_recue = lazy(()=> import("./views/Ordonnances/Recues/Ordonnance_recue"))
 const CalendrierDesTournes = lazy(()=> import("./views/apps/calendar/Calendar"))
+const CalendrierListe = lazy(()=> import("./views/apps/calendar/Liste"))
 const LivreursMap = lazy(()=> import("./views/livreurs/LivreurMap"))
 const Livreurs = lazy(()=> import("./views/livreurs/livreur"))
 const Commandes_recues = lazy(()=> import("./views/Commandes/Reçue/Commandes_reçues"))
@@ -263,6 +264,7 @@ class AppRouter extends React.Component {
           <AppRoute exact path="/factures" component= {() => <h1>Component of the factures </h1>} />
           <AppRoute exact path="/support_pro" component= {() => <h1>component of the support_pro </h1>} />
           <AppRoute exact path="/calendrier_tournées" component= {CalendrierDesTournes} />
+          <AppRoute exact path="/calendrier/liste" component= {CalendrierListe} />
           <AppRoute exact path="/livreurs" component= {Livreurs} />
           <AppRoute exact path="/livreurs/carte" component= {LivreursMap} />
           <AppRoute exact path="/livreurs/info" component= {InfoLivreurs} />

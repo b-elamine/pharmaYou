@@ -7,7 +7,7 @@ const navigationConfig = [
     id: "vue_ensemble",
     title: "Vue d'ensemble",
     type: "item",
-    vu_ens: true,
+    // vu_ens: true,
     icon: <FaTable size={20} />,
     navLink: "/",
   },
