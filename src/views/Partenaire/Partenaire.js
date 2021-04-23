@@ -4,13 +4,7 @@ import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../DataTableCustom/DataTableCustom";
 import { Edit, Eye } from "react-feather";
 import Select from "react-select";
-// const colourOptions = [
-//   { value: "ocean", label: "Ocean" },
-//   { value: "blue", label: "Blue" },
-//   { value: "purple", label: "Purple" },
-//   { value: "red", label: "Red" },
-//   { value: "orange", label: "Orange" },
-// ];
+import { history } from "../../history";
 
 // fake database
 const data = [
@@ -464,9 +458,10 @@ const columns = [
         <Eye
           className="cursor-pointer mr-1"
           size={20}
-          onClick={() => {
-            alert("editing the client " + row.id);
-          }}
+          onClick=
+            {(row) => {
+              history.push("/partenaires/info",row);
+            }}
         />
         <Edit
           className="cursor-pointer"
@@ -619,6 +614,8 @@ class Partenaire extends React.Component {
 
   render() {
     const { value, filteredData } = this.state;
+    let element = [];
+    element.push(data.length);
     return (
       <React.Fragment>
         <Breadcrumbs
@@ -658,6 +655,9 @@ class Partenaire extends React.Component {
               add_new
               columns={columns}
               data={value.length ? filteredData : this.state.data}
+              // onRowClicked={(row) => {
+              //   history.push("/partenaires/info",row);
+              // }}
             />
           </Col>
         </Row>
