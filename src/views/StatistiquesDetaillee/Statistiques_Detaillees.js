@@ -1177,7 +1177,6 @@ class General_View extends React.Component {
             type="bar"
             height={"200%"}
             width={"70%"}
-<<<<<<< HEAD
             />
       </div>
             
@@ -1201,7 +1200,6 @@ class General_View extends React.Component {
       </Col>
       </Row>
       <ReactApexChart
-=======
           />
         </div>
 
@@ -1228,7 +1226,6 @@ class General_View extends React.Component {
             </Col>
           </Row>
           <ReactApexChart
->>>>>>> ed34d561a6e7c5f36d4a17f9def701178fdfcb0f
             options={this.state.horizontal_Chart2.options}
             series={this.state.horizontal_Chart2.series}
             type="bar"
