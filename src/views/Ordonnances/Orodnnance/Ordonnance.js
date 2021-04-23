@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 
-import { Card, Row, Col, } from "reactstrap";
+import { Card, Row, Col,  } from "reactstrap";
 
 import FirstSection from "./Premiere_section"
 import SecondSection from "./Deuxieme_section"
+import ThirdSection from "./Troisieme_section"
+import ForthSection from "./Quatrieme_section"
+import PartieDroiteHaut from "./PartieDroite_1"
 
 class Ordonnance extends Component {
   componentDidMount() {
@@ -12,7 +15,7 @@ class Ordonnance extends Component {
   render() {
     return (
         <Row>
-            <Col xl="10">
+            <Col xl="8">
             <Card style={{ boxShadow: "none"}}>
               <Card className="mb-0">
                   <FirstSection />
@@ -22,23 +25,16 @@ class Ordonnance extends Component {
                   <SecondSection />
               </Card>
               <hr />
-              <Card>Section 3</Card>
+              <Card>
+                <ThirdSection /> 
+              </Card>
               <hr />
-              <Card>Section 4</Card>
+              <ForthSection />
             </Card>
             </Col>
-            <Col xl="2">
+            <Col xl="4">
             <Card>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
+               <PartieDroiteHaut />
             </Card>
             <Card style={{boxShadow:"none"}}>
                 <p>test</p>

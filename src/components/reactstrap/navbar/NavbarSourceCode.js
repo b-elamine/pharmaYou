@@ -166,7 +166,7 @@ export const navbarBasic = (
                     >
                       <li className="dropdown-menu-header">
                         <div className="dropdown-header mt-0">
-                          <h3 className="text-white">5 New</h3>
+                          <h3 className="text-white">Test New</h3>
                           <span className="notification-title">
                             App Notifications
                           </span>

@@ -9,12 +9,12 @@ import { Truck, User, FileText, DollarSign } from "react-feather";
 const dt = 333; //test à supprimer 
 const data = [
     {
-      id: 1,
+      id: "589547",
       image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
       name: "Alyss Lillecrop",
       email: "alillecrop0@twitpic.com",
       date: "May 13, 2018",
-      status: "active",
+      status: "Annuler",
       montant: "$32,000",
       ratings: "good",
       type: "particulier",
@@ -22,7 +22,7 @@ const data = [
       origine: "Partenaire App",
     },
     {
-      id: 2,
+      id: "349810",
       image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
       name: "Shep Pentlow",
       email: "spentlow1@home.pl",
@@ -35,12 +35,12 @@ const data = [
       origine: "Partenaire infermier",
     },
     {
-      id: 3,
+      id: "689527",
       image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
       name: "Gasper Morley",
       email: "gmorley2@chronoengine.com",
       date: "December 20, 2019",
-      status: "active",
+      status: "En livraison",
       montant: "$78,000",
       ratings: "average",
       type: "professionnel",
@@ -48,15 +48,17 @@ const data = [
       origine: "Partenaire MEDADOM",
     },
     {
+      id: "981536",
       image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
       name: "Phaedra Jerrard",
       email: "pjerrard3@blogs.com",
       date: "November 30, 2018",
-      status: "inactive",
+      status: "Non-traité",
       montant: "$10,000",
       ratings: "bad",
     },
     {
+      id: "401536",
       image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
       name: "Conn Plose",
       email: "cplose4@geocities.com",
@@ -66,6 +68,7 @@ const data = [
       ratings: "average",
     },
     {
+      id: "281516",
       image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
       name: "Tootsie Brandsma",
       email: "tbrandsma5@theatlantic.com",
@@ -75,6 +78,7 @@ const data = [
       ratings: "bad",
     },
     {
+      id: "731530",
       image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
       name: "Sibley Bum",
       email: "sbum6@sourceforge.net",
@@ -84,6 +88,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "081431",
       image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
       name: "Kristoffer Thew",
       email: "kthew7@amazon.com",
@@ -93,6 +98,7 @@ const data = [
       ratings: "bad",
     },
     {
+      id: "111536",
       image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
       name: "Fay Hasard",
       email: "fhasard8@java.com",
@@ -102,6 +108,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "536222",
       image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
       name: "Tabby Abercrombie",
       email: "tabercrombie9@statcounter.com",
@@ -111,6 +118,7 @@ const data = [
       ratings: "average",
     },
     {
+      id: "313516",
       image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
       name: "	Stella Indruch",
       email: "sindruch1@mayoclinic.com",
@@ -120,6 +128,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "451716",
       image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
       name: "	Aron McNirlin",
       email: "amcnirlin2@samsung.com",
@@ -129,6 +138,7 @@ const data = [
       ratings: "bad",
     },
     {
+      id: "121536",
       image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
       name: "Ange Trenholm",
       email: "atrenholm4@slideshare.net	",
@@ -138,6 +148,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "451712",
       image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
       name: "Caterina Starkie",
       email: "cstarkie5@feedburner.com",
@@ -147,6 +158,7 @@ const data = [
       ratings: "average",
     },
     {
+      id: "881716",
       image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
       name: "Hugibert McGeagh",
       email: "hmcgeaghf@smh.com.au",
@@ -156,6 +168,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "651726",
       image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
       name: "Jaime Maher",
       email: "jmaher1@msu.edu",
@@ -165,6 +178,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "151716",
       image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
       name: "Amalle Pladen",
       email: "jmaher1@msu.edu",
@@ -174,6 +188,7 @@ const data = [
       ratings: "average",
     },
     {
+      id: "221716",
       image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
       name: "Dorris Ferries",
       email: "dferries7@ucoz.com",
@@ -183,6 +198,7 @@ const data = [
       ratings: "bad",
     },
     {
+      id: "459916",
       image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
       name: "Andy Fettes",
       email: "afettesh@upenn.edu",
@@ -192,6 +208,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "991716",
       image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
       name: "Allene Hughf",
       email: "ahughf0@dropbox.com",
@@ -201,6 +218,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "541716",
       image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
       name: "Petra Rheubottom",
       email: "prheubottom0@globo.com",
@@ -210,6 +228,7 @@ const data = [
       ratings: "good",
     },
     {
+      id: "001716",
       image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
       name: "Ambrosius Olyfant",
       email: "aolyfant1@timesonline.co.uk",
@@ -219,6 +238,7 @@ const data = [
       ratings: "bad",
     },
     {
+      id: "561716",
       image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
       name: "Letti Trineman",
       email: "ltrineman2@cnbc.com",
@@ -228,6 +248,7 @@ const data = [
       ratings: "average",
     },
     {
+      id: "101716",
       image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
       name: "Sayer Rodger",
       email: "srodgerb@rakuten.co.jp",
@@ -410,21 +431,21 @@ const columns = [
             className="cursor-pointer mr-1"
             size={20}
             onClick={() => {
-              alert("Send a message " + row.id);
+              alert("Envoyer la commande reçue " + row.id);
             }}
           />
           <EyeFill
             className="cursor-pointer mr-1"
             size={20}
             onClick={() => {
-              alert("view the ordonnace " + row.id);
+              alert("Voir la commande reçue " + row.id);
             }}
           />
           <ThreeDotsVertical
             className="cursor-pointer"
             size={20}
             onClick={() => {
-              alert("more " + row.id);
+              alert("More " + row.id);
             }}
           />
         </div>
@@ -855,7 +876,7 @@ class General_View extends React.Component {
             <div 
             className="d-flex flex-sm-row justify-content-center"
             style={{
-            backgroundColor:"#fdd5a2",
+            backgroundImage:"linear-gradient(#a5c8fc, #a1ecf6)",
             borderRadius:"15px",
             width:"100%",
             marginRight:"1rem",
@@ -867,7 +888,7 @@ class General_View extends React.Component {
               <Row noGutters="false">
               <Col>
               <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "#fde9d0",
+                  backgroundColor : "#d1eafc",
                   borderRadius:"18px",
                   width : "80%",
                   height:"100%"
@@ -883,7 +904,7 @@ class General_View extends React.Component {
               </Col>
               <Col>
               <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "#fde9d0",
+                  backgroundColor : "#d1eafc",
                   borderRadius:"18px",
                   width : "80%",
                   height:"100%",
@@ -903,7 +924,7 @@ class General_View extends React.Component {
               </div>
               <div  
                 style ={{ 
-                    backgroundColor : "#fde9d0",
+                    backgroundColor : "#d1eafc",
                    borderRadius:"18px",
                    width :"60%",
                    height:"100%",
