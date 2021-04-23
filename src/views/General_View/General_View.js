@@ -772,9 +772,11 @@ class General_View extends React.Component {
               }}>
                   Statistiques particuliers
                   <div style={{
-                      marginTop:"2rem"
+                      marginTop:"2rem",
+                      overflowX:"scroll",
+                      
                   }}
-                  className="d-flex flex-sm-row justify-content-between align-items-center" >
+                  className="d-flex flex-sm-row justify-content-between align-items-center scroll-hide" >
                 
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <FileText  style ={{
@@ -909,9 +911,10 @@ class General_View extends React.Component {
               }}>
                   Statistiques professionnels
                   <div style={{
-                      marginTop:"2rem"
+                      marginTop:"2rem",
+                      overflowX:"scroll"
                   }}
-                  className="d-flex flex-sm-row justify-content-between align-items-center" >
+                  className="d-flex flex-sm-row justify-content-between align-items-center scroll-hide" >
                 
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <FileText  style ={{

@@ -15,8 +15,8 @@ import NumericInput from "react-numeric-input";
 import { mobileStyle } from "../../forms/form-elements/number-input/InputStyles";
 import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
-import "../../../assets/scss/plugins/extensions/editor.scss"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../../../assets/scss/plugins/extensions/editor.scss";
 
 import Switch from "react-switch";
 import "flatpickr/dist/themes/light.css";
@@ -30,9 +30,11 @@ const eventColors = {
 };
 class AddEvent extends React.Component {
   state = {
+    title: "",
     startDate: new Date(),
     endDate: new Date(),
-    title: "",
+    facturation: 1,
+    renumeration: 1,
     label: null,
     allDay: true,
     selectable: true,
@@ -48,45 +50,96 @@ class AddEvent extends React.Component {
 
   handleChange = (checked) => {
     this.setState({ checked });
-    console.log(this.state.checked);
   };
   handleDateChange = (date) => {
+    let dateN = new Date(date);
     this.setState({
-      startDate: date,
+      startDate: new Date(
+        dateN.getFullYear(),
+        dateN.getMonth(),
+        dateN.getDate(),
+        this.state.startDate.getHours(),
+        this.state.startDate.getMinutes(),
+        this.state.startDate.getSeconds()
+      ),
+      endDate: new Date(
+        dateN.getFullYear(),
+        dateN.getMonth(),
+        dateN.getDate(),
+        this.state.endDate.getHours(),
+        this.state.endDate.getMinutes(),
+        this.state.endDate.getSeconds()
+      ),
     });
   };
 
-  handleEndDateChange = (date) => {
-    this.setState({
-      endDate: date,
-    });
-  };
-
-  handleLabelChange = (label) => {
-    this.setState({
-      label,
-    });
-  };
+  // handleLabelChange = (label) => {
+  //   this.setState({
+  //     label,
+  //   });
+  // };
 
   handleAddEvent = (id) => {
     this.props.handleSidebar(false);
-    this.props.addEvent({
-      id: id,
-      title: this.state.title,
-      start: this.state.startDate,
-      end: this.state.endDate,
-      label:
-        this.state.label === null ? "créneau_de_livraison" : this.state.label,
-      allDay: this.state.allDay,
-      selectable: this.state.selectable,
-    });
+    if (this.state.checked) {
+      let dateD = this.state.startDate;
+      let dateF = this.state.endDate;
+      for (let index = 0; index < 7; index++) {
+        console.log(this.state.startDate);
+        this.props.addEvent({
+          id: id + index,
+          title: this.state.title,
+          start: dateD.setDate(dateD.getDate() + index),
+          end: dateF.setDate(dateF.getDate() + index),
+          label:
+            this.state.label === null
+              ? "créneau_de_livraison"
+              : this.state.label,
+          allDay: this.state.allDay,
+          selectable: this.state.selectable,
+          facturation: this.state.facturation,
+          renumeration: this.state.renumeration,
+          editorState: this.state.editorState,
+        });
+        this.setState({
+          title: "",
+          startDate: new Date(),
+          endDate: new Date(),
+          label: null,
+          allDay: true,
+          selectable: true,
+          facturation: 1,
+          renumeration: 1,
+          editorState: EditorState.createEmpty(),
+          checked: false,
+        });
+      }
+    } else {
+      this.props.addEvent({
+        id: id,
+        title: this.state.title,
+        start: this.state.startDate,
+        end: this.state.endDate,
+        label:
+          this.state.label === null ? "créneau_de_livraison" : this.state.label,
+        allDay: this.state.allDay,
+        selectable: this.state.selectable,
+        facturation: this.state.facturation,
+        renumeration: this.state.renumeration,
+        editorState: this.state.editorState,
+      });
+    }
     this.setState({
+      title: "",
       startDate: new Date(),
       endDate: new Date(),
-      title: "",
       label: null,
       allDay: true,
       selectable: true,
+      facturation: 1,
+      renumeration: 1,
+      editorState: EditorState.createEmpty(),
+      checked: false,
     });
   };
 
@@ -106,6 +159,16 @@ class AddEvent extends React.Component {
       allDay: nextProps.eventInfo === null ? true : nextProps.eventInfo.allDay,
       selectable:
         nextProps.eventInfo === null ? true : nextProps.eventInfo.selectable,
+      renumeration:
+        nextProps.eventInfo === null ? 1 : nextProps.eventInfo.renumeration,
+      facturation:
+        nextProps.eventInfo === null ? 1 : nextProps.eventInfo.facturation,
+      checked:
+        nextProps.eventInfo === null ? false : nextProps.eventInfo.checked,
+      editorState:
+        nextProps.eventInfo === null
+          ? EditorState.createEmpty()
+          : nextProps.eventInfo.editorState,
     });
   }
 
@@ -122,8 +185,7 @@ class AddEvent extends React.Component {
       >
         <div className="header d-flex justify-content-between">
           <h3 className="text-bold-600 mb-0">
-            {this.props.eventInfo !== null &&
-            this.props.eventInfo.title.length > 0
+            {this.props.eventInfo !== null
               ? "Modifier tournée livreur"
               : "Rajouter tournée livreur"}
           </h3>
@@ -186,7 +248,7 @@ class AddEvent extends React.Component {
             </div> */}
           </div>
           <div className="add-event-fields mt-2">
-            {/* <FormGroup className="form-label-group">
+            <FormGroup className="form-label-group">
               <Input
                 type="text"
                 id="EventTitle"
@@ -195,7 +257,7 @@ class AddEvent extends React.Component {
                 onChange={(e) => this.setState({ title: e.target.value })}
               />
               <Label for="EventTitle">Titre du creneau</Label>
-            </FormGroup> */}
+            </FormGroup>
             <FormGroup className="form-label-group">
               <FormGroup>
                 <Label for="Date">Date</Label>
@@ -212,8 +274,10 @@ class AddEvent extends React.Component {
                 <Flatpickr
                   id="startDate"
                   className="form-control"
-                  // value={this.state.startDate}
-                  // onChange={(date) => this.handleDateChange(date)}
+                  value={this.state.startDate}
+                  onChange={(date) => {
+                    this.state.startDate.setTime(new Date(date).getTime());
+                  }}
                   options={{
                     enableTime: true,
                     noCalendar: true,
@@ -229,8 +293,10 @@ class AddEvent extends React.Component {
               <Flatpickr
                 id="endDate"
                 className="form-control"
-                // value={this.state.endDate}
-                // onChange={(date) => this.handleEndDateChange(date)}
+                value={this.state.endDate}
+                onChange={(date) => {
+                  this.state.endDate.setTime(new Date(date).getTime());
+                }}
                 options={{
                   enableTime: true,
                   noCalendar: true,
@@ -258,54 +324,55 @@ class AddEvent extends React.Component {
             </FormGroup>
             <FormGroup>
               <span style={{ marginBottom: "20px" }} className="text-wrap">
-                Facturation livreur par commande
+                Facturation livreur par commande (€)
               </span>
-              <NumericInput min={0} value={1} mobile style={mobileStyle} />
+              <NumericInput
+                min={0}
+                value={this.state.facturation}
+                mobile
+                style={mobileStyle}
+                onChange={(e) => {
+                  this.setState({ facturation: e });
+                }}
+              />
             </FormGroup>
             <FormGroup>
               <span style={{ marginBottom: "20px" }} className="text-wrap">
-                Définir la rénumeration de base
+                Définir la rénumeration de base (€)
               </span>
-              <NumericInput min={0} value={1} mobile style={mobileStyle} />
-            </FormGroup>
-            <FormGroup>
-          <div style={{height:"200px"}}>
-              <Editor
-                wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
-                defaultEditorState={this.state.editorState}
-                onEditorStateChange={this.onEditorStateChange}
-                toolbar={{
-                  options: ["inline", "fontSize",'textAlign'],
-                  inline: {
-                    options: [
-                      "bold",
-                      "italic",
-                      "underline",
-                    ],
-                    bold: { className: "bordered-option-classname" },
-                    italic: { className: "bordered-option-classname" },
-                    underline: { className: "bordered-option-classname" },
-                  },
-                  // textAlign: {
-                  //   inDropdown: false,
-                  //   className: undefined,
-                  //   component: undefined,
-                  //   dropdownClassName: undefined,
-                  //   options: ['left', 'center', 'right', 'justify'],
-                  //   left: { icon: left, className: undefined },
-                  //   center: { icon: center, className: undefined },
-                  //   right: { icon: right, className: undefined },
-                  //   justify: { icon: justify, className: undefined },
-                  // },
-                  
+              <NumericInput
+                min={0}
+                value={this.state.renumeration}
+                mobile
+                style={mobileStyle}
+                onChange={(e) => {
+                  this.setState({ renumeration: e });
                 }}
               />
+            </FormGroup>
+            <FormGroup>
+              <div style={{ height: "200px" }}>
+                <Editor
+                  // onChange={(e)=>{console.log(e.blocks)}}
+                  wrapperClassName="demo-wrapper"
+                  editorClassName="demo-editor"
+                  defaultEditorState={this.state.editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                  toolbar={{
+                    options: ["inline", "fontSize", "textAlign"],
+                    inline: {
+                      options: ["bold", "italic", "underline"],
+                      bold: { className: "bordered-option-classname" },
+                      italic: { className: "bordered-option-classname" },
+                      underline: { className: "bordered-option-classname" },
+                    },
+                  }}
+                />
               </div>
             </FormGroup>
           </div>
           <hr className="my-2" />
-          <div className="add-event-actions text-right">
+          <div className="add-event-actions text-left ">
             <Button.Ripple
               disabled={this.state.title.length > 0 ? false : true}
               color="primary"
@@ -325,25 +392,27 @@ class AddEvent extends React.Component {
                     end: this.state.endDate,
                     allDay: true,
                     selectable: true,
+                    facturation: this.state.facturation,
+                    renumeration: this.state.renumeration,
+                    checked: this.state.checked,
+                    editorState: this.state.editorState,
                   });
               }}
             >
-              {this.props.eventInfo !== null &&
-              this.props.eventInfo.title.length > 0
-                ? "Modifier créneau"
-                : "Ajouter créneau"}
+              Valider
             </Button.Ripple>
             <Button.Ripple
               className="ml-1"
-              color="flat-danger"
+              color="danger"
               onClick={() => {
                 this.props.handleSidebar(false);
                 if (this.props.handleSelectedEvent)
                   this.props.handleSelectedEvent(null);
                 else return null;
               }}
+              outline
             >
-              Cancel
+              Annuler
             </Button.Ripple>
           </div>
         </div>
