@@ -936,6 +936,7 @@ class General_View extends React.Component {
                       en livraison
                       <br />
                     </p>
+                    
                   </div>
                 </div>
                 <div className="d-flex flex-sm-row justify-content-between align-items-center">
