@@ -611,7 +611,7 @@ class Livreurs extends React.Component {
               columns={columns}
               noHeader
               pagination
-              subHeader
+              subHeader 
               highlightOnHover
               onRowClicked={(row) => {
                 history.push("/livreurs/info",row);

@@ -1106,7 +1106,7 @@ class General_View extends React.Component {
         marginTop:"4rem"
       }} >
       <Row>
-        <Col lg="8">
+        <Col>
       <h6>Chiffre d'affiares profesionnel</h6>
       <h5>456,345$</h5>
       </Col>

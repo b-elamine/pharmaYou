@@ -18,7 +18,7 @@ const CustomHeader = (props) => {
       <div className="add-new">
         {props.add_new ? (
           <Button.Ripple color="primary ml-75 text-bold-500">
-            Ajouter un client
+            Ajouter Partenaire
           </Button.Ripple>
         ) : null}
       </div>
