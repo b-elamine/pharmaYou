@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Card, CardBody, Col, Row } from "reactstrap";
+import { Badge,  CardBody, Col, Row } from "reactstrap";
 import { ExclamationTriangleFill } from "react-bootstrap-icons";
 
 class FirstSection extends React.Component {
