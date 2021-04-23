@@ -1176,34 +1176,10 @@ class General_View extends React.Component {
             type="bar"
             height={"200%"}
             width={"70%"}
-<<<<<<< HEAD
+
             />
       </div>
             
-        
-      <div style={{
-        height:"100%", 
-        marginTop:"4rem"
-      }} >
-      <Row>
-        <Col>
-      <h6>Chiffre d'affiares profesionnel</h6>
-      <h5>456,345$</h5>
-      </Col>
-      <Col>
-       <BellFill 
-       style ={{
-         marginRight:"1rem"
-       }}
-       color="#0981f6" size ={"20"}/>
-        22/03/2021
-      </Col>
-      </Row>
-      <ReactApexChart
-=======
-          />
-        </div>
-
         <div
           style={{
             height: "100%",
@@ -1211,7 +1187,7 @@ class General_View extends React.Component {
           }}
         >
           <Row>
-            <Col lg="8">
+            <Col>
               <h6>Chiffre d'affiares profesionnel</h6>
               <h5>456,345$</h5>
             </Col>
@@ -1227,7 +1203,6 @@ class General_View extends React.Component {
             </Col>
           </Row>
           <ReactApexChart
->>>>>>> ed34d561a6e7c5f36d4a17f9def701178fdfcb0f
             options={this.state.horizontal_Chart2.options}
             series={this.state.horizontal_Chart2.series}
             type="bar"
