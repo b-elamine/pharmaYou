@@ -9,6 +9,7 @@ import {
   Row,
   Label,
   FormGroup,
+  CardBody,
 } from "reactstrap";
 import {
   Justify,
@@ -16,8 +17,51 @@ import {
   Plus,
   FileText,
   ListUl,
+  RecordCircleFill,
 } from "react-bootstrap-icons";
 import Select from "react-select";
+
+import Image from "../../../assets/img/portrait/small/avatar-s-2.jpg";
+
+const CommentaireBlock = (props) => {
+  return (
+    <CardBody>
+      <div className="user-info text-truncate ml-xl-50 ml-0 mb-50">
+        <RecordCircleFill
+          size={16}
+          style={{
+            color: props.icon_color,
+            marginLeft: "0px",
+          }}
+        />
+        <span
+          title={props.block_type}
+          className="ml-2 font-weight-bold font-medium-2"
+        >
+          {props.block_type}
+        </span>
+      </div>
+      <small className="ml-3 font-small-2"> {props.block_note} </small>
+
+      <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
+        <div className="user-img ml-xl-0 ml-3">
+          <img
+            className="img-fluid rounded-circle"
+            height="32"
+            width="32"
+            src={props.image_path}
+            alt="hey"
+          />
+        </div>
+        <div className="user-info text-truncate ml-xl-50 ml-0">
+          <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
+            {props.name}
+          </span>
+        </div>
+      </div>
+    </CardBody>
+  );
+};
 
 class QuatriemeSection extends React.Component {
   render() {
@@ -160,11 +204,31 @@ class QuatriemeSection extends React.Component {
           <br></br>
           <br></br>
           <Card className="p-2 mt-5 text-dark text-left">
-            <CardTitle className="font-medium-1 light-secondary text-left ml-2 mt-1 font-weight-bold">
+            <CardTitle className="font-medium-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
               <ListUl size={17} />
               Historique commentaire et note du patient
             </CardTitle>
-            L'ensemble des commentaires
+            <CommentaireBlock 
+            icon_color ="#fa680c"
+            block_type="Commentaire interne"
+            block_note="Client reloue ce fdp"
+            image_path={Image}
+            name="Zongo meryouli"
+            />
+            <CommentaireBlock 
+            icon_color ="#fa680c"
+            block_type="Commentaire interne"
+            block_note="Un tres bon client"
+            image_path={Image}
+            name="Bensnane rahmoune"
+            />
+            <CommentaireBlock 
+            icon_color ="#28c76f"
+            block_type="Note client"
+            block_note="2 dose de brygabaline, 2 fois par jour "
+            image_path={Image}
+            name="Djaluidji bouffon"
+            />
           </Card>
         </Badge>
       </Card>

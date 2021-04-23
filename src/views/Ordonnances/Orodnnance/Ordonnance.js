@@ -7,6 +7,7 @@ import SecondSection from "./Deuxieme_section"
 import ThirdSection from "./Troisieme_section"
 import ForthSection from "./Quatrieme_section"
 import PartieDroiteHaut from "./PartieDroite_1"
+import PartieDroiteBas from "./PartieDroite_2"
 
 class Ordonnance extends Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class Ordonnance extends Component {
   render() {
     return (
         <Row>
-            <Col xl="8">
+            <Col xl="9">
             <Card style={{ boxShadow: "none"}}>
               <Card className="mb-0">
                   <FirstSection />
@@ -32,29 +33,12 @@ class Ordonnance extends Component {
               <ForthSection />
             </Card>
             </Col>
-            <Col xl="4">
+            <Col xl="3">
             <Card>
                <PartieDroiteHaut />
             </Card>
             <Card style={{boxShadow:"none"}}>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
+               <PartieDroiteBas />
 
             </Card>
             </Col>
