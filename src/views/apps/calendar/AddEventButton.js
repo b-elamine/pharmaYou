@@ -13,7 +13,6 @@ const AddEventButton = props => {
         props.handleSidebar(true)
         props.handleSelectedEvent(null)
       }}
-      size="sm"
       // className="d-sm-block d-none"
     >
       Ajouter un créneau

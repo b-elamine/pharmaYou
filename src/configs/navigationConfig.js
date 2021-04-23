@@ -15,7 +15,7 @@ const navigationConfig = [
     id: "stats",
     title: "Statistiques détaillés",
     type: "item",
-    icon: <IoStatsChart size={20} color="#FDA300" />,
+    icon: <IoStatsChart size={20}  />,
     navLink: "/stats",
   },
   {

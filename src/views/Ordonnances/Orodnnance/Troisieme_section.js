@@ -1,8 +1,8 @@
 import React from "react";
-import { Row, Col, Card, CardBody, CardTitle, Button } from "reactstrap";
+import { Row, Col, Card, CardTitle, Button, Badge } from "reactstrap";
 import { PlusCircle } from "react-bootstrap-icons";
 
-const Card_dashed = (props) => {
+const CardDashed = (props) => {
   return (
     <Card>
       <Row>
@@ -44,8 +44,8 @@ const Card_dashed = (props) => {
               paddingTop: "5px",
               paddingBottom: "5px",
               paddingLeft: "0px",
-              marginTop:"200px",
-              fontSize:"6px"
+              marginTop: "200px",
+              fontSize: "6px",
             }}
           >
             <PlusCircle className="align-middle ml-0 mr-25" size={14} />
@@ -64,16 +64,28 @@ class Troisieme_section extends React.Component {
         <CardTitle className="ml-2">Documents Client</CardTitle>
         <Row>
           <Col className="ml-2">
-            <Card_dashed bg_color="#3397da" label="Ordonnance"></Card_dashed>
+            <CardDashed bg_color="#3397da" label="Ordonnance"></CardDashed>
+             khass swaleh li ya3tihoumli faycal 
           </Col>
           <Col>
-            <Card_dashed bg_color="#1aac1a" label="Carte Vital"></Card_dashed>
+            <CardDashed bg_color="#1aac1a" label="Carte Vital"></CardDashed>
+            khass swaleh li ya3tihoumli faycal 
+
           </Col>
           <Col>
-            <Card_dashed bg_color="#d01b47" label="Mutuelle"></Card_dashed>
+            <CardDashed bg_color="#d01b47" label="Mutuelle"></CardDashed>
+            khass swaleh li ya3tihoumli faycal 
+
           </Col>
         </Row>
-        <p className="ml-2">paragraphe</p>
+        <Badge color="light-success text-left">
+          <h5 className="success ml-0 font-weight-bold">Note du client </h5>
+          <p className="text-wrap text-lowercase">
+          Tootsie roll lollipop lollipop icing. Wafer cookie danish macaroon.
+          Liquorice fruitcake apple pie I love cupcake cupcake.Tootsie roll
+          lollipop lollipop icing. Wafer cookie danish macaroon
+          </p>
+        </Badge>
       </Card>
     );
   }

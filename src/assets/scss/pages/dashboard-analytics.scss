@@ -40,6 +40,10 @@
   }
 }
 
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
 table.dashboard-table {
   tr th,
   tr td {

@@ -14,7 +14,7 @@ class FirstSection extends React.Component {
             
             <Badge 
             pill 
-            style={{width:"150px",height:"25px"}}
+            style={{width:"150px",height:"25px",fontSize:"8px"}}
             color="light-danger pl-50 pr-50 text-wrap ml-50">
               <ExclamationTriangleFill  size={17} />
               Non-traité

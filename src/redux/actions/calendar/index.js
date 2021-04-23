@@ -20,6 +20,7 @@ export const addEvent = event => {
     dispatch({ type: "ADD_EVENT", event })
   }
 }
+
 export const updateEvent = event => {
   return dispatch => {
     dispatch({ type: "UPDATE_EVENT", event })
