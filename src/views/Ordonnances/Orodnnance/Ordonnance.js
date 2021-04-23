@@ -44,46 +44,7 @@ class Ordonnance extends Component {
             </Col>
         </Row>
 
-      //   <Container style={{ width: "60%",backgroundColor:"white" }}>
-      //     <Row xs='4'>
-      //       <Col xl="2" style={{ padding: "20px", marginLeft: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //       <Col xl="2" style={{ padding: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //       <Col xl="2" style={{ padding: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //       <Col xl="2" style={{ padding: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //     </Row>
-      /* <Row xs="3">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-      </Row>
-      <Row xs="4">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-      </Row>
-      <Row xs="4">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col xs="6">Column</Col>
-        <Col>Column</Col>
-      </Row>
-      <Row xs="1" sm="2" md="4">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-      </Row> */
-      //   </Container>
+      
     );
   }
 }
