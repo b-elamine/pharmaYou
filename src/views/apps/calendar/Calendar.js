@@ -236,7 +236,7 @@ class CalendarApp extends React.Component {
           <AddEventButton />
         </div> 
         <div style={{marginBottom:"20px"}}>
-        <span style={{opacity:.5}}>filter</span>
+        <span style={{opacity:.5}}>filtrer</span>
         </div>
         <div style={{marginBottom:"20px"}}>
         <Checkbox
@@ -279,7 +279,7 @@ class CalendarApp extends React.Component {
                   label: null,
                   start: new Date(start),
                   end: new Date(end),
-                  url: ""
+                  url: "",
                 })
               }}
               selectable={true}

@@ -45,5 +45,4 @@ const calenderReducer = (state = initialState, action) => {
       return state
   }
 }
-
 export default calenderReducer
