@@ -1,12 +1,12 @@
-import React from "react"
-import AddEventSidebar from "./AddEventSidebar"
-import AddEventButton from "./AddEventButton"
-import { Card, CardBody, Button, ButtonGroup } from "reactstrap"
-import { Calendar, momentLocalizer } from "react-big-calendar"
-import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop"
-import moment from "moment"
-import { connect } from "react-redux"
-import Checkbox from "../../../components/@vuexy/checkbox/CheckboxesVuexy"
+import React from "react";
+import AddEventSidebar from "./AddEventSidebar";
+import AddEventButton from "./AddEventButton";
+import { Card, CardBody, Button, ButtonGroup } from "reactstrap";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import moment from "moment";
+import { connect } from "react-redux";
+import Checkbox from "../../../components/@vuexy/checkbox/CheckboxesVuexy";
 import {
   fetchEvents,
   handleSidebar,
@@ -14,22 +14,22 @@ import {
   handleSelectedEvent,
   updateEvent,
   updateDrag,
-  updateResize
-} from "../../../redux/actions/calendar/index"
-import { ChevronLeft, ChevronRight,Check } from "react-feather"
+  updateResize,
+} from "../../../redux/actions/calendar/index";
+import { ChevronLeft, ChevronRight, Check } from "react-feather";
 
-import "react-big-calendar/lib/addons/dragAndDrop/styles.scss"
-import "react-big-calendar/lib/css/react-big-calendar.css"
-import "../../../assets/scss/plugins/calendars/react-big-calendar.scss"
-import {history} from "../../../history"
-const DragAndDropCalendar = withDragAndDrop(Calendar)
-const localizer = momentLocalizer(moment)
+import "react-big-calendar/lib/addons/dragAndDrop/styles.scss";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "../../../assets/scss/plugins/calendars/react-big-calendar.scss";
+import { history } from "../../../history";
+const DragAndDropCalendar = withDragAndDrop(Calendar);
+const localizer = momentLocalizer(moment);
 const eventColors = {
   // business: "bg-success",
   // work: "bg-warning",
   // personal: "bg-danger",
-  créneau_de_livraison: "bg-primary"
-}
+  créneau_de_livraison: "bg-primary",
+};
 
 class Toolbar extends React.Component {
   render() {
@@ -75,7 +75,7 @@ class Toolbar extends React.Component {
               <span>Others</span>
             </div>
           </div>*/}
-        </div> 
+        </div>
         <div className="text-center view-options mt-1 mt-sm-0 ml-lg-5 ml-0">
           <ButtonGroup>
             <button
@@ -85,7 +85,7 @@ class Toolbar extends React.Component {
                   : "btn-outline-primary text-warning"
               }`}
               onClick={() => {
-                this.props.onView("month")
+                this.props.onView("month");
               }}
             >
               Mois
@@ -97,7 +97,7 @@ class Toolbar extends React.Component {
                   : "btn-outline-primary text-warning"
               }`}
               onClick={() => {
-                this.props.onView("week")
+                this.props.onView("week");
               }}
             >
               Semaine
@@ -109,28 +109,27 @@ class Toolbar extends React.Component {
                   : "btn-outline-primary text-warning"
               }`}
               onClick={() => {
-                this.props.onView("day")
+                this.props.onView("day");
               }}
             >
               Jour
             </button>
             <button
               className={`btn ${
-                (this.props.view !=="day" && this.props.view !=="week" && this.props.view !=="month")
+                this.props.view === "work_week"
                   ? "btn-primary"
                   : "btn-outline-primary text-warning"
               }`}
               onClick={() => {
-                history.push("/calendrier/liste")
+                this.props.onView("agenda");
               }}
             >
               List
             </button>
           </ButtonGroup>
         </div>
-        
       </div>
-    )
+    );
   }
 }
 
@@ -141,122 +140,130 @@ class CalendarApp extends React.Component {
       props.app.sidebar !== state.sidebar ||
       props.app.selectedEvent !== state.eventInfo
     ) {
-      let dateToObj = props.app.events.map(event => {
-        event.start = new Date(event.start)
-        event.end = new Date(event.end)
-        return event
-      })
+      let dateToObj = props.app.events.map((event) => {
+        event.start = new Date(event.start);
+        event.end = new Date(event.end);
+        return event;
+      });
       return {
         events: dateToObj,
         sidebar: props.app.sidebar,
-        eventInfo: props.app.selectedEvent
-      }
+        eventInfo: props.app.selectedEvent,
+      };
     }
     // Return null if the state hasn't changed
-    return null
+    return null;
   }
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       events: [],
       views: {
         month: true,
         week: true,
-        day: true
+        day: true,
+        agenda: true,
       },
-      eventInfo: null
-    }
+      eventInfo: null,
+    };
   }
 
   async componentDidMount() {
-    await this.props.fetchEvents()
+    await this.props.fetchEvents();
   }
 
-  handleEventColors = event => {
-    return { className: eventColors[event.label] }
-  }
+  handleEventColors = (event) => {
+    return { className: eventColors[event.label] };
+  };
 
   moveEvent = ({ event, start, end, isAllDay: droppedOnAllDaySlot }) => {
-    const { events } = this.state
-    const idx = events.indexOf(event)
-    let allDay = event.allDay
+    const { events } = this.state;
+    const idx = events.indexOf(event);
+    let allDay = event.allDay;
     if (!event.allDay && droppedOnAllDaySlot) {
-      allDay = true
+      allDay = true;
     } else if (event.allDay && !droppedOnAllDaySlot) {
-      allDay = false
+      allDay = false;
     }
-    const updatedEvent = { ...event, start, end, allDay }
-    const nextEvents = [...events]
-    nextEvents.splice(idx, 1, updatedEvent)
+    const updatedEvent = { ...event, start, end, allDay };
+    const nextEvents = [...events];
+    nextEvents.splice(idx, 1, updatedEvent);
     this.setState({
-      events: nextEvents
-    })
-    this.props.updateDrag(updatedEvent)
-  }
+      events: nextEvents,
+    });
+    this.props.updateDrag(updatedEvent);
+  };
 
   resizeEvent = ({ event, start, end }) => {
-    const { events } = this.state
-    const nextEvents = events.map(existingEvent => {
+    const { events } = this.state;
+    const nextEvents = events.map((existingEvent) => {
       return existingEvent.id === event.id
         ? { ...existingEvent, start, end }
-        : existingEvent
-    })
+        : existingEvent;
+    });
 
     this.setState({
-      events: nextEvents
-    })
+      events: nextEvents,
+    });
 
-    this.props.updateResize({ ...event, start, end })
-  }
+    this.props.updateResize({ ...event, start, end });
+  };
 
-  handleSelectEvent = event => {
-    let filteredState = this.state.events.filter(i => i.id === event.id)
-    this.props.handleSidebar(true)
-    this.props.handleSelectedEvent(filteredState[0])
+  handleSelectEvent = (event) => {
+    let filteredState = this.state.events.filter((i) => i.id === event.id);
+    this.props.handleSidebar(true);
+    this.props.handleSelectedEvent(filteredState[0]);
     this.setState({
-      eventInfo: filteredState[0]
-    })
-  }
+      eventInfo: filteredState[0],
+    });
+  };
 
   render() {
-    const { events, views, sidebar } = this.state
+    const { events, views, sidebar } = this.state;
     return (
       <div className="app-calendar position-relative">
         <div
           className={`app-content-overlay ${sidebar ? "show" : "hidden"}`}
           onClick={() => {
-            this.props.handleSidebar(false)
-            this.props.handleSelectedEvent(null)
+            this.props.handleSidebar(false);
+            this.props.handleSelectedEvent(null);
           }}
         ></div>
         <Card>
           <CardBody>
-          <div style={{float:"left",width:"20%",borderRightColor:"grey",borderRightWidth:"1px"}}>
-          <div style={{marginBottom:"20px"}}>
-          <AddEventButton />
-        </div> 
-        <div style={{marginBottom:"20px"}}>
-        <span style={{opacity:.5}}>filtrer</span>
-        </div>
-        <div style={{marginBottom:"20px"}}>
-        <Checkbox
-            size="sm"
-            color="warning"
-            icon={<Check className="vx-icon" size={12} />}
-            label="tout voir"
-            onChange={() => {}}
-          />
-          </div>
-          <div style={{marginBottom:"20px"}}>
-        <Checkbox
-            size="sm"
-            color="primary"
-            icon={<Check className="vx-icon" size={12} />}
-            label="créneaux livraison"
-            onChange={() => {}}
-          />
-        </div>
-          </div>
+            <div
+              style={{
+                float: "left",
+                width: "20%",
+                borderRightColor: "grey",
+                borderRightWidth: "1px",
+              }}
+            >
+              <div style={{ marginBottom: "20px",marginRight:"15px" }}>
+                <AddEventButton />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <span style={{ opacity: 0.5 }}>filtrer</span>
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <Checkbox
+                  size="sm"
+                  color="warning"
+                  icon={<Check className="vx-icon" size={12} />}
+                  label="tout voir"
+                  onChange={() => {}}
+                />
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <Checkbox
+                  size="sm"
+                  color="primary"
+                  icon={<Check className="vx-icon" size={12} />}
+                  label="créneaux livraison"
+                  onChange={() => {}}
+                />
+              </div>
+            </div>
             <DragAndDropCalendar
               localizer={localizer}
               events={events}
@@ -269,18 +276,18 @@ class CalendarApp extends React.Component {
               components={{ toolbar: Toolbar }}
               eventPropGetter={this.handleEventColors}
               popup={true}
-              onSelectEvent={event => {
-                this.handleSelectEvent(event)
+              onSelectEvent={(event) => {
+                this.handleSelectEvent(event);
               }}
               onSelectSlot={({ start, end }) => {
-                this.props.handleSidebar(true)
+                this.props.handleSidebar(true);
                 this.props.handleSelectedEvent({
                   title: "",
                   label: null,
                   start: new Date(start),
                   end: new Date(end),
                   url: "",
-                })
+                });
               }}
               selectable={true}
             />
@@ -297,16 +304,15 @@ class CalendarApp extends React.Component {
           resizable
         />
       </div>
-    
-    )
+    );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    app: state.calendar
-  }
-}
+    app: state.calendar,
+  };
+};
 
 export default connect(mapStateToProps, {
   fetchEvents,
@@ -315,5 +321,5 @@ export default connect(mapStateToProps, {
   handleSelectedEvent,
   updateEvent,
   updateDrag,
-  updateResize
-})(CalendarApp)
+  updateResize,
+})(CalendarApp);
