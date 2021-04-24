@@ -45,6 +45,58 @@ export const mobileStyle = {
   },
 };
 
+export const mobileStyle2 = {
+  wrap: {
+    background: "#E2E2E2",
+    fontSize: 14,
+        width:"50%"
+
+    
+  },
+  "input.mobile": {
+    color: "5f5f5f",
+    padding: "0",
+    border: 0,
+    display: "block",
+    fontWeight: 400,
+    backgroundColor: "#f8f8f8",
+    height: "20px",
+        width:"100%"
+
+  },
+  "input:focus": {
+    outline: "none",
+  },
+  arrowUp: {
+    borderBottomColor: "#fff",
+  },
+  arrowDown: {
+    borderTopColor: "#fff",
+  },
+  plus: {
+    background: "white",
+  },
+  minus: {
+    background: "white",
+  },
+  "btnUp.mobile": {
+    background: "#3397da",
+    borderRadius: "5px",
+    height: "20px",
+    width: "20px",
+    top:"0px",
+    cursor: "pointer",
+  },
+  "btnDown.mobile": {
+    background: "#3397da",
+    borderRadius: "5px",
+    height: "20px",
+    width: "20px",
+    top:"0px",
+    cursor: "pointer",
+  },
+};
+
 export const defaultStyle = {
   arrowUp: {
     borderBottomColor: "#fff",

@@ -73,6 +73,10 @@ class AddEvent extends React.Component {
     });
   };
 
+  myFormat = (num) => {
+    return `${num} €`;
+  };
+
   // handleLabelChange = (label) => {
   //   this.setState({
   //     label,
@@ -332,12 +336,13 @@ class AddEvent extends React.Component {
             </FormGroup>
             <FormGroup>
               <span style={{ marginBottom: "20px" }} className="text-wrap">
-                Facturation livreur par commande (€)
+                Facturation livreur par commande
               </span>
               <NumericInput
                 min={0}
                 value={this.state.facturation}
                 mobile
+                format={this.myFormat}
                 style={mobileStyle}
                 onChange={(e) => {
                   this.setState({ facturation: e });
@@ -346,12 +351,13 @@ class AddEvent extends React.Component {
             </FormGroup>
             <FormGroup>
               <span style={{ marginBottom: "20px" }} className="text-wrap">
-                Définir la rénumeration de base (€)
+                Définir la rénumeration de base
               </span>
               <NumericInput
                 min={0}
                 value={this.state.renumeration}
                 mobile
+                format={this.myFormat}
                 style={mobileStyle}
                 onChange={(e) => {
                   this.setState({ renumeration: e });
