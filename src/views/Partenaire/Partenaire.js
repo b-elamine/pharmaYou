@@ -1,10 +1,11 @@
 import React from "react";
 import { Row, Col, Badge } from "reactstrap";
 import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
-import DataTableCustom from "../DataTableCustom/DataTableCustom";
+// import DataTableCustom from "../DataTableCustom/DataTableCustom";
 import { Edit, Eye } from "react-feather";
 import Select from "react-select";
 import { history } from "../../history";
+import DataTablePartenaire from "./DataTablePartenaire";
 
 // fake database
 const data = [
@@ -651,13 +652,10 @@ class Partenaire extends React.Component {
             />
           </Col>
           <Col sm="12">
-            <DataTableCustom
+            <DataTablePartenaire
               add_new
               columns={columns}
               data={value.length ? filteredData : this.state.data}
-              // onRowClicked={(row) => {
-              //   history.push("/partenaires/info",row);
-              // }}
             />
           </Col>
         </Row>
