@@ -7,6 +7,7 @@ import SecondSection from "./Deuxieme_section"
 import ThirdSection from "./Troisieme_section"
 import ForthSection from "./Quatrieme_section"
 import PartieDroiteHaut from "./PartieDroite_1"
+import PartieDroiteBas from "./PartieDroite_2"
 
 class Ordonnance extends Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class Ordonnance extends Component {
   render() {
     return (
         <Row>
-            <Col xl="8">
+            <Col xl="9">
             <Card style={{ boxShadow: "none"}}>
               <Card className="mb-0">
                   <FirstSection />
@@ -32,74 +33,18 @@ class Ordonnance extends Component {
               <ForthSection />
             </Card>
             </Col>
-            <Col xl="4">
+            <Col xl="3">
             <Card>
                <PartieDroiteHaut />
             </Card>
             <Card style={{boxShadow:"none"}}>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
+               <PartieDroiteBas />
 
             </Card>
             </Col>
         </Row>
 
-      //   <Container style={{ width: "60%",backgroundColor:"white" }}>
-      //     <Row xs='4'>
-      //       <Col xl="2" style={{ padding: "20px", marginLeft: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //       <Col xl="2" style={{ padding: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //       <Col xl="2" style={{ padding: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //       <Col xl="2" style={{ padding: "20px" }}>
-      //         <p>Badge</p>
-      //       </Col>
-      //     </Row>
-      /* <Row xs="3">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-      </Row>
-      <Row xs="4">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-      </Row>
-      <Row xs="4">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col xs="6">Column</Col>
-        <Col>Column</Col>
-      </Row>
-      <Row xs="1" sm="2" md="4">
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-        <Col>Column</Col>
-      </Row> */
-      //   </Container>
+      
     );
   }
 }

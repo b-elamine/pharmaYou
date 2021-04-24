@@ -65,25 +65,23 @@ class Troisieme_section extends React.Component {
         <Row>
           <Col className="ml-2">
             <CardDashed bg_color="#3397da" label="Ordonnance"></CardDashed>
-             khass swaleh li ya3tihoumli faycal 
+            khass swaleh li ya3tihoumli faycal
           </Col>
           <Col>
             <CardDashed bg_color="#1aac1a" label="Carte Vital"></CardDashed>
-            khass swaleh li ya3tihoumli faycal 
-
+            khass swaleh li ya3tihoumli faycal
           </Col>
           <Col>
             <CardDashed bg_color="#d01b47" label="Mutuelle"></CardDashed>
-            khass swaleh li ya3tihoumli faycal 
-
+            khass swaleh li ya3tihoumli faycal
           </Col>
         </Row>
         <Badge color="light-success text-left">
           <h5 className="success ml-0 font-weight-bold">Note du client </h5>
           <p className="text-wrap text-lowercase">
-          Tootsie roll lollipop lollipop icing. Wafer cookie danish macaroon.
-          Liquorice fruitcake apple pie I love cupcake cupcake.Tootsie roll
-          lollipop lollipop icing. Wafer cookie danish macaroon
+            Tootsie roll lollipop lollipop icing. Wafer cookie danish macaroon.
+            Liquorice fruitcake apple pie I love cupcake cupcake.Tootsie roll
+            lollipop lollipop icing. Wafer cookie danish macaroon
           </p>
         </Badge>
       </Card>
