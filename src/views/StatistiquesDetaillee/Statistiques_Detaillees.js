@@ -936,7 +936,6 @@ class General_View extends React.Component {
                       en livraison
                       <br />
                     </p>
-                    
                   </div>
                 </div>
                 <div className="d-flex flex-sm-row justify-content-between align-items-center">
@@ -1177,9 +1176,10 @@ class General_View extends React.Component {
             type="bar"
             height={"200%"}
             width={"70%"}
-          />
-        </div>
 
+            />
+      </div>
+            
         <div
           style={{
             height: "100%",
@@ -1187,7 +1187,7 @@ class General_View extends React.Component {
           }}
         >
           <Row>
-            <Col lg="8">
+            <Col>
               <h6>Chiffre d'affiares profesionnel</h6>
               <h5>456,345$</h5>
             </Col>

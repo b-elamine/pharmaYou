@@ -4,15 +4,18 @@ import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
 import Icon from "./Icon.svg";
-import { Badge} from "reactstrap";
-import {CursorFill, EyeFill, ThreeDotsVertical } from "react-bootstrap-icons"
+import { Badge } from "reactstrap";
 
 import {
+  CursorFill,
+  EyeFill,
+  ThreeDotsVertical,
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
   Calendar3,
   Check2All,
+  Calendar2Week,
 } from "react-bootstrap-icons";
 // fake database
 const data = [
@@ -22,12 +25,23 @@ const data = [
     name: "Alyss Lillecrop",
     email: "alillecrop0@twitpic.com",
     date: "May 13, 2018",
-    status: "active",
+    status: "non_traité",
     montant: "$32,000",
     ratings: "good",
     type: "particulier",
     code: 12345,
     origine: "Partenaire App",
+    patient: {
+      nom: "Ouardas",
+      prenom: "Akram",
+      address: "19 rue merabet ahmed, Saida , Algerie",
+      num_tel: "0559863111",
+      email: "a.ouardas@esi-sba.dz",
+      appeler: true,
+      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
+    },
+    mutulle: true,
+    CMU: false,
   },
   {
     id: 2,
@@ -35,12 +49,24 @@ const data = [
     name: "Shep Pentlow",
     email: "spentlow1@home.pl",
     date: "June 5, 2019",
-    status: "active",
+    status: "non_traité",
     montant: "$50,000",
     ratings: "good",
     type: "particulier",
     code: 56789,
     origine: "Partenaire infermier",
+    patient: {
+      nom: "Ouardas",
+      prenom: "Akram",
+      address: "19 rue merabet ahmed, Saida , Algerie",
+      num_tel: "0559863111",
+      email: "a.ouardas@esi-sba.dz",
+      appeler: false,
+      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
+
+    },
+    mutulle: false,
+    CMU: false,
   },
   {
     id: 3,
@@ -48,37 +74,66 @@ const data = [
     name: "Gasper Morley",
     email: "gmorley2@chronoengine.com",
     date: "December 24, 2019",
-    status: "active",
+    status: "en_attente",
     montant: "$78,000",
     ratings: "average",
     type: "professionnel",
     code: 1245,
     origine: "Partenaire MEDADOM",
+    patient: {
+      nom: "Elmogherbi",
+      prenom: "faycal",
+      address: "19 rue merabet ahmed, Oran , Algerie",
+      num_tel: "0552368514",
+      email: "m.elmogherbi@esi-sba.dz",
+      appeler: false,
+      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
+    },
+    mutulle: false,
+    CMU: true,
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
     name: "Phaedra Jerrard",
     email: "pjerrard3@blogs.com",
     date: "November 30, 2018",
-    status: "inactive",
+    status: "en_livraison",
     montant: "$10,000",
     ratings: "bad",
+    patient: {
+      nom: "Ouardas",
+      prenom: "Akram",
+      address: "19 rue merabet ahmed, Saida , Algerie",
+      num_tel: "0559863111",
+      email: "a.ouardas@esi-sba.dz",
+      appeler: true,
+      note : ""
+    },
+    mutulle: true,
+    CMU: true,
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
     name: "Conn Plose",
     email: "cplose4@geocities.com",
     date: "April 8, 2017",
-    status: "active",
+    status: "en_livraison",
     montant: "$22,000",
     ratings: "average",
+    patient: {
+      nom: "Elmogherbi",
+      prenom: "faycal",
+      address: "19 rue merabet ahmed, Oran , Algerie",
+      num_tel: "0552368514",
+      email: "m.elmogherbi@esi-sba.dz",
+    },
   },
   {
     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
     name: "Tootsie Brandsma",
     email: "tbrandsma5@theatlantic.com",
     date: "August 12, 2019",
-    status: "inactive",
+    status: "en_attente",
     montant: "$49,000",
     ratings: "bad",
   },
@@ -87,7 +142,7 @@ const data = [
     name: "Sibley Bum",
     email: "sbum6@sourceforge.net",
     date: "October 1, 2017",
-    status: "active",
+    status: "livré",
     montant: "$56,000",
     ratings: "good",
   },
@@ -96,7 +151,7 @@ const data = [
     name: "Kristoffer Thew",
     email: "kthew7@amazon.com",
     date: "February 28, 2018",
-    status: "inactive",
+    status: "tournée_assigné",
     montant: "$83,000",
     ratings: "bad",
   },
@@ -105,7 +160,7 @@ const data = [
     name: "Fay Hasard",
     email: "fhasard8@java.com",
     date: "January 29, 2018",
-    status: "active",
+    status: "livré",
     montant: "$26,000",
     ratings: "good",
   },
@@ -318,15 +373,56 @@ const columns = [
   {
     name: "Statut",
     selector: "status",
-    sortable: true,
-    cell: (row) => (
-      <Badge
-        color={row.status === "inactive" ? "light-danger" : "light-success"}
-        pill
-      >
-        {row.status}
-      </Badge>
-    ),
+    minWidth: "150px",
+    cell: (row) =>
+      row.status === "en_attente" ? (
+        <Badge
+          pill
+          // style={{ backgroundColor: "#f8e7b6", color: "#ff7535" }}
+          color="light-primary"
+          className="text-primary pl-50 pr-50 font-small-1 text-wrap text-bold-500"
+        >
+          <HourglassSplit className="primary mr-50" size={20} />
+          En attente
+        </Badge>
+      ) : row.status === "non_traité" ? (
+        <Badge color="light-danger pl-50 pr-50 " pill>
+          <ExclamationTriangleFill className="danger mr-50" size={20} />
+          Non-traité
+        </Badge>
+      ) : row.status === "en_livraison" ? (
+        <Badge
+          style={{
+            color: "#180852",
+            backgroundColor: "#e9e8ee",
+            fontWeight: "bold",
+          }}
+          color="pl-50 pr-50"
+          // className="text-warning"
+          pill
+        >
+          <Truck className="mr-50" size={20} />
+          En livraison
+        </Badge>
+      ) : row.status === "livré" ? (
+        <Badge color="light-success pl-50 pr-50 " pill>
+          <Check2All className="success mr-50" size={20} />
+          Livré
+        </Badge>
+      ) : row.status === "tournée_assigné" ? (
+        <Badge
+          style={{
+            backgroundImage: "linear-gradient(#ffd5c0, #fee6bf)",
+            color: "#fe5f29",
+            fontWeight: "bold",
+          }}
+          className="pl-50 pr-50 "
+          pill
+        >
+          <Calendar2Week className="primary mr-50" size={20} />
+          Tournée assigné
+        </Badge>
+      ) : null,
   },
   {
     name: "Nom Client",
@@ -360,16 +456,24 @@ const columns = [
     name: "Type",
     selector: "type",
     sortable: true,
-    cell: (row) => (
-      <Badge
-        color={
-          row.type === "particulier" ? "light-primary" : "light-success"
-        }
-        pill
-      >
-        {row.type}
-      </Badge>
-    ),
+    cell: (row) =>
+      row.type === "particulier" ? (
+        <Badge
+          // color="light-primary"
+          style={{
+            backgroundColor: "#ff9f43",
+            color: "white",
+            fontWeight: "bold",
+          }}
+          pill
+        >
+          {row.type}
+        </Badge>
+      ) : (
+        <Badge color="light-success" pill>
+          {row.type}
+        </Badge>
+      ),
   },
   {
     name: "Montant",
@@ -400,18 +504,18 @@ const columns = [
     minWidth: "200px",
     cell: (row) => (
       <Badge
-      color="light-success text-wrap text-bold-500 mb-0"
-      style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
-      pill
-    >
-      {row.origine}
-    </Badge>
+        color="light-success text-wrap text-bold-500 mb-0"
+        style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+        pill
+      >
+        {row.origine}
+      </Badge>
     ),
   },
   {
     name: "Actions",
     selector: "actions",
-    minWidth :"180px",
+    minWidth: "180px",
     cell: (row) => (
       <div className="data-list-action">
         <CursorFill
@@ -438,12 +542,11 @@ const columns = [
       </div>
     ),
   },
-
-]
+];
 
 class Ordonnances_recue extends React.Component {
   state = {
-    columns :[],
+    columns: [],
     data: [],
     ordonnances: {
       non_traité: 0,
@@ -455,11 +558,10 @@ class Ordonnances_recue extends React.Component {
     },
   };
 
- 
   componentDidMount() {
     // fetching the data from the database and passing it to the state
     this.setState({
-      columns :columns,
+      columns: columns,
       data: data,
       ordonnances: {
         non_traité: ordonnances.non_traité,
@@ -482,7 +584,6 @@ class Ordonnances_recue extends React.Component {
         <Row>
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
-              
               hideChart
               bg_color="danger"
               iconBg="danger"
@@ -544,7 +645,10 @@ class Ordonnances_recue extends React.Component {
 
         <Row>
           <Col sm="12">
-            <DataTableCustom   columns = {this.state.columns} data={this.state.data} />
+            <DataTableCustom
+              columns={this.state.columns}
+              data={this.state.data}
+            />
           </Col>
         </Row>
       </React.Fragment>

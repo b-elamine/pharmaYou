@@ -5,7 +5,7 @@ import {
   CardTitle,
   CardBody,
   Media,
-  Button,
+  // Button,
   Col,
 }
 from "reactstrap";
@@ -13,7 +13,7 @@ import {DollarSign, Truck, User, } from "react-feather";
 import StatisticsCard from "../../components/@vuexy/statisticsCard/StatisticsCard";
 
 
-class Nv_Partenaire extends React.Component {
+class Partenaire_Info extends React.Component {
   state = {
     row: this.props.location.state,
   };
@@ -113,4 +113,4 @@ class Nv_Partenaire extends React.Component {
     );
   }
 }
-export default Nv_Partenaire;
+export default Partenaire_Info;

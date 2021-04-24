@@ -192,16 +192,12 @@ const CalendrierListe = lazy(()=> import("./views/apps/calendar/Liste"))
 const LivreursMap = lazy(()=> import("./views/livreurs/LivreurMap"))
 const Livreurs = lazy(()=> import("./views/livreurs/livreur"))
 const Commandes_recues = lazy(()=> import("./views/Commandes/Reçue/Commandes_reçues"))
-
 const InfoLivreurs = lazy(()=> import("./views/livreurs/infoLivreur"))
-
 const Client_particuliers = lazy(()=> import('./views/Clients/Particulier/Client_particulier'))
-
 const Partenaire = lazy(()=> import("./views/Partenaire/Partenaire"))
-
 const Ordonnance = lazy(()=> import("./views/Ordonnances/Orodnnance/Ordonnance"));
-
-const Nv_Partenaire = lazy(()=> import("./views/Partenaire/Information_Partenaire"))
+const Partenaire_Info = lazy(()=> import("./views/Partenaire/Information_Partenaire"))
+const Nv_Partenaire = lazy(()=> import("./views/Partenaire/Nouveau_Partenair"))
 
 
 // Set Layout and Component Using App Route
@@ -270,7 +266,8 @@ class AppRouter extends React.Component {
           <AppRoute exact path="/livreurs/info" component= {InfoLivreurs} />
           <AppRoute exact path="/livreurs/salaire" component= {() => <h1>component of the salaire of the livreurs </h1>} />
           <AppRoute exact path="/users" component= {() => <h1>USERS </h1>} />
-          <AppRoute exact path="/partenaires/info" component= {Nv_Partenaire} />
+          <AppRoute exact path="/partenaires/info" component= {Partenaire_Info} />
+          <AppRoute exact path="/partenaires/nouveau_partenaire" component= {Nv_Partenaire} />
 
 
 
