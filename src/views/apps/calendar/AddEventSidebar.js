@@ -36,7 +36,7 @@ class AddEvent extends React.Component {
     facturation: 1,
     renumeration: 1,
     label: null,
-    allDay: true,
+    allDay: false,
     selectable: true,
     checked: false,
     editorState: EditorState.createEmpty(),
@@ -85,34 +85,39 @@ class AddEvent extends React.Component {
       let dateD = this.state.startDate;
       let dateF = this.state.endDate;
       for (let index = 0; index < 7; index++) {
-        console.log(this.state.startDate);
-        this.props.addEvent({
-          id: id + index,
-          title: this.state.title,
-          start: dateD.setDate(dateD.getDate() + index),
-          end: dateF.setDate(dateF.getDate() + index),
-          label:
-            this.state.label === null
-              ? "créneau_de_livraison"
-              : this.state.label,
-          allDay: this.state.allDay,
-          selectable: this.state.selectable,
-          facturation: this.state.facturation,
-          renumeration: this.state.renumeration,
-          editorState: this.state.editorState,
-        });
-        this.setState({
-          title: "",
-          startDate: new Date(),
-          endDate: new Date(),
-          label: null,
-          allDay: true,
-          selectable: true,
-          facturation: 1,
-          renumeration: 1,
-          editorState: EditorState.createEmpty(),
-          checked: false,
-        });
+        if (index === 0) {
+          this.props.addEvent({
+            id: id + index,
+            title: this.state.title,
+            start: dateD.setDate(dateD.getDate()),
+            end: dateF.setDate(dateF.getDate()),
+            label:
+              this.state.label === null
+                ? "créneau_de_livraison"
+                : this.state.label,
+            allDay: this.state.allDay,
+            selectable: this.state.selectable,
+            facturation: this.state.facturation,
+            renumeration: this.state.renumeration,
+            editorState: this.state.editorState,
+          });
+        } else {
+          this.props.addEvent({
+            id: id + index,
+            title: this.state.title,
+            start: dateD.setDate(dateD.getDate() + 1),
+            end: dateF.setDate(dateF.getDate() + 1),
+            label:
+              this.state.label === null
+                ? "créneau_de_livraison"
+                : this.state.label,
+            allDay: this.state.allDay,
+            selectable: this.state.selectable,
+            facturation: this.state.facturation,
+            renumeration: this.state.renumeration,
+            editorState: this.state.editorState,
+          });
+        }
       }
     } else {
       this.props.addEvent({
@@ -134,7 +139,7 @@ class AddEvent extends React.Component {
       startDate: new Date(),
       endDate: new Date(),
       label: null,
-      allDay: true,
+      allDay: false,
       selectable: true,
       facturation: 1,
       renumeration: 1,
@@ -156,7 +161,7 @@ class AddEvent extends React.Component {
           ? new Date()
           : new Date(nextProps.eventInfo.end),
       label: nextProps.eventInfo === null ? null : nextProps.eventInfo.label,
-      allDay: nextProps.eventInfo === null ? true : nextProps.eventInfo.allDay,
+      allDay: nextProps.eventInfo === null ? false : nextProps.eventInfo.allDay,
       selectable:
         nextProps.eventInfo === null ? true : nextProps.eventInfo.selectable,
       renumeration:
@@ -266,12 +271,13 @@ class AddEvent extends React.Component {
                   className="form-control"
                   value={this.state.startDate}
                   onChange={(date) => this.handleDateChange(date)}
-                  // options={{ altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", }}
+                  options={{ minDate: "today" }}
                 />
               </FormGroup>
               <FormGroup>
                 <Label for="startDate">Créneau entre</Label>
                 <Flatpickr
+                  minDate="today"
                   id="startDate"
                   className="form-control"
                   value={this.state.startDate}
@@ -283,14 +289,15 @@ class AddEvent extends React.Component {
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
+                    minTime: new Date().getTime(),
                   }}
-                  // options={{ altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d", }}
                 />
               </FormGroup>
             </FormGroup>
             <FormGroup>
               <Label for="endDate">Et</Label>
               <Flatpickr
+                minDate="today"
                 id="endDate"
                 className="form-control"
                 value={this.state.endDate}
@@ -302,6 +309,7 @@ class AddEvent extends React.Component {
                   noCalendar: true,
                   dateFormat: "H:i",
                   time_24hr: true,
+                  minTime: new Date().getTime(),
                 }}
               />
             </FormGroup>
