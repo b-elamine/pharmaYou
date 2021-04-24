@@ -15,13 +15,13 @@ const CardDashed = (props) => {
             borderRadius: "30px 0px 0px 30px",
             borderStyle: "dashed",
             borderColor: props.bg_color,
-            // textAlign:"center",
             color: "white",
             alignItems: "center",
             display: "flex",
+            // textAlign:"left"
           }}
         >
-          <p className="font-small-2 ml-0 mr-1">{props.label} </p>
+          <p className="font-small-1 ml-0 mr-1">{props.label} </p>
         </Col>
         <Col
           xl="5"
@@ -79,9 +79,9 @@ class Troisieme_section extends React.Component {
         <Badge color="light-success text-left">
           <h5 className="success ml-0 font-weight-bold">Note du client </h5>
           <p className="text-wrap text-lowercase">
-            Tootsie roll lollipop lollipop icing. Wafer cookie danish macaroon.
-            Liquorice fruitcake apple pie I love cupcake cupcake.Tootsie roll
-            lollipop lollipop icing. Wafer cookie danish macaroon
+            {this.props.ordonnance.patient.note
+              ? this.props.ordonnance.patient.note
+              : "Pas de note"}
           </p>
         </Badge>
       </Card>

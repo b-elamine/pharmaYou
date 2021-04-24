@@ -335,7 +335,7 @@ const columns = [
       row.status === "en attente" ? (
         <Badge
           pill
-          style={{ backgroundColor: "yellow", color: "red" }}
+          style={{ backgroundColor: "#f8e7b6", color: "#ff7535" }}
           className="pl-50 pr-50 font-small-1 text-wrap text-bold-500"
         >
           <img src={Icon} alt="Icon" height="22" width="22" className="mr-50" />
@@ -347,8 +347,16 @@ const columns = [
           {row.status}
         </Badge>
       ) : row.status === "En livraison" ? (
-        <Badge color="light-warning pl-50 pr-50 " pill>
-          <Truck className="warning mr-50" size={20} />
+        <Badge
+          style={{
+            color: "#180852",
+            backgroundColor: "#e9e8ee",
+            fontWeight: "bold",
+          }}
+          color="pl-50 pr-50"
+          pill
+        >
+          <Truck className="mr-50" size={20} />
           {row.status}
         </Badge>
       ) : row.status === "Livré" ? (
@@ -448,15 +456,19 @@ const columns = [
       row.paiment === "En attente" ? (
         <Badge
           pill
-        //   style={{ color: "red" }}
+          //   style={{ color: "red" }}
           className="gradient-light-primary pl-50 pr-50 text-warning text-wrap font-weight-bold"
         >
           <CreditCard2Back className="light-warning mr-50" size={20} />
           {row.paiment}
         </Badge>
       ) : row.paiment === "Reglé" ? (
-        <Badge pill color="light-success pl-50 pr-50  text-success text-wrap font-weight-bold" size={20}>
-          <CreditCard2Back  className="light-success mr-50" size={20} />
+        <Badge
+          pill
+          color="light-success pl-50 pr-50  text-success text-wrap font-weight-bold"
+          size={20}
+        >
+          <CreditCard2Back className="light-success mr-50" size={20} />
           <strong>{row.paiment}</strong>
         </Badge>
       ) : (
