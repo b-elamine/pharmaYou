@@ -20,6 +20,7 @@ import {
   RecordCircleFill,
 } from "react-bootstrap-icons";
 import Select from "react-select";
+import thunk from "redux-thunk";
 
 const CommentaireBlock = (props) => {
   return (
@@ -63,6 +64,7 @@ const CommentaireBlock = (props) => {
 
 class QuatriemeSection extends React.Component {
   state = {
+    commentaires_notes: [],
     inputs: [
       {
         id: 1,
@@ -72,7 +74,14 @@ class QuatriemeSection extends React.Component {
       },
     ],
     total: 0,
+    note_patient: "",
+    commentaire_interne: "",
   };
+  componentDidMount() {
+    this.setState({
+      commentaires_notes: this.props.commentaires_notes,
+    });
+  }
 
   quantité_input_change_handler(value, id) {
     this.setState((prev_state, props) => {
@@ -83,7 +92,7 @@ class QuatriemeSection extends React.Component {
         ...this.state.inputs[updated_produit_index],
       };
 
-      updated_produit.quantité = isNaN(parseInt(value)) ? 0 : parseInt(value);
+      updated_produit.quantité = isNaN(parseInt(value)) ? "" : parseInt(value);
       const inputs = [...this.state.inputs];
       inputs[updated_produit_index] = updated_produit;
       return {
@@ -99,27 +108,99 @@ class QuatriemeSection extends React.Component {
       const updated_produit = {
         ...this.state.inputs[updated_produit_index],
       };
-
-      updated_produit.prix = isNaN(parseInt(value)) ? 0 : parseInt(value);
+      updated_produit.prix = isNaN(parseInt(value)) ? "" : parseInt(value);
       const inputs = [...this.state.inputs];
       inputs[updated_produit_index] = updated_produit;
-      console.log(inputs);
+      return {
+        inputs: inputs,
+      };
+    });
+  }
+  produit_input_change_handler(value, id) {
+    this.setState((prev_state, props) => {
+      const updated_produit_index = prev_state.inputs.findIndex((el) => {
+        return el.id === id;
+      });
+      const updated_produit = {
+        ...this.state.inputs[updated_produit_index],
+      };
+      updated_produit.produit = value;
+      const inputs = [...this.state.inputs];
+      inputs[updated_produit_index] = updated_produit;
       return {
         inputs: inputs,
       };
     });
   }
 
+  note_patient_input_handle_change(value) {
+    this.setState((prev_state, props) => {
+      return {
+        note_patient: value,
+      };
+    });
+  }
+  commentaire_interne_input_handle_change(value) {
+    this.setState((prev_state, props) => {
+      return {
+        commentaire_interne: value,
+      };
+    });
+  }
+
+  add_commentaire_handler() {
+    if (this.state.commentaire_interne.length === 0) {
+      return alert("Il faut entrer un commentaire");
+    }
+    const new_commentaire_id =
+      this.state.commentaires_notes.slice(-1)[0].id + 1;
+    const new_commentaire_image = this.state.commentaires_notes.slice(-1)[0]
+      .image;
+    const new_commentaire_interne = {
+      id: new_commentaire_id,
+      commentaire: this.state.commentaire_interne,
+      type: "Commentaire interne",
+      image: new_commentaire_image,
+      nom: "utilisateur connecter",
+    };
+    const new_comment_array = this.state.commentaires_notes;
+    new_comment_array.push(new_commentaire_interne);
+    this.setState({
+      commentaires_notes: new_comment_array,
+      commentaire_interne  : ''
+    });
+  }
+  add_note_handler() {
+    if (this.state.note_patient.length === 0) {
+      return alert("Il faut entrer une note");
+    }
+    const new_note_id =
+      this.state.commentaires_notes.slice(-1)[0].id + 1;
+    const new_note_image = this.state.commentaires_notes.slice(-1)[0].image;
+    const new_note_patient = {
+      id: new_note_id,
+      commentaire: this.state.note_patient,
+      type: "Note envoyé au client",
+      image: new_note_image,
+      nom: "utilisateur connecter",
+    };
+    const new_comments_notes_array = this.state.commentaires_notes;
+    new_comments_notes_array.push(new_note_patient);
+    this.setState({
+      commentaires_notes: new_comments_notes_array,
+      note_patient  : ''
+    });
+  }
+
   render() {
     console.log(this.state);
-    // const total_array = this.state.inputs.map((item) => {
-    //   return item.quantité * item.prix;
-    // });
-    // let total = 0;
-    // total_array.forEach((item) => {
-    //   total = total + item;
-    // });
-    // console.log("the total is : ", total);
+    let total = 0;
+    const total_array = this.state.inputs.map((item) => {
+      return item.quantité * item.prix;
+    });
+    total_array.forEach((item) => {
+      total = total + item;
+    });
 
     const options = [
       { value: "option_1", label: "Option 1" },
@@ -143,6 +224,10 @@ class QuatriemeSection extends React.Component {
             placeholder="Notes"
             className="ml-2"
             style={{ width: "95%" }}
+            value={this.state.note_patient}
+            onChange={(e) => {
+              this.note_patient_input_handle_change(e.target.value);
+            }}
           />
           <Row>
             <Col>
@@ -154,7 +239,7 @@ class QuatriemeSection extends React.Component {
               <Button
                 className="mt-2 bg-success text-white float-right mr-2 p-75  mb-2"
                 onClick={() => {
-                  alert("Envoyer une note au client.");
+                  this.add_note_handler()
                 }}
               >
                 Envoyer
@@ -190,6 +275,12 @@ class QuatriemeSection extends React.Component {
                         id="produits"
                         className="mb-2"
                         placeholder="Produit 1,produit 2,produit 3"
+                        onChange={(e) => {
+                          this.produit_input_change_handler(
+                            e.target.value,
+                            item.id
+                          );
+                        }}
                       />
                     );
                   })}
@@ -281,7 +372,7 @@ class QuatriemeSection extends React.Component {
                   <hr className="w-75"></hr>
                   <p className=" text-dark ">
                     Total : {"\u00A0"} {"\u00A0"}{" "}
-                    <strong className="">39€</strong>
+                    <strong className="">{total} €</strong>
                   </p>
                 </Col>
               </Row>
@@ -298,12 +389,16 @@ class QuatriemeSection extends React.Component {
             placeholder="RAS"
             className="ml-2"
             style={{ width: "95%", marginTop: "20px" }}
+            value={this.state.commentaire_interne}
+            onChange={(e) => {
+              this.commentaire_interne_input_handle_change(e.target.value);
+            }}
           />
           <Button
             color="primary"
             className="mt-2 text-white float-right font-weight-bold mr-2 p-75  mb-2"
             onClick={() => {
-              alert("Sauvegarder le commentaire interne");
+              this.add_commentaire_handler();
             }}
           >
             Sauvgarder
@@ -317,20 +412,26 @@ class QuatriemeSection extends React.Component {
               <ListUl size={17} />
               Historique commentaire et note du patient
             </CardTitle>
-            {this.props.commentaires_notes.map((comment) => {
-              const icon_color =
-                comment.type === "Commentaire interne" ? "#fa680c" : "#28c76f";
-              return (
-                <CommentaireBlock
-                  key={comment.id}
-                  icon_color={icon_color}
-                  block_type={comment.type}
-                  block_note={comment.commentaire}
-                  image_path={comment.image}
-                  name={comment.nom}
-                />
-              );
-            })}
+            {this.state.commentaires_notes.length === 0 ? (
+              <strong>Pas de commentaire pour l'instant</strong>
+            ) : (
+              this.state.commentaires_notes.map((comment) => {
+                const icon_color =
+                  comment.type === "Commentaire interne"
+                    ? "#fa680c"
+                    : "#28c76f";
+                return (
+                  <CommentaireBlock
+                    key={comment.id}
+                    icon_color={icon_color}
+                    block_type={comment.type}
+                    block_note={comment.commentaire}
+                    image_path={comment.image}
+                    name={comment.nom}
+                  />
+                );
+              })
+            )}
           </Card>
         </Badge>
       </Card>
