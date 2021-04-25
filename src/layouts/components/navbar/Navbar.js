@@ -9,6 +9,7 @@ import {
 } from "../../../redux/actions/auth/loginActions"
 import NavbarUser from "./NavbarUser"
 import userImg from "../../../assets/img/portrait/small/avatar-s-11.jpg"
+import NavbarBookmarks from "./NavbarBookmarks"
 
 const UserName = props => {
   let username = ""
@@ -72,10 +73,10 @@ const ThemeNavbar = props => {
               id="navbar-mobile"
             >
               <div className="bookmark-wrapper">
-                {/* <NavbarBookmarks
+                <NavbarBookmarks
                   sidebarVisibility={props.sidebarVisibility}
                   handleAppOverlay={props.handleAppOverlay}
-                /> */}
+                />
               </div>
               {props.horizontal ? (
                 <div className="logo d-flex align-items-center">

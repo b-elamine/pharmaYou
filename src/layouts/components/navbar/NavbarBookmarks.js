@@ -168,7 +168,7 @@ class NavbarBookmarks extends React.PureComponent {
             </NavLink>
           </NavItem>
         </ul>
-        <ul className="nav navbar-nav bookmark-icons">
+        {/* <ul className="nav navbar-nav bookmark-icons">
           {this.renderBookmarks()}
           {extraStarred.length > 0 ? (
             <NavItem>
@@ -318,7 +318,7 @@ class NavbarBookmarks extends React.PureComponent {
               />
             </div>
           </NavItem>
-        </ul>
+        </ul> */}
       </div>
     )
   }

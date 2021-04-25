@@ -38,7 +38,7 @@ const CardDashed = (props) => {
             // textAlign:"left"
           }}
         >
-          <p className="font-small-1 font-weight-bold ml-0 mr-1">{props.label} </p>
+          <p className="font-small-1 ml-0 mr-1">{props.label} </p>
         </Col>
         <Col
           xl="5"
@@ -146,7 +146,7 @@ class Troisieme_section extends React.Component {
           </Col>
           <Col>
             <CardDashed bg_color="#1aac1a" label="Carte Vital"></CardDashed>
-            <div >
+            <div style={{ width: "90%" }}>
               <InputGroup>
                 <Input size="sm" className="block-example border border-right-0 border-success" placeholder="Numero de sécurité social"/>
                 <InputGroupAddon addonType="append">
@@ -159,12 +159,12 @@ class Troisieme_section extends React.Component {
           </Col>
           <Col>
             <CardDashed bg_color="#d01b47" label="Mutuelle"></CardDashed>
-            <div>
+            <div style={{width:"90%",marginTop:"-20px"}}>
               <Label>Date d'expiration</Label>
             <Flatpickr
               id="Date"
               className="form-control"
-              // value={this.state.Date}
+              value={this.state.Date}
               onChange={(date) => {
                 this.setState({ Date: date });
               }}
