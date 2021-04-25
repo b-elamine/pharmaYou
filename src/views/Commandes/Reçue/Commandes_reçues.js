@@ -7,6 +7,8 @@ import Icon from "./Icon.svg";
 import { Badge } from "reactstrap";
 import { CursorFill, EyeFill, CreditCard2Back } from "react-bootstrap-icons";
 
+import axios from "../../../axios";
+
 import {
   Truck,
   ExclamationTriangleFill,
@@ -544,8 +546,29 @@ class Commande_recue extends React.Component {
     },
   };
 
+  fetching_data = async () => {
+    console.log("fetching ....");
+    const commandes = await axios.get("/commandes?access_token=a");
+    console.log(commandes);
+  };
+
   componentDidMount() {
+    // this.fetching_data();
     // fetching the data from the database and passing it to the state
+
+    axios
+      .get("/commandes?access_token=a", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => console.log(err.message));
+
     this.setState({
       columns: columns,
       data: data,
@@ -563,7 +586,7 @@ class Commande_recue extends React.Component {
     return (
       <React.Fragment>
         <Breadcrumbs
-          breadCrumbTitle="Commabdes Reçues."
+          breadCrumbTitle="Commandes Reçues."
           breadCrumbParent="Commandes"
         />
         <Row>

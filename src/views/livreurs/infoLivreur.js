@@ -14,7 +14,7 @@ import { Truck, Calendar, DollarSign } from "react-feather";
 import StatisticsCard from "../../components/@vuexy/statisticsCard/StatisticsCard";
 import HistoriquePeiment from "./livreurHistoriquePaiement";
 import CommandesLivres from "./LivreurCommandesLivré";
-import { Building, Check, GeoFill, ListUl, RecordCircleFill, SignpostSplit, Telephone } from "react-bootstrap-icons";
+import { Building, GeoFill, ListUl, RecordCircleFill, SignpostSplit, Telephone } from "react-bootstrap-icons";
 
 const CommentaireBlock = (props) => {
   return (

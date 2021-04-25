@@ -13,9 +13,6 @@ import StatisticsCard from "../../../components/@vuexy/statisticsCard/Statistics
 import CommandesPartenaire from "./commandes_partenaire_table";
 import { history } from "../../../history";
 import {
-  Building,
-  GeoFill,
-  SignpostSplit,
   Check2, 
   CircleFill,
   StarFill,TelephoneFill
