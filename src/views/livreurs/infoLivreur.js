@@ -8,13 +8,21 @@ import {
   Button,
   Col,
   Row,
+  Badge,
   //   Input,
 } from "reactstrap";
 import { Truck, Calendar, DollarSign } from "react-feather";
 import StatisticsCard from "../../components/@vuexy/statisticsCard/StatisticsCard";
 import HistoriquePeiment from "./livreurHistoriquePaiement";
 import CommandesLivres from "./LivreurCommandesLivré";
-import { Building, Check, GeoFill, ListUl, RecordCircleFill, SignpostSplit, Telephone } from "react-bootstrap-icons";
+import {
+  Building,
+  Check2,
+  ListUl,
+  RecordCircleFill,
+  Telephone,
+} from "react-bootstrap-icons";
+import { FaRoad, FaUniversity, FaCar, FaMotorcycle } from "react-icons/fa";
 
 const CommentaireBlock = (props) => {
   return (
@@ -192,32 +200,55 @@ class LivreursMap extends React.Component {
               </div>
             </Col>
 
-
-              
             <Col xl="2">
-            <div className="d-flex">
-              <GeoFill className="mr-1" size={14} />
-              <p className="font-weight-bold ">Adresse</p>
-            </div>
-            <div className="d-flex">
-              <SignpostSplit className="mr-1" size={14} />
-              <p className="font-weight-bold ">Code postal</p>
-            </div>
-            <div className="d-flex">
-              <Building className="mr-1" size={14} />
-              <p className="font-weight-bold ">Ville</p>
-            </div>
-            <div className="d-flex">
-              <Telephone className="mr-1" size={14} />
-              <p className="font-weight-bold ">Contact</p>
-            </div>
-          </Col>
-          <Col xl="2">
-            <p className=" font-small-3">19 rue merabet ahmed</p>
-            <p className="">20000</p>
-            <p className="">Saida</p>
-            <p className="">0559863111</p>
-          </Col>
+              <div className="d-flex">
+                <Check2 className="mr-1" size={14} />
+                <p className="font-weight-bold ">Status</p>
+              </div>
+              <div className="d-flex">
+                <FaRoad className="mr-1" size={14} />
+                <p className="font-weight-bold ">Vehicule</p>
+              </div>
+              <div className="d-flex">
+                <Building className="mr-1" size={14} />
+                <p className="font-weight-bold ">Siret</p>
+              </div>
+              <div className="d-flex">
+                <Telephone className="mr-1" size={14} />
+                <p className="font-weight-bold ">Contact</p>
+              </div>
+              <div className="d-flex">
+                <FaUniversity className="mr-1" size={14} />
+                <p className="font-weight-bold ">Iban</p>
+              </div>
+            </Col>
+            <Col xl="2">
+              {/* <Badge
+                className="text-truncate mb-1"
+                color={
+                  this.state.row.status === "Desactivé"
+                    ? "light-danger"
+                    : this.state.row.status === "Actif"
+                    ? "light-success"
+                    : "light-primary"
+                }
+                pill
+              > */}
+                <p>{this.state.row.status}</p>
+              {/* </Badge> */}
+
+              <Badge className='mb-1' style={{ padding: "8" }} color="warning" pill>
+                {this.state.row.vihecule === "voiture" ? (
+                  <FaCar size="14" style={{ marginRight: "5px" }} />
+                ) : (
+                  <FaMotorcycle size="14" style={{ marginRight: "5px" }} />
+                )}
+                {this.state.row.vihecule}
+              </Badge>
+              <p className="">5666766768</p>
+              <p className="">(+33)456-3456</p>
+              <p className="">FR 465372 83636 9983</p>
+            </Col>
             <Col lg="3">
               <CardTitle className="font-small-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
                 <ListUl className="mr-1" size={17} />
