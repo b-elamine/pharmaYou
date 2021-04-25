@@ -2,9 +2,10 @@ import React from "react";
 import { Row, Col, Badge } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
-import { Check, Edit, Trash, AlertTriangle } from "react-feather";
+import { Check, Edit, Trash, AlertTriangle, Eye } from "react-feather";
 
 import CustomSelects from "./CustomSelects";
+import { history } from "../../../history";
 // fake database
 const data = [
   {
@@ -439,21 +440,20 @@ const columns = [
   {
     name: "ACTION",
     selector: "action",
-    // il faut faire des icons
     cell: (row) => (
       <div className="data-list-action">
-        <Edit
+        <Eye
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            alert("editing the client " + row.id);
+            history.push("/client/particulier/infos",row);
           }}
         />
-        <Trash
+        <Edit
           className="cursor-pointer"
           size={20}
           onClick={() => {
-            alert("deleting the client " + row.id);
+            history.push("/client/particulier/edit",row);
           }}
         />
       </div>
@@ -504,10 +504,10 @@ class Client_particuliers extends React.Component {
       this.setState({ filteredData });
     }
   };
-// adding handle filter role 
+  // adding handle filter role
 
   render() {
-    const { value, filteredData } = this.state; 
+    const { value, filteredData } = this.state;
     return (
       <React.Fragment>
         <Breadcrumbs
@@ -525,6 +525,7 @@ class Client_particuliers extends React.Component {
           <Col sm="12">
             <DataTableCustom
               add_new
+              add_new_value="Ajouter un client"
               columns={columns}
               data={value.length ? filteredData : this.state.data}
             />

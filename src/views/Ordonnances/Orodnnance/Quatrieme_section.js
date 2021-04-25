@@ -20,7 +20,6 @@ import {
   RecordCircleFill,
 } from "react-bootstrap-icons";
 import Select from "react-select";
-import thunk from "redux-thunk";
 
 const CommentaireBlock = (props) => {
   return (

@@ -38,7 +38,6 @@ class FirstSection extends React.Component {
                   {" "}
                   {this.state.ordonnance.patient.address}{" "}
                 </p>
-                {/* <p style={{ marginBottom: "0" }}>Small Heath, 75012 paris</p> */}
                 <div className="d-flex">
                   <p style={{ marginBottom: "0" }}>
                     {" "}

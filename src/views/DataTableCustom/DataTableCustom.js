@@ -18,7 +18,7 @@ const CustomHeader = (props) => {
       <div className="add-new">
         {props.add_new ? (
           <Button.Ripple color="primary ml-75 text-bold-500">
-            Ajouter Partenaire
+            {props.add_new_value}
           </Button.Ripple>
         ) : null}
       </div>
@@ -122,6 +122,7 @@ class DataTableCustom extends React.Component {
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
+                add_new_value = {this.props.add_new_value}
                 value={value}
                 handleFilter={this.handleFilter}
               />
