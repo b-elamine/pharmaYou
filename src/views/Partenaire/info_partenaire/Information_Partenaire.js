@@ -5,13 +5,13 @@ import {
   CardTitle,
   CardBody,
   Media,
-  // Button,
+  Button,
   Col,
-}
-from "reactstrap";
-import {DollarSign, Truck, User, } from "react-feather";
-import StatisticsCard from "../../components/@vuexy/statisticsCard/StatisticsCard";
-
+} from "reactstrap";
+import { TrendingUp, DollarSign, User } from "react-feather";
+import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
+import Commandes_partenaire from "./commandes_partenaire_table";
+import { history } from "../../../history";
 
 class Partenaire_Info extends React.Component {
   state = {
@@ -22,7 +22,7 @@ class Partenaire_Info extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Informations livreurs</CardTitle>
+          <CardTitle>Informations partenaire</CardTitle>
         </CardHeader>
         <CardBody>
           <div className="d-flex flex-sm-row flex-column ">
@@ -32,82 +32,76 @@ class Partenaire_Info extends React.Component {
                   <Media
                     style={{ borderRadius: "10px" }}
                     object
-                    // src={}
+                    src={this.state.row.image}
                     alt="User"
                     height="100"
                     width="100"
                   />
                 </Media>
                 <Media body>
-                  <h4>Abdou Berrezoug</h4>
+                  <h4>{this.state.row.name}</h4>
                   <p style={{ marginTop: "-10px" }}>
-                    <small>a.Berrezoug@esi-sba.dz</small>
+                    <small>{this.state.row.email}</small>
                   </p>
                   <div className="d-flex flex-sm-row flex-column justify-content-start px-0">
-                    {/* <Button.Ripple
+                    <Button.Ripple
                       tag="label"
                       className="mr-50 cursor-pointer"
                       color="primary"
+                      onClick={() => {
+                        history.push(
+                          "/partenaires/modifier_Partenaire",
+                          this.state.row
+                        );
+                      }}
                     >
                       Modifier
-                      <Input type="file" name="file" id="uploadImg" hidden />
+                      {/* <Input type="file" name="file" id="uploadImg" hidden /> */}
                     </Button.Ripple>
-                    {this.state.row.status === "Actif" ? (
-                      <Button.Ripple outline color="danger">
-                        Desactiver
-                      </Button.Ripple>
-                       ) : (
-                      <Button.Ripple outline color="success">
-                        Activer
-                      </Button.Ripple>
-                    )} */}
+                    <Button.Ripple outline color="danger">
+                      Supprimer
+                    </Button.Ripple>
                   </div>
                 </Media>
               </Media>
-              <div
-                style={{ marginTop: "20px", marginLeft: "40px" }}
-                className="d-flex flex-sm-row flex-column justify-content-start px-0"
-              >
-                <Col lg="2" sm="2">
+              <div className="d-flex flex-sm-row flex-column justify-content-start px-0 ">
+                <Col lg="3" sm="3">
                   <StatisticsCard
                     hideChart
                     iconLeft
                     bg_color="white"
                     iconBg="warning"
-                    icon={<Truck className="warning" size={24} />}
-                    stat="54.654$"
+                    icon={<TrendingUp className="warning" size={28} />}
+                    stat="54"
                     statTitle="Ordonnances envoyées"
                   />
                 </Col>
-                <Col lg="2" sm="2">
+                <Col lg="3" sm="2">
                   <StatisticsCard
                     hideChart
                     iconLeft
                     bg_color="white"
                     iconBg="success"
-                    icon={<DollarSign className="success" size={24} />}
-                    stat="89.000$"             //{`${this.state.row.revenue}`}
+                    icon={<DollarSign className="success" size={28} />}
+                    stat={this.state.row.montant} //{`${this.state.row.revenue}`}
                     statTitle="Chiffre d'affaire"
                   />
                 </Col>
-                <Col lg="2" sm="2">
+                <Col lg="3" sm="2">
                   <StatisticsCard
                     hideChart
                     iconLeft
                     bg_color="white"
                     iconBg="primary"
-                    icon={<User className="primary" size={24} />}
+                    icon={<User className="primary" size={28} />}
                     stat="90"
                     statTitle="Patients"
                   />
                 </Col>
               </div>
             </div>
-
-          
           </div>
-          {/* <HistoriquePeiment /> */}
-          {/* <CommandesLivres /> */}
+          <Commandes_partenaire />
         </CardBody>
       </Card>
     );

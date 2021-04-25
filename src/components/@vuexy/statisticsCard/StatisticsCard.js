@@ -43,9 +43,9 @@ class StatisticsCards extends React.Component {
             </div>
           </div>
           <div className="title-section">
-            <h4 className="text-bold-600 mt-1 mb-25 ">{this.props.stat}</h4>
+            <h4 className="text-bold-600 mt-1 mb-25 ml-75">{this.props.stat}</h4>
 
-            <p className="mb-0 p-0 text-dark font-medium-25">{this.props.statTitle}</p>
+            <p className="mb-0 p-0 text-dark font-medium-25 ml-75">{this.props.statTitle}</p>
           </div>
         </CardBody>
         {!this.props.hideChart && (
