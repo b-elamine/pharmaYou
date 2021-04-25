@@ -17,11 +17,10 @@ const CustomHeader = (props) => {
   return (
     <div className="d-flex flex-row-reverse">
       <div className="add-new">
-        {props.add_new ? (
-          <Button.Ripple color="primary ml-75 text-bold-500">
+          <Button.Ripple onClick={props.add_new} color="primary ml-75 text-bold-500">
             Ajouter Partenaire
           </Button.Ripple>
-        ) : null}
+        
       </div>
       <div className="position-relative has-icon-left mb-1">
         <Input value={props.value} onChange={(e) => props.handleFilter(e)} />

@@ -460,7 +460,7 @@ const columns = [
           className="cursor-pointer mr-1"
           size={20}
           onClick=
-            {(row) => {
+            {() => {
               history.push("/partenaires/info",row);
             }}
         />
@@ -468,7 +468,8 @@ const columns = [
           className="cursor-pointer"
           size={20}
           onClick={() => {
-            alert("deleting the client " + row.id);
+            history.push("/partenaires/modifier_partenaire",row)
+
           }}
         />
       </div>
@@ -594,6 +595,10 @@ class Partenaire extends React.Component {
       this.setState({ filteredData });
     }
   };
+
+  add_new =()=>{
+    history.push("/partenaires/nouveau_partenaire")
+  }
   handle_filter_profession = (e) => {
     let value = e.value;
     let data = this.state.data;
@@ -653,7 +658,7 @@ class Partenaire extends React.Component {
           </Col>
           <Col sm="12">
             <DataTablePartenaire
-              add_new
+              add_new={this.add_new}
               columns={columns}
               data={value.length ? filteredData : this.state.data}
             />
