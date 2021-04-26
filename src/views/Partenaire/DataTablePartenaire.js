@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, Input, Button } from "reactstrap";
 import DataTable from "react-data-table-component";
-import { history } from "../../history";
+// import { history } from "../../history";
 import { withRouter } from "react-router-dom";
 
 import {
@@ -88,10 +88,10 @@ class DataTablePartenaire extends React.Component {
 
   render() {
     let { value, filteredData } = this.state;
-    const ordonnance = (row) => {
-      const url = `/ordonnance/info`;
-      history.push(url, row);
-    };
+    // const ordonnance = (row) => {
+    //   const url = `/ordonnance/info`;
+    //   history.push(url, row);
+    // };
     return (
       <Card className="mt-5">
         <CardBody className="rdt_Wrapper pt-75">
