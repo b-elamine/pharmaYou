@@ -1,5 +1,1 @@
-const test = [
-    {id : 1,t : 'hey1'}, 
-    {id : 2,t :"hey2"}
-]
-console.log(test.slice(-1)[0].id)
+console.log(new Date(1618964469).toISOString().split("T")[0]);

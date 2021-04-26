@@ -178,7 +178,7 @@ class Troisieme_section extends React.Component {
           <p className="text-wrap text-lowercase">
             {this.props.ordonnance.patient.note
               ? this.props.ordonnance.patient.note
-              : "Pas de note"}
+              : "Pas de note."}
           </p>
         </Badge>
       </Card>

@@ -9,44 +9,43 @@ import ForthSection from "./Quatrieme_section";
 import PartieDroiteHaut from "./PartieDroite_1";
 import PartieDroiteBas from "./PartieDroite_2";
 
-
 const commentaires_notes = [
   {
-    id:1,
-    type : "Commentaire interne", 
-    commentaire : "Bon client", 
-    image : require("../../../assets/img/portrait/small/avatar-s-2.jpg"), 
-    nom : "Zongo meryouli"
+    id: 1,
+    type: "Commentaire interne",
+    commentaire: "Bon client",
+    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+    nom: "Zongo meryouli",
   },
   {
-    id:2,
-    type : "Commentaire interne", 
-    commentaire : "Un client deyer ki tfou", 
-    image : require("../../../assets/img/portrait/small/avatar-s-1.jpg"), 
-    nom : "Benssnan zakzouk"
+    id: 2,
+    type: "Commentaire interne",
+    commentaire: "Un client deyer ki tfou",
+    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
+    nom: "Benssnan zakzouk",
   },
   {
-    id:3,
-    type : "Note envoyé au client", 
-    commentaire : "4 dose de brygabaline", 
-    image : require("../../../assets/img/portrait/small/avatar-s-3.jpg"), 
-    nom : "Nadjet Boudouara"
+    id: 3,
+    type: "Note envoyé au client",
+    commentaire: "4 dose de brygabaline",
+    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
+    nom: "Nadjet Boudouara",
   },
   {
-    id:4,
-    type : "Note envoyé au client", 
-    commentaire : "4 dose de brygabaline", 
-    image : require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-    nom : "Nadjet Boudouara"
+    id: 4,
+    type: "Note envoyé au client",
+    commentaire: "4 dose de brygabaline",
+    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+    nom: "Nadjet Boudouara",
   },
   {
-    id:5,
-    type : "Commentaire interne", 
-    commentaire : "Client ki soukour", 
-    image : require("../../../assets/img/portrait/small/avatar-s-5.jpg"), 
-    nom : "Djaluidji Boufon"
+    id: 5,
+    type: "Commentaire interne",
+    commentaire: "Client ki soukour",
+    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
+    nom: "Djaluidji Boufon",
   },
-]
+];
 
 class Ordonnance extends Component {
   state = {
@@ -65,19 +64,17 @@ class Ordonnance extends Component {
             </Card>
             <hr className="mb-0 mt-0" />
             <Card>
-              <SecondSection 
-              ordonnance ={this.props.location.state}
-               />
+              <SecondSection ordonnance={this.props.location.state} />
             </Card>
             <hr />
             <Card>
-              <ThirdSection ordonnance ={this.props.location.state} />
+              <ThirdSection ordonnance={this.props.location.state} />
             </Card>
             <hr />
-            <ForthSection 
-            ordonnance={this.props.location.state}
-            commentaires_notes = {commentaires_notes}
-             />
+            <ForthSection
+              ordonnance={this.props.location.state}
+              commentaires_notes={commentaires_notes}
+            />
           </Card>
         </Col>
         <Col xl="3">

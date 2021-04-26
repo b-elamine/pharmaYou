@@ -3,6 +3,9 @@ import { Col, Row, CardBody, Badge, FormGroup, Label, Input } from "reactstrap";
 import Logo from "../../../assets/img/logo/logo_pharmaYou.PNG";
 import {
   Calendar2Check,
+  Check2,
+  Cone,
+  Exclamation,
   ExclamationTriangleFill,
   HourglassSplit,
   Truck,
@@ -18,16 +21,17 @@ class FirstSection extends React.Component {
     });
   }
   render() {
+    console.log(this.state.ordonnance);
     return (
       <Row>
         <Col xl="8">
           <CardBody className="d-flex pb-0">
             <img src={Logo} alt="PharmaYouLogo" height="25px" width="150px" />
 
-            {this.state.ordonnance.status === "non_traité" ? (
+            {this.state.ordonnance.status === "non-traité" ? (
               <Badge
                 pill
-                style={{ width: "150px", height: "25px", fontSize: "10px" }}
+                style={{ width: "130px", height: "25px", fontSize: "12px" }}
                 color="light-danger pl-50 pr-50 text-wrap ml-50 text-left"
               >
                 <ExclamationTriangleFill className="mr-50" size={14} />
@@ -49,7 +53,7 @@ class FirstSection extends React.Component {
                 <Truck className="mr-50" size={14} />
                 En livraison
               </Badge>
-            ) : this.state.ordonnance.status === "livré" ? (
+            ) : this.state.ordonnance.status === "livrée" ? (
               <Badge
                 pill
                 style={{
@@ -61,7 +65,7 @@ class FirstSection extends React.Component {
                 color="light-success pl-50 pr-50 text-wrap ml-50 text-left"
               >
                 <Truck className="success mr-50" size={14} />
-                Livré
+                Livrée
               </Badge>
             ) : this.state.ordonnance.status === "en_attente" ? (
               <Badge
@@ -94,9 +98,62 @@ class FirstSection extends React.Component {
                 <Calendar2Check className="mr-50" size={14} />
                 Tournée assigné
               </Badge>
+            ) : this.state.ordonnance.status === "attente_approvisionnement" ? (
+              <Badge
+                pill
+                style={{
+                  width: "180px",
+                  height: "25px",
+                  fontSize: "9px",
+                  fontWeight: "bold",
+                  backgroundImage: "linear-gradient(#ffd5c0, #fee6bf)",
+                  color: "#fe5f29",
+                }}
+                color="pl-50 pr-50 text-wrap ml-50 text-left"
+              >
+                <Calendar2Check className="mr-50" size={14} />
+                En attente approvisionnement
+              </Badge>
+            ) : this.state.ordonnance.status === "validée" ? (
+              <Badge
+                pill
+                style={{
+                  width: "100px",
+                  height: "25px",
+                  fontSize: "12px",
+                  // fontWeight: "bold",
+                }}
+                color="light-success pl-50 pr-50 text-wrap ml-50 text-left"
+              >
+                <Check2 className="success mr-50" size={16} />
+                Validée
+              </Badge>
+            ) : this.state.ordonnance.status === "annulée" ? (
+              <Badge
+                pill
+                style={{ width: "120px", height: "25px", fontSize: "12px" }}
+                color="light-danger pl-50 pr-50 text-wrap ml-50 text-left"
+              >
+                <Exclamation className="mr-0" size={17} />
+                Annulée
+              </Badge>
+            ) : this.state.ordonnance.status === "incomplet" ? (
+              <Badge
+                pill
+                style={{
+                  width: "130px",
+                  height: "25px",
+                  fontSize: "12px",
+                }}
+                color="light-primary pl-50 pr-50 text-wrap ml-50 text-left"
+                className="text-primary "
+              >
+                <HourglassSplit className="mr-50" size={14} />
+                Incomplet
+              </Badge>
             ) : null}
 
-            {this.state.ordonnance.type === "particulier" ? (
+            {this.state.ordonnance.type === "Particulier" ? (
               <Badge
                 pill
                 style={{
@@ -105,11 +162,11 @@ class FirstSection extends React.Component {
                   fontWeight: "900",
                   fontSize: "14px",
                 }}
-                className="bg-gradient-primary pl-50 pr-50  text-wrap ml-50"
+                className="bg-gradient-primary pl-50 mr-50  text-wrap ml-50"
               >
                 Particulier
               </Badge>
-            ) : this.state.ordonnance.type === "professionnel" ? (
+            ) : this.state.ordonnance.type === "Professionnel" ? (
               <Badge
                 pill
                 style={{
@@ -118,25 +175,53 @@ class FirstSection extends React.Component {
                   fontWeight: "900",
                   fontSize: "12px",
                 }}
-                color="light-success pl-50 pr-50  text-wrap ml-50"
+                color="light-success pl-50 m  r-50  text-wrap ml-50"
               >
                 Professionnel
               </Badge>
             ) : null}
 
-            <Badge
-              pill
-              style={{ width: "150px", height: "30px" }}
-              color="light-success pl-50 pr-50 text-wrap ml-50"
-            >
-              {this.state.ordonnance.origine}
-            </Badge>
+            {this.state.ordonnance.origine === "infirmier" ? (
+              <Badge
+                color="light-success text-wrap text-bold-500 mb-0"
+                style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+                pill
+              >
+                Infirmier
+              </Badge>
+            ) : this.state.ordonnance.origine === "medadom" ? (
+              <Badge
+                color="light-success text-wrap text-bold-500 mb-0"
+                style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+                pill
+              >
+                Infirmier MEDADOM
+              </Badge>
+            ) : this.state.ordonnance.origine === "web" ? (
+              <Badge
+                color="light-success text-wrap text-bold-500 mb-0"
+                style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+                pill
+              >
+                Infirmier WEB
+              </Badge>
+            ) : this.state.ordonnance.origine === "appli" ? (
+              <Badge
+                color="light-success text-wrap text-bold-500 mb-0"
+                style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+                pill
+              >
+                Infirmier Appli
+              </Badge>
+            ) : null}
           </CardBody>
 
           <CardBody style={{ width: "250px" }}>
             <strong>Officine de traitement :</strong>
             <br></br>
-            Pharma You, 8 rue de vaucouleurs 75011,Paris
+            {this.state.ordonnance.adresse_livraison}
+            {this.state.ordonnance.code},{" "}
+            {this.state.ordonnance.ville_livraison}
           </CardBody>
         </Col>
 
@@ -167,10 +252,10 @@ class FirstSection extends React.Component {
             >
               <Label for="readonlyInput">Date Commande</Label>
               <Input
-                type="date"
+                type="text"
                 id="readonlyInput"
                 readOnly
-                value="2021-01-21"
+                value={new Date(1618964469).toISOString().split("T")[0]}
                 bsSize="sm"
               />
             </FormGroup>
@@ -184,7 +269,7 @@ class FirstSection extends React.Component {
                 bsSize="sm"
               />
             </FormGroup>
-          </CardBody> 
+          </CardBody>
         </Col>
       </Row>
     );

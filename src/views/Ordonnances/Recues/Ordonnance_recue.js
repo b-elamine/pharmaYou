@@ -19,6 +19,7 @@ import {
   Calendar2Week,
   Check2,
   Exclamation,
+  Hourglass,
 } from "react-bootstrap-icons";
 // fake database
 const data = [
@@ -41,7 +42,8 @@ const data = [
       num_tel: "0559863111",
       email: "a.ouardas@esi-sba.dz",
       appeler: true,
-      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
+      note:
+        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
     },
     mutulle: true,
     CMU: false,
@@ -65,8 +67,8 @@ const data = [
       num_tel: "0559863111",
       email: "a.ouardas@esi-sba.dz",
       appeler: false,
-      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
-
+      note:
+        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
     },
     mutulle: false,
     CMU: false,
@@ -90,7 +92,8 @@ const data = [
       num_tel: "0552368514",
       email: "m.elmogherbi@esi-sba.dz",
       appeler: false,
-      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
+      note:
+        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
     },
     mutulle: false,
     CMU: true,
@@ -110,7 +113,7 @@ const data = [
       num_tel: "0559863111",
       email: "a.ouardas@esi-sba.dz",
       appeler: true,
-      note : ""
+      note: "",
     },
     mutulle: true,
     CMU: true,
@@ -424,10 +427,9 @@ const columns = [
           <Calendar2Week className="primary mr-50" size={20} />
           Tournée assigné
         </Badge>
-      ) : 
-      row.status === "annulée" ? (
+      ) : row.status === "annulée" ? (
         <Badge color="light-danger pl-50 pr-50 " pill>
-          <HourglassSplit className="primary mr-50" size={20} />
+          <Exclamation className="danger mr-0" size={20} />
           Annulée
         </Badge>
       ) : row.status === "validée" ? (
@@ -437,7 +439,7 @@ const columns = [
         </Badge>
       ) : row.status === "incomplet" ? (
         <Badge color="light-primary pl-50 pr-50 " pill>
-          <Exclamation className="primary mr-50" size={20} />
+          <Hourglass className="primary mr-50" size={20} />
           Incomplet
         </Badge>
       ) : null,
@@ -494,13 +496,13 @@ const columns = [
       ),
   },
   {
-    name: "Montant",
+    name: "MONTANT",
     selector: "montant",
     sortable: true,
     cell: (row) => <p className="text-bold-500 mb-0">{row.montant}</p>,
   },
   {
-    name: "Date",
+    name: "DATE",
     selector: "date",
     sortable: true,
     cell: (row) => (
@@ -508,7 +510,7 @@ const columns = [
     ),
   },
   {
-    name: "Code postal",
+    name: "CODE POSTAL",
     selector: "code_postal",
     sortable: true,
     cell: (row) => (
@@ -602,14 +604,20 @@ class Ordonnances_recue extends React.Component {
   };
 
   fetching_data = async () => {
+    // try{
+
+    // }catch(err){
+
+    // }
     console.log("fetching ....");
     const commandes = await axios.get("/commandes?access_token=a");
-    console.log(commandes)
+    console.log(commandes);
     const commandes_ordo = commandes.data.filter(
       (item) => item.type === "ordo"
     );
     const custom_commandes = commandes_ordo.map((item) => {
       return {
+        ...item,
         id: item.commande_id,
         status:
           item.status_commande === -2
@@ -625,9 +633,10 @@ class Ordonnances_recue extends React.Component {
             : item.status_commande === 3
             ? "livrée"
             : null,
+        // status :"incomplet",
         name: item.nom_patient + " " + item.prenom_patient,
         // name: 'Akram Ouardas',
-        type :item.type==="ordo" ? "Particulier" : "Professionnel",
+        type: item.type === "ordo" ? "Particulier" : "Professionnel",
         image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
         montant: item.montant_total,
         date: new Date(item.created_at).toLocaleDateString("fr-FR", {
@@ -644,17 +653,30 @@ class Ordonnances_recue extends React.Component {
         // origine : item.origine,
         // paiment: item.paiment,
         paiment: "reglé",
+        patient: {
+          nom: item.nom_patient,
+          prenom: item.prenom_patient,
+          address: `${item.adresse_livraison} , ${item.code_postal_livraison} , ${item.ville_livraison}`,
+          num_tel: item.telephone,
+          appeler: true,
+          email: item.email,
+          note: item.note_admin
+            ? item.note_admin
+            : "Pas de note pour l'instant.",
+        },
+        CMU: true,
+        mutuelle: false,
       };
     });
-    console.log(custom_commandes);
     this.setState({
       data: custom_commandes,
     });
   };
 
   componentDidMount() {
-    this.fetching_data()
+    this.fetching_data();
     // fetching the data from the database and passing it to the state
+
     this.setState({
       columns: columns,
       // data: data,
@@ -670,6 +692,35 @@ class Ordonnances_recue extends React.Component {
   }
 
   render() {
+    const ordo_non_traité = this.state.data.filter(
+      (item) => item.status_commande === 0
+    );
+    const nbr_ordo_non_traité = ordo_non_traité.length;
+
+    const ordo_attente_approvis = this.state.data.filter(
+      (item) => item.status_commande === 1
+    );
+    const nbr_ordo_approvis = ordo_attente_approvis.length;
+
+    const ordo_assigner_tournée = this.state.data.filter(
+      (item) => item.status_commande === 4
+    );
+    const nbr_ordo_assigner_tournée = ordo_assigner_tournée.length;
+
+    const ordo_en_cours_livraison = this.state.data.filter(
+      (item) => item.status_commande === 5
+    );
+    const nbr_ordo_en_cours_livraison = ordo_en_cours_livraison.length;
+
+    const ordo_livrée = this.state.data.filter(
+      (item) => item.status_commande === 0
+    );
+    const nbr_ordo_livrée = ordo_livrée.length;
+    const ordo_incomplet = this.state.data.filter(
+      (item) => item.status_commande === -1
+    );
+    const nbr_ordo_incomplet = ordo_incomplet.length;
+
     return (
       <React.Fragment>
         <Breadcrumbs
@@ -683,7 +734,7 @@ class Ordonnances_recue extends React.Component {
               bg_color="danger"
               iconBg="danger"
               icon={<ExclamationTriangleFill className="danger" size={25} />}
-              stat={this.state.ordonnances.non_traité}
+              stat={nbr_ordo_non_traité}
               statTitle="Ordonnances Non traité"
             />
           </Col>
@@ -693,7 +744,7 @@ class Ordonnances_recue extends React.Component {
               bg_color="info"
               iconBg="info"
               icon={<HourglassSplit className="info" size={25} />}
-              stat={this.state.ordonnances.en_attente}
+              stat={nbr_ordo_approvis}
               statTitle="Ordonnances attente approvisionnement"
             />
           </Col>
@@ -703,7 +754,7 @@ class Ordonnances_recue extends React.Component {
               bg_color="primary"
               iconBg="primary"
               icon={<Calendar3 className="primary" size={25} />}
-              stat={this.state.ordonnances.assigner_tournée}
+              stat={nbr_ordo_assigner_tournée}
               statTitle="Ordonnances assignés a une tournée"
             />
           </Col>
@@ -713,7 +764,7 @@ class Ordonnances_recue extends React.Component {
               bg_color="warning"
               iconBg="warning"
               icon={<Truck className="warning" size={25} />}
-              stat={this.state.ordonnances.en_cours_livraison}
+              stat={nbr_ordo_en_cours_livraison}
               statTitle="Ordonnances en Cours de livraison"
             />
           </Col>
@@ -723,7 +774,7 @@ class Ordonnances_recue extends React.Component {
               bg_color="success"
               iconBg="success"
               icon={<Check2All className="success" size={25} />}
-              stat={this.state.ordonnances.livrée}
+              stat={nbr_ordo_livrée}
               statTitle="Ordonnances livré Aujourd'hui."
             />
           </Col>
@@ -732,7 +783,7 @@ class Ordonnances_recue extends React.Component {
               hideChart
               iconBg="primary"
               icon={<img src={Icon} alt="Icon" />}
-              stat={this.state.ordonnances.dossier_incomplet}
+              stat={nbr_ordo_incomplet}
               statTitle="Dossiers Incomplet"
             />
           </Col>

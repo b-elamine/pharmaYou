@@ -10,11 +10,11 @@ class StatisticsCards extends React.Component {
           borderRadius: "28px",
           // width : "auto",
           // height : "auto",
-          justifyContent:"space-between"
+          justifyContent: "space-between",
         }}
       >
         <CardBody
-          style={{ borderRadius: "28px" }}
+          style={{ borderRadius: "28px", height: "170px" }}
           className={` ${
             this.props.className ? this.props.className : "stats-card-body"
           } d-flex ${
@@ -28,10 +28,12 @@ class StatisticsCards extends React.Component {
               ? "justify-content-center flex-column text-center"
               : null
           } ${!this.props.hideChart ? "pb-0" : "pb-50"}  pt-1 ${
-            this.props.bg_color ? "gradient-light-" + this.props.bg_color : "bg-rgba-primary"
+            this.props.bg_color
+              ? "gradient-light-" + this.props.bg_color
+              : "bg-rgba-primary"
           }`}
         >
-          <div className="icon-section h-75">
+          <div className="icon-section h-50 mt-0">
             <div
               className={`avatar avatar-stats  ${
                 this.props.iconBg
@@ -42,10 +44,13 @@ class StatisticsCards extends React.Component {
               <div className="avatar-content">{this.props.icon}</div>
             </div>
           </div>
-          <div className="title-section">
-            <h4 className="text-bold-600 mt-1 mb-25 ml-75">{this.props.stat}</h4>
-
-            <p className="mb-0 p-0 text-dark font-medium-25 ml-75">{this.props.statTitle}</p>
+          <div className="title-section ml-0 pl-0">
+            <h4 className="text-bold-600 mt-1 mb-25 ml-75">
+              {this.props.stat}
+            </h4>
+            <p className="mb-0 p-0 text-dark font-small-3 ml-0">
+              {this.props.statTitle}
+            </p>
           </div>
         </CardBody>
         {!this.props.hideChart && (
@@ -61,5 +66,3 @@ class StatisticsCards extends React.Component {
   }
 }
 export default StatisticsCards;
-
-
