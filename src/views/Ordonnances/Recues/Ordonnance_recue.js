@@ -6,6 +6,7 @@ import StatisticsCard from "../../../components/@vuexy/statisticsCard/Statistics
 import Icon from "./Icon.svg";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 import {
   CursorFill,
@@ -41,7 +42,8 @@ const data = [
       num_tel: "0559863111",
       email: "a.ouardas@esi-sba.dz",
       appeler: true,
-      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
+      note:
+        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
     },
     mutulle: true,
     CMU: false,
@@ -65,8 +67,8 @@ const data = [
       num_tel: "0559863111",
       email: "a.ouardas@esi-sba.dz",
       appeler: false,
-      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
-
+      note:
+        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
     },
     mutulle: false,
     CMU: false,
@@ -90,7 +92,8 @@ const data = [
       num_tel: "0552368514",
       email: "m.elmogherbi@esi-sba.dz",
       appeler: false,
-      note : "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois "
+      note:
+        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
     },
     mutulle: false,
     CMU: true,
@@ -110,7 +113,7 @@ const data = [
       num_tel: "0559863111",
       email: "a.ouardas@esi-sba.dz",
       appeler: true,
-      note : ""
+      note: "",
     },
     mutulle: true,
     CMU: true,
@@ -424,8 +427,7 @@ const columns = [
           <Calendar2Week className="primary mr-50" size={20} />
           Tournée assigné
         </Badge>
-      ) : 
-      row.status === "annulée" ? (
+      ) : row.status === "annulée" ? (
         <Badge color="light-danger pl-50 pr-50 " pill>
           <HourglassSplit className="primary mr-50" size={20} />
           Annulée
@@ -589,6 +591,8 @@ const columns = [
 
 class Ordonnances_recue extends React.Component {
   state = {
+    errorAlert: false,
+    errorText: "Vérifier votre cnnexion",
     columns: [],
     data: [],
     ordonnances: {
@@ -601,59 +605,69 @@ class Ordonnances_recue extends React.Component {
     },
   };
 
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
+  };
+
   fetching_data = async () => {
     console.log("fetching ....");
-    const commandes = await axios.get("/commandes?access_token=a");
-    console.log(commandes)
-    const commandes_ordo = commandes.data.filter(
-      (item) => item.type === "ordo"
-    );
-    const custom_commandes = commandes_ordo.map((item) => {
-      return {
-        id: item.commande_id,
-        status:
-          item.status_commande === -2
-            ? "annulée"
-            : item.status_commande === -1
-            ? "incomplet"
-            : item.status_commande === 0
-            ? "non-traité"
-            : item.status_commande === 1
-            ? "attente_approvisionnement"
-            : item.status_commande === 2
-            ? "validée"
-            : item.status_commande === 3
-            ? "livrée"
-            : null,
-        name: item.nom_patient + " " + item.prenom_patient,
-        // name: 'Akram Ouardas',
-        type :item.type==="ordo" ? "Particulier" : "Professionnel",
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-        montant: item.montant_total,
-        date: new Date(item.created_at).toLocaleDateString("fr-FR", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        code: item.code_postal_livraison,
-        origine: "infirmier",
-        email: item.email,
-        // email: "a.ouardas@esi-sba.dz",
-        ville: item.ville_livraison,
-        // origine : item.origine,
-        // paiment: item.paiment,
-        paiment: "reglé",
-      };
-    });
-    console.log(custom_commandes);
-    this.setState({
-      data: custom_commandes,
-    });
+    try {
+      const commandes = await axios.get("/commandes?access_token=a");
+      if (commandes.statusText === "OK") {
+        const commandes_ordo = commandes.data.filter(
+          (item) => item.type === "ordo"
+        );
+        const custom_commandes = commandes_ordo.map((item) => {
+          return {
+            id: item.commande_id,
+            status:
+              item.status_commande === -2
+                ? "annulée"
+                : item.status_commande === -1
+                ? "incomplet"
+                : item.status_commande === 0
+                ? "non-traité"
+                : item.status_commande === 1
+                ? "attente_approvisionnement"
+                : item.status_commande === 2
+                ? "validée"
+                : item.status_commande === 3
+                ? "livrée"
+                : null,
+            name: item.nom_patient + " " + item.prenom_patient,
+            // name: 'Akram Ouardas',
+            type: item.type === "ordo" ? "Particulier" : "Professionnel",
+            image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+            montant: item.montant_total,
+            date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }),
+            code: item.code_postal_livraison,
+            origine: "infirmier",
+            email: item.email,
+            // email: "a.ouardas@esi-sba.dz",
+            ville: item.ville_livraison,
+            // origine : item.origine,
+            // paiment: item.paiment,
+            paiment: "reglé",
+          };
+        });
+        this.setState({
+          data: custom_commandes,
+        });
+      } else {
+        this.handleAlert("errorAlert", true, commandes.statusText);
+      }
+    } catch (err) {
+      this.handleAlert("errorAlert", true, "Vérifier votre connexion !");
+    }
   };
 
   componentDidMount() {
-    this.fetching_data()
+    this.fetching_data();
     // fetching the data from the database and passing it to the state
     this.setState({
       columns: columns,
@@ -746,6 +760,14 @@ class Ordonnances_recue extends React.Component {
             />
           </Col>
         </Row>
+        <SweetAlert
+          error
+          title="Erreur"
+          show={this.state.errorAlert}
+          onConfirm={() => this.handleAlert("errorAlert", false)}
+        >
+          <p className="sweet-alert-text">{this.state.errorText}</p>
+        </SweetAlert>
       </React.Fragment>
     );
   }

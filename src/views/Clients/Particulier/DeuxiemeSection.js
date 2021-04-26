@@ -12,6 +12,8 @@ import {
 } from "reactstrap";
 import { PlusCircle, Send } from "react-feather";
 import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/light.css";
+import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 
 
 
