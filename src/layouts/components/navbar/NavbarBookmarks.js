@@ -3,15 +3,15 @@ import {
   NavItem,
   NavLink,
   UncontrolledTooltip,
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle
+  // UncontrolledDropdown,
+  // DropdownItem,
+  // DropdownMenu,
+  // DropdownToggle
 } from "reactstrap"
 import * as Icon from "react-feather"
-import { Link } from "react-router-dom"
-import classnames from "classnames"
-import AutoComplete from "../../../components/@vuexy/autoComplete/AutoCompleteComponent"
+// import { Link } from "react-router-dom"
+// import classnames from "classnames"
+// import AutoComplete from "../../../components/@vuexy/autoComplete/AutoCompleteComponent"
 import { history } from "../../../history"
 import { connect } from "react-redux"
 import {
@@ -137,24 +137,28 @@ class NavbarBookmarks extends React.PureComponent {
 
   render() {
     let {
-      bookmarks: { extraStarred, suggestions },
+      // bookmarks: { 
+      //   // extraStarred,
+      //   //  suggestions 
+      //   },
+
       sidebarVisibility,
-      updateStarred,
-      handleAppOverlay
+      // updateStarred,
+      // handleAppOverlay
     } = this.props
 
-    const renderExtraStarred =
-      extraStarred.length > 0
-        ? extraStarred.map(i => {
-          const IconTag = Icon[i.icon ? i.icon : null]
-          return (
-            <DropdownItem key={i.id} href={i.link}>
-              <IconTag size={15} />
-              <span className="align-middle ml-1">{i.title}</span>
-            </DropdownItem>
-          )
-        })
-        : null
+    // const renderExtraStarred =
+    //   extraStarred.length > 0
+    //     ? extraStarred.map(i => {
+    //       const IconTag = Icon[i.icon ? i.icon : null]
+    //       return (
+    //         <DropdownItem key={i.id} href={i.link}>
+    //           <IconTag size={15} />
+    //           <span className="align-middle ml-1">{i.title}</span>
+    //         </DropdownItem>
+    //       )
+    //     })
+    //     : null
 
     return (
       <div className="mr-auto float-left bookmark-wrapper d-flex align-items-center">
@@ -168,7 +172,7 @@ class NavbarBookmarks extends React.PureComponent {
             </NavLink>
           </NavItem>
         </ul>
-        <ul className="nav navbar-nav bookmark-icons">
+        {/* <ul className="nav navbar-nav bookmark-icons">
           {this.renderBookmarks()}
           {extraStarred.length > 0 ? (
             <NavItem>
@@ -318,7 +322,7 @@ class NavbarBookmarks extends React.PureComponent {
               />
             </div>
           </NavItem>
-        </ul>
+        </ul> */}
       </div>
     )
   }

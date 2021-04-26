@@ -3,7 +3,7 @@ import { Badge, CardBody, Col, Row } from "reactstrap";
 
 import { PhoneCall, PhoneMissed } from "react-feather";
 
-class FirstSection extends React.Component {
+class SecondSection extends React.Component {
   state = {
     ordonnance: {
       patient :{
@@ -96,4 +96,4 @@ class FirstSection extends React.Component {
   }
 }
 
-export default FirstSection;
+export default SecondSection;

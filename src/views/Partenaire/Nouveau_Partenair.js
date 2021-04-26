@@ -83,6 +83,7 @@ class Nouveau_Partenaire extends React.Component {
                             </div>
                         </div>
                     </div>
+                    {/* test */}
                         <div
                         style={{
                             width:"100%",

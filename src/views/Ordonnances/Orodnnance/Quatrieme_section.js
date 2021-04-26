@@ -166,15 +166,14 @@ class QuatriemeSection extends React.Component {
     new_comment_array.push(new_commentaire_interne);
     this.setState({
       commentaires_notes: new_comment_array,
-      commentaire_interne  : ''
+      commentaire_interne: "",
     });
   }
   add_note_handler() {
     if (this.state.note_patient.length === 0) {
       return alert("Il faut entrer une note");
     }
-    const new_note_id =
-      this.state.commentaires_notes.slice(-1)[0].id + 1;
+    const new_note_id = this.state.commentaires_notes.slice(-1)[0].id + 1;
     const new_note_image = this.state.commentaires_notes.slice(-1)[0].image;
     const new_note_patient = {
       id: new_note_id,
@@ -187,12 +186,11 @@ class QuatriemeSection extends React.Component {
     new_comments_notes_array.push(new_note_patient);
     this.setState({
       commentaires_notes: new_comments_notes_array,
-      note_patient  : ''
+      note_patient: "",
     });
   }
 
   render() {
-    console.log(this.state);
     let total = 0;
     const total_array = this.state.inputs.map((item) => {
       return item.quantité * item.prix;
@@ -238,7 +236,7 @@ class QuatriemeSection extends React.Component {
               <Button
                 className="mt-2 bg-success text-white float-right mr-2 p-75  mb-2"
                 onClick={() => {
-                  this.add_note_handler()
+                  this.add_note_handler();
                 }}
               >
                 Envoyer
@@ -321,9 +319,11 @@ class QuatriemeSection extends React.Component {
                       <Row className="ml-4">
                         <Col>
                           <FormGroup className="text-left">
-                            <Label className="mt-1" for="quantité_input">
-                              <strong>Quantité</strong>
-                            </Label>
+                            {item.id === 1 ? (
+                              <Label className="mt-1" for="quantité_input">
+                                <strong>Quantité</strong>
+                              </Label>
+                            ) : null}
                             <Input
                               type="number"
                               id="quantité_input"
@@ -344,9 +344,11 @@ class QuatriemeSection extends React.Component {
                         </Col>
                         <Col>
                           <FormGroup className="text-left">
-                            <Label className="mt-1" for="prix_input">
-                              <strong>Prix</strong>
-                            </Label>
+                            {item.id === 1 ? (
+                              <Label className="mt-1" for="prix_input">
+                                <strong>Prix</strong>
+                              </Label>
+                            ) : null}
                             <Input
                               type="number"
                               id="prix_input"
@@ -406,11 +408,13 @@ class QuatriemeSection extends React.Component {
           <br></br>
           <br></br>
           <br></br>
-          <Card className="p-2 mt-5 text-dark text-left">
+          <Card  className="p-2 mt-5 text-dark text-left">
             <CardTitle className="font-medium-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
-              <ListUl size={17} />
+              <ListUl className="mr-1" size={17} />
               Historique commentaire et note du patient
             </CardTitle>
+            <div style={{overflowY:"scroll", height:"250px"}}>
+
             {this.state.commentaires_notes.length === 0 ? (
               <strong>Pas de commentaire pour l'instant</strong>
             ) : (
@@ -431,6 +435,7 @@ class QuatriemeSection extends React.Component {
                 );
               })
             )}
+            </div>
           </Card>
         </Badge>
       </Card>

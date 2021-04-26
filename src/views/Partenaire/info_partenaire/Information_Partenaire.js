@@ -10,8 +10,13 @@ import {
 } from "reactstrap";
 import { TrendingUp, DollarSign, User } from "react-feather";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-import Commandes_partenaire from "./commandes_partenaire_table";
+import CommandesPartenaire from "./commandes_partenaire_table";
 import { history } from "../../../history";
+import {
+  Check2, 
+  CircleFill,
+  StarFill,TelephoneFill
+} from "react-bootstrap-icons";
 
 class Partenaire_Info extends React.Component {
   state = {
@@ -100,8 +105,34 @@ class Partenaire_Info extends React.Component {
                 </Col>
               </div>
             </div>
+            <div className="d-flex flex-sm-row flex-column justify-content-start px-0 h-50 ">
+              <div className="mr-2">
+                <div className="d-flex">
+                  <Check2 className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Status</p>
+                </div>
+                <div className="d-flex">
+                  <StarFill className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Profession</p>
+                </div>
+                <div className="d-flex">
+                  <CircleFill className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Ville</p>
+                </div>
+                <div className="d-flex">
+                  <TelephoneFill className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Contact</p>
+                </div>
+              </div>
+              <div>
+                <p className=" font-small-3">Actif</p>
+                <p className="">Khadem</p>
+                <p className="">Saida</p>
+                <p className="">0559863111</p>
+              </div>
+            </div>
           </div>
-          <Commandes_partenaire />
+          <CommandesPartenaire />
         </CardBody>
       </Card>
     );

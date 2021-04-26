@@ -12,6 +12,8 @@ import {
 } from "reactstrap";
 import { PlusCircle, Send } from "react-feather";
 import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/light.css";
+import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 
 
 
@@ -78,7 +80,7 @@ class SecondSection extends React.Component {
   render() {
     return (
       <Card>
-        <CardTitle className="font-large-2 mt-50">
+        <CardTitle className="font-large-1 mt-50">
           Document du patient
         </CardTitle>
         <Row>
