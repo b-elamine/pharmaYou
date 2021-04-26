@@ -121,10 +121,10 @@ class PremiereSection extends React.Component {
             </div>
           </Col>
           <Col xl="4">
-            <p className=" font-small-3">19 rue merabet ahmed</p>
-            <p className="">20000</p>
-            <p className="">Saida</p>
-            <p className="">0559863111</p>
+            <p className=" font-small-3">19 </p>
+            <p className="">75000</p>
+            <p className="">Paris</p>
+            <p className="">0625148852</p>
           </Col>
         </Row>
         <Row className="mt-4 mb-4">
@@ -167,26 +167,28 @@ class PremiereSection extends React.Component {
               <ListUl className="mr-1" size={17} />
               Historique commentaire et note du patient
             </CardTitle>
-            {this.state.commentaires_notes.length === 0 ? (
-              <strong>Pas de commentaire pour l'instant</strong>
-            ) : (
-              this.state.commentaires_notes.map((comment) => {
-                const icon_color =
-                  comment.type === "Commentaire interne"
-                    ? "#fa680c"
-                    : "#28c76f";
-                return (
-                  <CommentaireBlock
-                    key={comment.id}
-                    icon_color={icon_color}
-                    block_type={comment.type}
-                    block_note={comment.commentaire}
-                    image_path={comment.image}
-                    name={comment.nom}
-                  />
-                );
-              })
-            )}
+            <div style={{height:"350px",overflowY:"scroll"}}>
+              {this.state.commentaires_notes.length === 0 ? (
+                <strong>Pas de commentaire pour l'instant</strong>
+              ) : (
+                this.state.commentaires_notes.map((comment) => {
+                  const icon_color =
+                    comment.type === "Commentaire interne"
+                      ? "#fa680c"
+                      : "#28c76f";
+                  return (
+                    <CommentaireBlock
+                      key={comment.id}
+                      icon_color={icon_color}
+                      block_type={comment.type}
+                      block_note={comment.commentaire}
+                      image_path={comment.image}
+                      name={comment.nom}
+                    />
+                  );
+                })
+              )}
+            </div>
           </Card>
         </Row>
       </Card>

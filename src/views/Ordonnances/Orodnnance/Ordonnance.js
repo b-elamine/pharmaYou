@@ -55,6 +55,7 @@ class Ordonnance extends Component {
     this.setState({ ordonnance: this.props.location.state });
   }
   render() {
+    console.log(this.props.location.state)
     return (
       <Row>
         <Col xl="9">

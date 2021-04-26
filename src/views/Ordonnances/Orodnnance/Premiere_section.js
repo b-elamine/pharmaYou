@@ -4,7 +4,6 @@ import Logo from "../../../assets/img/logo/logo_pharmaYou.PNG";
 import {
   Calendar2Check,
   Check2,
-  Cone,
   Exclamation,
   ExclamationTriangleFill,
   HourglassSplit,

@@ -90,6 +90,7 @@ class DataTableCustom extends React.Component {
     let { value, filteredData } = this.state;
     const ordonnance = (row) => {
       const url = `/ordonnance/info`;
+      console.log(row)
       history.push(url, row);
     };
     return (

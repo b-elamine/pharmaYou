@@ -6,6 +6,7 @@ import StatisticsCard from "../../../components/@vuexy/statisticsCard/Statistics
 import Icon from "./Icon.svg";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 import {
   CursorFill,
@@ -22,344 +23,346 @@ import {
   Hourglass,
 } from "react-bootstrap-icons";
 // fake database
-const data = [
-  {
-    id: 1,
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Alyss Lillecrop",
-    email: "alillecrop0@twitpic.com",
-    date: "May 13, 2018",
-    status: "non_traité",
-    montant: "$32,000",
-    ratings: "good",
-    type: "particulier",
-    code: 12345,
-    origine: "Partenaire App",
-    patient: {
-      nom: "Ouardas",
-      prenom: "Akram",
-      address: "19 rue merabet ahmed, Saida , Algerie",
-      num_tel: "0559863111",
-      email: "a.ouardas@esi-sba.dz",
-      appeler: true,
-      note:
-        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
-    },
-    mutulle: true,
-    CMU: false,
-  },
-  {
-    id: 2,
-    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Shep Pentlow",
-    email: "spentlow1@home.pl",
-    date: "June 5, 2019",
-    status: "non_traité",
-    montant: "$50,000",
-    ratings: "good",
-    type: "particulier",
-    code: 56789,
-    origine: "Partenaire infermier",
-    patient: {
-      nom: "Ouardas",
-      prenom: "Akram",
-      address: "19 rue merabet ahmed, Saida , Algerie",
-      num_tel: "0559863111",
-      email: "a.ouardas@esi-sba.dz",
-      appeler: false,
-      note:
-        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
-    },
-    mutulle: false,
-    CMU: false,
-  },
-  {
-    id: 3,
-    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Gasper Morley",
-    email: "gmorley2@chronoengine.com",
-    date: "December 24, 2019",
-    status: "en_attente",
-    montant: "$78,000",
-    ratings: "average",
-    type: "professionnel",
-    code: 1245,
-    origine: "Partenaire MEDADOM",
-    patient: {
-      nom: "Elmogherbi",
-      prenom: "faycal",
-      address: "19 rue merabet ahmed, Oran , Algerie",
-      num_tel: "0552368514",
-      email: "m.elmogherbi@esi-sba.dz",
-      appeler: false,
-      note:
-        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
-    },
-    mutulle: false,
-    CMU: true,
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Phaedra Jerrard",
-    email: "pjerrard3@blogs.com",
-    date: "November 30, 2018",
-    status: "en_livraison",
-    montant: "$10,000",
-    ratings: "bad",
-    patient: {
-      nom: "Ouardas",
-      prenom: "Akram",
-      address: "19 rue merabet ahmed, Saida , Algerie",
-      num_tel: "0559863111",
-      email: "a.ouardas@esi-sba.dz",
-      appeler: true,
-      note: "",
-    },
-    mutulle: true,
-    CMU: true,
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Conn Plose",
-    email: "cplose4@geocities.com",
-    date: "April 8, 2017",
-    status: "en_livraison",
-    montant: "$22,000",
-    ratings: "average",
-    patient: {
-      nom: "Elmogherbi",
-      prenom: "faycal",
-      address: "19 rue merabet ahmed, Oran , Algerie",
-      num_tel: "0552368514",
-      email: "m.elmogherbi@esi-sba.dz",
-    },
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Tootsie Brandsma",
-    email: "tbrandsma5@theatlantic.com",
-    date: "August 12, 2019",
-    status: "en_attente",
-    montant: "$49,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Sibley Bum",
-    email: "sbum6@sourceforge.net",
-    date: "October 1, 2017",
-    status: "livré",
-    montant: "$56,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Kristoffer Thew",
-    email: "kthew7@amazon.com",
-    date: "February 28, 2018",
-    status: "tournée_assigné",
-    montant: "$83,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Fay Hasard",
-    email: "fhasard8@java.com",
-    date: "January 29, 2018",
-    status: "livré",
-    montant: "$26,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Tabby Abercrombie",
-    email: "tabercrombie9@statcounter.com",
-    date: "April 1, 2019",
-    status: "active",
-    montant: "$60,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-10.jpg"),
-    name: "	Stella Indruch",
-    email: "sindruch1@mayoclinic.com",
-    date: "Dec 4, 2019",
-    status: "active",
-    montant: "$21,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-17.jpg"),
-    name: "	Aron McNirlin",
-    email: "amcnirlin2@samsung.com",
-    date: "Jan 4, 2018",
-    status: "inactive",
-    montant: "$30,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-20.jpg"),
-    name: "Ange Trenholm",
-    email: "atrenholm4@slideshare.net	",
-    date: "February 23, 2019",
-    status: "active",
-    montant: "$12,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-14.jpg"),
-    name: "Caterina Starkie",
-    email: "cstarkie5@feedburner.com",
-    date: "September 8, 2018",
-    status: "active",
-    montant: "$40,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-25.jpg"),
-    name: "Hugibert McGeagh",
-    email: "hmcgeaghf@smh.com.au",
-    date: "August 20, 2017",
-    status: "active",
-    montant: "$90,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-9.jpg"),
-    name: "Jaime Maher",
-    email: "jmaher1@msu.edu",
-    date: "April 7, 2019",
-    status: "active",
-    montant: "$38,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-24.jpg"),
-    name: "Amalle Pladen",
-    email: "jmaher1@msu.edu",
-    date: "March 30, 2018",
-    status: "active",
-    montant: "$18,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-18.jpg"),
-    name: "Dorris Ferries",
-    email: "dferries7@ucoz.com",
-    date: "August 25, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-23.jpg"),
-    name: "Andy Fettes",
-    email: "afettesh@upenn.edu",
-    date: "September 30, 2017",
-    status: "inactive",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Allene Hughf",
-    email: "ahughf0@dropbox.com",
-    date: "June 21, 2018",
-    status: "active",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Petra Rheubottom",
-    email: "prheubottom0@globo.com",
-    date: "July 4, 2018",
-    status: "active",
-    montant: "$72,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Ambrosius Olyfant",
-    email: "aolyfant1@timesonline.co.uk",
-    date: "May 5, 2019",
-    status: "inactive",
-    montant: "$13,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Letti Trineman",
-    email: "ltrineman2@cnbc.com",
-    date: "February 15, 2017",
-    status: "active",
-    montant: "$84,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Sayer Rodger",
-    email: "srodgerb@rakuten.co.jp",
-    date: "January 30, 2018",
-    status: "inactive",
-    montant: "$15,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Skyler Scotcher",
-    email: "sscotcher3@soup.io",
-    date: "November 3, 2018",
-    status: "active",
-    montant: "$26,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Florette Shotbolt",
-    email: "fshotbolt7@wiley.com",
-    date: "March 12, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Janis Bakhrushkin",
-    email: "jbakhrushkina@epa.gov",
-    date: "July 10, 2017",
-    status: "active",
-    montant: "$65,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Alric Peinton",
-    email: "apeinton0@google.cn",
-    date: "February 6, 2017",
-    status: "inactive",
-    montant: "$38,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Rubie Pitkethly",
-    email: "rpitkethlyf@51.la",
-    date: "February 20, 2018",
-    status: "active",
-    montant: "$62,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Hortensia Soaper",
-    email: "hsoaperh@mapy.cz",
-    date: "June 1, 2017",
-    status: "active",
-    montant: "$60,000",
-    ratings: "good",
-  },
-];
+
+
+// const data = [
+//   {
+//     id: 1,
+//     image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+//     name: "Alyss Lillecrop",
+//     email: "alillecrop0@twitpic.com",
+//     date: "May 13, 2018",
+//     status: "non_traité",
+//     montant: "$32,000",
+//     ratings: "good",
+//     type: "particulier",
+//     code: 12345,
+//     origine: "Partenaire App",
+//     patient: {
+//       nom: "Ouardas",
+//       prenom: "Akram",
+//       address: "19 rue merabet ahmed, Saida , Algerie",
+//       num_tel: "0559863111",
+//       email: "a.ouardas@esi-sba.dz",
+//       appeler: true,
+//       note:
+//         "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
+//     },
+//     mutulle: true,
+//     CMU: false,
+//   },
+//   {
+//     id: 2,
+//     image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
+//     name: "Shep Pentlow",
+//     email: "spentlow1@home.pl",
+//     date: "June 5, 2019",
+//     status: "non_traité",
+//     montant: "$50,000",
+//     ratings: "good",
+//     type: "particulier",
+//     code: 56789,
+//     origine: "Partenaire infermier",
+//     patient: {
+//       nom: "Ouardas",
+//       prenom: "Akram",
+//       address: "19 rue merabet ahmed, Saida , Algerie",
+//       num_tel: "0559863111",
+//       email: "a.ouardas@esi-sba.dz",
+//       appeler: false,
+//       note:
+//         "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
+//     },
+//     mutulle: false,
+//     CMU: false,
+//   },
+//   {
+//     id: 3,
+//     image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
+//     name: "Gasper Morley",
+//     email: "gmorley2@chronoengine.com",
+//     date: "December 24, 2019",
+//     status: "en_attente",
+//     montant: "$78,000",
+//     ratings: "average",
+//     type: "professionnel",
+//     code: 1245,
+//     origine: "Partenaire MEDADOM",
+//     patient: {
+//       nom: "Elmogherbi",
+//       prenom: "faycal",
+//       address: "19 rue merabet ahmed, Oran , Algerie",
+//       num_tel: "0552368514",
+//       email: "m.elmogherbi@esi-sba.dz",
+//       appeler: false,
+//       note:
+//         "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
+//     },
+//     mutulle: false,
+//     CMU: true,
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
+//     name: "Phaedra Jerrard",
+//     email: "pjerrard3@blogs.com",
+//     date: "November 30, 2018",
+//     status: "en_livraison",
+//     montant: "$10,000",
+//     ratings: "bad",
+//     patient: {
+//       nom: "Ouardas",
+//       prenom: "Akram",
+//       address: "19 rue merabet ahmed, Saida , Algerie",
+//       num_tel: "0559863111",
+//       email: "a.ouardas@esi-sba.dz",
+//       appeler: true,
+//       note: "",
+//     },
+//     mutulle: true,
+//     CMU: true,
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
+//     name: "Conn Plose",
+//     email: "cplose4@geocities.com",
+//     date: "April 8, 2017",
+//     status: "en_livraison",
+//     montant: "$22,000",
+//     ratings: "average",
+//     patient: {
+//       nom: "Elmogherbi",
+//       prenom: "faycal",
+//       address: "19 rue merabet ahmed, Oran , Algerie",
+//       num_tel: "0552368514",
+//       email: "m.elmogherbi@esi-sba.dz",
+//     },
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
+//     name: "Tootsie Brandsma",
+//     email: "tbrandsma5@theatlantic.com",
+//     date: "August 12, 2019",
+//     status: "en_attente",
+//     montant: "$49,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
+//     name: "Sibley Bum",
+//     email: "sbum6@sourceforge.net",
+//     date: "October 1, 2017",
+//     status: "livré",
+//     montant: "$56,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
+//     name: "Kristoffer Thew",
+//     email: "kthew7@amazon.com",
+//     date: "February 28, 2018",
+//     status: "tournée_assigné",
+//     montant: "$83,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
+//     name: "Fay Hasard",
+//     email: "fhasard8@java.com",
+//     date: "January 29, 2018",
+//     status: "livré",
+//     montant: "$26,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
+//     name: "Tabby Abercrombie",
+//     email: "tabercrombie9@statcounter.com",
+//     date: "April 1, 2019",
+//     status: "active",
+//     montant: "$60,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-10.jpg"),
+//     name: "	Stella Indruch",
+//     email: "sindruch1@mayoclinic.com",
+//     date: "Dec 4, 2019",
+//     status: "active",
+//     montant: "$21,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-17.jpg"),
+//     name: "	Aron McNirlin",
+//     email: "amcnirlin2@samsung.com",
+//     date: "Jan 4, 2018",
+//     status: "inactive",
+//     montant: "$30,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-20.jpg"),
+//     name: "Ange Trenholm",
+//     email: "atrenholm4@slideshare.net	",
+//     date: "February 23, 2019",
+//     status: "active",
+//     montant: "$12,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-14.jpg"),
+//     name: "Caterina Starkie",
+//     email: "cstarkie5@feedburner.com",
+//     date: "September 8, 2018",
+//     status: "active",
+//     montant: "$40,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-25.jpg"),
+//     name: "Hugibert McGeagh",
+//     email: "hmcgeaghf@smh.com.au",
+//     date: "August 20, 2017",
+//     status: "active",
+//     montant: "$90,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-9.jpg"),
+//     name: "Jaime Maher",
+//     email: "jmaher1@msu.edu",
+//     date: "April 7, 2019",
+//     status: "active",
+//     montant: "$38,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-24.jpg"),
+//     name: "Amalle Pladen",
+//     email: "jmaher1@msu.edu",
+//     date: "March 30, 2018",
+//     status: "active",
+//     montant: "$18,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-18.jpg"),
+//     name: "Dorris Ferries",
+//     email: "dferries7@ucoz.com",
+//     date: "August 25, 2017",
+//     status: "active",
+//     montant: "$69,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-23.jpg"),
+//     name: "Andy Fettes",
+//     email: "afettesh@upenn.edu",
+//     date: "September 30, 2017",
+//     status: "inactive",
+//     montant: "$35,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
+//     name: "Allene Hughf",
+//     email: "ahughf0@dropbox.com",
+//     date: "June 21, 2018",
+//     status: "active",
+//     montant: "$35,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+//     name: "Petra Rheubottom",
+//     email: "prheubottom0@globo.com",
+//     date: "July 4, 2018",
+//     status: "active",
+//     montant: "$72,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
+//     name: "Ambrosius Olyfant",
+//     email: "aolyfant1@timesonline.co.uk",
+//     date: "May 5, 2019",
+//     status: "inactive",
+//     montant: "$13,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
+//     name: "Letti Trineman",
+//     email: "ltrineman2@cnbc.com",
+//     date: "February 15, 2017",
+//     status: "active",
+//     montant: "$84,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
+//     name: "Sayer Rodger",
+//     email: "srodgerb@rakuten.co.jp",
+//     date: "January 30, 2018",
+//     status: "inactive",
+//     montant: "$15,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
+//     name: "Skyler Scotcher",
+//     email: "sscotcher3@soup.io",
+//     date: "November 3, 2018",
+//     status: "active",
+//     montant: "$26,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
+//     name: "Florette Shotbolt",
+//     email: "fshotbolt7@wiley.com",
+//     date: "March 12, 2017",
+//     status: "active",
+//     montant: "$69,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
+//     name: "Janis Bakhrushkin",
+//     email: "jbakhrushkina@epa.gov",
+//     date: "July 10, 2017",
+//     status: "active",
+//     montant: "$65,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
+//     name: "Alric Peinton",
+//     email: "apeinton0@google.cn",
+//     date: "February 6, 2017",
+//     status: "inactive",
+//     montant: "$38,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
+//     name: "Rubie Pitkethly",
+//     email: "rpitkethlyf@51.la",
+//     date: "February 20, 2018",
+//     status: "active",
+//     montant: "$62,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
+//     name: "Hortensia Soaper",
+//     email: "hsoaperh@mapy.cz",
+//     date: "June 1, 2017",
+//     status: "active",
+//     montant: "$60,000",
+//     ratings: "good",
+//   },
+// ];
 const ordonnances = {
   non_traité: 10,
   en_attente: 2,
@@ -591,6 +594,8 @@ const columns = [
 
 class Ordonnances_recue extends React.Component {
   state = {
+    errorAlert: false,
+    errorText: "Vérifier votre cnnexion",
     columns: [],
     data: [],
     ordonnances: {
@@ -603,6 +608,10 @@ class Ordonnances_recue extends React.Component {
     },
   };
 
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
+  };
+
   fetching_data = async () => {
     // try{
 
@@ -610,67 +619,78 @@ class Ordonnances_recue extends React.Component {
 
     // }
     console.log("fetching ....");
-    const commandes = await axios.get("/commandes?access_token=a");
-    console.log(commandes);
-    const commandes_ordo = commandes.data.filter(
-      (item) => item.type === "ordo"
-    );
-    const custom_commandes = commandes_ordo.map((item) => {
-      return {
-        ...item,
-        id: item.commande_id,
-        status:
-          item.status_commande === -2
-            ? "annulée"
-            : item.status_commande === -1
-            ? "incomplet"
-            : item.status_commande === 0
-            ? "non-traité"
-            : item.status_commande === 1
-            ? "attente_approvisionnement"
-            : item.status_commande === 2
-            ? "validée"
-            : item.status_commande === 3
-            ? "livrée"
-            : null,
-        // status :"incomplet",
-        name: item.nom_patient + " " + item.prenom_patient,
-        // name: 'Akram Ouardas',
-        type: item.type === "ordo" ? "Particulier" : "Professionnel",
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-        montant: item.montant_total,
-        date: new Date(item.created_at).toLocaleDateString("fr-FR", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        code: item.code_postal_livraison,
-        origine: "infirmier",
-        email: item.email,
-        // email: "a.ouardas@esi-sba.dz",
-        ville: item.ville_livraison,
-        // origine : item.origine,
-        // paiment: item.paiment,
-        paiment: "reglé",
-        patient: {
-          nom: item.nom_patient,
-          prenom: item.prenom_patient,
-          address: `${item.adresse_livraison} , ${item.code_postal_livraison} , ${item.ville_livraison}`,
-          num_tel: item.telephone,
-          appeler: true,
-          email: item.email,
-          note: item.note_admin
-            ? item.note_admin
-            : "Pas de note pour l'instant.",
-        },
-        CMU: true,
-        mutuelle: false,
-      };
-    });
-    this.setState({
-      data: custom_commandes,
-    });
+    try {
+      const commandes = await axios.get("/commandes?access_token=a");
+      if (commandes.statusText === "OK") {
+        const commandes_ordo = commandes.data.filter(
+          (item) => item.type === "ordo"
+        );
+        const custom_commandes = commandes_ordo.map((item) => {
+          return {
+            ...item,
+            id: item.commande_id,
+            status:
+              item.status_commande === -2
+                ? "annulée"
+                : item.status_commande === -1
+                ? "incomplet"
+                : item.status_commande === 0
+                ? "non-traité"
+                : item.status_commande === 1
+                ? "attente_approvisionnement"
+                : item.status_commande === 2
+                ? "validée"
+                : item.status_commande === 3
+                ? "livrée"
+                : null,
+            // status :"incomplet",
+            name: item.nom_patient + " " + item.prenom_patient,
+            // name: 'Akram Ouardas',
+            type: item.type === "ordo" ? "Particulier" : "Professionnel",
+            image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+            montant: item.montant_total,
+            date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }),
+            code: item.code_postal_livraison,
+            origine: "infirmier",
+            email: item.email,
+            // email: "a.ouardas@esi-sba.dz",
+            ville: item.ville_livraison,
+            // origine : item.origine,
+            // paiment: item.paiment,
+            paiment: "reglé",
+            patient: {
+              nom: item.nom_patient,
+              prenom: item.prenom_patient,
+              address: `${item.adresse_livraison} , ${item.code_postal_livraison} , ${item.ville_livraison}`,
+              num_tel: item.telephone,
+              appeler: true,
+              email: item.email,
+              note: item.note_admin
+                ? item.note_admin
+                : "Pas de note pour l'instant.",
+            },
+            CMU: true,
+            mutuelle: false,
+          };
+        });
+        this.setState({
+          data: custom_commandes,
+        });
+      } else {
+        this.handleAlert(
+          "errorAlert",
+          true,
+          commandes.error_code ? commandes.error_code : commandes.statusText
+        );
+      }
+    } catch (err) {
+      this.handleAlert("errorAlert", true, "Vérifier votre connexion !");
+    }
   };
 
   componentDidMount() {
@@ -797,6 +817,14 @@ class Ordonnances_recue extends React.Component {
             />
           </Col>
         </Row>
+        <SweetAlert
+          error
+          title="Erreur"
+          show={this.state.errorAlert}
+          onConfirm={() => this.handleAlert("errorAlert", false)}
+        >
+          <p className="sweet-alert-text">{this.state.errorText}</p>
+        </SweetAlert>
       </React.Fragment>
     );
   }
