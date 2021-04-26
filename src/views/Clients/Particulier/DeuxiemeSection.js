@@ -78,7 +78,7 @@ class SecondSection extends React.Component {
   render() {
     return (
       <Card>
-        <CardTitle className="font-large-2 mt-50">
+        <CardTitle className="font-large-1 mt-50">
           Document du patient
         </CardTitle>
         <Row>

@@ -5,7 +5,13 @@ import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
 import Icon from "./Icon.svg";
 import { Badge } from "reactstrap";
-import { CursorFill, EyeFill, CreditCard2Back } from "react-bootstrap-icons";
+import {
+  CursorFill,
+  EyeFill,
+  CreditCard2Back,
+  Check2,
+  Exclamation,
+} from "react-bootstrap-icons";
 
 import axios from "../../../axios";
 
@@ -329,12 +335,12 @@ const columns = [
     cell: (row) => <p className="text-bold-500 mb-0">{row.id}</p>,
   },
   {
-    name: "Statut",
+    name: "STATUT",
     selector: "status",
     sortable: true,
     minWidth: "190px",
     cell: (row) =>
-      row.status === "en attente" ? (
+      row.status === "attente_approvisionnement" ? (
         <Badge
           pill
           style={{ backgroundColor: "#f8e7b6", color: "#ff7535" }}
@@ -343,12 +349,12 @@ const columns = [
           <img src={Icon} alt="Icon" height="22" width="22" className="mr-50" />
           Traité ! Réglement en attente
         </Badge>
-      ) : row.status === "Non-traité" ? (
+      ) : row.status === "non-traité" ? (
         <Badge color="light-danger pl-50 pr-50 " pill>
           <ExclamationTriangleFill className="danger mr-50" size={20} />
-          {row.status}
+          Non-traitée
         </Badge>
-      ) : row.status === "En livraison" ? (
+      ) : row.status === "en_livraison" ? (
         <Badge
           style={{
             color: "#180852",
@@ -359,19 +365,35 @@ const columns = [
           pill
         >
           <Truck className="mr-50" size={20} />
-          {row.status}
+          En livraison
         </Badge>
-      ) : row.status === "Livré" ? (
+      ) : row.status === "livrée" ? (
         <Badge color="light-success pl-50 pr-50 " pill>
           <Check2All className="success mr-50" size={20} />
-          {row.status}
+          Livrée
         </Badge>
       ) : row.status === "En attente" ? (
         <Badge color="light-primary pl-50 pr-50 " pill>
           <HourglassSplit className="primary mr-50" size={20} />
           {row.status}
         </Badge>
+      ) : row.status === "annulée" ? (
+        <Badge color="light-danger pl-50 pr-50 " pill>
+          <HourglassSplit className="primary mr-50" size={20} />
+          Annulée
+        </Badge>
+      ) : row.status === "validée" ? (
+        <Badge color="light-success pl-50 pr-50 " pill>
+          <Check2 className="primary mr-50" size={20} />
+          Validée
+        </Badge>
+      ) : row.status === "incomplet" ? (
+        <Badge color="light-primary pl-50 pr-50 " pill>
+          <Exclamation className="primary mr-50" size={20} />
+          Incomplet
+        </Badge>
       ) : null,
+
     // {row.status === "en attente" ? (
     //   <img src={Icon} alt="Icon" height="22" width="22" />
     // ) : row.status === "En attente" ? (
@@ -422,7 +444,7 @@ const columns = [
     sortable: true,
     cell: (row) => (
       <Badge
-        color={row.type === "particulier" ? "light-primary" : "light-success"}
+        color={row.type === "Particulier" ? "light-primary" : "light-success"}
         pill
       >
         {row.type}
@@ -455,23 +477,23 @@ const columns = [
     selector: "paiment",
     minWidth: "150px",
     cell: (row) =>
-      row.paiment === "En attente" ? (
+      row.paiment === "en_attente" ? (
         <Badge
           pill
           //   style={{ color: "red" }}
           className="gradient-light-primary pl-50 pr-50 text-warning text-wrap font-weight-bold"
         >
           <CreditCard2Back className="light-warning mr-50" size={20} />
-          {row.paiment}
+          En attente
         </Badge>
-      ) : row.paiment === "Reglé" ? (
+      ) : row.paiment === "reglé" ? (
         <Badge
           pill
           color="light-success pl-50 pr-50  text-success text-wrap font-weight-bold"
           size={20}
         >
           <CreditCard2Back className="light-success mr-50" size={20} />
-          <strong>{row.paiment}</strong>
+          <strong>Reglé</strong>
         </Badge>
       ) : (
         <Badge
@@ -480,7 +502,7 @@ const columns = [
           className="pl-50 pr-50 font-small-4 text-wrap text-bold-600"
         >
           <Truck className="dark mr-50" size={20} />
-          <strong>{row.paiment}</strong>
+          <strong>j+15 </strong>
         </Badge>
       ),
     //   <Badge
@@ -549,29 +571,55 @@ class Commande_recue extends React.Component {
   fetching_data = async () => {
     console.log("fetching ....");
     const commandes = await axios.get("/commandes?access_token=a");
-    console.log(commandes);
+    const commandes_pro = commandes.data.filter((item) => item.type === "pro");
+    const custom_commandes = commandes_pro.map((item) => {
+      return {
+        id: item.commande_id,
+        status:
+          item.status_commande === -2
+            ? "annulée"
+            : item.status_commande === -1
+            ? "incomplet"
+            : item.status_commande === 0
+            ? "non-traité"
+            : item.status_commande === 1
+            ? "attente_approvisionnement"
+            : item.status_commande === 2
+            ? "validée"
+            : item.status_commande === 3
+            ? "livrée"
+            : null,
+        name: item.nom_patient + " " + item.prenom_patient,
+        // name: 'Akram Ouardas',
+        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+        email: item.email,
+        // email: "a.ouardas@esi-sba.dz",
+        type: item.type === "ordo" ? "Particulier" : "Professionnel",
+        montant: item.montant_total,
+        date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        code: item.code_postal_livraison,
+        // paiment: item.paiment,
+        paiment: "reglé",
+      };
+    });
+
+    console.log(custom_commandes);
+    this.setState({
+      data: custom_commandes,
+    });
   };
 
   componentDidMount() {
-    // this.fetching_data();
-    // fetching the data from the database and passing it to the state
-
-    axios
-      .get("/commandes?access_token=a", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET",
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => console.log(err.message));
+    this.fetching_data();
 
     this.setState({
       columns: columns,
-      data: data,
+      // data: data,
       commandes: {
         non_traité: commandes.non_traité,
         en_attente: commandes.en_attente,

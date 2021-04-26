@@ -64,7 +64,7 @@ class PremiereSection extends React.Component {
   render() {
     return (
       <Card className="ml-1">
-        <CardTitle className="font-large-2 mt-50">
+        <CardTitle className="font-large-1 mt-50">
           Informations client
         </CardTitle>
         <Row>

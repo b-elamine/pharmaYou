@@ -5,6 +5,7 @@ import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
 import Icon from "./Icon.svg";
 import { Badge } from "reactstrap";
+import axios from "../../../axios";
 
 import {
   CursorFill,
@@ -16,6 +17,8 @@ import {
   Calendar3,
   Check2All,
   Calendar2Week,
+  Check2,
+  Exclamation,
 } from "react-bootstrap-icons";
 // fake database
 const data = [
@@ -371,21 +374,20 @@ const columns = [
     cell: (row) => <p className="text-bold-500 mb-0">{row.id}</p>,
   },
   {
-    name: "Statut",
+    name: "STATUT",
     selector: "status",
     minWidth: "150px",
     cell: (row) =>
       row.status === "en_attente" ? (
         <Badge
           pill
-          // style={{ backgroundColor: "#f8e7b6", color: "#ff7535" }}
           color="light-primary"
           className="text-primary pl-50 pr-50 font-small-1 text-wrap text-bold-500"
         >
           <HourglassSplit className="primary mr-50" size={20} />
           En attente
         </Badge>
-      ) : row.status === "non_traité" ? (
+      ) : row.status === "non-traité" ? (
         <Badge color="light-danger pl-50 pr-50 " pill>
           <ExclamationTriangleFill className="danger mr-50" size={20} />
           Non-traité
@@ -404,7 +406,7 @@ const columns = [
           <Truck className="mr-50" size={20} />
           En livraison
         </Badge>
-      ) : row.status === "livré" ? (
+      ) : row.status === "livrée" ? (
         <Badge color="light-success pl-50 pr-50 " pill>
           <Check2All className="success mr-50" size={20} />
           Livré
@@ -422,10 +424,26 @@ const columns = [
           <Calendar2Week className="primary mr-50" size={20} />
           Tournée assigné
         </Badge>
+      ) : 
+      row.status === "annulée" ? (
+        <Badge color="light-danger pl-50 pr-50 " pill>
+          <HourglassSplit className="primary mr-50" size={20} />
+          Annulée
+        </Badge>
+      ) : row.status === "validée" ? (
+        <Badge color="light-success pl-50 pr-50 " pill>
+          <Check2 className="primary mr-50" size={20} />
+          Validée
+        </Badge>
+      ) : row.status === "incomplet" ? (
+        <Badge color="light-primary pl-50 pr-50 " pill>
+          <Exclamation className="primary mr-50" size={20} />
+          Incomplet
+        </Badge>
       ) : null,
   },
   {
-    name: "Nom Client",
+    name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
     minWidth: "200px",
@@ -453,7 +471,7 @@ const columns = [
     ),
   },
   {
-    name: "Type",
+    name: "TYPE",
     selector: "type",
     sortable: true,
     cell: (row) =>
@@ -498,19 +516,44 @@ const columns = [
     ),
   },
   {
-    name: "Origine",
+    name: "ORIGINE",
     selector: "origine",
     sortable: true,
     minWidth: "200px",
-    cell: (row) => (
-      <Badge
-        color="light-success text-wrap text-bold-500 mb-0"
-        style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
-        pill
-      >
-        {row.origine}
-      </Badge>
-    ),
+    cell: (row) =>
+      row.origine === "infirmier" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier
+        </Badge>
+      ) : row.origine === "medadom" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier MEDADOM
+        </Badge>
+      ) : row.origine === "web" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier WEB
+        </Badge>
+      ) : row.origine === "appli" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier Appli
+        </Badge>
+      ) : null,
   },
   {
     name: "Actions",
@@ -558,11 +601,63 @@ class Ordonnances_recue extends React.Component {
     },
   };
 
+  fetching_data = async () => {
+    console.log("fetching ....");
+    const commandes = await axios.get("/commandes?access_token=a");
+    console.log(commandes)
+    const commandes_ordo = commandes.data.filter(
+      (item) => item.type === "ordo"
+    );
+    const custom_commandes = commandes_ordo.map((item) => {
+      return {
+        id: item.commande_id,
+        status:
+          item.status_commande === -2
+            ? "annulée"
+            : item.status_commande === -1
+            ? "incomplet"
+            : item.status_commande === 0
+            ? "non-traité"
+            : item.status_commande === 1
+            ? "attente_approvisionnement"
+            : item.status_commande === 2
+            ? "validée"
+            : item.status_commande === 3
+            ? "livrée"
+            : null,
+        name: item.nom_patient + " " + item.prenom_patient,
+        // name: 'Akram Ouardas',
+        type :item.type==="ordo" ? "Particulier" : "Professionnel",
+        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+        montant: item.montant_total,
+        date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        code: item.code_postal_livraison,
+        origine: "infirmier",
+        email: item.email,
+        // email: "a.ouardas@esi-sba.dz",
+        ville: item.ville_livraison,
+        // origine : item.origine,
+        // paiment: item.paiment,
+        paiment: "reglé",
+      };
+    });
+    console.log(custom_commandes);
+    this.setState({
+      data: custom_commandes,
+    });
+  };
+
   componentDidMount() {
+    this.fetching_data()
     // fetching the data from the database and passing it to the state
     this.setState({
       columns: columns,
-      data: data,
+      // data: data,
       ordonnances: {
         non_traité: ordonnances.non_traité,
         en_attente: ordonnances.en_attente,

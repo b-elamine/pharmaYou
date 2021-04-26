@@ -41,13 +41,13 @@ class DataTableCustom extends React.Component {
     data_fetched: false,
   };
 
-  componentDidUpdate() {
-    if (this.state.data.length === 0) {
-      this.setState({
-        data: this.props.data,
-      });
-    }
-  }
+  // componentDidUpdate() {
+  //   if (this.state.data.length === 0) {
+  //     this.setState({
+  //       data: this.props.data,
+  //     });
+  //   }
+  // }
 
   componentDidMount() {
     this.setState({
