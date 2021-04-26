@@ -2,17 +2,17 @@ import React from "react"
 import themeConfig from "../configs/themeConfig"
 import classnames from "classnames"
 
-const FullPageLayout = ({ children, ...rest }) => {
+const LoginFullLayout = ({ children, ...rest }) => {
   return (
     <div
-        className={classnames(
-          "full-layout wrapper blank-page  dark-layout",
-          {
-            "layout-dark": themeConfig.layoutDark
-          }
-        )}
+    //   className={classnames(
+    //     "full-layout wrapper bg-full-screen-image blank-page dark-layout",
+    //     {
+    //       "layout-dark": themeConfig.layoutDark
+    //     }
+    //   )}
     >
-      <div className="app-content d-flex flex-sm-row justify-content-center">
+      <div className="app-content">
         <div className="content-wrapper">
           <div className="content-body">
             <div className="flexbox-container">
@@ -25,4 +25,4 @@ const FullPageLayout = ({ children, ...rest }) => {
   )
 }
 
-export default FullPageLayout
+export default LoginFullLayout
