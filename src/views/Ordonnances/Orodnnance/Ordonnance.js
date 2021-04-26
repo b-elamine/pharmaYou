@@ -7,7 +7,9 @@ import SecondSection from "./Deuxieme_section";
 import ThirdSection from "./Troisieme_section";
 import ForthSection from "./Quatrieme_section";
 import PartieDroiteHaut from "./PartieDroite_1";
+
 import PartieDroiteBas from "./PartieDroite_2";
+import SideBar from "./SideBar1";
 
 const commentaires_notes = [
   {
@@ -55,7 +57,6 @@ class Ordonnance extends Component {
     this.setState({ ordonnance: this.props.location.state });
   }
   render() {
-    console.log(this.props.location.state)
     return (
       <Row>
         <Col xl="9">
@@ -85,6 +86,7 @@ class Ordonnance extends Component {
           <Card style={{ boxShadow: "none" }}>
             <PartieDroiteBas />
           </Card>
+          <SideBar sidebar={true} />
         </Col>
       </Row>
     );

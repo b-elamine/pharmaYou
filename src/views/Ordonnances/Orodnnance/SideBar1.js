@@ -1,199 +1,15 @@
 import React from "react";
-import { X } from "react-feather";
-import {
-  // UncontrolledDropdown,
-  // DropdownItem,
-  // DropdownMenu,
-  // DropdownToggle,
-  FormGroup,
-  Input,
-  Label,
-  Button,
-} from "reactstrap";
-import Flatpickr from "react-flatpickr";
-import NumericInput from "react-numeric-input";
-import { mobileStyle } from "../../forms/form-elements/number-input/InputStyles";
-import { EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../../assets/scss/plugins/extensions/editor.scss";
 
-import Switch from "react-switch";
-import "flatpickr/dist/themes/light.css";
-import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
-
-const eventColors = {
-  // business: "chip-success",
-  // work: "chip-warning",
-  // personal: "chip-danger",
-  créneau_de_livraison: "chip-primary",
-};
-class AddEvent extends React.Component {
-  state = {
-    title: "",
-    startDate: new Date(),
-    endDate: new Date(),
-    facturation: 1,
-    renumeration: 1,
-    label: null,
-    allDay: false,
-    selectable: true,
-    checked: false,
-    editorState: EditorState.createEmpty(),
-  };
-
-  onEditorStateChange = (editorState) => {
-    this.setState({
-      editorState,
-    });
-  };
-
-  handleChange = (checked) => {
-    this.setState({ checked });
-  };
-  handleDateChange = (date) => {
-    let dateN = new Date(date);
-    this.setState({
-      startDate: new Date(
-        dateN.getFullYear(),
-        dateN.getMonth(),
-        dateN.getDate(),
-        this.state.startDate.getHours(),
-        this.state.startDate.getMinutes(),
-        this.state.startDate.getSeconds()
-      ),
-      endDate: new Date(
-        dateN.getFullYear(),
-        dateN.getMonth(),
-        dateN.getDate(),
-        this.state.endDate.getHours(),
-        this.state.endDate.getMinutes(),
-        this.state.endDate.getSeconds()
-      ),
-    });
-  };
-
-  myFormat = (num) => {
-    return `${num} €`;
-  };
-
-  // handleLabelChange = (label) => {
-  //   this.setState({
-  //     label,
-  //   });
-  // };
-
-  handleAddEvent = (id) => {
-    this.props.handleSidebar(false);
-    if (this.state.checked) {
-      let dateD = this.state.startDate;
-      let dateF = this.state.endDate;
-      for (let index = 0; index < 7; index++) {
-        if (index === 0) {
-          this.props.addEvent({
-            id: id + index,
-            title: this.state.title,
-            start: dateD.setDate(dateD.getDate()),
-            end: dateF.setDate(dateF.getDate()),
-            label:
-              this.state.label === null
-                ? "créneau_de_livraison"
-                : this.state.label,
-            allDay: this.state.allDay,
-            selectable: this.state.selectable,
-            facturation: this.state.facturation,
-            renumeration: this.state.renumeration,
-            editorState: this.state.editorState,
-          });
-        } else {
-          this.props.addEvent({
-            id: id + index,
-            title: this.state.title,
-            start: dateD.setDate(dateD.getDate() + 1),
-            end: dateF.setDate(dateF.getDate() + 1),
-            label:
-              this.state.label === null
-                ? "créneau_de_livraison"
-                : this.state.label,
-            allDay: this.state.allDay,
-            selectable: this.state.selectable,
-            facturation: this.state.facturation,
-            renumeration: this.state.renumeration,
-            editorState: this.state.editorState,
-          });
-        }
-      }
-    } else {
-      this.props.addEvent({
-        id: id,
-        title: this.state.title,
-        start: this.state.startDate,
-        end: this.state.endDate,
-        label:
-          this.state.label === null ? "créneau_de_livraison" : this.state.label,
-        allDay: this.state.allDay,
-        selectable: this.state.selectable,
-        facturation: this.state.facturation,
-        renumeration: this.state.renumeration,
-        editorState: this.state.editorState,
-      });
-    }
-    this.setState({
-      title: "",
-      startDate: new Date(),
-      endDate: new Date(),
-      label: null,
-      allDay: false,
-      selectable: true,
-      facturation: 1,
-      renumeration: 1,
-      editorState: EditorState.createEmpty(),
-      checked: false,
-    });
-  };
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState({
-      title: nextProps.eventInfo === null ? "" : nextProps.eventInfo.title,
-      url: nextProps.eventInfo === null ? "" : nextProps.eventInfo.url,
-      startDate:
-        nextProps.eventInfo === null
-          ? new Date()
-          : new Date(nextProps.eventInfo.start),
-      endDate:
-        nextProps.eventInfo === null
-          ? new Date()
-          : new Date(nextProps.eventInfo.end),
-      label: nextProps.eventInfo === null ? null : nextProps.eventInfo.label,
-      allDay: nextProps.eventInfo === null ? false : nextProps.eventInfo.allDay,
-      selectable:
-        nextProps.eventInfo === null ? true : nextProps.eventInfo.selectable,
-      renumeration:
-        nextProps.eventInfo === null ? 1 : nextProps.eventInfo.renumeration,
-      facturation:
-        nextProps.eventInfo === null ? 1 : nextProps.eventInfo.facturation,
-      checked:
-        nextProps.eventInfo === null ? false : nextProps.eventInfo.checked,
-      editorState:
-        nextProps.eventInfo === null
-          ? EditorState.createEmpty()
-          : nextProps.eventInfo.editorState,
-    });
-  }
-
+class SideBar extends React.Component {
   render() {
-    let events = this.props.events.map((i) => i.id);
-    let lastId = events.pop();
-    let newEventId = lastId + 1;
     return (
-      
       <div
         style={{ overflowY: "scroll" }}
-        className={`add-event-sidebar ${
-          this.props.sidebar ? "show" : "hidden"
-        }`}
+        className={`add-event-sidebar 
+        ${this.props.sidebar ? "show" : "hidden"}
+        `}
       >
-        <div className="header d-flex justify-content-between">
+        {/* <div className="header d-flex justify-content-between">
           <h3 className="text-bold-600 mb-0">
             {this.props.eventInfo !== null
               ? "Modifier tournée livreur"
@@ -205,21 +21,20 @@ class AddEvent extends React.Component {
           >
             <X size={20} />
           </div>
-        </div>
-        <div className="add-event-body">
+        </div> */}
+
+        <div style={{ height: "500px" }} className="add-event-body ">
           <div className="category-action d-flex justify-content-between my-50">
             <div className="event-category">
-              {this.state.label !== null ? (
-                <div className={`chip ${eventColors[this.state.label]}`}>
-                  <div className="chip-body">
-                    <div className="chip-text text-capitalize">
-                      {this.state.label}
-                    </div>
-                  </div>
+              ThirdSection
+              <div>
+                <div className="chip-body">
+                  <div className="chip-text text-capitalize"></div>
                 </div>
-              ) : null}
+              </div>
             </div>
-            {/* <div className="category-dropdown">
+          </div>
+          {/* <div className="category-dropdown">
               <UncontrolledDropdown>
                 <DropdownToggle tag="div" className="cursor-pointer">
                   <Tag size={18} />
@@ -256,8 +71,8 @@ class AddEvent extends React.Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </div> */}
-          </div>
-          <div className="add-event-fields mt-2">
+        </div>
+        {/* <div className="add-event-fields mt-2">
             <FormGroup className="form-label-group">
               <Input
                 type="text"
@@ -430,10 +245,10 @@ class AddEvent extends React.Component {
               Annuler
             </Button.Ripple>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
 }
 
-export default AddEvent;
+export default SideBar;
