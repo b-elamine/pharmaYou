@@ -133,10 +133,10 @@ class Toolbar extends React.Component {
 }
 
 class CalendarApp extends React.Component {
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps (props, state) {
     if (
       props.app.events.length !== state.events ||
-      props.app.sidebar !== state.sidebar ||
+      props.app.sigetDerivedStateFromPropsdebar !== state.sidebar ||
       props.app.selectedEvent !== state.eventInfo
     ) {
       let dateToObj = props.app.events.map((event) => {
@@ -150,7 +150,6 @@ class CalendarApp extends React.Component {
         eventInfo: props.app.selectedEvent,
       };
     }
-    // Return null if the state hasn't changed
     return null;
   }
   constructor(props) {

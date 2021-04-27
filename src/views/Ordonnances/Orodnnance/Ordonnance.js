@@ -9,7 +9,10 @@ import ForthSection from "./Quatrieme_section";
 import PartieDroiteHaut from "./PartieDroite_1";
 
 import PartieDroiteBas from "./PartieDroite_2";
-import SideBar from "./SideBar1";
+import "../../../assets/scss/pages/app-email.scss"
+
+
+import Sidebar from "./SideBar1";
 
 const commentaires_notes = [
   {
@@ -51,14 +54,38 @@ const commentaires_notes = [
 
 class Ordonnance extends Component {
   state = {
+    composeMailStatus: false,
     ordonnance: {},
   };
   componentDidMount() {
     this.setState({ ordonnance: this.props.location.state });
   }
+
+  handleComposeSidebar = (status) => {
+    if (status === "open") {
+      this.setState({
+        composeMailStatus: true,
+      });
+    } else {
+      this.setState({
+        composeMailStatus: false,
+      });
+    }
+  };
+
   render() {
     return (
-      <Row>
+      <Row 
+      className="email-application position-relative"
+      >
+        <div
+          className={`app-content-overlay ${
+            this.state.composeMailStatus ? "show" : ""
+          }`}
+          onClick={() => {
+            this.handleComposeSidebar("close");
+          }}
+        />
         <Col xl="9">
           <Card style={{ boxShadow: "none" }}>
             <Card className="mb-0">
@@ -81,13 +108,16 @@ class Ordonnance extends Component {
         </Col>
         <Col xl="3">
           <Card>
-            <PartieDroiteHaut />
+            <PartieDroiteHaut toggle_sidebar={this.handleComposeSidebar} />
           </Card>
           <Card style={{ boxShadow: "none" }}>
             <PartieDroiteBas />
           </Card>
-          <SideBar sidebar={true} />
         </Col>
+        <Sidebar
+          handleComposeSidebar={this.handleComposeSidebar}
+          currentStatus={this.state.composeMailStatus}
+        />
       </Row>
     );
   }

@@ -2,19 +2,22 @@ import React from "react";
 import { Card, Button } from "reactstrap";
 import { Truck, ExclamationSquare, X } from "react-bootstrap-icons";
 import { RotateCw } from "react-feather";
-import SideBar from "./SideBar1";
+import Sidebar from "./SideBar1";
 
-import {
-  fetchEvents,
-  handleSidebar,
-  addEvent,
-  handleSelectedEvent,
-  updateEvent,
-  updateDrag,
-  updateResize,
-} from "../../../redux/actions/calendar/index";
+// import {
+//   fetchEvents,
+//   handleSidebar,
+//   addEvent,
+//   handleSelectedEvent,
+//   updateEvent,
+//   updateDrag,
+//   updateResize,
+// } from "../../../redux/actions/calendar/index";
 
 class PartieDroite_1 extends React.Component {
+  state = {
+    composeMailStatus: false,
+  };
   render() {
     return (
       <Card>
@@ -25,6 +28,9 @@ class PartieDroite_1 extends React.Component {
             fontSize: "13px",
           }}
           className="ml-2 mr-2 mt-1 text-left font-weight-bold"
+          onClick={() => {
+            this.props.toggle_sidebar("open")
+          }}
         >
           <Truck className="mr-75 text-left" size={17} />
           Rajouter dans une tournée

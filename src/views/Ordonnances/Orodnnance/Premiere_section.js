@@ -30,7 +30,11 @@ class FirstSection extends React.Component {
             {this.state.ordonnance.status === "non-traité" ? (
               <Badge
                 pill
-                style={{ width: "130px", height: "25px", fontSize: "12px" }}
+                style={{
+                  width:"140px",
+                  height: "25px",
+                  fontSize: "12px",
+                }}
                 color="light-danger pl-50 pr-50 text-wrap ml-50 text-left"
               >
                 <ExclamationTriangleFill className="mr-50" size={14} />
@@ -117,7 +121,7 @@ class FirstSection extends React.Component {
               <Badge
                 pill
                 style={{
-                  width: "100px",
+                  width: "140px",
                   height: "25px",
                   fontSize: "12px",
                   // fontWeight: "bold",
