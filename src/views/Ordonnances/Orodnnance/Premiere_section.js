@@ -20,7 +20,6 @@ class FirstSection extends React.Component {
     });
   }
   render() {
-    console.log(this.state.ordonnance);
     return (
       <Row>
         <Col xl="8">
