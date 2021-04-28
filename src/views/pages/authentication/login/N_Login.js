@@ -8,7 +8,9 @@ import logo from "../../../../assets/img/logo/logo_pharmaYou.PNG"
 import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy"
 import { Check } from "react-feather"
 import validator from"validator"
+import LoginJWT from "./LoginJWT"
 
+let errormessage =""
 
 class N_Login extends React.Component {
     state = {
@@ -26,10 +28,14 @@ class N_Login extends React.Component {
     // componentDidUpdate () {
     //     this.validation(e)
     // }
-    validation(e) {
-        this.setState({
-            email:e.target.value
-        })
+
+   
+    handl_mail_input(value) {
+        this.setState((prev_state, props) => {
+            return {
+              email: value
+            };
+          });
     if (validator.isEmail(this.state.email)) {
         console.log("c'est valide ")
         this.setState({
@@ -40,6 +46,7 @@ class N_Login extends React.Component {
         this.setState({
             valid:false
         })
+        errormessage ="Entrer un e-mail valide"
       }
     }
     
@@ -65,7 +72,7 @@ class N_Login extends React.Component {
                     <Label>E-mail</Label>
                     <Input
                     valid={this.state.valid} 
-                    onChange={(e) => this.validation(e)}
+                    onChange={(e) => this.handl_mail_input(e.target.value)}
                     type="email"
                     placeholder={this.state.email}
                     // value={this.state.email}
@@ -73,8 +80,8 @@ class N_Login extends React.Component {
                     />
                     </div>
                     <label>
-                        {this.state.valid ? (
-                        <small style={{color:"red"}} >Entrer un email valide</small>
+                        {this.state.valid === false ? (
+                        <small style={{color:"red"}} >{errormessage}</small>
                         ): "" }
                         
                     </label>
