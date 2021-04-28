@@ -16,7 +16,7 @@ import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
 class ComposeEmail extends React.Component {
   state = {
-    selectedTournée : {},
+    selectedTournée: {},
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
     editorState: EditorState.createEmpty(),
     editorState1: EditorState.createEmpty(),
@@ -37,7 +37,10 @@ class ComposeEmail extends React.Component {
   };
 
   handleChange = (checked) => {
-    this.setState({ checked });
+    this.setState({ checked ,});
+    if (!checked){
+      this.setState({ selectedTournée:{} })
+    }
   };
 
   handleSidebarClose = () => {
@@ -77,7 +80,7 @@ class ComposeEmail extends React.Component {
         const sortedData = data.sort((a, b) => a.start - b.start);
         this.setState({
           tournées: sortedData,
-          selectedTournée : sortedData[0]
+          selectedTournée: sortedData[0],
         });
       })
       .catch((err) => console.log(err));
@@ -85,13 +88,13 @@ class ComposeEmail extends React.Component {
 
   render() {
     const { editorState, editorState1 } = this.state;
-
+    let tours = "";
+    const toursDefault = `${this.state.selectedTournée.value}`
+    for (let index = 0; index < this.state.selectedTournée.length; index++) {
+      tours = tours + `${this.state.selectedTournée[index].value} ${"\n"} `;
+    }
     return (
       <Card
-        // style={{
-        //   display: this.props.currentStatus ? "" : "none",
-
-        // }}
         className={`compose-email shadow-none ${
           this.props.currentStatus ? "open" : ""
         }`}
@@ -122,28 +125,14 @@ class ComposeEmail extends React.Component {
                 Prochaine tournée par defaut
               </span>
               <Input
+                type="textarea"
                 readOnly
                 id="prochaine_tournée"
-                value={this.state.selectedTournée.value}
+                value={tours ? tours : toursDefault }
                 // onChange={(e) =>
                 //   this.setState({ listeTournes: e.target.value })
                 // }
               />
-              {/* <Flatpickr
-                disabled
-                id="Date"
-                className="form-control"
-                // placeholder="hello"
-                value={new Date()}
-                // onChange={(date) => this.handleDateChange(date)}
-                options={{
-                  // enableTime: true,
-                  // noCalendar: true,
-                  dateFormat: "Y-m-d - H:i",
-                  time_24hr: true,
-                  minTime: new Date().getTime(),
-                }}
-              /> */}
             </div>
             <div className="form-label-group">
               <div className="d-flex flex-sm-row flex-column align-items-center justify-content-start px-0">
@@ -167,6 +156,7 @@ class ComposeEmail extends React.Component {
                 Sélectionner une autre tournée
               </span>
               <Select
+                isMulti
                 isDisabled={!this.state.checked}
                 className="React"
                 classNamePrefix="select"
@@ -174,7 +164,9 @@ class ComposeEmail extends React.Component {
                 name="Role"
                 placeholder="Liste des prochaines tournées"
                 options={this.state.tournées}
-                onChange={(e)=>{ this.setState({ selectedTournée: e })}}
+                onChange={(e) => {
+                  this.setState({ selectedTournée: e });
+                }}
               />
             </div>
             <div id="email-notif" style={{ marginTop: "80px" }}>
