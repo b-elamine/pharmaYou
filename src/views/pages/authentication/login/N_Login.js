@@ -72,13 +72,13 @@ class N_Login extends React.Component {
                     required
                     />
                     </div>
-                    <div style={{heignt:"1rem"}} >
+                    <label>
                         {this.state.valid ? (
-                        <small>Entrer un email valid</small>
+                        <small style={{color:"red"}} >Entrer un email valide</small>
                         ): "" }
                         
-                    </div>
-                    <div style={{marginBottom:"1rem"}} >
+                    </label>
+                    <div style={{marginBottom:"1.5rem"}} >
                     <Label>Mot de passe</Label>
                     <small><a href="/#" style={{color:"orange", float:"right"}} >Mot de passe oublié ?</a></small>
                     <Input
