@@ -1,9 +1,8 @@
 import React from "react";
-import axios from "axios";
+import axios from "../../../axios";
 import { Input, Card, CardHeader, CardBody, Button } from "reactstrap";
 import { X, Users, Truck } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import Flatpickr from "react-flatpickr";
 import Switch from "react-switch";
 import Select from "react-select";
 
@@ -16,7 +15,7 @@ import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
 class ComposeEmail extends React.Component {
   state = {
-    selectedTournée : {},
+    selectedTournée: {},
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
     editorState: EditorState.createEmpty(),
     editorState1: EditorState.createEmpty(),
@@ -38,6 +37,9 @@ class ComposeEmail extends React.Component {
 
   handleChange = (checked) => {
     this.setState({ checked });
+    if (!checked) {
+      this.setState({ selectedTournée: [this.state.tournées[0]] });
+    }
   };
 
   handleSidebarClose = () => {
@@ -60,6 +62,7 @@ class ComposeEmail extends React.Component {
           .filter((item) => item.start >= new Date())
           .map((item) => {
             return {
+              id : item.id,
               start: item.start,
               end: item.end,
               value: `${item.start.toISOString().split("T")[0]}  ${
@@ -77,21 +80,47 @@ class ComposeEmail extends React.Component {
         const sortedData = data.sort((a, b) => a.start - b.start);
         this.setState({
           tournées: sortedData,
-          selectedTournée : sortedData[0]
+          selectedTournée: [sortedData[0]],
         });
       })
       .catch((err) => console.log(err));
   }
 
+  handleSelect = (e) => {
+    this.setState({ selectedTournée: e });
+    // if (!this.state.checked) {
+    //   this.setState({ selectedTournée: [this.state.tournées[0]] });
+    // } else {
+    //   this.setState({ selectedTournée: e });
+    // }
+    if (!e || e.length === 0) {
+      this.setState({
+        selectedTournée: [this.state.tournées[0]],
+      });
+    }
+  };
+
+  ValiderTournée = async () => {
+    const response = await axios.post(
+      `commandes/${this.props.ordonnance.id}/assigner_tournee`,
+      {
+        tournee_id: this.state.selectedTournée[0].id,
+        access_token: "a",
+      }
+    );
+    console.log(response)
+    this.handleSidebarClose();
+  };
+
   render() {
     const { editorState, editorState1 } = this.state;
-
+    let tours = "";
+    for (let index = 0; index < this.state.selectedTournée.length; index++) {
+      tours = tours + `${this.state.selectedTournée[index].value} ${"\n"} `;
+      // console.log(this.props.ordonnance)
+    }
     return (
       <Card
-        // style={{
-        //   display: this.props.currentStatus ? "" : "none",
-
-        // }}
         className={`compose-email shadow-none ${
           this.props.currentStatus ? "open" : ""
         }`}
@@ -122,28 +151,14 @@ class ComposeEmail extends React.Component {
                 Prochaine tournée par defaut
               </span>
               <Input
+                type="textarea"
                 readOnly
                 id="prochaine_tournée"
-                value={this.state.selectedTournée.value}
+                value={tours}
                 // onChange={(e) =>
                 //   this.setState({ listeTournes: e.target.value })
                 // }
               />
-              {/* <Flatpickr
-                disabled
-                id="Date"
-                className="form-control"
-                // placeholder="hello"
-                value={new Date()}
-                // onChange={(date) => this.handleDateChange(date)}
-                options={{
-                  // enableTime: true,
-                  // noCalendar: true,
-                  dateFormat: "Y-m-d - H:i",
-                  time_24hr: true,
-                  minTime: new Date().getTime(),
-                }}
-              /> */}
             </div>
             <div className="form-label-group">
               <div className="d-flex flex-sm-row flex-column align-items-center justify-content-start px-0">
@@ -167,6 +182,7 @@ class ComposeEmail extends React.Component {
                 Sélectionner une autre tournée
               </span>
               <Select
+                isMulti
                 isDisabled={!this.state.checked}
                 className="React"
                 classNamePrefix="select"
@@ -174,7 +190,7 @@ class ComposeEmail extends React.Component {
                 name="Role"
                 placeholder="Liste des prochaines tournées"
                 options={this.state.tournées}
-                onChange={(e)=>{ this.setState({ selectedTournée: e })}}
+                onChange={this.handleSelect}
               />
             </div>
             <div id="email-notif" style={{ marginTop: "80px" }}>
@@ -230,7 +246,7 @@ class ComposeEmail extends React.Component {
                 //     ? false
                 //     : true
                 // }
-                onClick={() => this.handleSidebarClose()}
+                onClick={this.ValiderTournée}
               >
                 Valider
               </Button.Ripple>

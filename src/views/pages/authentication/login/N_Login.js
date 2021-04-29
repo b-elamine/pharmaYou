@@ -9,6 +9,9 @@ import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy"
 import { Check } from "react-feather"
 import validator from "validator"
 import LoginJWT from "./LoginJWT"
+import axios from "axios"
+import { history } from "../../../../history"
+
 
 let errormessage =""
 
@@ -24,10 +27,30 @@ class N_Login extends React.Component {
     //     this.props.loginWithJWT(this.state)    //Use loginAction(LoginWithJwt) in this path redux/action.auth/loginAction    
     //   }
 
-    //validation
-    // componentDidUpdate () {
-    //     this.validation(e)
-    // }
+     loginWithJWT = user => {
+        return dispatch => {
+          axios
+            .post("/api/authenticate/login/user", {
+              email: user.email,
+              password: user.password
+            })
+            .then(response => {
+              var loggedInUser
+      
+              if (response.data) {
+                loggedInUser = response.data.user
+      
+                dispatch({
+                  type: "LOGIN_WITH_JWT",
+                  payload: { loggedInUser, loggedInWith: "jwt" }
+                })
+      
+                history.push("/")
+              }
+            })
+            .catch(err => console.log(err))
+        }
+      }
 
    
     handl_mail_input(value) {
@@ -105,9 +128,9 @@ class N_Login extends React.Component {
                     <div>
                         <Button style={{
                         width:"28rem",
-                        
                          }}
                          color="primary"
+                         onClick={this.loginWithJWT}
                          >
                              Se connecter
                         </Button>

@@ -44,17 +44,18 @@ const commentaires_notes = [
 
 class Client_particulier extends React.Component {
   render() {
+    console.log(this.props.location.state)
     return (
       <Card>
         <Row>
           <Col>
-            <FirstSection commentaires_notes={commentaires_notes} />
+            <FirstSection client={this.props.location.state} commentaires_notes={commentaires_notes} />
           </Col>
           <Col>
-            <SecondSection />
+            <SecondSection client={this.props.location.state} />
           </Col>
         </Row>
-        <ThirdSection />
+        <ThirdSection client={this.props.location.state} />
       </Card>
     );
   }

@@ -11,6 +11,8 @@ import {
   FormGroup,
   CardBody,
 } from "reactstrap";
+import PerfectScrollbar from "react-perfect-scrollbar";
+
 import {
   Justify,
   Calculator,
@@ -408,33 +410,38 @@ class QuatriemeSection extends React.Component {
           <br></br>
           <br></br>
           <br></br>
-          <Card  className="p-2 mt-5 text-dark text-left">
+          <Card className="p-2 mt-5 text-dark text-left">
             <CardTitle className="font-medium-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
               <ListUl className="mr-1" size={17} />
               Historique commentaire et note du patient
             </CardTitle>
-            <div style={{overflowY:"scroll", height:"250px"}}>
-
-            {this.state.commentaires_notes.length === 0 ? (
-              <strong>Pas de commentaire pour l'instant</strong>
-            ) : (
-              this.state.commentaires_notes.map((comment) => {
-                const icon_color =
-                  comment.type === "Commentaire interne"
-                    ? "#fa680c"
-                    : "#28c76f";
-                return (
-                  <CommentaireBlock
-                    key={comment.id}
-                    icon_color={icon_color}
-                    block_type={comment.type}
-                    block_note={comment.commentaire}
-                    image_path={comment.image}
-                    name={comment.nom}
-                  />
-                );
-              })
-            )}
+            <div style={{ height: "250px" }}>
+              <PerfectScrollbar
+                options={{
+                  wheelPropagation: false,
+                }}
+              >
+                {this.state.commentaires_notes.length === 0 ? (
+                  <strong>Pas de commentaire pour l'instant</strong>
+                ) : (
+                  this.state.commentaires_notes.map((comment) => {
+                    const icon_color =
+                      comment.type === "Commentaire interne"
+                        ? "#fa680c"
+                        : "#28c76f";
+                    return (
+                      <CommentaireBlock
+                        key={comment.id}
+                        icon_color={icon_color}
+                        block_type={comment.type}
+                        block_note={comment.commentaire}
+                        image_path={comment.image}
+                        name={comment.nom}
+                      />
+                    );
+                  })
+                )}
+              </PerfectScrollbar>
             </div>
           </Card>
         </Badge>

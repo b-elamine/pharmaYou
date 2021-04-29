@@ -76,7 +76,7 @@ class Toolbar extends React.Component {
           </div>*/}
         </div>
         <div className="text-center view-options mt-1 mt-sm-0 ml-lg-5 ml-0">
-          <ButtonGroup>
+          <ButtonGroup >
             <button
               className={`btn ${
                 this.props.view === "month"

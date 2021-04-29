@@ -1,7 +1,7 @@
 import React from "react"
 import { Row, Col } from "reactstrap"
 import ReactApexChart from "react-apexcharts"
-import DataTableCustom from "../DataTableCustom/DataTableCustom"
+import DataTableCustom from "./DataTableGeneral_View"
 import "../../assets/scss/pages/dashboard-analytics.scss"
 import { Badge} from "reactstrap";
 import {CursorFill, EyeFill, HourglassSplit, ThreeDotsVertical } from "react-bootstrap-icons"
@@ -427,25 +427,12 @@ const columns = [
       minWidth :"180px",
       cell: (row) => (
         <div className="data-list-action">
-          <CursorFill
-            className="cursor-pointer mr-1"
-            size={20}
-            onClick={() => {
-              alert("Envoyer la commande reçue " + row.id);
-            }}
-          />
+         
           <EyeFill
             className="cursor-pointer mr-1"
             size={20}
             onClick={() => {
               alert("Voir la commande reçue " + row.id);
-            }}
-          />
-          <ThreeDotsVertical
-            className="cursor-pointer"
-            size={20}
-            onClick={() => {
-              alert("More " + row.id);
             }}
           />
         </div>
@@ -458,14 +445,14 @@ class General_View extends React.Component {
   state = {  
     pro_chart_bar : {
         series: [{
-            data: [21, 22, 10, 28]
+            data: [15 ,21, 22, 10, 28]
           }],
           options: {
             chart: {
               toolbar: {
                   show : false 
               },
-              height: "5rem",
+              height: "3.5rem",
               type: 'bar',
               events: {
                 click: function(chart, w, e) {
@@ -475,9 +462,11 @@ class General_View extends React.Component {
             },
             colors: ["#FF5614"],
             plotOptions: {
+              
               bar: {
-                columnWidth: '18%',
+                columnWidth: '20%',
                 distributed: true,
+                borderRadius:3,
               }
             },
             dataLabels: {
@@ -507,28 +496,28 @@ class General_View extends React.Component {
             grid : {
                 show : false
             }, 
-            title : {
-                text : "Cmd / Semaine",
-                align : "left", 
-                style : {
-                    fontSize : "12px",
-                    fontWeight : "regular",
-                    color : "black"
-                }
-            }
+            // title : {
+            //     text : "Commande / Semaine",
+            //     align : "left", 
+            //     style : {
+            //         fontSize : "12px",
+            //         fontWeight : "regular",
+            //         color : "black"
+            //     }
+            // }
             
           },
     },
     pro_chart_line : {
         series: [{
-            data: [21, 22, 10, 28]
+            data: [13,17, 20, 14, 16]
           }],
           options: {
             chart: {
               toolbar : {
                   show : false 
               },
-              height: "5rem",
+              height: "3.5rem",
               type: 'bar',
               events: {
                 click: function(chart, w, e) {
@@ -539,8 +528,9 @@ class General_View extends React.Component {
             colors: ["#28C76F"],
             plotOptions: {
               bar: {
-                columnWidth: '18%',
+                columnWidth: '20%',
                 distributed: true,
+                borderRadius:3,
               }
             },
             dataLabels: {
@@ -567,27 +557,27 @@ class General_View extends React.Component {
             grid : {
                 show : false
             },
-            title : {
-                text : "Chiffre d'aiffaire",
-                align : "left", 
-                style : {
-                    fontSize : "12px",
-                    fontWeight : "regular",
-                    color : "black"
-                }
-            }
+            // title : {
+            //     text : "Chiffre d'aiffaire",
+            //     align : "left", 
+            //     style : {
+            //         fontSize : "12px",
+            //         fontWeight : "regular",
+            //         color : "black"
+            //     }
+            // }
           },
     },
     particular_char_bar : {
         series: [{
-            data: [21, 22, 10, 28]
+            data: [18, 22, 10, 28, 33]
           }],
           options: {
             chart: {
               toolbar : {
                 show : false
               },
-              height: "5rem",
+              height: "3.5rem",
               type: 'bar',
               events: {
                 click: function(chart, w, e) {
@@ -598,8 +588,9 @@ class General_View extends React.Component {
             colors: ["#FC8F04"],
             plotOptions: {
               bar: {
-                columnWidth: '18%',
+                columnWidth: '20%',
                 distributed: true,
+                borderRadius:3,
               }
             },
             dataLabels: {
@@ -614,6 +605,7 @@ class General_View extends React.Component {
                 ['Joe'],
                 ['Jake'],
                 ['Peter'],
+                ['Peter'],
                 
               ],
               labels: {
@@ -626,27 +618,27 @@ class General_View extends React.Component {
             grid : {
                 show : false
             },
-            title : {
-                text : "Ordonnances reçues",
-                align : "left", 
-                style : {
-                    fontSize : "12px",
-                    fontWeight : "regular",
-                    color : "black"
-                }
-            }
+            // title : {
+            //     text : "Ordonnances reçues",
+            //     align : "left", 
+            //     style : {
+            //         fontSize : "12px",
+            //         fontWeight : "regular",
+            //         color : "black"
+            //     }
+            // }
           },
     },
     particular_char_line : {
         series: [{
-            data: [21, 22, 10, 28]
+            data: [21, 22, 10, 28, 33]
           }],
           options: {
             chart: {
               toolbar : {
                   show : false 
               },
-              height: "5rem",
+              height: "3.5rem",
               type: 'bar',
               events: {
                 click: function(chart, w, e) {
@@ -657,8 +649,9 @@ class General_View extends React.Component {
             colors: ["#00CFE8"],
             plotOptions: {
               bar: {
-                columnWidth: '18%',
+                columnWidth: '20%',
                 distributed: true,
+                borderRadius:3,
               }
             },
             dataLabels: {
@@ -685,15 +678,15 @@ class General_View extends React.Component {
             grid : {
                 show : false
             }, 
-            title : {
-                text : "Chiffre d'affiare ordonnance",
-                align : "left", 
-                style : {
-                    fontSize : "12px",
-                    fontWeight : "regular",
-                    color : "black"
-                }
-            }
+            // title : {
+            //     text : "Chiffre d'affiare ordonnance",
+            //     align : "left", 
+            //     style : {
+            //         fontSize : "12px",
+            //         fontWeight : "regular",
+            //         color : "black"
+            //     }
+            // }
           },
     },
     table : {
@@ -745,44 +738,67 @@ class General_View extends React.Component {
             padding:"2rem",
             marginBottom:"35px",
             }}>
-              <div style={{width:"40%"}}>
+              <div style={{ width: "40%" }}>
               <Row noGutters="false">
-              <Col>
-              <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "#ffe3d8",
-                  borderRadius:"18px",
-                  width : "80%",
-                  height:"100%"
-              }}>
-              <ReactApexChart
-              options={this.state.pro_chart_bar.options}
-              series={this.state.pro_chart_bar.series}
-              type="bar"
-              height={"100%"}
-              width={"70%"}
-              />
-              </div>
-              </Col>
-              <Col>
-              <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "#ffe3d8",
-                  borderRadius:"18px",
-                  width : "80%",
-                  height:"100%",
-                 
-              }}>      
-              <ReactApexChart
-              options={this.state.pro_chart_line.options}
-              series={this.state.pro_chart_line.series}
-              type="line"
-              height={"100%"}
-              width={"70%"}
-              />
-              </div>
-              </Col>
-              
+                <Col>
+                  <div
+                    className="align-items-center justify-content-center d-flex"
+                    style={{
+                      backgroundColor: "#ffe3d8",
+                      borderRadius: "18px",
+                      width: "80%",
+                      height: "11rem",
+                    }}
+                  >
+                    <Col>
+                    <div className="align-self-center">
+                    <div>
+                    <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Ordonnances reçues</h5>
+                    <h5 style={{marginBottom:"-2rem",}} ><b>321</b></h5>
+                    </div>
+                    <ReactApexChart
+                      options={this.state.pro_chart_bar.options}
+                      series={this.state.pro_chart_bar.series}
+                      type="bar"
+                      height={"60%"}
+                      width={"90%"}
+                    />
+                    </div>
+                    
+                    </Col>
+                  </div>
+                </Col>
+                <Col>
+                  <div
+                    className="align-items-center justify-content-center d-flex"
+                    style={{
+                      backgroundColor: "#ffe3d8",
+                      borderRadius: "18px",
+                      width: "80%",
+                      height: "11rem",
+                    }}
+                  >
+
+                    <Col>
+                    <div className="align-self-center">
+                    <div>
+                    <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Chiffre d'affaire ordonnance</h5>
+                    <h5 style={{marginBottom:"-2rem",}} ><b>3 984 £</b></h5>
+                    </div>
+                    <ReactApexChart
+                      options={this.state.pro_chart_line.options}
+                      series={this.state.pro_chart_line.series}
+                      // type="bar"
+                      height={"60%"}
+                      width={"90%"}
+                    />
+                    </div>
+                    
+                    </Col>
+                  </div>
+                </Col>
               </Row>
-              </div>
+            </div>
               <div  
                 style ={{ 
                     backgroundColor : "#ffe3d8",
@@ -872,7 +888,7 @@ class General_View extends React.Component {
           
         </Row>
         <Row>
-          <h5>Profesionnels</h5>
+          <h5>Professionnels</h5>
             <div 
             className="d-flex flex-sm-row justify-content-center"
             style={{
@@ -891,33 +907,53 @@ class General_View extends React.Component {
                   backgroundColor : "#d1eafc",
                   borderRadius:"18px",
                   width : "80%",
-                  height:"100%"
+                  height:"11rem"
               }}>
+              <Col>
+              <div className="align-self-center">
+              <div>
+              <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Commandes professionnelles</h5>
+              <h5 style={{marginBottom:"-2rem",}} ><b>467</b></h5>
+              </div>
               <ReactApexChart
               options={this.state.pro_chart_bar.options}
               series={this.state.pro_chart_bar.series}
               type="bar"
-              height={"100%"}
-              width={"70%"}
+              height={"60%"}
+              width={"90%"}
               />
               </div>
               </Col>
-              <Col>
-              <div className = "align-items-center justify-content-center d-flex"  style={{
-                  backgroundColor : "#d1eafc",
-                  borderRadius:"18px",
-                  width : "80%",
-                  height:"100%",
-                 
-              }}>      
-              <ReactApexChart
-              options={this.state.pro_chart_line.options}
-              series={this.state.pro_chart_line.series}
-              type="line"
-              height={"100%"}
-              width={"70%"}
-              />
               </div>
+              </Col>
+              <Col>
+              <div
+                    className="align-items-center justify-content-center d-flex"
+                    style={{
+                      backgroundColor: "#d1eafc",
+                      borderRadius: "18px",
+                      width: "80%",
+                      height: "11rem",
+                    }}
+                  >
+
+                    <Col>
+                    <div className="align-self-center">
+                    <div>
+                    <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Chiffre d'affaire professionnel</h5>
+                    <h5 style={{marginBottom:"-2rem",}} ><b>6 294 £</b></h5>
+                    </div>
+                    <ReactApexChart
+                      options={this.state.pro_chart_line.options}
+                      series={this.state.pro_chart_line.series}
+                      // type="bar"
+                      height={"60%"}
+                      width={"90%"}
+                    />
+                    </div>
+                    
+                    </Col>
+                  </div>
               </Col>
               
               </Row>
@@ -930,7 +966,7 @@ class General_View extends React.Component {
                    height:"100%",
                    padding : "1rem"
               }}>
-                  Statistiques professionnels
+                  Statistiques professionnelles
                   <div style={{
                       marginTop:"2rem",
                       overflowX:"scroll"
