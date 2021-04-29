@@ -7,6 +7,8 @@ import {
   RecordCircleFill,
   ListUl,
 } from "react-bootstrap-icons";
+import PerfectScrollbar from "react-perfect-scrollbar";
+
 import { DollarSign, User } from "react-feather";
 import { Badge, Button, Card, CardBody, CardTitle, Col, Row } from "reactstrap";
 
@@ -55,10 +57,12 @@ const CommentaireBlock = (props) => {
 class PremiereSection extends React.Component {
   state = {
     commentaires_notes: [],
+    client: {},
   };
   componentDidMount() {
     this.setState({
       commentaires_notes: this.props.commentaires_notes,
+      client: this.props.client,
     });
   }
   render() {
@@ -71,36 +75,37 @@ class PremiereSection extends React.Component {
           <Col xl="5">
             <div className="ml-0">
               <h3 style={{ fontWeight: "900", marginBottom: "0px" }}>
-                Mayra Foster
+                {this.state.client.name}
               </h3>
-              <small className="mt-25 ml-0">Email@address.com</small>
+              <small className="mt-25 ml-0">{this.state.client.email}</small>
             </div>
+            <div className="d-flex flex-sm-row flex-column align-items-center justify-content-start px-0">
+              <Button
+                color="primary"
+                className="mt-2 text-white  font-weight-bold mr-2 p-50  mb-2"
+              >
+                Modifier
+              </Button>
+              <Button
+                color=""
+                style={{
+                  //     borderColor: "red",
+                  //     float: "right",
+                  color: "red",
+                  width: "80px",
+                  height: "40px",
+                  //     fontSize: "8px",
+                  //     border: "1px solid red",
+                  //     marginRight:"20px",
+                  //     marginBottom:"0px"
+                }}
+                className=" mt-2 text-danger font-small-3  p-50  mb-2 border border-danger"
 
-            <Button
-              color="primary"
-              className="mt-2 text-white float-left font-weight-bold mr-2 p-50  mb-2"
-            >
-              Modifier
-            </Button>
-            <Button
-              color=""
-              style={{
-                //     borderColor: "red",
-                //     float: "right",
-                color: "red",
-                width: "80px",
-                height: "40px",
-                //     fontSize: "8px",
-                //     border: "1px solid red",
-                //     marginRight:"20px",
-                //     marginBottom:"0px"
-              }}
-              className=" mt-2 text-danger font-small-3 float-right  p-50  mb-2 border border-danger"
-
-              //   className="mt-2 text-white float-right font-weight-bold mr-2 p-50  mb-2"
-            >
-              Supprimé
-            </Button>
+                //   className="mt-2 text-white float-right font-weight-bold mr-2 p-50  mb-2"
+              >
+                Supprimé
+              </Button>
+            </div>
           </Col>
           <Col xl="3">
             <div className="d-flex">
@@ -121,10 +126,12 @@ class PremiereSection extends React.Component {
             </div>
           </Col>
           <Col xl="4">
-            <p className=" font-small-3">19 </p>
-            <p className="">75000</p>
-            <p className="">Paris</p>
-            <p className="">0625148852</p>
+            <p className=" font-small-3">
+              {this.state.client.adresse_livraison}{" "}
+            </p>
+            <p className="">{this.state.client.code}</p>
+            <p className="">{this.state.client.ville}</p>
+            <p className="">{this.state.client.telephone}</p>
           </Col>
         </Row>
         <Row className="mt-4 mb-4">
@@ -135,7 +142,7 @@ class PremiereSection extends React.Component {
               </Badge>
               <div>
                 <p className="font-medium-2 mb-0 font-weight-bold">12</p>
-                <small className="mt-0">Ordonnane du client</small>
+                <small className="mt-0">Ordonnance du client</small>
               </div>
             </div>
           </Col>
@@ -145,7 +152,9 @@ class PremiereSection extends React.Component {
                 <DollarSign className="mr-4 fonticon-wrap" size={32} />
               </Badge>
               <div>
-                <p className="font-medium-2 mb-0 font-weight-bold">630€</p>
+                <p className="font-medium-2 mb-0 font-weight-bold">
+                  {this.state.client.chiffre_affaire}€
+                </p>
                 <small className="mt-0">Chiffre d'affaire</small>
               </div>
             </div>
@@ -167,27 +176,33 @@ class PremiereSection extends React.Component {
               <ListUl className="mr-1" size={17} />
               Historique commentaire et note du patient
             </CardTitle>
-            <div style={{height:"350px",overflowY:"scroll"}}>
-              {this.state.commentaires_notes.length === 0 ? (
-                <strong>Pas de commentaire pour l'instant</strong>
-              ) : (
-                this.state.commentaires_notes.map((comment) => {
-                  const icon_color =
-                    comment.type === "Commentaire interne"
-                      ? "#fa680c"
-                      : "#28c76f";
-                  return (
-                    <CommentaireBlock
-                      key={comment.id}
-                      icon_color={icon_color}
-                      block_type={comment.type}
-                      block_note={comment.commentaire}
-                      image_path={comment.image}
-                      name={comment.nom}
-                    />
-                  );
-                })
-              )}
+            <div style={{ height: "350px"}}>
+              <PerfectScrollbar
+                options={{
+                  wheelPropagation: false,
+                }}
+              >
+                {this.state.commentaires_notes.length === 0 ? (
+                  <strong>Pas de commentaire pour l'instant</strong>
+                ) : (
+                  this.state.commentaires_notes.map((comment) => {
+                    const icon_color =
+                      comment.type === "Commentaire interne"
+                        ? "#fa680c"
+                        : "#28c76f";
+                    return (
+                      <CommentaireBlock
+                        key={comment.id}
+                        icon_color={icon_color}
+                        block_type={comment.type}
+                        block_note={comment.commentaire}
+                        image_path={comment.image}
+                        name={comment.nom}
+                      />
+                    );
+                  })
+                )}
+              </PerfectScrollbar>
             </div>
           </Card>
         </Row>

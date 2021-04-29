@@ -1,9 +1,8 @@
 import React from "react";
-import axios from "axios";
+import axios from "../../../axios";
 import { Input, Card, CardHeader, CardBody, Button } from "reactstrap";
 import { X, Users, Truck } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import Flatpickr from "react-flatpickr";
 import Switch from "react-switch";
 import Select from "react-select";
 
@@ -37,9 +36,9 @@ class ComposeEmail extends React.Component {
   };
 
   handleChange = (checked) => {
-    this.setState({ checked ,});
-    if (!checked){
-      this.setState({ selectedTournée:{} })
+    this.setState({ checked });
+    if (!checked) {
+      this.setState({ selectedTournée: [this.state.tournées[0]] });
     }
   };
 
@@ -80,19 +79,24 @@ class ComposeEmail extends React.Component {
         const sortedData = data.sort((a, b) => a.start - b.start);
         this.setState({
           tournées: sortedData,
-          selectedTournée: sortedData[0],
+          selectedTournée: [sortedData[0]],
         });
       })
       .catch((err) => console.log(err));
   }
 
+  ValiderTournée = async () =>{
+    await axios.post(`commandes//assigner_tournee`)
+    this.handleSidebarClose()
+  }
+
   render() {
     const { editorState, editorState1 } = this.state;
     let tours = "";
-    const toursDefault = `${this.state.selectedTournée.value}`
     for (let index = 0; index < this.state.selectedTournée.length; index++) {
       tours = tours + `${this.state.selectedTournée[index].value} ${"\n"} `;
     }
+    console.log(this.state.selectedTournée);
     return (
       <Card
         className={`compose-email shadow-none ${
@@ -128,7 +132,7 @@ class ComposeEmail extends React.Component {
                 type="textarea"
                 readOnly
                 id="prochaine_tournée"
-                value={tours ? tours : toursDefault }
+                value={tours}
                 // onChange={(e) =>
                 //   this.setState({ listeTournes: e.target.value })
                 // }
@@ -166,6 +170,11 @@ class ComposeEmail extends React.Component {
                 options={this.state.tournées}
                 onChange={(e) => {
                   this.setState({ selectedTournée: e });
+                  if (!e || e.length === 0) {
+                    this.setState({
+                      selectedTournée: [this.state.tournées[0]],
+                    });
+                  }
                 }}
               />
             </div>
@@ -222,7 +231,7 @@ class ComposeEmail extends React.Component {
                 //     ? false
                 //     : true
                 // }
-                onClick={() => this.handleSidebarClose()}
+                onClick={this.ValiderTournée}
               >
                 Valider
               </Button.Ripple>

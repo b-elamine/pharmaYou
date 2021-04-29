@@ -151,6 +151,7 @@ class Ordonnance extends Component {
           </Card>
         </Col>
         <SidebarAssignerTournee
+          ordonnance={this.props.location.state}
           handleComposeSidebar={this.handleAssignerTourneSideBar}
           currentStatus={this.state.statusAssignerTourneSideBar}
         />
