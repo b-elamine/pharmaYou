@@ -7,8 +7,51 @@ import {
 import logo from "../../../../assets/img/logo/logo_pharmaYou.PNG"
 import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy"
 import { Check } from "react-feather"
+import validator from"validator"
+import LoginJWT from "./LoginJWT"
+
+let errormessage =""
 
 class N_Login extends React.Component {
+    state = {
+        email: "example@abcd.xyz",
+        password: "password",
+        remember: false,
+        valid : false,
+      }
+    //   handleLogin = e => {                    
+    //     e.preventDefault()
+    //     this.props.loginWithJWT(this.state)    //Use loginAction(LoginWithJwt) in this path redux/action.auth/loginAction    
+    //   }
+
+    //validation
+    // componentDidUpdate () {
+    //     this.validation(e)
+    // }
+
+   
+    handl_mail_input(value) {
+        this.setState((prev_state, props) => {
+            return {
+              email: value
+            };
+          });
+    if (validator.isEmail(this.state.email)) {
+        console.log("c'est valide ")
+        this.setState({
+            valid:true
+        })
+      } else {
+        console.log('Enter valid Email!')
+        this.setState({
+            valid:false
+        })
+        errormessage ="Entrer un e-mail valide"
+      }
+    }
+    
+    
+
     render() {
         return(
             
@@ -19,20 +62,38 @@ class N_Login extends React.Component {
                 <div
                 style={{marginTop:"2rem"}}
                 >
-                    <h3>Bienvenu sur l'interface admin<br/>PharmaYou !</h3>
+                    <h3>Bienvenu sur l'interface admin<br/>PharmaYou !👋</h3>
                 </div>
                 <div style={{
                      width:"28rem",
                      marginTop:"3rem"
                      }} >
-                    <div style={{marginBottom:"1rem"}} >
+                    <div>
                     <Label>E-mail</Label>
-                    <Input placeholder="example@abc.xyz"/>
+                    <Input
+                    valid={this.state.valid} 
+                    onChange={(e) => this.handl_mail_input(e.target.value)}
+                    type="email"
+                    placeholder={this.state.email}
+                    // value={this.state.email}
+                    required
+                    />
                     </div>
-                    <div style={{marginBottom:"1rem"}} >
+                    <label>
+                        {this.state.valid === false ? (
+                        <small style={{color:"red"}} >{errormessage}</small>
+                        ): "" }
+                        
+                    </label>
+                    <div style={{marginBottom:"1.5rem"}} >
                     <Label>Mot de passe</Label>
                     <small><a href="/#" style={{color:"orange", float:"right"}} >Mot de passe oublié ?</a></small>
-                    <Input type="password" placeholder="Entrer le mot de passe"/>
+                    <Input
+                    type="password"
+                    placeholder="Entrer le mot de passe"
+                    onChange={e => this.setState({ password: e.target.value })}
+                    required
+                    />
                     </div>
                     <div style={{marginBottom:"1rem"}}>
                     <Checkbox
