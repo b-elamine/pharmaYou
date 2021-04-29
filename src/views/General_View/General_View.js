@@ -888,7 +888,7 @@ class General_View extends React.Component {
           
         </Row>
         <Row>
-          <h5>Profesionnels</h5>
+          <h5>Professionnels</h5>
             <div 
             className="d-flex flex-sm-row justify-content-center"
             style={{
@@ -940,7 +940,7 @@ class General_View extends React.Component {
                     <Col>
                     <div className="align-self-center">
                     <div>
-                    <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Chiffre d'affaire profesionnel</h5>
+                    <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Chiffre d'affaire professionnel</h5>
                     <h5 style={{marginBottom:"-2rem",}} ><b>6 294 £</b></h5>
                     </div>
                     <ReactApexChart
@@ -966,7 +966,7 @@ class General_View extends React.Component {
                    height:"100%",
                    padding : "1rem"
               }}>
-                  Statistiques professionnels
+                  Statistiques professionnelles
                   <div style={{
                       marginTop:"2rem",
                       overflowX:"scroll"

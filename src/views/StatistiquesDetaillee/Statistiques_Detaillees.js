@@ -1025,7 +1025,7 @@ class stats extends React.Component {
           <Row style={{width:"100%"}}>
           <Col>
           <div>
-          <h5>Profesionnels</h5>
+          <h5>Professionnels</h5>
           </div>
           </Col>
           <Col>
@@ -1125,7 +1125,7 @@ class stats extends React.Component {
                     <Col>
                     <div className="align-self-center">
                     <div>
-                    <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Chiffre d'affaire profesionnel</h5>
+                    <h5 style={{marginTop:"0.5rem",marginBottom:"1rem", fontSize:"14px"}} >Chiffre d'affaire professionnel</h5>
                     <h5 style={{marginBottom:"-2rem",}} ><b>6 294 £</b></h5>
                     </div>
                     <ReactApexChart
@@ -1151,7 +1151,7 @@ class stats extends React.Component {
                    height:"100%",
                    padding : "1rem"
               }}>
-                  Statistiques professionnels
+                  Statistiques professionnelles
                   <div style={{
                       marginTop:"2rem",
                       overflowX:"scroll"
@@ -1268,7 +1268,7 @@ class stats extends React.Component {
         >
           <Row>
             <Col>
-              <h6>Chiffre d'affiares profesionnel</h6>
+              <h6>Chiffre d'affiares professionnel</h6>
               <h5>456,345$</h5>
             </Col>
             <Col>
