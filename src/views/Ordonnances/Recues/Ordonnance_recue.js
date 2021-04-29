@@ -509,10 +509,7 @@ class Ordonnances_recue extends React.Component {
             code: item.code_postal_livraison,
             origine: "infirmier",
             email: item.email,
-            // email: "a.ouardas@esi-sba.dz",
             ville: item.ville_livraison,
-            // origine : item.origine,
-            // paiment: item.paiment,
             paiment: "reglé",
             patient: {
               nom: item.nom_patient,

@@ -1,10 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Input, Card, CardHeader, CardBody, Button } from "reactstrap";
-import { X, Users, Truck, Edit } from "react-feather";
+import { Card, CardHeader, CardBody, Button } from "reactstrap";
+import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import Flatpickr from "react-flatpickr";
-import Switch from "react-switch";
 import Select from "react-select";
 
 import { ContentState, EditorState } from "draft-js";
@@ -14,23 +12,26 @@ import "../../../assets/scss/plugins/extensions/editor.scss";
 import "../../../assets/scss/pages/app-email.scss";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
+import externalAxios from "../../../axios";
+
+const Response = {
+  message: {
+    email_title: "[Commande 1-PE-17] Votre commande a été mise en attente",
+    email_text:
+      "Bonjour,\n\nVotre commande 1-PE-17 a été mise en attente.\n\nPharma You",
+    sms_text: "Votre commande 1-PE-17 a été mise en attente.",
+    push_text: "Votre commande a été mise en attente.",
+  },
+};
 class ComposeEmail extends React.Component {
   state = {
     selectedTournée: {},
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-    editorState: EditorState.createWithContent(
-      ContentState.createFromText(
-        `Bonjour, votre mutuelle est expiré,veulliez nous faire prévenir par email le document,via l'email suivant.ordonnances@pharmayou.fr.
-
-        Réference commande # ${this.props.ordonnance.id}
-
-        Docteur House, pour vous servir
-        `
-      )
-    ),
+    editorState: EditorState.createEmpty(),
     commentaire: "",
     listeTournes: "",
     emailBody: "",
+    email_text: "",
     checked: false,
   };
   onEditorStateChange = (editorState) => {
@@ -58,6 +59,34 @@ class ComposeEmail extends React.Component {
       emailBody: "",
       checked: false,
     });
+  };
+
+  fetch_email_text = async (commande_id) => {
+    try {
+      // const request = {
+      //   access_token: "a",
+      // };
+      // const response = await externalAxios.post(
+      //   `/commandes/${commande_id}/mettre_en_attente`,
+      //   {
+      //     access_token: "a",
+      //   }
+      // );
+      const response = Response;
+      const message = response.message ? response.message : null;
+      const email_text = message
+        ? message.email_text
+        : "Pas de message pour l'instant";
+      const newEditorState = EditorState.createWithContent(
+        ContentState.createFromText(email_text)
+      );
+      this.setState({
+        editorState: newEditorState,
+        email_text: email_text,
+      });
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   async componentDidMount() {
@@ -89,6 +118,8 @@ class ComposeEmail extends React.Component {
         });
       })
       .catch((err) => console.log(err));
+
+    this.fetch_email_text(this.props.ordonnance.id);
   }
 
   render() {
@@ -176,17 +207,11 @@ class ComposeEmail extends React.Component {
                   alert(
                     this.state.editorState.getCurrentContent().getPlainText()
                   );
+                  const newEditorState = EditorState.createWithContent(
+                    ContentState.createFromText(this.state.email_text)
+                  );
                   this.setState({
-                    editorState: EditorState.createWithContent(
-                      ContentState.createFromText(
-                        `Bonjour, votre mutuelle est expiré,veulliez nous faire prévenir par email le document,via l'email suivant.ordonnances@pharmayou.fr.
-                  
-                          Réference commande # ${this.props.ordonnance.id}
-                  
-                          Docteur House, pour vous servir
-                          `
-                      )
-                    ),
+                    editorState: newEditorState,
                   });
                 }}
               >
