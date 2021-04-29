@@ -3,7 +3,7 @@ import { Row, Col } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 // import DataTableCustom from "../DataTableCustom/DataTableCustom"
 import "../../assets/scss/pages/dashboard-analytics.scss";
-import { Badge } from "reactstrap";
+import { Badge, Button, ButtonGroup } from "reactstrap";
 import {
   BellFill,
   CursorFill,
@@ -438,6 +438,7 @@ const columns = [
   },
 ];
 
+
 class General_View extends React.Component {
   state = {
     pro_chart_bar: {
@@ -672,9 +673,11 @@ class General_View extends React.Component {
         colors: ["#fb8705"],
         plotOptions: {
           bar: {
-            // columnWidth: "10%",
+            
             distributed: true,
             horizontal: true,
+            borderRadius:10,
+            barHeight : "40%"
           },
         },
         dataLabels: {
@@ -713,9 +716,10 @@ class General_View extends React.Component {
         colors: ["#0981f6"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
             distributed: true,
             horizontal: true,
+            borderRadius:10,
+            barHeight : "40%"
           },
         },
         dataLabels: {
@@ -782,7 +786,58 @@ class General_View extends React.Component {
     return (
       <div>
         <Row>
+          <Row  style={{width:"100%"}} >
+          <Col>
+          <div>
           <h5>Particuliers</h5>
+          </div>
+          </Col>
+          <Col>
+          <div className="float-right" >   
+          <ButtonGroup className="d-flex justify-content-end" > {/*Btn grp for changing stats : daily, weekly or monthly*/}
+            <button
+              style={{backgroundColor:"#ffc4ad"}}
+              className={`btn ${
+                this.props.view === "month"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-white" 
+              }`}
+              // onClick={() => {
+              //   this.props.onView("month");
+              // }}
+            >
+              Mois
+            </button>
+            <button
+            style={{backgroundColor:"#ffc4ad"}}
+              className={`btn ${
+                this.props.view === "week"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-white"
+              }`}
+              // onClick={() => {
+              //   this.props.onView("week");
+              // }}
+            >
+              Semaine
+            </button>
+            <button
+            style={{backgroundColor:"#ffc4ad"}}
+              className={`btn ${
+                this.props.view === "day"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-white"
+              }`}
+              // onClick={() => {
+              //   this.props.onView("day");
+              // }}
+            >
+              Jour
+            </button>
+          </ButtonGroup>
+          </div>
+          </Col>
+          </Row>
           <div
             className="d-flex flex-sm-row justify-content-center"
             style={{
@@ -966,7 +1021,58 @@ class General_View extends React.Component {
           </div>
         </Row>
         <Row>
+          <Row style={{width:"100%"}}>
+          <Col>
+          <div>
           <h5>Profesionnels</h5>
+          </div>
+          </Col>
+          <Col>
+          <div className="float-right">   
+          <ButtonGroup className="d-flex justify-content-end" > {/*Btn grp for changing stats : daily, weekly or monthly*/}
+            <button
+              style={{backgroundColor:"#a5c8fc"}}
+              className={`btn ${
+                this.props.view === "month"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-white"
+              }`}
+              // onClick={() => {
+              //   this.props.onView("month");
+              // }}
+            >
+              Mois
+            </button>
+            <button
+            style={{backgroundColor:"#a5c8fc"}}
+              className={`btn ${
+                this.props.view === "week"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-white"
+              }`}
+              // onClick={() => {
+              //   this.props.onView("week");
+              // }}
+            >
+              Semaine
+            </button>
+            <button
+            style={{backgroundColor: "#a5c8fc"}}
+              className={`btn ${
+                this.props.view === "day"
+                  ? "btn-primary"
+                  : "btn-outline-primary text-white"
+              }`}
+              // onClick={() => {
+              //   this.props.onView("day");
+              // }}
+            >
+              Jour
+            </button>
+          </ButtonGroup>
+          </div>
+          </Col>
+          </Row>
           <div
             className="d-flex flex-sm-row justify-content-center"
             style={{
