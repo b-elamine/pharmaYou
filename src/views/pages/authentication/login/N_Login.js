@@ -7,7 +7,7 @@ import {
 import logo from "../../../../assets/img/logo/logo_pharmaYou.PNG"
 import Checkbox from "../../../../components/@vuexy/checkbox/CheckboxesVuexy"
 import { Check } from "react-feather"
-import validator from"validator"
+import validator from "validator"
 import LoginJWT from "./LoginJWT"
 
 let errormessage =""
