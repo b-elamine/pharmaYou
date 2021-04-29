@@ -15,6 +15,8 @@ import SidebarAssignerTournee from "./SideBarAssignerTournee";
 import SideBarAttenteApprovisionnement from "./SideBarAttenteApprovisionnement";
 import SideBarDocumentManquant from "./SideBarDocumentManquant";
 
+import axios from "../../../axios";
+
 const commentaires_notes = [
   {
     id: 1,
@@ -59,11 +61,86 @@ class Ordonnance extends Component {
     statusAssignerTourneSideBar: false,
     statusDocumentManquantSideBar: false,
     statusAttenteApproSideBar: false,
-    ordonnance: {},
+    ordonnance: {
+      patient: {
+        note: "",
+        nom: "",
+        prenom: "",
+        email: "",
+      },
+      historique: [],
+    },
   };
   componentDidMount() {
+    console.log(this.props.match.params.id_commande);
+    const id_commande = this.props.match.params.id_commande;
+    this.fetcher_commande(id_commande);
     this.setState({ ordonnance: this.props.location.state });
   }
+
+  fetcher_commande = async (id_commande) => {
+    try {
+      const response = await axios.get(
+        `/commandes/${id_commande}?access_token=a`
+      );
+      const commande = response.data;
+      const custom_commande = {
+        ...commande,
+        id: commande.commande_id,
+        status:
+          commande.status_commande === -2
+            ? "annulée"
+            : commande.status_commande === -1
+            ? "incomplet"
+            : commande.status_commande === 0
+            ? "non-traité"
+            : commande.status_commande === 1
+            ? "attente_approvisionnement"
+            : commande.status_commande === 2
+            ? "validée"
+            : commande.status_commande === 3
+            ? "livrée"
+            : null,
+        // status :"incomplet",
+        name: commande.nom_patient + " " + commande.prenom_patient,
+        // name: 'Akram Ouardas',
+        type: commande.type === "ordo" ? "Particulier" : "Professionnel",
+        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+        montant: commande.montant_total,
+        date: new Date(commande.created_at).toLocaleDateString("fr-FR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        code: commande.code_postal_livraison,
+        origine: "infirmier",
+        email: commande.email,
+        ville: commande.ville_livraison,
+        paiment: "reglé",
+        patient: {
+          nom: commande.nom_patient,
+          prenom: commande.prenom_patient,
+          address: `${commande.adresse_livraison} , ${commande.code_postal_livraison}`,
+          num_tel: commande.telephone,
+          appeler: commande.etrerappele,
+          email: commande.email,
+          note: commande.note_admin
+            ? commande.note_admin
+            : "Pas de note pour l'instant.",
+        },
+        historique: commande.historique,
+        CMU: commande.cmu,
+        mutuelle: commande.mutuelle ? commande.mutuelle : false,
+      };
+      this.setState({
+        ordonnance: custom_commande,
+      });
+      console.log(this.state.ordonnance);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   handleAssignerTourneSideBar = (status) => {
     if (status === "open") {
@@ -102,6 +179,7 @@ class Ordonnance extends Component {
   };
 
   render() {
+    console.log(this.state.ordonnance.historique);
     return (
       <Row className="email-application position-relative">
         <div
@@ -121,19 +199,19 @@ class Ordonnance extends Component {
         <Col xl="9">
           <Card style={{ boxShadow: "none" }}>
             <Card className="mb-0">
-              <FirstSection {...this.props} />
+              <FirstSection ordonnance={this.state.ordonnance} />
             </Card>
             <hr className="mb-0 mt-0" />
             <Card>
-              <SecondSection ordonnance={this.props.location.state} />
+              <SecondSection ordonnance={this.state.ordonnance} />
             </Card>
             <hr />
             <Card>
-              <ThirdSection ordonnance={this.props.location.state} />
+              <ThirdSection ordonnance={this.state.ordonnance} />
             </Card>
             <hr />
             <ForthSection
-              ordonnance={this.props.location.state}
+              ordonnance={this.state.ordonnance}
               commentaires_notes={commentaires_notes}
             />
           </Card>
@@ -147,21 +225,28 @@ class Ordonnance extends Component {
             />
           </Card>
           <Card style={{ boxShadow: "none" }}>
-            <PartieDroiteBas />
+            <PartieDroiteBas
+              historique_commande={
+                this.state.ordonnance.historique
+                  ? this.state.ordonnance.historique
+                  : []
+                // commentaires_notes
+              }
+            />
           </Card>
         </Col>
         <SidebarAssignerTournee
-          ordonnance={this.props.location.state}
+          ordonnance={this.state.ordonnance}
           handleComposeSidebar={this.handleAssignerTourneSideBar}
           currentStatus={this.state.statusAssignerTourneSideBar}
         />
         <SideBarDocumentManquant
-          ordonnance={this.props.location.state}
+          ordonnance={this.state.ordonnance}
           handleComposeSidebar={this.handleDocumentManquantSideBar}
           currentStatus={this.state.statusDocumentManquantSideBar}
         />
         <SideBarAttenteApprovisionnement
-          ordonnance={this.props.location.state}
+          ordonnance={this.state.ordonnance}
           handleComposeSidebar={this.handleAttenteApproSideBar}
           currentStatus={this.state.statusAttenteApproSideBar}
         />

@@ -4,6 +4,7 @@ import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
 import Icon from "./Icon.svg";
+import { history } from "../../../history";
 import { Badge } from "reactstrap";
 import {
   CursorFill,
@@ -332,7 +333,11 @@ const columns = [
     selector: "id",
     sortable: true,
     minWidth: "10px",
-    cell: (row) => <p className="text-bold-500 mb-0">{row.id}</p>,
+    cell: (row) => <p style={{cursor:"pointer"}} className="text-bold-500 mb-0" onClick={()=> {
+      const url = `/ordonnance/${row.id}`;
+      console.log(row)
+      history.push(url, row);
+    }}>{row.id}</p>,
   },
   {
     name: "STATUT",
@@ -641,6 +646,8 @@ class Commande_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color = '#fadcdc'
+              second_color = '#f5f3f3'
               bg_color="danger"
               iconBg="danger"
               icon={<ExclamationTriangleFill className="danger" size={25} />}
@@ -651,6 +658,8 @@ class Commande_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color = '#d3f4f9'
+              second_color = '#f5fcfd'
               bg_color="info"
               iconBg="info"
               //   icon={<HourglassSplit className="info" size={25} />}
@@ -662,6 +671,8 @@ class Commande_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color = '#feddcf'
+              second_color = '#feedcf'
               bg_color="primary"
               iconBg="primary"
               icon={<HourglassSplit className="primary" size={25} />}
@@ -672,6 +683,8 @@ class Commande_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color = '#d0cdd9'
+              second_color = '#f3f2f6'
               bg_color="warning"
               iconBg="warning"
               icon={<Truck className="warning" size={25} />}

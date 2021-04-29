@@ -6,13 +6,13 @@ import { PhoneCall, PhoneMissed } from "react-feather";
 class SecondSection extends React.Component {
   state = {
     ordonnance: {
-      patient :{
-        nom: "", 
-        prenom : "", 
-        email : "", 
-        num_tel : "", 
-        address:"", 
-      }
+      patient: {
+        nom: "",
+        prenom: "",
+        email: "",
+        num_tel: "",
+        address: "",
+      },
     },
   };
   componentDidMount() {
@@ -21,51 +21,65 @@ class SecondSection extends React.Component {
     });
   }
   render() {
+    console.log(this.props.ordonnance.patient);
     return (
       <Row>
         <Col xl="6">
           <CardBody>
-            <div style={{ width: "50%", marginBottom: "20px" }}>
+            <div style={{ width: "50%", marginBottom: "20px", fontSize:"17px",fontWeight:"bold" }}>
               <span>Information, livraison et facturation</span>
             </div>
             <div style={{ height: "50%" }}>
               <h3 style={{ fontWeight: "900" }}>
-                {this.state.ordonnance.patient.nom}{" "}
-                {this.state.ordonnance.patient.prenom}
+                {this.props.ordonnance.patient.nom}{" "}
+                {this.props.ordonnance.patient.prenom}
               </h3>
-              <div className="font-small-1">
-                <p style={{ marginBottom: "0" }}>
+              <div className="font-medium-1">
+                <p style={{ marginBottom: "0"}}>
                   {" "}
-                  {this.state.ordonnance.patient.address}{" "}
+                  {this.props.ordonnance.patient.address}{" "}
                 </p>
-                <div className="d-flex">
-                  <p style={{ marginBottom: "0" }}>
+                <p style={{ marginBottom: "0"}}>
+                  {" "}
+                  {this.props.ordonnance.ville}{" "}
+                </p>
+                <div className="d-flex mt-50">
+                  <p style={{ marginBottom: "0",fontSize:"15px"}}>
                     {" "}
-                    {this.state.ordonnance.patient.num_tel}{" "}
+                    {this.props.ordonnance.patient.num_tel}{" "}
                   </p>
 
-                  {this.state.ordonnance.patient.appeler ? (
+                  {this.props.ordonnance.patient.appeler ? (
                     <Badge
                       pill
-                      color="light-success ml-25"
-                      style={{ width: "180px", height: "25%" }}
+                      color="light-success ml-25 "
+                      style={{
+                        width: "250px",
+                        height: "25%",
+                        fontSize: "13px",
+                      }}
                     >
-                      <PhoneCall size={15} />
+                      <PhoneCall className="mr-25" size={15} />
                       Le client veut étre appelé
                     </Badge>
                   ) : (
                     <Badge
                       pill
-                      color="light-danger ml-25"
-                      style={{ width: "190px", height: "25%" }}
+                      color="ml-25 text-wrap"
+                      style={{
+                        width: "250px",
+                        height: "25%",
+                        fontSize:"12px",
+                        color:"black"
+                      }}
                     >
-                      <PhoneMissed size={15} />
+                      <PhoneMissed className="mr-25" size={15} />
                       Vous pouvez pas appelé le client
                     </Badge>
                   )}
                 </div>
-                <p style={{ marginBottom: "0" }}>
-                  {this.state.ordonnance.patient.email}
+                <p style={{ marginBottom: "0" , marginTop:"10px" }}>
+                  {this.props.ordonnance.patient.email}
                 </p>
               </div>
             </div>
@@ -82,15 +96,14 @@ class SecondSection extends React.Component {
                 <p>
                   Montant : <strong>En calcul</strong>
                 </p>
-                <p>CMU : {this.state.ordonnance.CMU ? "Oui" : "Non"} </p>
+                <p>CMU : {this.props.ordonnance.CMU ? "Oui" : "Non"} </p>
                 <p>
-                  Mutuelle: {this.state.ordonnance.muttuelle ? "Oui" : "Non"}{" "}
+                  Mutuelle: {this.props.ordonnance.muttuelle ? "Oui" : "Non"}{" "}
                 </p>
               </div>
             </CardBody>
           </CardBody>
         </Col>
-        
       </Row>
     );
   }

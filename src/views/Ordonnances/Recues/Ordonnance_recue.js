@@ -3,10 +3,12 @@ import { Row, Col } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-import Icon from "./Icon.svg";
+import Icon from "./ICON.png";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
+
+import {history} from '../../../history'
 
 import {
   CursorFill,
@@ -230,7 +232,19 @@ const columns = [
     selector: "id",
     sortable: true,
     minWidth: "10px",
-    cell: (row) => <p className="text-bold-500 mb-0">{row.id}</p>,
+    cell: (row) => (
+      <p
+        style={{ cursor: "pointer" }}
+        className="text-bold-500 mb-0"
+        onClick={() => {
+          const url = `/ordonnance/${row.id}`;
+          console.log(row);
+          history.push(url, row);
+        }}
+      >
+        {row.id}
+      </p>
+    ),
   },
   {
     name: "STATUT",
@@ -471,7 +485,6 @@ class Ordonnances_recue extends React.Component {
       const commandes = await axios.get("/commandes?access_token=a");
       // const commandes = {statusText :"OK",data : data };
 
-
       if (commandes.statusText === "OK") {
         const commandes_ordo = commandes.data.filter(
           (item) => item.type === "ordo"
@@ -603,6 +616,8 @@ class Ordonnances_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color="#fadcdc"
+              second_color="#f5f3f3"
               bg_color="danger"
               iconBg="danger"
               icon={<ExclamationTriangleFill className="danger" size={25} />}
@@ -613,6 +628,19 @@ class Ordonnances_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color="#faeed8"
+              second_color="#faeed8"
+              iconBg="primary"
+              icon={<img src={Icon} width="45px" height="40px" alt="Icon" />}
+              stat={nbr_ordo_incomplet}
+              statTitle="Dossiers Incomplet"
+            />
+          </Col>
+          <Col xl="2" lg="4" sm="6">
+            <StatisticsCard
+              hideChart
+              first_color="#d3f4f9"
+              second_color="#f5fcfd"
               bg_color="info"
               iconBg="info"
               icon={<HourglassSplit className="info" size={25} />}
@@ -623,6 +651,8 @@ class Ordonnances_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color="#feddcf"
+              second_color="#feedcf"
               bg_color="primary"
               iconBg="primary"
               icon={<Calendar3 className="primary" size={25} />}
@@ -633,6 +663,8 @@ class Ordonnances_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color="#d0cdd9"
+              second_color="#f3f2f6"
               bg_color="warning"
               iconBg="warning"
               icon={<Truck className="warning" size={25} />}
@@ -643,20 +675,13 @@ class Ordonnances_recue extends React.Component {
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
               hideChart
+              first_color="#cbeed3"
+              second_color="#ebf7ee"
               bg_color="success"
               iconBg="success"
               icon={<Check2All className="success" size={25} />}
               stat={nbr_ordo_livrée}
               statTitle="Ordonnances livré Aujourd'hui."
-            />
-          </Col>
-          <Col xl="2" lg="4" sm="6">
-            <StatisticsCard
-              hideChart
-              iconBg="primary"
-              icon={<img src={Icon} alt="Icon" />}
-              stat={nbr_ordo_incomplet}
-              statTitle="Dossiers Incomplet"
             />
           </Col>
         </Row>

@@ -14,7 +14,11 @@ class StatisticsCards extends React.Component {
         }}
       >
         <CardBody
-          style={{ borderRadius: "28px", height: "170px" }}
+          style={{
+            borderRadius: "28px",
+            height: "170px",
+            backgroundImage: `linear-gradient(${this.props.first_color}, ${this.props.second_color})`,
+          }}
           className={` ${
             this.props.className ? this.props.className : "stats-card-body"
           } d-flex ${
@@ -27,21 +31,25 @@ class StatisticsCards extends React.Component {
               : this.props.hideChart && !this.props.iconRight
               ? "justify-content-center flex-column text-center"
               : null
-          } ${!this.props.hideChart ? "pb-0" : "pb-50"}  pt-1 ${
-            this.props.bg_color
-              ? "gradient-light-" + this.props.bg_color
-              : "bg-rgba-primary"
-          }`}
+          } ${!this.props.hideChart ? "pb-0" : "pb-50"}  pt-1 
+          
+          `}
         >
-          <div className="icon-section h-50 mt-0">
+          <div className="icon-section mt-0">
             <div
-              className={`avatar avatar-stats  ${
+              className={`avatar avatar-stats ${
                 this.props.iconBg
                   ? `bg-rgba-${this.props.iconBg}`
                   : "bg-rgba-primary"
               }`}
+              style={{
+                alignItems: "center",
+                marginLeft: "20px",
+                height: "45px",
+                width: "50px",
+              }}
             >
-              <div className="avatar-content">{this.props.icon}</div>
+              <div className="avatar-content ml-50">{this.props.icon}</div>
             </div>
           </div>
           <div className="title-section ml-0 pl-0">

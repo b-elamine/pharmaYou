@@ -15,9 +15,9 @@ class FirstSection extends React.Component {
     ordonnance: {},
   };
   componentDidMount() {
-    this.setState({
-      ordonnance: this.props.location.state,
-    });
+    // this.setState({
+    //   ordonnance: this.props.location.state,
+    // });
   }
   render() {
     return (
@@ -26,11 +26,11 @@ class FirstSection extends React.Component {
           <CardBody className="d-flex pb-0">
             <img src={Logo} alt="PharmaYouLogo" height="25px" width="150px" />
 
-            {this.state.ordonnance.status === "non-traité" ? (
+            {this.props.ordonnance.status === "non-traité" ? (
               <Badge
                 pill
                 style={{
-                  width:"140px",
+                  width: "140px",
                   height: "25px",
                   fontSize: "12px",
                 }}
@@ -39,7 +39,7 @@ class FirstSection extends React.Component {
                 <ExclamationTriangleFill className="mr-50" size={14} />
                 Non-traité
               </Badge>
-            ) : this.state.ordonnance.status === "en_livraison" ? (
+            ) : this.props.ordonnance.status === "en_livraison" ? (
               <Badge
                 pill
                 style={{
@@ -55,7 +55,7 @@ class FirstSection extends React.Component {
                 <Truck className="mr-50" size={14} />
                 En livraison
               </Badge>
-            ) : this.state.ordonnance.status === "livrée" ? (
+            ) : this.props.ordonnance.status === "livrée" ? (
               <Badge
                 pill
                 style={{
@@ -69,7 +69,7 @@ class FirstSection extends React.Component {
                 <Truck className="success mr-50" size={14} />
                 Livrée
               </Badge>
-            ) : this.state.ordonnance.status === "en_attente" ? (
+            ) : this.props.ordonnance.status === "en_attente" ? (
               <Badge
                 pill
                 style={{
@@ -84,7 +84,7 @@ class FirstSection extends React.Component {
                 <HourglassSplit className="mr-50" size={14} />
                 En attente
               </Badge>
-            ) : this.state.ordonnance.status === "tournée_assigné" ? (
+            ) : this.props.ordonnance.status === "tournée_assigné" ? (
               <Badge
                 pill
                 style={{
@@ -100,7 +100,7 @@ class FirstSection extends React.Component {
                 <Calendar2Check className="mr-50" size={14} />
                 Tournée assigné
               </Badge>
-            ) : this.state.ordonnance.status === "attente_approvisionnement" ? (
+            ) : this.props.ordonnance.status === "attente_approvisionnement" ? (
               <Badge
                 pill
                 style={{
@@ -116,7 +116,7 @@ class FirstSection extends React.Component {
                 <Calendar2Check className="mr-50" size={14} />
                 En attente approvisionnement
               </Badge>
-            ) : this.state.ordonnance.status === "validée" ? (
+            ) : this.props.ordonnance.status === "validée" ? (
               <Badge
                 pill
                 style={{
@@ -130,7 +130,7 @@ class FirstSection extends React.Component {
                 <Check2 className="success mr-50" size={16} />
                 Validée
               </Badge>
-            ) : this.state.ordonnance.status === "annulée" ? (
+            ) : this.props.ordonnance.status === "annulée" ? (
               <Badge
                 pill
                 style={{ width: "120px", height: "25px", fontSize: "12px" }}
@@ -139,7 +139,7 @@ class FirstSection extends React.Component {
                 <Exclamation className="mr-0" size={17} />
                 Annulée
               </Badge>
-            ) : this.state.ordonnance.status === "incomplet" ? (
+            ) : this.props.ordonnance.status === "incomplet" ? (
               <Badge
                 pill
                 style={{
@@ -155,7 +155,7 @@ class FirstSection extends React.Component {
               </Badge>
             ) : null}
 
-            {this.state.ordonnance.type === "Particulier" ? (
+            {this.props.ordonnance.type === "Particulier" ? (
               <Badge
                 pill
                 style={{
@@ -168,7 +168,7 @@ class FirstSection extends React.Component {
               >
                 Particulier
               </Badge>
-            ) : this.state.ordonnance.type === "Professionnel" ? (
+            ) : this.props.ordonnance.type === "Professionnel" ? (
               <Badge
                 pill
                 style={{
@@ -183,7 +183,7 @@ class FirstSection extends React.Component {
               </Badge>
             ) : null}
 
-            {this.state.ordonnance.origine === "infirmier" ? (
+            {this.props.ordonnance.origine === "infirmier" ? (
               <Badge
                 color="light-success text-wrap text-bold-500 mb-0"
                 style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
@@ -191,7 +191,7 @@ class FirstSection extends React.Component {
               >
                 Infirmier
               </Badge>
-            ) : this.state.ordonnance.origine === "medadom" ? (
+            ) : this.props.ordonnance.origine === "medadom" ? (
               <Badge
                 color="light-success text-wrap text-bold-500 mb-0"
                 style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
@@ -199,7 +199,7 @@ class FirstSection extends React.Component {
               >
                 Infirmier MEDADOM
               </Badge>
-            ) : this.state.ordonnance.origine === "web" ? (
+            ) : this.props.ordonnance.origine === "web" ? (
               <Badge
                 color="light-success text-wrap text-bold-500 mb-0"
                 style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
@@ -207,7 +207,7 @@ class FirstSection extends React.Component {
               >
                 Infirmier WEB
               </Badge>
-            ) : this.state.ordonnance.origine === "appli" ? (
+            ) : this.props.ordonnance.origine === "appli" ? (
               <Badge
                 color="light-success text-wrap text-bold-500 mb-0"
                 style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
@@ -221,9 +221,9 @@ class FirstSection extends React.Component {
           <CardBody style={{ width: "250px" }}>
             <strong>Officine de traitement :</strong>
             <br></br>
-            {this.state.ordonnance.adresse_livraison}
-            {this.state.ordonnance.code},{" "}
-            {this.state.ordonnance.ville_livraison}
+            {this.props.ordonnance.adresse_livraison}
+            {this.props.ordonnance.code},{" "}
+            {this.props.ordonnance.ville_livraison}
           </CardBody>
         </Col>
 
@@ -239,10 +239,11 @@ class FirstSection extends React.Component {
                 <strong>Référence</strong>
               </Label>
               <Input
+                className="font-weight-bold font-medium-1"
                 type="text"
                 id="readonlyInput"
                 readOnly
-                value={`#${this.state.ordonnance.id}`}
+                value={`#${this.props.ordonnance.id}`}
                 bsSize="sm"
               />
             </FormGroup>
@@ -254,6 +255,7 @@ class FirstSection extends React.Component {
             >
               <Label for="readonlyInput">Date Commande</Label>
               <Input
+                className="font-medium-1"
                 type="text"
                 id="readonlyInput"
                 readOnly
@@ -264,6 +266,7 @@ class FirstSection extends React.Component {
             <Label for="readonlyInput">Source de la commande</Label>
             <FormGroup style={{ width: "150px", marginBottom: "10px" }}>
               <Input
+                className="font-medium-1"
                 type="text"
                 id="readonlyInput"
                 readOnly
