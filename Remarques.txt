@@ -20,7 +20,7 @@ Client Particulier
 	regler la recherche (DONE)
 
 Ordonnance recue 
-	il faut ajouter des select pour faire la selection comma dans la page partenaire 
+	il faut ajouter des select pour faire la selection comma dans la page partenaire  (DONE)
 	les couleurs dans les card statistique (DONE)
 
 
