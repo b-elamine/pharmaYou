@@ -82,17 +82,13 @@ class DataTableCustom extends React.Component {
           return includesCondition;
         } else return null;
       });
+      console.log(this.state.filteredData)
       this.setState({ filteredData });
     }
   };
 
   render() {
     let { value, filteredData } = this.state;
-    const ordonnance = (row) => {
-      const url = `/ordonnance/info`;
-      console.log(row)
-      history.push(url, row);
-    };
     return (
       <Card className="mt-5">
         <CardBody className="rdt_Wrapper pt-75">
@@ -116,7 +112,6 @@ class DataTableCustom extends React.Component {
             subHeader
             highlightOnHover
             onRowClicked={(row)=> {
-              console.log('Amine Artist')
               history.push(`/ordonnance/${row.id}` ,row);
             }}
             subHeaderComponent={

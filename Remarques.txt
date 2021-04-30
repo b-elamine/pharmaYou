@@ -3,8 +3,14 @@ vu d'ensemble
 	f le tableau :
 		dir ge3 les commandes (ordo,et pro) (Done)
 		f les actions nkhalou ghir voir (Done)
+<<<<<<< HEAD
 		mettre un lien (Done)
 		regler la recherche dans le tableau
+=======
+		mettre un lien (done)
+		regler la recherche dans le tableau 
+		update chaque minut (done)
+>>>>>>> db49ae631038c8092189cfb7342daaf248e35532
 
 Odonnance 
 	regler l'url  (DONE) 
@@ -22,5 +28,9 @@ Client Particulier
 Ordonnance recue 
 	il faut ajouter des select pour faire la selection comma dans la page partenaire  (DONE)
 	les couleurs dans les card statistique (DONE)
+
+Livreur 
+	modifier le calendrier pou selectionné que les jours dans le futur,
+	regler flatpicker 
 
 
