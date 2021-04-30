@@ -1,0 +1,26 @@
+vu d'ensemble 
+	regler les icon rodhoum des rond 
+	f le tableau 
+		dir ge3 les commandes (ordo,et pro) 
+		f les actions nkhalou ghir voir 
+		mettre un lien 
+		regler la recherche dans le tableau 
+
+Odonnance 
+	regler l'url  (DONE) 
+	regler le redius dans les icons de la card statisqtique  (DONE)  
+	agrandir les info de l'ordonnance (DONE) 
+	il faut regler les inputs dans le prix (DONE)
+	Regler la recherche(DONE)
+
+
+Client Particulier 
+	il faut regles le tableau (DONE)
+	Changer l'url (DONE)
+	regler la recherche (DONE)
+
+Ordonnance recue 
+	il faut ajouter des select pour faire la selection comma dans la page partenaire 
+	les couleurs dans les card statistique (DONE)
+
+
