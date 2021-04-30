@@ -1,11 +1,13 @@
 import React from "react"
 import { Row, Col } from "reactstrap"
 import ReactApexChart from "react-apexcharts"
-import DataTableCustom from "./DataTableGeneral_View"
 import "../../assets/scss/pages/dashboard-analytics.scss"
 import { Badge} from "reactstrap";
 import {CursorFill, EyeFill, HourglassSplit, ThreeDotsVertical } from "react-bootstrap-icons"
 import { Truck, User, FileText, DollarSign } from "react-feather";
+import {history} from "../../history"
+import DataTableGeneral_View from "./DataTableGeneral_View"
+
 const dt = 333; //test à supprimer 
 const data = [
     {
@@ -326,7 +328,18 @@ const columns = [
       selector: "id",
       sortable: true,
       minWidth: "10px",
-      cell: (row) => <p className="text-bold-500 mb-0">{row.id}</p>,
+      cell: (row) => (
+        <p
+          style={{ cursor: "pointer" }}
+          className="text-bold-500 mb-0"
+          onClick={() => {
+            const url = `/ordonnance/${row.id}`;
+            history.push(url, row);
+          }}
+        >
+          {row.id}
+        </p>
+      ),
     },
     {
       name: "Statut",
@@ -699,7 +712,8 @@ class General_View extends React.Component {
       livrée: 0,
       assigner_tournée: 0,
       dossier_incomplet: 0,
-    }
+    },
+   
     }
   };
 
@@ -778,7 +792,6 @@ class General_View extends React.Component {
                       height: "11rem",
                     }}
                   >
-
                     <Col>
                     <div className="align-self-center">
                     <div>
@@ -788,7 +801,6 @@ class General_View extends React.Component {
                     <ReactApexChart
                       options={this.state.pro_chart_line.options}
                       series={this.state.pro_chart_line.series}
-                      // type="bar"
                       height={"60%"}
                       width={"90%"}
                     />
@@ -818,9 +830,12 @@ class General_View extends React.Component {
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <FileText  style ={{
                     marginRight :"10px",
+                    background:"#D7E1DD",
+                     padding:"5px",
+                    borderRadius:"50%",
                    
                 }}
-                    className="primary" size={25} bg_color="black"  />
+                    className="primary" size={35}    />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -831,9 +846,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <User  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#DFE7D6",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="warning" size={25} />
+                    className="warning" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -844,9 +862,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <HourglassSplit  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#E4E6C6",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="danger" size={25} />
+                    className="danger" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -857,9 +878,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <Truck  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#DFE7D6",
+                    padding:"5px",
+                    borderRadius:"50%",
                 }}
-                    color="#180852" size={25} />
+                    color="#180852" size={35} />
                 <div>
                 <h7>{dt}</h7>
                 <p style={{
@@ -870,9 +894,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <DollarSign  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#E4E6C6",
+                    padding:"5px",
+                    borderRadius:"50%",
                 }}
-                    className="danger" size={25} />
+                    className="danger" size={35} />
                 <div>
                 <h7>12</h7> 
                  
@@ -976,9 +1003,12 @@ class General_View extends React.Component {
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <FileText  style ={{
                     marginRight :"10px",
+                    background:"#C6DCFB",
+                    padding:"5px",
+                   borderRadius:"50%",
                    
                 }}
-                    className="danger" size={25} bg_color="black"  />
+                    className="danger" size={35} bg_color="black"  />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -989,9 +1019,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <User  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#D6E2DC",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="primary" size={25} />
+                    className="primary" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -1002,9 +1035,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <HourglassSplit  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#D4DBE7",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                   className="danger" size={25} />
+                   className="danger" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -1015,9 +1051,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <Truck  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#C6DCFB",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    color="#180852" size={25} />
+                    color="#180852" size={35} />
                 <div>
                 <h7>{dt}</h7>
                 <p style={{
@@ -1028,9 +1067,12 @@ class General_View extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <DollarSign  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#D4DBE7",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="danger" size={25} />
+                    className="danger" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -1046,7 +1088,16 @@ class General_View extends React.Component {
         <Row>
           <Col>
           <h1>Dernières commandes reçus</h1>
-            <DataTableCustom columns = {this.state.table.columns} data={this.state.table.data} />
+            <DataTableGeneral_View
+            className="dataTable-custom"
+            columns={columns}
+            noHeader
+            pagination
+            subHeader 
+            highlightOnHover
+            columns = {this.state.table.columns}
+            data={this.state.table.data}
+            />
           </Col>
         </Row>
       </React.Fragment>

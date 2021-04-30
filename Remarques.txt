@@ -1,8 +1,8 @@
 vu d'ensemble 
-	regler les icon rodhoum des rond 
-	f le tableau 
-		dir ge3 les commandes (ordo,et pro) 
-		f les actions nkhalou ghir voir 
+	regler les icon rodhoum des rond (Done)
+	f le tableau :
+		dir ge3 les commandes (ordo,et pro) (Done)
+		f les actions nkhalou ghir voir (Done)
 		mettre un lien 
 		regler la recherche dans le tableau 
 

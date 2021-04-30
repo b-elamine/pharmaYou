@@ -950,11 +950,14 @@ class stats extends React.Component {
                   className="d-flex flex-sm-row justify-content-between align-items-center scroll-hide" >
                 
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
-                <FileText  style ={{
+               <FileText  style ={{
                     marginRight :"10px",
+                    background:"#D7E1DD",
+                     padding:"5px",
+                    borderRadius:"50%",
                    
                 }}
-                    className="primary" size={25} bg_color="black"  />
+                    className="primary" size={35}    />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -965,9 +968,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <User  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#DFE7D6",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="warning" size={25} />
+                    className="warning" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -978,9 +984,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <HourglassSplit  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#E4E6C6",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="danger" size={25} />
+                    className="danger" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -991,9 +1000,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <Truck  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#DFE7D6",
+                    padding:"5px",
+                    borderRadius:"50%",
                 }}
-                    color="#180852" size={25} />
+                    color="#180852" size={35} />
                 <div>
                 <h7>{dt}</h7>
                 <p style={{
@@ -1004,9 +1016,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <DollarSign  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#E4E6C6",
+                    padding:"5px",
+                    borderRadius:"50%",
                 }}
-                    className="danger" size={25} />
+                    className="danger" size={35} />
                 <div>
                 <h7>12</h7> 
                  
@@ -1159,11 +1174,14 @@ class stats extends React.Component {
                   className="d-flex flex-sm-row justify-content-between align-items-center scroll-hide" >
                 
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
-                <FileText  style ={{
+               <FileText  style ={{
                     marginRight :"10px",
+                    background:"#C6DCFB",
+                    padding:"5px",
+                   borderRadius:"50%",
                    
                 }}
-                    className="danger" size={25} bg_color="black"  />
+                    className="danger" size={35} bg_color="black"  />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -1174,9 +1192,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <User  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#D6E2DC",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="primary" size={25} />
+                    className="primary" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -1187,9 +1208,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <HourglassSplit  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#D4DBE7",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                   className="danger" size={25} />
+                   className="danger" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{
@@ -1200,9 +1224,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <Truck  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#C6DCFB",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    color="#180852" size={25} />
+                    color="#180852" size={35} />
                 <div>
                 <h7>{dt}</h7>
                 <p style={{
@@ -1213,9 +1240,12 @@ class stats extends React.Component {
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <DollarSign  style ={{
-                    marginRight :"10px"
+                    marginRight :"10px",
+                    background:"#D4DBE7",
+                    padding:"5px",
+                   borderRadius:"50%",
                 }}
-                    className="danger" size={25} />
+                    className="danger" size={35} />
                 <div>
                 <h7>12</h7>
                 <p style={{

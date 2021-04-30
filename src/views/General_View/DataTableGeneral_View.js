@@ -115,11 +115,10 @@ class DataTableCustom extends React.Component {
             paginationIconNext={<ChevronRight size={15} />}
             subHeader
             highlightOnHover
-            onRowClicked={
-              this.props.match.url === "/ordonnance/recues"
-                ? ordonnance
-                : () => {}
-            }
+            onRowClicked={(row)=> {
+              console.log('Amine Artist')
+              history.push(`/ordonnance/${row.id}` ,row);
+            }}
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
