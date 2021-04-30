@@ -72,10 +72,8 @@ class Ordonnance extends Component {
     },
   };
   componentDidMount() {
-    console.log(this.props.match.params.id_commande);
     const id_commande = this.props.match.params.id_commande;
     this.fetcher_commande(id_commande);
-    this.setState({ ordonnance: this.props.location.state });
   }
 
   fetcher_commande = async (id_commande) => {
@@ -136,7 +134,6 @@ class Ordonnance extends Component {
       this.setState({
         ordonnance: custom_commande,
       });
-      console.log(this.state.ordonnance);
     } catch (err) {
       alert(err.message);
     }
@@ -179,7 +176,6 @@ class Ordonnance extends Component {
   };
 
   render() {
-    console.log(this.state.ordonnance.historique);
     return (
       <Row className="email-application position-relative">
         <div

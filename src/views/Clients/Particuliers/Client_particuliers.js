@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Badge } from "reactstrap";
+import { Row, Col, Badge, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import { Check, Edit, AlertTriangle, Eye } from "react-feather";
@@ -175,7 +175,7 @@ const columns = [
   {
     name: "VILLE",
     selector: "ville",
-    minWidth: "150px",
+    maxWidth: "80px",
     sortable: true,
     cell: (row) => <p className="text-bold-200 mb-0">{row.ville}</p>,
   },
@@ -183,6 +183,7 @@ const columns = [
     name: "CODE POSTAL",
     selector: "code_postal",
     minWidth: "150px",
+    center: true,
     sortable: true,
     cell: (row) => <p className="text-truncate mb-0">{row.code}</p>,
   },
@@ -190,7 +191,9 @@ const columns = [
     name: "ORIGINE",
     selector: "origine",
     sortable: true,
-    minWidth: "200px",
+    center: true,
+
+    minWidth: "150px",
     cell: (row) => (
       <Badge
         color="light-success text-wrap text-bold-500 mb-0"
@@ -205,12 +208,16 @@ const columns = [
     name: "CLIENT DEPUIS",
     selector: "date_client",
     sortable: true,
+
+    minWidth: "180px",
     cell: (row) => <p className="text-truncate mb-0">{row.date}</p>,
   },
   {
     name: "ORDONNANCES",
     selector: "ordonnances",
-    sortable: true,
+    // sortable: true,
+    center: true,
+    // maxWidth:"100px",
     cell: (row) => (
       <p className="text-bold-700 font-medium-1 text-truncate mb-0">
         {row.ordonnances}
@@ -221,6 +228,9 @@ const columns = [
     name: "CARTE VITAL",
     selector: "carte_vital",
     sortable: true,
+    maxWidth: "50px",
+    center: true,
+
     cell: (row) => {
       const core = row.carte_vital ? (
         <div className="data-list-action">
@@ -238,6 +248,9 @@ const columns = [
     name: "MUTUELLE",
     selector: "mutuelle",
     sortable: true,
+    center: true,
+    maxWidth: "60px",
+
     cell: (row) => {
       const core = row.mutuelle ? (
         <div className="data-list-action">
@@ -254,20 +267,16 @@ const columns = [
   {
     name: "ACTION",
     selector: "action",
+    maxWidth: "50px",
+
+    center: true,
     cell: (row) => (
       <div className="data-list-action">
         <Eye
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            history.push("/client/particulier/infos", row);
-          }}
-        />
-        <Edit
-          className="cursor-pointer"
-          size={20}
-          onClick={() => {
-            history.push("/client/particulier/edit", row);
+            history.push(`/client/particulier/${row.id}`, row);
           }}
         />
       </div>
@@ -291,6 +300,7 @@ class Client_particuliers extends React.Component {
   fetch_data = async () => {
     try {
       const clientParticulier = await axios.get("/users?access_token=a");
+      console.log(clientParticulier.data);
       if (clientParticulier.statusText === "OK") {
         const data = clientParticulier.data.map((item) => {
           return {
@@ -301,7 +311,7 @@ class Client_particuliers extends React.Component {
             ville: item.ville_livraison,
             code: item.code_postal_livraison,
             origine: item.origine,
-            date: "January 29, 2018",
+            date: "29 Janvier 2019",
             ordonnances: item.n_commandes,
             carte_vital: item.vitale_ok,
             mutuelle: item.mutuelle_ok,
@@ -316,10 +326,10 @@ class Client_particuliers extends React.Component {
           data: data,
         });
       } else {
-        this.handleAlert("errorAlert", true , clientParticulier.statusText);
+        this.handleAlert("errorAlert", true, clientParticulier.statusText);
       }
     } catch (err) {
-      this.handleAlert("errorAlert", true , "Vérifier votre connexion !");
+      this.handleAlert("errorAlert", true, "Vérifier votre connexion !");
     }
   };
   componentDidMount() {
@@ -374,12 +384,21 @@ class Client_particuliers extends React.Component {
             />
           </Col>
           <Col sm="12">
-            <DataTableCustom
-              add_new
-              add_new_value="Ajouter un client"
-              columns={columns}
-              data={value.length ? filteredData : this.state.data}
-            />
+            {this.state.data.length !== 0 ? (
+              <DataTableCustom
+                add_new
+                add_new_value="Ajouter un client"
+                columns={columns}
+                data={value.length ? filteredData : this.state.data}
+              />
+            ) : (
+              <div className="text-center mt-4">
+                <Spinner
+                  style={{ width: "5rem", height: "5rem" }}
+                  color="warning"
+                />
+              </div>
+            )}
           </Col>
           <SweetAlert
             error

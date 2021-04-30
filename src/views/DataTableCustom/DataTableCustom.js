@@ -50,11 +50,13 @@ class DataTableCustom extends React.Component {
   // }
 
   componentDidMount() {
+    console.log(this.props.data)
     this.setState({
       data: this.props.data,
     });
   }
-  handleFilter = (e) => {
+
+  handleFilterOrdo = (e) => {
     let value = e.target.value;
     let data = this.state.data;
     let filteredData = this.state.filteredData;
@@ -62,19 +64,58 @@ class DataTableCustom extends React.Component {
     if (value.length) {
       filteredData = data.filter((item) => {
         let startsWithCondition =
-          item.name.toLowerCase().startsWith(value.toLowerCase()) ||
+          `${item.patient.nom} ${item.patient.prenom}`
+            .toLowerCase()
+            .startsWith(value.toLowerCase()) ||
           item.date.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.email.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.montant.toLowerCase().startsWith(value.toLowerCase()) ||
-          // item.origine.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.type.toLowerCase().startsWith(value.toLowerCase()) ||
+          // l'email est a null
+          // item.email.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.montant === value ||
+          item.origine.toLowerCase().startsWith(value.toLowerCase()) ||
           item.status.toLowerCase().startsWith(value.toLowerCase());
         let includesCondition =
-          item.name.toLowerCase().includes(value.toLowerCase()) ||
-          item.date.toLowerCase().includes(value.toLowerCase()) ||
-          item.email.toLowerCase().includes(value.toLowerCase()) ||
-          // item.origine.toLowerCase().includes(value.toLowerCase()) ||
-          item.montant.toLowerCase().includes(value.toLowerCase()) ||
+          `${item.patient.nom} ${item.patient.prenom}`
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          // item.email.toLowerCase().includes(value.toLowerCase()) ||
+          item.origine.toLowerCase().includes(value.toLowerCase()) ||
+          item.type.toLowerCase().startsWith(value.toLowerCase()) ||
           item.status.toLowerCase().includes(value.toLowerCase());
+
+        if (startsWithCondition) {
+          return startsWithCondition;
+        } else if (!startsWithCondition && includesCondition) {
+          return includesCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
+  handleFilterClient = (e) => {
+    let value = e.target.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        let startsWithCondition =
+          item.name
+            .toLowerCase()
+            .startsWith(value.toLowerCase()) ||
+          item.date.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.type.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.email.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.origine.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.ville.toLowerCase().startsWith(value.toLowerCase());
+        let includesCondition =
+        item.name
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          item.email.toLowerCase().includes(value.toLowerCase()) ||
+          item.origine.toLowerCase().includes(value.toLowerCase()) ||
+          item.type.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.ville.toLowerCase().includes(value.toLowerCase());
 
         if (startsWithCondition) {
           return startsWithCondition;
@@ -90,7 +131,7 @@ class DataTableCustom extends React.Component {
     let { value, filteredData } = this.state;
     const ordonnance = (row) => {
       const url = `/ordonnance/${row.id}`;
-      console.log(row)
+      console.log(row);
       history.push(url, row);
     };
     return (
@@ -123,9 +164,13 @@ class DataTableCustom extends React.Component {
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
-                add_new_value = {this.props.add_new_value}
+                add_new_value={this.props.add_new_value}
                 value={value}
-                handleFilter={this.handleFilter}
+                handleFilter={
+                  this.props.match.url === "/ordonnance/recues"
+                    ? this.handleFilterOrdo
+                    : this.handleFilterClient
+                }
               />
             }
           />

@@ -202,9 +202,9 @@ class QuatriemeSection extends React.Component {
     });
 
     const options = [
-      { value: "option_1", label: "Option 1" },
-      { value: "option_2", label: "Option 2" },
-      { value: "option_3", label: "Option 3" },
+      { value: "classique", label: "Ordonnance Classique" },
+      // { value: "option_2", label: "Option 2" },
+      // { value: "option_3", label: "Option 3" },
     ];
     return (
       <Card>
@@ -322,7 +322,7 @@ class QuatriemeSection extends React.Component {
                         <Col>
                           <FormGroup className="text-left">
                             {item.id === 1 ? (
-                              <Label className="mt-1" for="quantité_input">
+                              <Label className="mt-0" for="quantité_input">
                                 <strong>Quantité</strong>
                               </Label>
                             ) : null}
@@ -334,7 +334,7 @@ class QuatriemeSection extends React.Component {
                               max="10"
                               step="1"
                               bsSize="sm"
-                              className="w-50 mt-2 text-center"
+                              className={`w-50 mt-${item.id===1? "4" : "1"} text-center`}
                               onChange={(e) => {
                                 this.quantité_input_change_handler(
                                   e.target.value,
@@ -347,7 +347,7 @@ class QuatriemeSection extends React.Component {
                         <Col>
                           <FormGroup className="text-left">
                             {item.id === 1 ? (
-                              <Label className="mt-1" for="prix_input">
+                              <Label className="mt-0" for="prix_input">
                                 <strong>Prix</strong>
                               </Label>
                             ) : null}
@@ -359,7 +359,7 @@ class QuatriemeSection extends React.Component {
                               min="1"
                               max="250"
                               step="1"
-                              className="w-50 mt-2 text-center"
+                              className={`w-50 mt-${item.id===1? "4" : "1"} text-center`}
                               onChange={(e) => {
                                 this.prix_input_change_handler(
                                   e.target.value,

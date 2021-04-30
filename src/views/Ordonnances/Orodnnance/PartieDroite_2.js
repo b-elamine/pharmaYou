@@ -44,9 +44,6 @@ const CommandeBlock = (props) => {
 };
 
 class PartieDroite_2 extends React.Component {
-  componentDidMount(){
-    console.log(this.props)
-  }
   render() {
     return (
       <Card>

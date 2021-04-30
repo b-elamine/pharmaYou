@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
@@ -8,7 +8,7 @@ import { Badge } from "reactstrap";
 import axios from "../../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
-import {history} from '../../../history'
+import { history } from "../../../history";
 
 import {
   CursorFill,
@@ -24,6 +24,7 @@ import {
   Exclamation,
   Hourglass,
 } from "react-bootstrap-icons";
+import Select from "react-select";
 // fake database
 
 const data = [
@@ -318,7 +319,7 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    minWidth: "200px",
+    minWidth: "180px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -369,11 +370,12 @@ const columns = [
     name: "MONTANT",
     selector: "montant",
     sortable: true,
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant}</p>,
+    cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
   },
   {
     name: "DATE",
     selector: "date",
+    minWidth: "180px",
     sortable: true,
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
@@ -391,7 +393,7 @@ const columns = [
     name: "ORIGINE",
     selector: "origine",
     sortable: true,
-    minWidth: "200px",
+    minWidth: "150px",
     cell: (row) =>
       row.origine === "infirmier" ? (
         <Badge
@@ -430,28 +432,13 @@ const columns = [
   {
     name: "Actions",
     selector: "actions",
-    minWidth: "180px",
     cell: (row) => (
       <div className="data-list-action">
-        <CursorFill
-          className="cursor-pointer mr-1"
-          size={20}
-          onClick={() => {
-            alert("Send a message " + row.id);
-          }}
-        />
         <EyeFill
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            alert("view the ordonnace " + row.id);
-          }}
-        />
-        <ThreeDotsVertical
-          className="cursor-pointer"
-          size={20}
-          onClick={() => {
-            alert("more " + row.id);
+            history.push(`/ordonnance/${row.id}`);
           }}
         />
       </div>
@@ -461,6 +448,11 @@ const columns = [
 
 class Ordonnances_recue extends React.Component {
   state = {
+    options: {
+      professions: [],
+      origines: [],
+      status: [],
+    },
     errorAlert: false,
     errorText: "Vérifier votre cnnexion",
     columns: [],
@@ -473,14 +465,90 @@ class Ordonnances_recue extends React.Component {
       assigner_tournée: 0,
       dossier_incomplet: 0,
     },
+    value : ""
   };
+
+  extract_distinct_values(data) {
+    const origines = [];
+    const status = [];
+    data.forEach((row) => {
+      if (row.origine) {
+        if (!origines.includes(row.origine)) {
+          origines.push(row.origine);
+        }
+      }
+      if (row.status) {
+        if (!status.includes(row.status)) {
+          status.push(row.status);
+        }
+      }
+    });
+    const origine_options = origines.map((item) => {
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    const status_options = status.map((item) => {
+      return {
+        value: item,
+        label:
+          typeof item === "string"
+            ? item.charAt(0).toUpperCase() + item.slice(1)
+            : null,
+      };
+    });
+    this.setState({
+      options: {
+        origines: origine_options,
+        status: status_options,
+      },
+    });
+  }
 
   handleAlert = (state, value, text) => {
     this.setState({ [state]: value, errorText: text });
   };
 
+  handle_filter_status = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        let equalCondition = item.status.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
+
+  handle_filter_origine = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        if (!item.origine) {
+          return null;
+        }
+        let equalCondition = item.origine.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
+
   fetching_data = async () => {
-    console.log("fetching ....");
     try {
       const commandes = await axios.get("/commandes?access_token=a");
       // const commandes = {statusText :"OK",data : data };
@@ -512,7 +580,7 @@ class Ordonnances_recue extends React.Component {
             // name: 'Akram Ouardas',
             type: item.type === "ordo" ? "Particulier" : "Professionnel",
             image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-            montant: item.montant_total,
+            montant: item.montant_total ? item.montant_total : 0,
             date: new Date(item.created_at).toLocaleDateString("fr-FR", {
               weekday: "long",
               year: "numeric",
@@ -542,6 +610,7 @@ class Ordonnances_recue extends React.Component {
         this.setState({
           data: custom_commandes,
         });
+        this.extract_distinct_values(this.state.data ? this.state.data : []);
       } else {
         this.handleAlert(
           "errorAlert",
@@ -559,20 +628,13 @@ class Ordonnances_recue extends React.Component {
   };
 
   componentDidMount() {
-    this.fetching_data();
     // fetching the data from the database and passing it to the state
+    this.fetching_data();
+    console.log(this.state.data);
 
     this.setState({
       columns: columns,
       // data: data,
-      ordonnances: {
-        non_traité: ordonnances.non_traité,
-        en_attente: ordonnances.en_attente,
-        en_cours_livraison: ordonnances.en_cours_livraison,
-        livrée: ordonnances.livrée,
-        assigner_tournée: ordonnances.assigner_tournée,
-        dossier_incomplet: ordonnances.dossier_incomplet,
-      },
     });
   }
 
@@ -605,7 +667,7 @@ class Ordonnances_recue extends React.Component {
       (item) => item.status_commande === -1
     );
     const nbr_ordo_incomplet = ordo_incomplet.length;
-
+    const { value, filteredData } = this.state;
     return (
       <React.Fragment>
         <Breadcrumbs
@@ -687,11 +749,38 @@ class Ordonnances_recue extends React.Component {
         </Row>
 
         <Row>
-          <Col sm="12">
-            <DataTableCustom
-              columns={this.state.columns}
-              data={this.state.data}
+          <Col md="4" sm="8">
+            <Select
+              classNamePrefix="select"
+              placeholder="Status"
+              name="Status"
+              onChange={this.handle_filter_status}
+              options={this.state.options.status}
             />
+          </Col>
+          <Col md="4" sm="8">
+            <Select
+              classNamePrefix="select"
+              placeholder="Origine"
+              name="Origine"
+              options={this.state.options.origines}
+              onChange={this.handle_filter_origine}
+            />
+          </Col>
+          <Col sm="12">
+            {this.state.data.length !== 0 ? (
+              <DataTableCustom
+                columns={this.state.columns}
+                data={value.length ? filteredData : this.state.data}
+              />
+            ) : (
+              <div className="text-center mt-4">
+                <Spinner
+                  style={{ width: "5rem", height: "5rem" }}
+                  color="warning"
+                />
+              </div>
+            )}
           </Col>
         </Row>
         <SweetAlert

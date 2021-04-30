@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge, CardBody, Col, Row } from "reactstrap";
 
-import { PhoneCall, PhoneMissed } from "react-feather";
+import { PhoneCall } from "react-feather";
 
 class SecondSection extends React.Component {
   state = {
@@ -16,12 +16,11 @@ class SecondSection extends React.Component {
     },
   };
   componentDidMount() {
-    this.setState({
-      ordonnance: this.props.ordonnance,
-    });
+      this.setState({
+        ordonnance: this.props.ordonnance,
+      });
   }
   render() {
-    console.log(this.props.ordonnance.patient);
     return (
       <Row>
         <Col xl="6">
@@ -44,7 +43,7 @@ class SecondSection extends React.Component {
                   {this.props.ordonnance.ville}{" "}
                 </p>
                 <div className="d-flex mt-50">
-                  <p style={{ marginBottom: "0",fontSize:"15px"}}>
+                  <p  style={{ marginBottom: "0",fontSize:"15px",cursor:"pointer"}}>
                     {" "}
                     {this.props.ordonnance.patient.num_tel}{" "}
                   </p>
@@ -62,21 +61,7 @@ class SecondSection extends React.Component {
                       <PhoneCall className="mr-25" size={15} />
                       Le client veut étre appelé
                     </Badge>
-                  ) : (
-                    <Badge
-                      pill
-                      color="ml-25 text-wrap"
-                      style={{
-                        width: "250px",
-                        height: "25%",
-                        fontSize:"12px",
-                        color:"black"
-                      }}
-                    >
-                      <PhoneMissed className="mr-25" size={15} />
-                      Vous pouvez pas appelé le client
-                    </Badge>
-                  )}
+                  ) : null}
                 </div>
                 <p style={{ marginBottom: "0" , marginTop:"10px" }}>
                   {this.props.ordonnance.patient.email}

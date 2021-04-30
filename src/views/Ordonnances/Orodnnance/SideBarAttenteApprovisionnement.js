@@ -176,7 +176,6 @@ class ComposeEmail extends React.Component {
                 Notification client sms et email
               </span>
               <Editor
-                // defaultEditorState={ContentState.createFromText('test')}
                 editorState={editorState}
                 wrapperClassName="demo-wrapper"
                 editorClassName="demo-editor"

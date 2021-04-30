@@ -218,8 +218,8 @@ class FirstSection extends React.Component {
             ) : null}
           </CardBody>
 
-          <CardBody style={{ width: "250px" }}>
-            <strong>Officine de traitement :</strong>
+          <CardBody style={{ width: "250px" }} className="font-medium-1">
+            <strong className="font-medium-2">Officine de traitement :</strong>
             <br></br>
             {this.props.ordonnance.adresse_livraison}
             {this.props.ordonnance.code},{" "}
