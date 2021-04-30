@@ -5,6 +5,7 @@ import { Card, CardBody, Button, ButtonGroup } from "reactstrap";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import moment from "moment";
+import 'moment/locale/fr';
 import { connect } from "react-redux";
 import Checkbox from "../../../components/@vuexy/checkbox/CheckboxesVuexy";
 import {
@@ -32,6 +33,7 @@ const eventColors = {
 
 class Toolbar extends React.Component {
   render() {
+    console.log(this.props)
     return (
       <div className="calendar-header mb-2 d-flex justify-content-between flex-wrap">
         <div className="month-label d-flex flex-column text-center text-md-right mt-1 mt-md-0">
@@ -46,6 +48,7 @@ class Toolbar extends React.Component {
             </Button.Ripple>
             <div className="month d-inline-block mx-75 text-bold-500 font-medium-2 align-middle">
               {this.props.label}
+
             </div>
             <Button.Ripple
               className="btn-icon rounded-circle"
