@@ -11,9 +11,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { history } from "../../../history";
 
 import {
-  CursorFill,
   EyeFill,
-  ThreeDotsVertical,
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
