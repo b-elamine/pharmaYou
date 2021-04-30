@@ -3,7 +3,7 @@ import { Row, Col } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 // import DataTableCustom from "../DataTableCustom/DataTableCustom"
 import "../../assets/scss/pages/dashboard-analytics.scss";
-import { Badge, Button, ButtonGroup } from "reactstrap";
+import { Badge, ButtonGroup } from "reactstrap";
 import {
   BellFill,
   CursorFill,
@@ -11,9 +11,7 @@ import {
   HourglassSplit,
   ThreeDotsVertical,
 } from "react-bootstrap-icons";
-import { Truck, User, FileText, DollarSign } from "react-feather";
-
-const dt = 333; //test à supprimer
+import {  User, FileText, DollarSign } from "react-feather";
 
 const data = [
   {
@@ -452,11 +450,6 @@ class stats extends React.Component {
             },
             height: "3.5rem",
             type: 'bar',
-            events: {
-              click: function(chart, w, e) {
-                // console.log(chart, w, e)
-              }
-            }
           },
           colors: ["#FF5614"],
           plotOptions: {
@@ -494,16 +487,7 @@ class stats extends React.Component {
           grid : {
               show : false
           }, 
-          // title : {
-          //     text : "Commande / Semaine",
-          //     align : "left", 
-          //     style : {
-          //         fontSize : "12px",
-          //         fontWeight : "regular",
-          //         color : "black"
-          //     }
-          // }
-          
+
         },
   },
   pro_chart_line : {
@@ -517,11 +501,6 @@ class stats extends React.Component {
             },
             height: "3.5rem",
             type: 'bar',
-            events: {
-              click: function(chart, w, e) {
-                // console.log(chart, w, e)
-              }
-            }
           },
           colors: ["#28C76F"],
           plotOptions: {
@@ -555,15 +534,7 @@ class stats extends React.Component {
           grid : {
               show : false
           },
-          // title : {
-          //     text : "Chiffre d'aiffaire",
-          //     align : "left", 
-          //     style : {
-          //         fontSize : "12px",
-          //         fontWeight : "regular",
-          //         color : "black"
-          //     }
-          // }
+
         },
   },
   particular_char_bar : {
@@ -577,11 +548,6 @@ class stats extends React.Component {
             },
             height: "3.5rem",
             type: 'bar',
-            events: {
-              click: function(chart, w, e) {
-                // console.log(chart, w, e)
-              }
-            }
           },
           colors: ["#FC8F04"],
           plotOptions: {
@@ -616,15 +582,7 @@ class stats extends React.Component {
           grid : {
               show : false
           },
-          // title : {
-          //     text : "Ordonnances reçues",
-          //     align : "left", 
-          //     style : {
-          //         fontSize : "12px",
-          //         fontWeight : "regular",
-          //         color : "black"
-          //     }
-          // }
+        
         },
   },
   particular_char_line : {
@@ -638,11 +596,7 @@ class stats extends React.Component {
             },
             height: "3.5rem",
             type: 'bar',
-            events: {
-              click: function(chart, w, e) {
-                // console.log(chart, w, e)
-              }
-            }
+           
           },
           colors: ["#00CFE8"],
           plotOptions: {
@@ -676,15 +630,7 @@ class stats extends React.Component {
           grid : {
               show : false
           }, 
-          // title : {
-          //     text : "Chiffre d'affiare ordonnance",
-          //     align : "left", 
-          //     style : {
-          //         fontSize : "12px",
-          //         fontWeight : "regular",
-          //         color : "black"
-          //     }
-          // }
+       
         },
   },
     horizontal_Chart1: {
@@ -998,22 +944,7 @@ class stats extends React.Component {
                 pro <br/></p>
                 </div>
                </div>
-               <div className="d-flex flex-sm-row justify-content-between align-items-center">
-                <Truck  style ={{
-                    marginRight :"10px",
-                    background:"#DFE7D6",
-                    padding:"5px",
-                    borderRadius:"50%",
-                }}
-                    color="#180852" size={35} />
-                <div>
-                <h7>{dt}</h7>
-                <p style={{
-                    fontSize :"12px"
-                }}>Commandes<br/>
-                en livraison<br/></p>
-                </div>
-               </div>
+              
                <div className="d-flex flex-sm-row justify-content-between align-items-center">
                 <DollarSign  style ={{
                     marginRight :"10px",
@@ -1220,22 +1151,6 @@ class stats extends React.Component {
                     fontSize :"12px"
                 }}>client <br/>
                 pro <br/></p>
-                </div>
-               </div>
-               <div className="d-flex flex-sm-row justify-content-between align-items-center">
-                <Truck  style ={{
-                    marginRight :"10px",
-                    background:"#C6DCFB",
-                    padding:"5px",
-                   borderRadius:"50%",
-                }}
-                    color="#180852" size={35} />
-                <div>
-                <h7>{dt}</h7>
-                <p style={{
-                    fontSize :"12px"
-                }}>Commandes<br/>
-                en livraison<br/></p>
                 </div>
                </div>
                <div className="d-flex flex-sm-row justify-content-between align-items-center">

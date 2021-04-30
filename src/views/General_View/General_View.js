@@ -3,317 +3,207 @@ import { Row, Col } from "reactstrap"
 import ReactApexChart from "react-apexcharts"
 import "../../assets/scss/pages/dashboard-analytics.scss"
 import { Badge} from "reactstrap";
-import {CursorFill, EyeFill, HourglassSplit, ThreeDotsVertical } from "react-bootstrap-icons"
+import { EyeFill, HourglassSplit } from "react-bootstrap-icons"
 import { Truck, User, FileText, DollarSign } from "react-feather";
 import {history} from "../../history"
 import DataTableGeneral_View from "./DataTableGeneral_View"
+import axios from "../../axios";
 
 const dt = 333; //test à supprimer 
+
+// fake data
 const data = [
-    {
-      id: "589547",
-      image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-      name: "Alyss Lillecrop",
-      email: "alillecrop0@twitpic.com",
-      date: "May 13, 2018",
-      status: "Annuler",
-      montant: "$32,000",
-      ratings: "good",
-      type: "particulier",
-      code: 12345,
-      origine: "Partenaire App",
-    },
-    {
-      id: "349810",
-      image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-      name: "Shep Pentlow",
-      email: "spentlow1@home.pl",
-      date: "June 5, 2019",
-      status: "active",
-      montant: "$50,000",
-      ratings: "good",
-      type: "particulier",
-      code: 56789,
-      origine: "Partenaire infermier",
-    },
-    {
-      id: "689527",
-      image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-      name: "Gasper Morley",
-      email: "gmorley2@chronoengine.com",
-      date: "December 20, 2019",
-      status: "En livraison",
-      montant: "$78,000",
-      ratings: "average",
-      type: "professionnel",
-      code: 1205,
-      origine: "Partenaire MEDADOM",
-    },
-    {
-      id: "981536",
-      image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-      name: "Phaedra Jerrard",
-      email: "pjerrard3@blogs.com",
-      date: "November 30, 2018",
-      status: "Non-traité",
-      montant: "$10,000",
-      ratings: "bad",
-    },
-    {
-      id: "401536",
-      image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-      name: "Conn Plose",
-      email: "cplose4@geocities.com",
-      date: "April 8, 2017",
-      status: "active",
-      montant: "$22,000",
-      ratings: "average",
-    },
-    {
-      id: "281516",
-      image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-      name: "Tootsie Brandsma",
-      email: "tbrandsma5@theatlantic.com",
-      date: "August 12, 2019",
-      status: "inactive",
-      montant: "$49,000",
-      ratings: "bad",
-    },
-    {
-      id: "731530",
-      image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-      name: "Sibley Bum",
-      email: "sbum6@sourceforge.net",
-      date: "October 1, 2017",
-      status: "active",
-      montant: "$56,000",
-      ratings: "good",
-    },
-    {
-      id: "081431",
-      image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-      name: "Kristoffer Thew",
-      email: "kthew7@amazon.com",
-      date: "February 28, 2018",
-      status: "inactive",
-      montant: "$83,000",
-      ratings: "bad",
-    },
-    {
-      id: "111536",
-      image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-      name: "Fay Hasard",
-      email: "fhasard8@java.com",
-      date: "January 29, 2018",
-      status: "active",
-      montant: "$26,000",
-      ratings: "good",
-    },
-    {
-      id: "536222",
-      image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-      name: "Tabby Abercrombie",
-      email: "tabercrombie9@statcounter.com",
-      date: "April 1, 2019",
-      status: "active",
-      montant: "$60,000",
-      ratings: "average",
-    },
-    {
-      id: "313516",
-      image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
-      name: "	Stella Indruch",
-      email: "sindruch1@mayoclinic.com",
-      date: "Dec 4, 2019",
-      status: "active",
-      montant: "$21,000",
-      ratings: "good",
-    },
-    {
-      id: "451716",
-      image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
-      name: "	Aron McNirlin",
-      email: "amcnirlin2@samsung.com",
-      date: "Jan 4, 2018",
-      status: "inactive",
-      montant: "$30,000",
-      ratings: "bad",
-    },
-    {
-      id: "121536",
-      image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-      name: "Ange Trenholm",
-      email: "atrenholm4@slideshare.net	",
-      date: "February 23, 2019",
-      status: "active",
-      montant: "$12,000",
-      ratings: "good",
-    },
-    {
-      id: "451712",
-      image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
-      name: "Caterina Starkie",
-      email: "cstarkie5@feedburner.com",
-      date: "September 8, 2018",
-      status: "active",
-      montant: "$40,000",
-      ratings: "average",
-    },
-    {
-      id: "881716",
-      image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
-      name: "Hugibert McGeagh",
-      email: "hmcgeaghf@smh.com.au",
-      date: "August 20, 2017",
-      status: "active",
-      montant: "$90,000",
-      ratings: "good",
-    },
-    {
-      id: "651726",
-      image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
-      name: "Jaime Maher",
-      email: "jmaher1@msu.edu",
-      date: "April 7, 2019",
-      status: "active",
-      montant: "$38,000",
-      ratings: "good",
-    },
-    {
-      id: "151716",
-      image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-      name: "Amalle Pladen",
-      email: "jmaher1@msu.edu",
-      date: "March 30, 2018",
-      status: "active",
-      montant: "$18,000",
-      ratings: "average",
-    },
-    {
-      id: "221716",
-      image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
-      name: "Dorris Ferries",
-      email: "dferries7@ucoz.com",
-      date: "August 25, 2017",
-      status: "active",
-      montant: "$69,000",
-      ratings: "bad",
-    },
-    {
-      id: "459916",
-      image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
-      name: "Andy Fettes",
-      email: "afettesh@upenn.edu",
-      date: "September 30, 2017",
-      status: "inactive",
-      montant: "$35,000",
-      ratings: "good",
-    },
-    {
-      id: "991716",
-      image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-      name: "Allene Hughf",
-      email: "ahughf0@dropbox.com",
-      date: "June 21, 2018",
-      status: "active",
-      montant: "$35,000",
-      ratings: "good",
-    },
-    {
-      id: "541716",
-      image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-      name: "Petra Rheubottom",
-      email: "prheubottom0@globo.com",
-      date: "July 4, 2018",
-      status: "active",
-      montant: "$72,000",
-      ratings: "good",
-    },
-    {
-      id: "001716",
-      image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-      name: "Ambrosius Olyfant",
-      email: "aolyfant1@timesonline.co.uk",
-      date: "May 5, 2019",
-      status: "inactive",
-      montant: "$13,000",
-      ratings: "bad",
-    },
-    {
-      id: "561716",
-      image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-      name: "Letti Trineman",
-      email: "ltrineman2@cnbc.com",
-      date: "February 15, 2017",
-      status: "active",
-      montant: "$84,000",
-      ratings: "average",
-    },
-    {
-      id: "101716",
-      image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-      name: "Sayer Rodger",
-      email: "srodgerb@rakuten.co.jp",
-      date: "January 30, 2018",
-      status: "inactive",
-      montant: "$15,000",
-      ratings: "bad",
-    },
-    {
-      image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-      name: "Skyler Scotcher",
-      email: "sscotcher3@soup.io",
-      date: "November 3, 2018",
-      status: "active",
-      montant: "$26,000",
-      ratings: "average",
-    },
-    {
-      image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-      name: "Florette Shotbolt",
-      email: "fshotbolt7@wiley.com",
-      date: "March 12, 2017",
-      status: "active",
-      montant: "$69,000",
-      ratings: "good",
-    },
-    {
-      image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-      name: "Janis Bakhrushkin",
-      email: "jbakhrushkina@epa.gov",
-      date: "July 10, 2017",
-      status: "active",
-      montant: "$65,000",
-      ratings: "good",
-    },
-    {
-      image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-      name: "Alric Peinton",
-      email: "apeinton0@google.cn",
-      date: "February 6, 2017",
-      status: "inactive",
-      montant: "$38,000",
-      ratings: "bad",
-    },
-    {
-      image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-      name: "Rubie Pitkethly",
-      email: "rpitkethlyf@51.la",
-      date: "February 20, 2018",
-      status: "active",
-      montant: "$62,000",
-      ratings: "average",
-    },
-    {
-      image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-      name: "Hortensia Soaper",
-      email: "hsoaperh@mapy.cz",
-      date: "June 1, 2017",
-      status: "active",
-      montant: "$60,000",
-      ratings: "good",
-    },
-  ];
+  {
+    commande_id: "1-IZ-62",
+    commande_serial_id: 1749,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497935,
+    nom_complet_livraison: "Ian Atlas",
+    adresse_livraison: "2 rue du Commerce",
+    code_postal_livraison: "75015",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 2,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Ian",
+    prenom_patient: "Atlas",
+  },
+  {
+    commande_id: "1-LE-27",
+    commande_serial_id: 1762,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Dean Ethan",
+    adresse_livraison: "125",
+    code_postal_livraison: "75013",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Dean",
+    prenom_patient: "Ethan",
+  },
+  {
+    commande_id: "1-NH-04",
+    commande_serial_id: 1763,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "David Hunter",
+    adresse_livraison: "117 rue de Losserand",
+    code_postal_livraison: "75014",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "David",
+    prenom_patient: "Hunter",
+  },
+  {
+    commande_id: "1-JB-50",
+    commande_serial_id: 1761,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Luca Arthur",
+    adresse_livraison: "119 rue de Flandres",
+    code_postal_livraison: "75019",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Luca",
+    prenom_patient: "Arthur",
+  },
+  {
+    commande_id: "1-GY-73",
+    commande_serial_id: 1760,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Alex August",
+    adresse_livraison: "129 rue d\u2019Al\u00e9sia",
+    code_postal_livraison: "75014",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Alex",
+    prenom_patient: "August",
+  },
+  {
+    commande_id: "1-EV-96",
+    commande_serial_id: 1759,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Luka Braxton",
+    adresse_livraison: "117 rue de Losserand",
+    code_postal_livraison: "75014",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Luka",
+    prenom_patient: "Braxton",
+  },
+  {
+    commande_id: "1-XT-01",
+    commande_serial_id: 1756,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Hunter Luis",
+    adresse_livraison: "91 rue du faubourg Saint-Denis",
+    code_postal_livraison: "75010",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Hunter",
+    prenom_patient: "Luis",
+  },
+  {
+    commande_id: "1-TN-47",
+    commande_serial_id: 1754,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Elias Felix",
+    adresse_livraison: "54 bd de l\u2019H\u00f4pital",
+    code_postal_livraison: "75013",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Elias",
+    prenom_patient: "Felix",
+  },
+  {
+    commande_id: "1-VQ-24",
+    commande_serial_id: 1755,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Javier Finn",
+    adresse_livraison: "92 rue d\u2019Al\u00e9sia",
+    code_postal_livraison: "75014",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Javier",
+    prenom_patient: "Finn",
+  },
+  {
+    commande_id: "1-CT-19",
+    commande_serial_id: 1758,
+    type: "ordo",
+    created_at: 1619497729,
+    updated_at: 1619497729,
+    nom_complet_livraison: "Parker Santiago",
+    adresse_livraison: "125",
+    code_postal_livraison: "75013",
+    ville_livraison: "Paris",
+    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+    telephone: "0612345678",
+    email: null,
+    status_commande: 0,
+    montant_total: null,
+    origine: null,
+    nom_patient: "Parker",
+    prenom_patient: "Santiago",
+  },
+];
 const ordonnances = {
   non_traité: 10,
   en_attente: 2,
@@ -453,6 +343,7 @@ const columns = [
     },
   
   ]
+
   
 class General_View extends React.Component {
   state = {  
@@ -703,37 +594,118 @@ class General_View extends React.Component {
           },
     },
     table : {
-    columns :[],
-    data: [],
-    ordonnances: {
-      non_traité: 0,
-      en_attente: 0,
-      en_cours_livraison: 0,
-      livrée: 0,
-      assigner_tournée: 0,
-      dossier_incomplet: 0,
+      options: {
+        professions: [],
+        origines: [],
+        status: [],
+      },
+      errorAlert: false,
+      errorText: "Vérifier votre cnnexion",
+      columns: [],
+      data: [],
+      ordonnances: {
+        non_traité: 0,
+        en_attente: 0,
+        en_cours_livraison: 0,
+        livrée: 0,
+        assigner_tournée: 0,
+        dossier_incomplet: 0,
+      },
+      value : ""
     },
-   
+  };
+
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
+  };
+
+
+  fetching_Data_Table = async () => {
+    try {
+      const commandes = await axios.get("/commandes?access_token=a");
+      // const commandes = {statusText :"OK",data : data };
+
+      if (commandes.statusText === "OK") {
+        const all_commandes = commandes;
+        const custom_commandes = all_commandes.map((item) => {
+          return {
+            ...item,
+            id: item.commande_id,
+            status:
+              item.status_commande === -2
+                ? "annulée"
+                : item.status_commande === -1
+                ? "incomplet"
+                : item.status_commande === 0
+                ? "non-traité"
+                : item.status_commande === 1
+                ? "attente_approvisionnement"
+                : item.status_commande === 2
+                ? "validée"
+                : item.status_commande === 3
+                ? "livrée"
+                : null,
+            // status :"incomplet",
+            name: item.nom_patient + " " + item.prenom_patient,
+            // name: 'Akram Ouardas',
+            type: item.type === "ordo" ? "Particulier" : "Professionnel",
+            image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
+            montant: item.montant_total ? item.montant_total : 0,
+            date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }),
+            code: item.code_postal_livraison,
+            origine: "infirmier",
+            email: item.email,
+            ville: item.ville_livraison,
+            paiment: "reglé",
+            patient: {
+              nom: item.nom_patient,
+              prenom: item.prenom_patient,
+              address: `${item.adresse_livraison} , ${item.code_postal_livraison} , ${item.ville_livraison}`,
+              num_tel: item.telephone,
+              appeler: true,
+              email: item.email,
+              note: item.note_admin
+                ? item.note_admin
+                : "Pas de note pour l'instant.",
+            },
+            CMU: true,
+            mutuelle: false,
+          };
+        });
+        this.setState({
+          data: custom_commandes,
+        });
+        this.extract_distinct_values(this.state.table.data ? this.state.table.data : []);
+      } else {
+        this.handleAlert(
+          "errorAlert",
+          true,
+          commandes.error_code ? commandes.error_code : commandes.statusText
+        );
+      }
+    } catch (err) {
+      const error_message =
+        err.message === "Network Error"
+          ? "Une erreur est produite lors de la récupération des données."
+          : "Vérifier votre connexion !";
+      this.handleAlert("errorAlert", true, error_message);
     }
   };
 
+
   componentDidMount() {
-    // fetching the data from the database and passing it to the state
-    this.setState({
-      table: {
-        columns :columns,
-        data: data,
-        ordonnances: {
-        non_traité: ordonnances.non_traité,
-        en_attente: ordonnances.en_attente,
-        en_cours_livraison: ordonnances.en_cours_livraison,
-        livrée: ordonnances.livrée,
-        assigner_tournée: ordonnances.assigner_tournée,
-        dossier_incomplet: ordonnances.dossier_incomplet,
-      },
-    }
-    });
+    // fetching the data table from the database and passing it to the state
+
+    this.fetching_Data_Table();
+    console.log(this.state.table.data)
+    console.log(this.state.table.columns)
   }
+  
 
   render() {
     return (
@@ -1090,7 +1062,6 @@ class General_View extends React.Component {
           <h1>Dernières commandes reçus</h1>
             <DataTableGeneral_View
             className="dataTable-custom"
-            columns={columns}
             noHeader
             pagination
             subHeader 
