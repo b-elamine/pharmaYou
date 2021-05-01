@@ -64,6 +64,9 @@ const CardDashed = (props) => {
               marginTop: "200px",
               fontSize: "6px",
             }}
+            onClick={()=> {
+              alert("Voir le fichier lié a l'ordonnance : "+ props.id_ordonnance)
+            }}
           >
             <PlusCircle className="align-middle ml-0 mr-25" size={14} />
             Voir le fichier
@@ -88,12 +91,13 @@ class Troisieme_section extends React.Component {
     this.setState({ checked });
   };
   render() {
+    console.log(this.props.ordonnance)
     return (
       <Card>
         <CardTitle className="ml-2">Documents Client</CardTitle>
         <Row>
           <Col className="ml-2">
-            <CardDashed bg_color="#3397da" label="Ordonnance"></CardDashed>
+            <CardDashed bg_color="#3397da" label="Ordonnance" id_ordonnance ={this.props.ordonnance.id}></CardDashed>
             <div
               style={{ width: "90%" }}
               className="d-flex flex-sm-row flex-column align-items-center justify-content-between px-0 mb-75"
@@ -145,7 +149,7 @@ class Troisieme_section extends React.Component {
             </div>
           </Col>
           <Col>
-            <CardDashed bg_color="#1aac1a" label="Carte Vital"></CardDashed>
+            <CardDashed bg_color="#1aac1a" label="Carte Vital" id_ordonnance ={this.props.ordonnance.id}></CardDashed>
             <div style={{ width: "90%" }}>
               <InputGroup>
                 <Input size="sm" className="block-example border border-right-0 border-success" placeholder="Numero de sécurité social"/>
@@ -158,7 +162,7 @@ class Troisieme_section extends React.Component {
             </div>
           </Col>
           <Col>
-            <CardDashed bg_color="#d01b47" label="Mutuelle"></CardDashed>
+            <CardDashed bg_color="#d01b47" label="Mutuelle" id_ordonnance ={this.props.ordonnance.id}></CardDashed>
             <div style={{width:"90%",marginTop:"-20px"}}>
               <Label>Date d'expiration</Label>
             <Flatpickr

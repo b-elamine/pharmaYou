@@ -237,7 +237,6 @@ const columns = [
         className="text-bold-500 mb-0"
         onClick={() => {
           const url = `/ordonnance/${row.id}`;
-          console.log(row);
           history.push(url, row);
         }}
       >
@@ -248,7 +247,7 @@ const columns = [
   {
     name: "STATUT",
     selector: "status",
-    minWidth:"100px",
+    minWidth: "100px",
     maxWidth: "150px",
     center: true,
     cell: (row) =>
@@ -319,7 +318,7 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    maxWidth: "150px",
+    maxWidth: "250px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -346,9 +345,9 @@ const columns = [
   {
     name: "TYPE",
     selector: "type",
-    center: true,
+    // center: true,
     sortable: true,
-    maxWidth:'100px',
+    maxWidth: "130px",
     cell: (row) =>
       row.type === "Particulier" ? (
         <Badge
@@ -371,26 +370,28 @@ const columns = [
   {
     name: "MONTANT",
     selector: "montant",
-    sortable: true,
-    maxWidth:"120px",
     center: true,
+    sortable: true,
+    maxWidth: "150px",
     cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
   },
   {
     name: "DATE",
     selector: "date",
-    maxWidth: "180px",
     sortable: true,
+    maxWidth: "200px",
     cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
+      <p className="text-bold-500 text-truncate mb-0">
+        {row.date}
+        <br></br>À {row.heure}
+      </p>
     ),
   },
   {
     name: "CODE POSTAL",
     selector: "code_postal",
+    maxWidth: "120px",
     sortable: true,
-    center: true,
-    maxWidth: "100px",
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
     ),
@@ -398,8 +399,9 @@ const columns = [
   {
     name: "ORIGINE",
     selector: "origine",
+    maxWidth: "190px",
+    // center: true,
     sortable: true,
-    maxWidth: "150px",
     cell: (row) =>
       row.origine === "infirmier" ? (
         <Badge
@@ -439,9 +441,7 @@ const columns = [
     name: "Actions",
     selector: "actions",
     center: true,
-    
-    maxWidth: "100px",
-
+    maxWidth: "120px",
     cell: (row) => (
       <div className="data-list-action">
         <EyeFill
@@ -597,6 +597,10 @@ class Ordonnances_recue extends React.Component {
               month: "long",
               day: "numeric",
             }),
+            heure: `${new Date(item.created_at).getHours()}H${new Date(
+              item.created_at
+            ).getMinutes()}`,
+
             code: item.code_postal_livraison,
             origine: "infirmier",
             email: item.email,
