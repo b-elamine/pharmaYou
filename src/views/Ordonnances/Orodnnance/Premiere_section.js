@@ -3,7 +3,7 @@ import {
   Col,
   Row,
   CardBody,
-  CardHeader,
+  // CardHeader,
   Badge,
   FormGroup,
   Label,
@@ -31,10 +31,10 @@ class FirstSection extends React.Component {
     // });
   }
   render() {
-    return (
+    return ( 
       <Row>
         <Col xl="8">
-        <a style={{top:"-50px",left:"10px",position:"absolute",zIndex:"100"}} onClick={()=>{history.goBack()}}>
+        <a href style={{top:"-50px",left:"10px",position:"absolute",zIndex:"100"}} onClick={()=>{history.goBack()}}>
         <ArrowLeftCircleFill size="40" className="primary"/>
         </a>
           <CardBody className="d-flex pb-0">
