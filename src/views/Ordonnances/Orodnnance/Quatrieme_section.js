@@ -262,7 +262,7 @@ class QuatriemeSection extends React.Component {
                   <Select
                     className="w-75 mb-2"
                     classNamePrefix="select"
-                    placeholder="Orconnance classique"
+                    placeholder="Ordonnance classique"
                     name="Professions"
                     options={options}
                   />
