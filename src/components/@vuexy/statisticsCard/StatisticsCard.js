@@ -47,6 +47,7 @@ class StatisticsCards extends React.Component {
                 marginLeft: "20px",
                 height: "45px",
                 width: "50px",
+
               }}
             >
               <div className="avatar-content ml-50">{this.props.icon}</div>

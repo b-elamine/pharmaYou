@@ -13,9 +13,11 @@ import StatisticsCard from "../../../components/@vuexy/statisticsCard/Statistics
 import CommandesPartenaire from "./commandes_partenaire_table";
 import { history } from "../../../history";
 import {
-  Check2, 
+  Check2,
   CircleFill,
-  StarFill,TelephoneFill
+  StarFill,
+  TelephoneFill,
+  ArrowLeftCircleFill,
 } from "react-bootstrap-icons";
 
 class Partenaire_Info extends React.Component {
@@ -26,6 +28,9 @@ class Partenaire_Info extends React.Component {
     // console.log(this.state.row);
     return (
       <Card>
+        <a style={{top:"-50px",left:"10px",position:"absolute",zIndex:"100"}} onClick={()=>{history.goBack()}}>
+        <ArrowLeftCircleFill size="40" className="primary"/>
+        </a>
         <CardHeader>
           <CardTitle>Informations partenaire</CardTitle>
         </CardHeader>

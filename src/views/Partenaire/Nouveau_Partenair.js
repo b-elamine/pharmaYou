@@ -1,12 +1,15 @@
 import React from "react";
 import {
   Card,
+  CardHeader,
   CardBody,
   Media,
   Button,
   Input,
 }
 from "reactstrap";
+import { history } from "../../history";
+import { ArrowLeftCircleFill } from "react-bootstrap-icons";
 
 
 const img = require("../../assets/img/portrait/small/avatar-s-2.jpg") //fake profile pic 
@@ -15,8 +18,21 @@ class Nouveau_Partenaire extends React.Component {
     render(){
     return (
         <div>
-            <h1>Nouveau Partenaire</h1>
-            <Card>
+          <a
+          style={{
+            top: "50px",
+            left: "30px",
+            position: "absolute",
+            zIndex: "100",
+          }}
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <ArrowLeftCircleFill size="40" className="primary" />
+        </a>
+        <Card>
+          <CardHeader><h1>Modifier Partenaire</h1></CardHeader>
                 <Button
                     style={{
                         margin :"1.6rem",

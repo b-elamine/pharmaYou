@@ -25,6 +25,7 @@ const data = [
     carte_vital: true,
     mutuelle: false,
     profession: "infirmier",
+    ville:"paris",
   },
   {
     // id: 2,
@@ -42,6 +43,7 @@ const data = [
     carte_vital: false,
     mutuelle: true,
     profession: "infirmier",
+    ville:"marseille",
   },
   {
     // id: 3,
@@ -59,6 +61,7 @@ const data = [
     carte_vital: false,
     mutuelle: true,
     profession: "Application Externe",
+    ville:"lyon",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
@@ -71,6 +74,7 @@ const data = [
     carte_vital: true,
     mutuelle: true,
     profession: "Application Externe",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
@@ -83,6 +87,7 @@ const data = [
     ordonnances: 10,
     mutuelle: true,
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
@@ -95,6 +100,7 @@ const data = [
     ordonnances: 0,
     mutuelle: true,
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
@@ -107,6 +113,7 @@ const data = [
     mutuelle: true,
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
@@ -118,6 +125,7 @@ const data = [
     ratings: "bad",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
@@ -129,6 +137,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
@@ -139,6 +148,7 @@ const data = [
     montant: "$60,000",
     ratings: "average",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
@@ -150,6 +160,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
@@ -161,6 +172,7 @@ const data = [
     ratings: "bad",
     profession: "infirmier",
 
+    ville:"paris",
     origine: "Partenaire App",
   },
   {
@@ -173,6 +185,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
@@ -184,6 +197,7 @@ const data = [
     ratings: "average",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
@@ -195,6 +209,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
@@ -206,6 +221,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-24.jpg"),
@@ -217,6 +233,7 @@ const data = [
     ratings: "average",
     origine: "Partenaire App",
     profession: "infirmier",
+    ville:"paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
@@ -410,7 +427,7 @@ const columns = [
     selector: "ville",
     minWidth: "150px",
     sortable: true,
-    cell: (row) => <p className="text-bold-200 mb-0">{row.status}</p>,
+    cell: (row) => <p className="text-bold-200 mb-0">{row.ville}</p>, //row.ville
   },
   {
     name: "CODE POSTAL",
@@ -443,7 +460,7 @@ const columns = [
     cell: (row) => <p className="text-truncate mb-0">{row.date}</p>,
   },
   {
-    name: "NBR DE PATIENTS",
+    name: "NOMBRE DE PATIENTS",
     selector: "nbr_patients",
     sortable: true,
     cell: (row) => (

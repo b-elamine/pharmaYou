@@ -3,7 +3,7 @@ import { Row, Col, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-import Icon from "./ICON.png";
+import Icon from "./Icon.svg";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -318,7 +318,7 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    maxWidth: "250px",
+    minWidth:"250px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -372,14 +372,14 @@ const columns = [
     selector: "montant",
     center: true,
     sortable: true,
-    maxWidth: "150px",
+    maxWidth: "100px",
     cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
   },
   {
     name: "DATE",
     selector: "date",
     sortable: true,
-    maxWidth: "200px",
+    minWidth: "200px",
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">
         {row.date}
@@ -707,7 +707,7 @@ class Ordonnances_recue extends React.Component {
               first_color="#faeed8"
               second_color="#faeed8"
               iconBg="primary"
-              icon={<img src={Icon} width="45px" height="40px" alt="Icon" />}
+              icon={<img src={Icon} width="35px" height="35px" alt="Icon" />}
               stat={nbr_ordo_incomplet}
               statTitle="Dossiers Incomplet"
             />

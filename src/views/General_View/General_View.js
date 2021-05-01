@@ -426,7 +426,7 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    maxWidth: "250px",
+    minWidth: "250px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -480,14 +480,14 @@ const columns = [
     selector: "montant",
     center: true,
     sortable: true,
-    maxWidth: "150px",
+    maxWidth: "100px",
     cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
   },
   {
     name: "DATE",
     selector: "date",
     sortable: true,
-    maxWidth: "200px",
+    minWidth: "200px",
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">
         {row.date}
