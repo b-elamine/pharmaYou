@@ -299,7 +299,13 @@ class AddEvent extends React.Component {
                       noCalendar: true,
                       dateFormat: "H:i",
                       time_24hr: true,
-                      minTime: new Date().getTime(),
+                      minTime:
+                        this.state.startDate.getDate() ===
+                          new Date().getDate() &&
+                        this.state.startDate.getMonth() ===
+                          new Date().getMonth()
+                          ? new Date().getTime()
+                          : null,
                     }}
                   />
                 </FormGroup>
@@ -319,7 +325,11 @@ class AddEvent extends React.Component {
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
-                    minTime: new Date().getTime(),
+                    minTime:
+                      this.state.startDate.getDate() === new Date().getDate() &&
+                      this.state.startDate.getMonth() === new Date().getMonth()
+                        ? new Date().getTime()
+                        : null,
                   }}
                 />
               </FormGroup>

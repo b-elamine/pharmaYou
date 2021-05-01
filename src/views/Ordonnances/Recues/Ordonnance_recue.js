@@ -11,9 +11,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { history } from "../../../history";
 
 import {
-  CursorFill,
   EyeFill,
-  ThreeDotsVertical,
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
@@ -25,7 +23,7 @@ import {
   Hourglass,
 } from "react-bootstrap-icons";
 import Select from "react-select";
-// fake database
+//fake database
 
 const data = [
   {
