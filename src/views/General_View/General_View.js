@@ -3,7 +3,16 @@ import { Row, Col, Spinner } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 import "../../assets/scss/pages/dashboard-analytics.scss";
 import { Badge } from "reactstrap";
-import { EyeFill, HourglassSplit } from "react-bootstrap-icons";
+import {
+  Calendar2Week,
+  Check2,
+  Check2All,
+  Exclamation,
+  ExclamationTriangleFill,
+  EyeFill,
+  Hourglass,
+  HourglassSplit,
+} from "react-bootstrap-icons";
 import { Truck, User, FileText, DollarSign } from "react-feather";
 import { history } from "../../history";
 import DataTableGeneral_View from "./DataTableGeneral_View";
@@ -329,7 +338,7 @@ const columns = [
     name: "#",
     selector: "id",
     sortable: true,
-    minWidth: "10px",
+    maxWidth: "100px",
     cell: (row) => (
       <p
         style={{ cursor: "pointer" }}
@@ -344,23 +353,80 @@ const columns = [
     ),
   },
   {
-    name: "Statut",
+    name: "STATUT",
     selector: "status",
-    sortable: true,
-    cell: (row) => (
-      <Badge
-        color={row.status === "inactive" ? "light-danger" : "light-success"}
-        pill
-      >
-        {row.status}
-      </Badge>
-    ),
+    minWidth: "100px",
+    maxWidth: "150px",
+    center: true,
+    cell: (row) =>
+      row.status === "en_attente" ? (
+        <Badge
+          pill
+          color="light-primary"
+          className="text-primary pl-50 pr-50 font-small-1 text-wrap text-bold-500"
+        >
+          <HourglassSplit className="primary mr-50" size={20} />
+          En attente
+        </Badge>
+      ) : row.status === "non-traité" ? (
+        <Badge color="light-danger pl-50 pr-50 " pill>
+          <ExclamationTriangleFill className="danger mr-50" size={20} />
+          Non-traité
+        </Badge>
+      ) : row.status === "en_livraison" ? (
+        <Badge
+          style={{
+            color: "#180852",
+            backgroundColor: "#e9e8ee",
+            fontWeight: "bold",
+          }}
+          color="pl-50 pr-50"
+          // className="text-warning"
+          pill
+        >
+          <Truck className="mr-50" size={20} />
+          En livraison
+        </Badge>
+      ) : row.status === "livrée" ? (
+        <Badge color="light-success pl-50 pr-50 " pill>
+          <Check2All className="success mr-50" size={20} />
+          Livré
+        </Badge>
+      ) : row.status === "tournée_assigné" ? (
+        <Badge
+          style={{
+            backgroundImage: "linear-gradient(#ffd5c0, #fee6bf)",
+            color: "#fe5f29",
+            fontWeight: "bold",
+          }}
+          className="pl-50 pr-50 "
+          pill
+        >
+          <Calendar2Week className="primary mr-50" size={20} />
+          Tournée assigné
+        </Badge>
+      ) : row.status === "annulée" ? (
+        <Badge color="light-danger pl-50 pr-50 " pill>
+          <Exclamation className="danger mr-0" size={20} />
+          Annulée
+        </Badge>
+      ) : row.status === "validée" ? (
+        <Badge color="light-success pl-50 pr-50 " pill>
+          <Check2 className="success mr-50" size={20} />
+          Validée
+        </Badge>
+      ) : row.status === "incomplet" ? (
+        <Badge color="light-primary pl-50 pr-50 " pill>
+          <Hourglass className="primary mr-50" size={20} />
+          Incomplet
+        </Badge>
+      ) : null,
   },
   {
-    name: "Nom Client",
+    name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    minWidth: "200px",
+    maxWidth: "150px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -385,66 +451,109 @@ const columns = [
     ),
   },
   {
-    name: "Type",
+    name: "TYPE",
     selector: "type",
+    center: true,
     sortable: true,
-    cell: (row) => (
-      <Badge
-        color={row.type === "particulier" ? "light-primary" : "light-success"}
-        pill
-      >
-        {row.type}
-      </Badge>
-    ),
+    maxWidth: "100px",
+    cell: (row) =>
+      row.type === "Particulier" ? (
+        <Badge
+          // color="light-primary"
+          style={{
+            backgroundColor: "#ff9f43",
+            color: "white",
+            fontWeight: "bold",
+          }}
+          pill
+        >
+          {row.type}
+        </Badge>
+      ) : (
+        <Badge color="light-success" pill>
+          {row.type}
+        </Badge>
+      ),
   },
   {
-    name: "Montant",
+    name: "MONTANT",
     selector: "montant",
+    center: true,
     sortable: true,
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant}</p>,
+    maxWidth: "120px",
+    cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
   },
   {
-    name: "Date",
+    name: "DATE",
     selector: "date",
     sortable: true,
+    maxWidth: "180px",
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
     ),
   },
   {
-    name: "Code postal",
+    name: "CODE POSTAL",
     selector: "code_postal",
+    maxWidth: "100px",
     sortable: true,
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
     ),
   },
   {
-    name: "Origine",
+    name: "ORIGINE",
     selector: "origine",
+    maxWidth: "150px",
+    center: true,
     sortable: true,
-    minWidth: "200px",
-    cell: (row) => (
-      <Badge
-        color="light-success text-wrap text-bold-500 mb-0"
-        style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
-        pill
-      >
-        {row.origine}
-      </Badge>
-    ),
+    cell: (row) =>
+      row.origine === "infirmier" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier
+        </Badge>
+      ) : row.origine === "medadom" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier MEDADOM
+        </Badge>
+      ) : row.origine === "web" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier WEB
+        </Badge>
+      ) : row.origine === "appli" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier Appli
+        </Badge>
+      ) : null,
   },
   {
     name: "Actions",
     selector: "actions",
-    minWidth: "180px",
+    center: true,
+    maxWidth: "100px",
     cell: (row) => (
       <div className="data-list-action">
         <EyeFill
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            alert("Voir la commande reçue " + row.id);
+            history.push(`/ordonnance/${row.id}`);
           }}
         />
       </div>
@@ -687,14 +796,14 @@ class General_View extends React.Component {
     table: {
       columns: [],
       data: [],
-      ordonnances: {
-        non_traité: 0,
-        en_attente: 0,
-        en_cours_livraison: 0,
-        livrée: 0,
-        assigner_tournée: 0,
-        dossier_incomplet: 0,
-      },
+      // ordonnances: {
+      //   non_traité: 0,
+      //   en_attente: 0,
+      //   en_cours_livraison: 0,
+      //   livrée: 0,
+      //   assigner_tournée: 0,
+      //   dossier_incomplet: 0,
+      // },
     },
   };
 
@@ -759,14 +868,14 @@ class General_View extends React.Component {
           table: {
             columns: columns,
             data: custom_commandes,
-            ordonnances: {
-              non_traité: ordonnances.non_traité,
-              en_attente: ordonnances.en_attente,
-              en_cours_livraison: ordonnances.en_cours_livraison,
-              livrée: ordonnances.livrée,
-              assigner_tournée: ordonnances.assigner_tournée,
-              dossier_incomplet: ordonnances.dossier_incomplet,
-            },
+            // ordonnances: {
+            //   non_traité: ordonnances.non_traité,
+            //   en_attente: ordonnances.en_attente,
+            //   en_cours_livraison: ordonnances.en_cours_livraison,
+            //   livrée: ordonnances.livrée,
+            //   assigner_tournée: ordonnances.assigner_tournée,
+            //   dossier_incomplet: ordonnances.dossier_incomplet,
+            // },
           },
         });
         this.setState({ dataFetched: true });

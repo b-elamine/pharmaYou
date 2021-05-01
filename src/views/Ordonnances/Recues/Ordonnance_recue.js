@@ -230,7 +230,7 @@ const columns = [
     name: "#",
     selector: "id",
     sortable: true,
-    minWidth: "10px",
+    maxWidth: "100px",
     cell: (row) => (
       <p
         style={{ cursor: "pointer" }}
@@ -248,7 +248,9 @@ const columns = [
   {
     name: "STATUT",
     selector: "status",
-    minWidth: "150px",
+    minWidth:"100px",
+    maxWidth: "150px",
+    center: true,
     cell: (row) =>
       row.status === "en_attente" ? (
         <Badge
@@ -317,7 +319,7 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    minWidth: "180px",
+    maxWidth: "150px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -344,9 +346,11 @@ const columns = [
   {
     name: "TYPE",
     selector: "type",
+    center: true,
     sortable: true,
+    maxWidth:'100px',
     cell: (row) =>
-      row.type === "particulier" ? (
+      row.type === "Particulier" ? (
         <Badge
           // color="light-primary"
           style={{
@@ -368,12 +372,14 @@ const columns = [
     name: "MONTANT",
     selector: "montant",
     sortable: true,
+    maxWidth:"120px",
+    center: true,
     cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
   },
   {
     name: "DATE",
     selector: "date",
-    minWidth: "180px",
+    maxWidth: "180px",
     sortable: true,
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
@@ -383,6 +389,8 @@ const columns = [
     name: "CODE POSTAL",
     selector: "code_postal",
     sortable: true,
+    center: true,
+    maxWidth: "100px",
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
     ),
@@ -391,7 +399,7 @@ const columns = [
     name: "ORIGINE",
     selector: "origine",
     sortable: true,
-    minWidth: "150px",
+    maxWidth: "150px",
     cell: (row) =>
       row.origine === "infirmier" ? (
         <Badge
@@ -430,6 +438,10 @@ const columns = [
   {
     name: "Actions",
     selector: "actions",
+    center: true,
+    
+    maxWidth: "100px",
+
     cell: (row) => (
       <div className="data-list-action">
         <EyeFill
@@ -463,7 +475,7 @@ class Ordonnances_recue extends React.Component {
       assigner_tournée: 0,
       dossier_incomplet: 0,
     },
-    value : ""
+    value: "",
   };
 
   extract_distinct_values(data) {

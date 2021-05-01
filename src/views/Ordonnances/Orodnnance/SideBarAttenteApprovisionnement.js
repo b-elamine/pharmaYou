@@ -161,7 +161,6 @@ class ComposeEmail extends React.Component {
                 // isDisabled={!this.state.checked}
                 className="React"
                 classNamePrefix="select"
-                // defaultValue={colourOptions[0]}
                 name="Role"
                 placeholder="Liste des prochaines tournées"
                 options={this.state.tournées}

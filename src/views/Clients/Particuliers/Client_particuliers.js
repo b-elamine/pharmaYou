@@ -329,7 +329,11 @@ class Client_particuliers extends React.Component {
         this.handleAlert("errorAlert", true, clientParticulier.statusText);
       }
     } catch (err) {
-      this.handleAlert("errorAlert", true, "Vérifier votre connexion !");
+      const error_message =
+        err.message === "Network Error"
+          ? "Vérifier votre connexion !"
+          : "Une erreur est produite lors de la récupération des données.";
+      this.handleAlert("errorAlert", true, error_message);
     }
   };
   componentDidMount() {
