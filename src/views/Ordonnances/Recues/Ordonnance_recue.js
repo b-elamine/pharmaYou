@@ -3,7 +3,7 @@ import { Row, Col, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-import Icon from "./ICON.png";
+import Icon from "./Icon.svg";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -707,7 +707,7 @@ class Ordonnances_recue extends React.Component {
               first_color="#faeed8"
               second_color="#faeed8"
               iconBg="primary"
-              icon={<img src={Icon} width="45px" height="40px" alt="Icon" />}
+              icon={<img src={Icon} width="35px" height="35px" alt="Icon" />}
               stat={nbr_ordo_incomplet}
               statTitle="Dossiers Incomplet"
             />

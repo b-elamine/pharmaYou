@@ -21,8 +21,10 @@ import {
   ListUl,
   RecordCircleFill,
   Telephone,
+  ArrowLeftCircleFill
 } from "react-bootstrap-icons";
 import { FaRoad, FaUniversity, FaCar, FaMotorcycle } from "react-icons/fa";
+import {history} from "../../history"
 
 const CommentaireBlock = (props) => {
   return (
@@ -114,9 +116,20 @@ class LivreursMap extends React.Component {
   }
 
   render() {
-    console.log(this.state.row);
     return (
       <Card>
+        <a
+          style={{
+            top: "-50px",
+            position: "absolute",
+            zIndex: "100",
+          }}
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <ArrowLeftCircleFill size="40" className="primary" />
+        </a>
         <CardHeader>
           <CardTitle>Informations livreurs</CardTitle>
         </CardHeader>

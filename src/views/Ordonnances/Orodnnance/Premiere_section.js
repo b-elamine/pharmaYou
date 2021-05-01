@@ -1,5 +1,14 @@
 import React from "react";
-import { Col, Row, CardBody, Badge, FormGroup, Label, Input } from "reactstrap";
+import {
+  Col,
+  Row,
+  CardBody,
+  CardHeader,
+  Badge,
+  FormGroup,
+  Label,
+  Input,
+} from "reactstrap";
 import Logo from "../../../assets/img/logo/logo_pharmaYou.PNG";
 import {
   Calendar2Check,
@@ -8,7 +17,9 @@ import {
   ExclamationTriangleFill,
   HourglassSplit,
   Truck,
+  ArrowLeftCircleFill,
 } from "react-bootstrap-icons";
+import {history} from "../../../history";
 
 class FirstSection extends React.Component {
   state = {
@@ -23,6 +34,9 @@ class FirstSection extends React.Component {
     return (
       <Row>
         <Col xl="8">
+        <a style={{top:"-50px",left:"10px",position:"absolute",zIndex:"100"}} onClick={()=>{history.goBack()}}>
+        <ArrowLeftCircleFill size="40" className="primary"/>
+        </a>
           <CardBody className="d-flex pb-0">
             <img src={Logo} alt="PharmaYouLogo" height="25px" width="150px" />
 
