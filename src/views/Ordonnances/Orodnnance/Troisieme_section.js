@@ -65,7 +65,8 @@ const CardDashed = (props) => {
               fontSize: "6px",
             }}
             onClick={()=> {
-              alert("Voir le fichier lié a l'ordonnance : "+ props.id_ordonnance)
+              console.log(props.ordonnance)
+              alert(`faire un GET Request depuis la requette suivante : https://ordo.pharmayou.fr:3003/ordonnances/${props.ordonnance.ordonnance.path}/original?access_token=a `)
             }}
           >
             <PlusCircle className="align-middle ml-0 mr-25" size={14} />
@@ -97,7 +98,7 @@ class Troisieme_section extends React.Component {
         <CardTitle className="ml-2">Documents Client</CardTitle>
         <Row>
           <Col className="ml-2">
-            <CardDashed bg_color="#3397da" label="Ordonnance" id_ordonnance ={this.props.ordonnance.id}></CardDashed>
+            <CardDashed bg_color="#3397da" label="Ordonnance" ordonnance ={this.props.ordonnance}></CardDashed>
             <div
               style={{ width: "90%" }}
               className="d-flex flex-sm-row flex-column align-items-center justify-content-between px-0 mb-75"
@@ -149,7 +150,7 @@ class Troisieme_section extends React.Component {
             </div>
           </Col>
           <Col>
-            <CardDashed bg_color="#1aac1a" label="Carte Vital" id_ordonnance ={this.props.ordonnance.id}></CardDashed>
+            <CardDashed bg_color="#1aac1a" label="Carte Vital" ordonnance ={this.props.ordonnance}></CardDashed>
             <div style={{ width: "90%" }}>
               <InputGroup>
                 <Input size="sm" className="block-example border border-right-0 border-success" placeholder="Numero de sécurité social"/>
@@ -162,7 +163,7 @@ class Troisieme_section extends React.Component {
             </div>
           </Col>
           <Col>
-            <CardDashed bg_color="#d01b47" label="Mutuelle" id_ordonnance ={this.props.ordonnance.id}></CardDashed>
+            <CardDashed bg_color="#d01b47" label="Mutuelle" ordonnance ={this.props.ordonnance}></CardDashed>
             <div style={{width:"90%",marginTop:"-20px"}}>
               <Label>Date d'expiration</Label>
             <Flatpickr
