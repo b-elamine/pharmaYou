@@ -56,7 +56,7 @@ class Livreurs extends React.Component {
   state = {
     columns: [
       {
-        name: "Name",
+        name: "NOM",
         selector: "NOM",
         sortable: true,
         minWidth: "180px",
@@ -87,7 +87,8 @@ class Livreurs extends React.Component {
         name: "Email",
         selector: "EMAIL",
         sortable: true,
-        cell: (row) => <small title={row.email}>{row.email}</small>,
+        minWidth:"240px",
+        cell: (row) => <p className="text-wrap" title={row.email}>{row.email}</p>,
       },
       {
         name: "VEHICULE",

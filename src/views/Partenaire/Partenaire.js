@@ -410,7 +410,7 @@ const columns = [
     selector: "ville",
     minWidth: "150px",
     sortable: true,
-    cell: (row) => <p className="text-bold-200 mb-0">{row.status}</p>,
+    cell: (row) => <p className="text-bold-200 mb-0">Paris</p>, //row.ville
   },
   {
     name: "CODE POSTAL",
@@ -443,7 +443,7 @@ const columns = [
     cell: (row) => <p className="text-truncate mb-0">{row.date}</p>,
   },
   {
-    name: "NBR DE PATIENTS",
+    name: "NOMBRE DE PATIENTS",
     selector: "nbr_patients",
     sortable: true,
     cell: (row) => (

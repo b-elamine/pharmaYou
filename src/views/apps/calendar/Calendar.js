@@ -5,7 +5,7 @@ import { Card, CardBody, Button, ButtonGroup } from "reactstrap";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import moment from "moment";
-import 'moment/locale/fr';
+import "moment/locale/fr";
 import { connect } from "react-redux";
 import Checkbox from "../../../components/@vuexy/checkbox/CheckboxesVuexy";
 import {
@@ -26,14 +26,13 @@ const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 const eventColors = {
   // business: "bg-success",
-  // work: "bg-warning",
-  // personal: "bg-danger",
+  travail: "bg-warning",
+  personel: "bg-danger",
   créneau_de_livraison: "bg-primary",
 };
 
 class Toolbar extends React.Component {
   render() {
-    console.log(this.props)
     return (
       <div className="calendar-header mb-2 d-flex justify-content-between flex-wrap">
         <div className="month-label d-flex flex-column text-center text-md-right mt-1 mt-md-0">
@@ -48,7 +47,6 @@ class Toolbar extends React.Component {
             </Button.Ripple>
             <div className="month d-inline-block mx-75 text-bold-500 font-medium-2 align-middle">
               {this.props.label}
-
             </div>
             <Button.Ripple
               className="btn-icon rounded-circle"
@@ -79,7 +77,7 @@ class Toolbar extends React.Component {
           </div>*/}
         </div>
         <div className="text-center view-options mt-1 mt-sm-0 ml-lg-5 ml-0">
-          <ButtonGroup >
+          <ButtonGroup>
             <button
               className={`btn ${
                 this.props.view === "month"
@@ -136,7 +134,7 @@ class Toolbar extends React.Component {
 }
 
 class CalendarApp extends React.Component {
-  static getDerivedStateFromProps (props, state) {
+  static getDerivedStateFromProps(props, state) {
     if (
       props.app.events.length !== state.events ||
       props.app.sigetDerivedStateFromPropsdebar !== state.sidebar ||
@@ -158,6 +156,9 @@ class CalendarApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      checkAll: true,
+      checkCreneau: false,
+      filterEvents: [],
       events: [],
       views: {
         month: true,
@@ -186,28 +187,38 @@ class CalendarApp extends React.Component {
     } else if (event.allDay && !droppedOnAllDaySlot) {
       allDay = false;
     }
-    const updatedEvent = { ...event, start, end, allDay };
-    const nextEvents = [...events];
-    nextEvents.splice(idx, 1, updatedEvent);
-    this.setState({
-      events: nextEvents,
-    });
-    this.props.updateDrag(updatedEvent);
+    if (start >= new Date()) {
+      const updatedEvent = { ...event, start, end, allDay };
+      const nextEvents = [...events];
+      nextEvents.splice(idx, 1, updatedEvent);
+      this.setState({
+        events: nextEvents,
+      });
+      this.props.updateDrag(updatedEvent);
+    } else {
+      alert("Vous pouver pas ajouter ou modifier un créneau dans le passé!");
+    }
   };
 
   resizeEvent = ({ event, start, end }) => {
     const { events } = this.state;
-    const nextEvents = events.map((existingEvent) => {
-      return existingEvent.id === event.id
-        ? { ...existingEvent, start, end }
-        : existingEvent;
-    });
+    if (start < new Date()) {
+      alert("Vous pouver pas ajouter ou modifier un créneau dans le passé!");
+    } else if (start.getDate() !== end.getDate()) {
+      alert("Un créneau ne peut pas durée plus qu'une journée!");
+    } else {
+      const nextEvents = events.map((existingEvent) => {
+        return existingEvent.id === event.id
+          ? { ...existingEvent, start, end }
+          : existingEvent;
+      });
 
-    this.setState({
-      events: nextEvents,
-    });
+      this.setState({
+        events: nextEvents,
+      });
 
-    this.props.updateResize({ ...event, start, end });
+      this.props.updateResize({ ...event, start, end });
+    }
   };
 
   handleSelectEvent = (event) => {
@@ -220,7 +231,7 @@ class CalendarApp extends React.Component {
   };
 
   render() {
-    const { events, views, sidebar } = this.state;
+    let { checkAll, checkCreneau,filterEvents, events, views, sidebar } = this.state;
     return (
       <div className="app-calendar position-relative">
         <div
@@ -240,7 +251,7 @@ class CalendarApp extends React.Component {
                 borderRightWidth: "1px",
               }}
             >
-              <div style={{ marginBottom: "20px",marginRight:"15px" }}>
+              <div style={{ marginBottom: "20px", marginRight: "15px" }}>
                 <AddEventButton />
               </div>
               <div style={{ marginBottom: "20px" }}>
@@ -248,26 +259,47 @@ class CalendarApp extends React.Component {
               </div>
               <div style={{ marginBottom: "20px" }}>
                 <Checkbox
+                  checked={checkAll}
                   size="sm"
                   color="warning"
                   icon={<Check className="vx-icon" size={12} />}
                   label="tout voir"
-                  onChange={() => {}}
+                  onChange={() => {
+                    if (!checkAll) {
+                      this.setState({
+                        filterEvents: events,
+                        checkAll: !checkAll,
+                        checkCreneau: false,
+                      });
+                    }
+                  }}
                 />
               </div>
               <div style={{ marginBottom: "20px" }}>
                 <Checkbox
+                  checked={checkCreneau}
                   size="sm"
                   color="primary"
                   icon={<Check className="vx-icon" size={12} />}
                   label="créneaux livraison"
-                  onChange={() => {}}
+                  onChange={() => {
+                    if (!checkCreneau) {
+                      let filterEvents = events.filter(
+                        (item) => item.label === "créneau_de_livraison"
+                      );
+                      this.setState({
+                        filterEvents,
+                        checkCreneau: !checkCreneau,
+                        checkAll: false,
+                      });
+                    }
+                  }}
                 />
               </div>
             </div>
             <DragAndDropCalendar
               localizer={localizer}
-              events={events}
+              events={filterEvents.length !== 0 ? filterEvents : events}
               onEventDrop={this.moveEvent}
               onEventResize={this.resizeEvent}
               startAccessor="start"

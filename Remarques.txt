@@ -25,7 +25,7 @@ Ordonnance recue
 	les couleurs dans les card statistique (DONE)
 
 Livreur 
-	modifier le calendrier pou selectionné que les jours dans le futur,
+	modifier le calendrier pou selectionné que les jours dans le futur,(done)
 	regler flatpicker (done),
 	rendre les dates en francais (done)
 
