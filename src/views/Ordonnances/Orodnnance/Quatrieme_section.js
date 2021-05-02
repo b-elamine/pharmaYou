@@ -12,6 +12,7 @@ import {
   CardBody,
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import AutoComplete from "./autoCompleteComponent";
 
 import {
   Justify,
@@ -65,6 +66,35 @@ const CommentaireBlock = (props) => {
 
 class QuatriemeSection extends React.Component {
   state = {
+    suggestions: [
+      {
+        title: "Doliprane"
+      },
+      {
+        title: "paracetamol"
+      },
+      {
+        title: "amoxiciline"
+      },
+      {
+        title: "azytromicyle"
+      },
+      {
+        title: "flazol"
+      },
+      {
+        title: "aspirine"
+      },
+      {
+        title: "penisiline"
+      },
+      {
+        title: "clamoxyle"
+      },
+      {
+        title: "defirine"
+      }
+    ],
     commentaires_notes: [],
     inputs: [
       {
@@ -268,11 +298,13 @@ class QuatriemeSection extends React.Component {
                   />
                   {this.state.inputs.map((item) => {
                     return (
-                      <Input
+                      <AutoComplete
                         key={item.id}
-                        type="text"
                         id="produits"
-                        className="mb-2"
+                        suggestions={this.state.suggestions}
+                        className="form-control mb-2"
+                        filterKey="title"
+                        suggestionLimit={7}
                         placeholder="Produit 1,produit 2,produit 3"
                         onChange={(e) => {
                           this.produit_input_change_handler(
@@ -281,6 +313,19 @@ class QuatriemeSection extends React.Component {
                           );
                         }}
                       />
+                      // <Input
+                      //   key={item.id}
+                      //   type="text"
+                      //   id="produits"
+                      //   className="mb-2"
+                      //   placeholder="Produit 1,produit 2,produit 3"
+                      //   onChange={(e) => {
+                      //     this.produit_input_change_handler(
+                      //       e.target.value,
+                      //       item.id
+                      //     );
+                      //   }}
+                      // />
                     );
                   })}
                   <Button
@@ -334,7 +379,9 @@ class QuatriemeSection extends React.Component {
                               max="10"
                               step="1"
                               bsSize="sm"
-                              className={`w-50 mt-${item.id===1? "4" : "1"} text-center`}
+                              className={`w-50 mt-${
+                                item.id === 1 ? "4" : "1"
+                              } text-center`}
                               onChange={(e) => {
                                 this.quantité_input_change_handler(
                                   e.target.value,
@@ -359,7 +406,9 @@ class QuatriemeSection extends React.Component {
                               min="1"
                               max="250"
                               step="1"
-                              className={`w-50 mt-${item.id===1? "4" : "1"} text-center`}
+                              className={`w-50 mt-${
+                                item.id === 1 ? "4" : "1"
+                              } text-center`}
                               onChange={(e) => {
                                 this.prix_input_change_handler(
                                   e.target.value,
