@@ -11,7 +11,9 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { history } from "../../../history";
 
 import {
+  CursorFill,
   EyeFill,
+  ThreeDotsVertical,
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
@@ -21,9 +23,12 @@ import {
   Check2,
   Exclamation,
   Hourglass,
+  DoorClosed,
+  FolderX,
+  FolderMinus,
 } from "react-bootstrap-icons";
 import Select from "react-select";
-//fake database
+// fake database
 
 const data = [
   {
@@ -680,7 +685,24 @@ class Ordonnances_recue extends React.Component {
               second_color="#f5f3f3"
               bg_color="danger"
               iconBg="danger"
-              icon={<ExclamationTriangleFill className="danger" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"8px",
+                  backgroundColor:"#F7CFCF",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <ExclamationTriangleFill 
+                style={{
+                  color:"#EA5455"
+                }}
+                size={30} />
+                </div> }
               stat={nbr_ordo_non_traité}
               statTitle="Ordonnances Non traité"
             />
@@ -691,7 +713,24 @@ class Ordonnances_recue extends React.Component {
               first_color="#faeed8"
               second_color="#faeed8"
               iconBg="primary"
-              icon={<img src={Icon} width="45px" height="40px" alt="Icon" />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#FBE3C2",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <FolderMinus 
+                style={{
+                  color:"#EA5455"
+                }}
+                size={30} />
+                </div> }
               stat={nbr_ordo_incomplet}
               statTitle="Dossiers Incomplet"
             />
@@ -703,7 +742,24 @@ class Ordonnances_recue extends React.Component {
               second_color="#f5fcfd"
               bg_color="info"
               iconBg="info"
-              icon={<HourglassSplit className="info" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#BCF0F8",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <HourglassSplit 
+                style={{
+                  color:"#00CFE8"
+                }}
+                size={30} />
+                </div> }
               stat={nbr_ordo_approvis}
               statTitle="Ordonnances attente approvisionnement"
             />
@@ -715,22 +771,60 @@ class Ordonnances_recue extends React.Component {
               second_color="#feedcf"
               bg_color="primary"
               iconBg="primary"
-              icon={<Calendar3 className="primary" size={25} />}
-              stat={nbr_ordo_assigner_tournée}
-              statTitle="Ordonnances assignés a une tournée"
-            />
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#FFD8BB",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <Calendar3 
+                style={{
+                  color:"#FF9F43"
+                }}
+                size={30} />
+                </div> }
+                stat={nbr_ordo_assigner_tournée}
+                statTitle="Ordonnances assignés a une tournée"
+                
+              />
+             
+            
           </Col>
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
+           
               hideChart
               first_color="#d0cdd9"
               second_color="#f3f2f6"
               bg_color="warning"
               iconBg="warning"
-              icon={<Truck className="warning" size={25} />}
+              icon={
+              <div
+              style={{
+                marginRight:"auto",
+                marginLeft:"auto",
+                padding:"8px",
+                backgroundColor:"#CAC5E3",
+                borderRadius:"50%",
+                height:"50px",
+                width:"50px",
+              }}
+              >
+              <Truck 
+              className="warning"
+              size={35} />
+              </div> }
               stat={nbr_ordo_en_cours_livraison}
               statTitle="Ordonnances en Cours de livraison"
+              
             />
+            
           </Col>
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
@@ -739,7 +833,24 @@ class Ordonnances_recue extends React.Component {
               second_color="#ebf7ee"
               bg_color="success"
               iconBg="success"
-              icon={<Check2All className="success" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"8px",
+                  backgroundColor:"#BFECCF",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <Check2All 
+                style={{
+                  color:"#28C76F"
+                }}
+                size={35} />
+                </div> }
               stat={nbr_ordo_livrée}
               statTitle="Ordonnances livré Aujourd'hui."
             />

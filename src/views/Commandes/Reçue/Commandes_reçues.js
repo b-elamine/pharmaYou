@@ -12,6 +12,7 @@ import {
   CreditCard2Back,
   Check2,
   Exclamation,
+  FolderMinus
 } from "react-bootstrap-icons";
 
 import axios from "../../../axios";
@@ -650,7 +651,24 @@ class Commande_recue extends React.Component {
               second_color = '#f5f3f3'
               bg_color="danger"
               iconBg="danger"
-              icon={<ExclamationTriangleFill className="danger" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"8px",
+                  backgroundColor:"#F7CFCF",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <ExclamationTriangleFill 
+                style={{
+                  color:"#EA5455"
+                }}
+                size={30} />
+                </div> }
               stat={this.state.commandes.non_traité}
               statTitle="Commandes pro Non traité"
             />
@@ -662,8 +680,25 @@ class Commande_recue extends React.Component {
               second_color = '#f5fcfd'
               bg_color="info"
               iconBg="info"
-              //   icon={<HourglassSplit className="info" size={25} />}
-              icon={<img src={Icon} alt="Icon" />}
+              
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#BCF0F8",  
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <FolderMinus 
+                style={{
+                  color:"#EA5455"
+                }}
+                size={30} />
+                </div> }
               stat={this.state.commandes.en_attente}
               statTitle="Commandes en attente de paiment"
             />
@@ -675,7 +710,24 @@ class Commande_recue extends React.Component {
               second_color = '#feedcf'
               bg_color="primary"
               iconBg="primary"
-              icon={<HourglassSplit className="primary" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#FFD8BB",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <HourglassSplit 
+                style={{
+                  color:"#00CFE8"
+                }}
+                size={30} />
+                </div> }
               stat={this.state.commandes.pro_en_attente}
               statTitle="Commandes pro en attente"
             />
@@ -687,7 +739,22 @@ class Commande_recue extends React.Component {
               second_color = '#f3f2f6'
               bg_color="warning"
               iconBg="warning"
-              icon={<Truck className="warning" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"8px",
+                  backgroundColor:"#CAC5E3",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <Truck 
+                className="warning"
+                size={35} />
+                </div> }
               stat={this.state.commandes.en_cours_livraison}
               statTitle="Commandes pro en Cours de livraison"
             />
