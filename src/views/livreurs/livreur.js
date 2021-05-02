@@ -56,7 +56,7 @@ class Livreurs extends React.Component {
   state = {
     columns: [
       {
-        name: "Name",
+        name: "NOM",
         selector: "NOM",
         sortable: true,
         minWidth: "180px",
@@ -87,7 +87,8 @@ class Livreurs extends React.Component {
         name: "Email",
         selector: "EMAIL",
         sortable: true,
-        cell: (row) => <small title={row.email}>{row.email}</small>,
+        minWidth:"240px",
+        cell: (row) => <p className="text-wrap" title={row.email}>{row.email}</p>,
       },
       {
         name: "VEHICULE",
@@ -160,7 +161,7 @@ class Livreurs extends React.Component {
         name: "CHIFRE D'AFFAIRE",
         selector: "revenue",
         sortable: true,
-        cell: (row) => <p className="text-bold-500 mb-0">{row.revenue}</p>,
+        cell: (row) => <p className="text-bold-500 mb-0">{row.revenue}€</p>,
       },
       {
         name: "",
@@ -186,8 +187,8 @@ class Livreurs extends React.Component {
         date: "09 fev 2021",
         status: "Actif",
         commandes_livrés: "120",
-        revenue: "25,000£",
-        balance: "220£",
+        revenue: "25,000",
+        balance: "220€",
         ratings: "good",
       },
       {
@@ -199,7 +200,7 @@ class Livreurs extends React.Component {
         date: "05 mars 2020",
         status: "Desactivé",
         commandes_livrés: "15",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "50,000",
         ratings: "good",
@@ -213,7 +214,7 @@ class Livreurs extends React.Component {
         date: "24 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "1231",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "78,000",
         ratings: "average",
@@ -227,7 +228,7 @@ class Livreurs extends React.Component {
         date: "01 janvier 2019",
         status: "Acitf",
         commandes_livrés: "56",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "10,000",
         ratings: "bad",
@@ -241,7 +242,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "Desactivé",
         commandes_livrés: "198",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "22,000",
         ratings: "average",
@@ -256,7 +257,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "49,000",
         ratings: "bad",
@@ -270,7 +271,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "Actif",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "56,000",
         ratings: "good",
@@ -284,7 +285,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "Desactivé",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "83,000",
         ratings: "bad",
@@ -298,7 +299,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "26,000",
         ratings: "good",
@@ -312,7 +313,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "60,000",
         ratings: "average",
@@ -327,7 +328,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "21,000",
         ratings: "good",
@@ -338,7 +339,7 @@ class Livreurs extends React.Component {
         email: "amcnirlin2@samsung.com",
         vihecule: "voiture",
         code_postale: "236542",
-        balance: "220£",
+        balance: "220€",
 
         date: "12 decembre 2020",
         status: "En attente de validation",
@@ -357,7 +358,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "12,000",
         ratings: "good",
@@ -372,7 +373,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "40,000",
         ratings: "average",
@@ -387,7 +388,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "90,000",
         ratings: "good",
@@ -402,7 +403,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "38,000",
         ratings: "good",
@@ -417,7 +418,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "18,000",
         ratings: "average",
@@ -432,7 +433,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "69,000",
       },
@@ -446,7 +447,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "35,000",
       },
@@ -460,7 +461,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
 
         revenue: "35,000",
         ratings: "good",
@@ -475,7 +476,7 @@ class Livreurs extends React.Component {
         date: "12 decembre 2020",
         status: "En attente de validation",
         commandes_livrés: "120",
-        balance: "220£",
+        balance: "220€",
         revenue: "72,000",
       },
     ],

@@ -9,15 +9,17 @@ import {
   InputGroup,
   Input,
   InputGroupAddon,
-  Label
+  Label,
+  Spinner,
 } from "reactstrap";
-import {PlusCircle,Send} from "react-feather"
+import { PlusCircle, Send } from "react-feather";
 import Flatpickr from "react-flatpickr";
 import NumericInput from "react-numeric-input";
 import { mobileStyle2 } from "../../forms/form-elements/number-input/InputStyles";
 import Switch from "react-switch";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
+import axios from "../../../axios";
 
 const CardDashed = (props) => {
   return (
@@ -40,6 +42,7 @@ const CardDashed = (props) => {
         >
           <p className="font-small-1 ml-0 mr-1">{props.label} </p>
         </Col>
+
         <Col
           xl="5"
           style={{
@@ -64,10 +67,14 @@ const CardDashed = (props) => {
               marginTop: "200px",
               fontSize: "6px",
             }}
+            onClick={props.get_file}
           >
             <PlusCircle className="align-middle ml-0 mr-25" size={14} />
             Voir le fichier
           </Button>
+          {props.file_loader ? (
+            <Spinner className="ml-2" color="info" size="lg" />
+          ) : null}
         </Col>
       </Row>
     </Card>
@@ -80,6 +87,7 @@ class Troisieme_section extends React.Component {
     nbrFois: 1,
     tousLes: 1,
     Date: new Date(),
+    file_ordonnance_loader: false,
   };
   myFormat = (num) => {
     return `${num} jours`;
@@ -87,13 +95,44 @@ class Troisieme_section extends React.Component {
   handleChange = (checked) => {
     this.setState({ checked });
   };
+
+  get_ordonnance_file = async (path) => {
+    try {
+      this.setState({
+        file_ordonnance_loader: true,
+      });
+      const response = await axios.get(
+        `/ordonnances/${path}/original?access_token=a`
+      );
+      const file = new Blob([response.data], {
+        type: this.props.ordonnance.ordonnance.mime_type,
+      });
+      const fileURL = URL.createObjectURL(file);
+      this.setState({
+        file_ordonnance_loader: false,
+      });
+      window.open(fileURL);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   render() {
+    console.log(this.props.ordonnance);
     return (
       <Card>
         <CardTitle className="ml-2">Documents Client</CardTitle>
         <Row>
           <Col className="ml-2">
-            <CardDashed bg_color="#3397da" label="Ordonnance"></CardDashed>
+            <CardDashed
+              file_loader={this.state.file_ordonnance_loader}
+              get_file={() => {
+                this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
+              }}
+              bg_color="#3397da"
+              label="Ordonnance"
+              ordonnance={this.props.ordonnance}
+            ></CardDashed>
             <div
               style={{ width: "90%" }}
               className="d-flex flex-sm-row flex-column align-items-center justify-content-between px-0 mb-75"
@@ -145,10 +184,18 @@ class Troisieme_section extends React.Component {
             </div>
           </Col>
           <Col>
-            <CardDashed bg_color="#1aac1a" label="Carte Vital"></CardDashed>
+            <CardDashed
+              bg_color="#1aac1a"
+              label="Carte Vital"
+              ordonnance={this.props.ordonnance}
+            ></CardDashed>
             <div style={{ width: "90%" }}>
               <InputGroup>
-                <Input size="sm" className="block-example border border-right-0 border-success" placeholder="Numero de sécurité social"/>
+                <Input
+                  size="sm"
+                  className="block-example border border-right-0 border-success"
+                  placeholder="Numero de sécurité social"
+                />
                 <InputGroupAddon addonType="append">
                   <Button.Ripple outline color="success" size="sm">
                     <Send size={20} />
@@ -158,18 +205,22 @@ class Troisieme_section extends React.Component {
             </div>
           </Col>
           <Col>
-            <CardDashed bg_color="#d01b47" label="Mutuelle"></CardDashed>
-            <div style={{width:"90%",marginTop:"-20px"}}>
+            <CardDashed
+              bg_color="#d01b47"
+              label="Mutuelle"
+              ordonnance={this.props.ordonnance}
+            ></CardDashed>
+            <div style={{ width: "90%", marginTop: "-20px" }}>
               <Label>Date d'expiration</Label>
-            <Flatpickr
-              id="Date"
-              className="form-control"
-              value={this.state.Date}
-              onChange={(date) => {
-                this.setState({ Date: date });
-              }}
-              options={{ minDate: "today" }}
-            />
+              <Flatpickr
+                id="Date"
+                className="form-control"
+                value={this.state.Date}
+                onChange={(date) => {
+                  this.setState({ Date: date });
+                }}
+                options={{ minDate: "today" }}
+              />
             </div>
           </Col>
         </Row>

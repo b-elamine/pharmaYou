@@ -31,6 +31,12 @@ class ComposeEmail extends React.Component {
     listeTournes: "",
     emailBody: "",
     checked: false,
+    options: [
+      { value: "attestation_mutuelle", label: "Attestation Mututelle" },
+      { value: "problem_ordonnance", label: "Problem ordonnance" },
+      { value: "problem_carte_vital", label: "Problem carte vital" },
+    ],
+    document_manquant_value: "",
   };
   onEditorStateChange = (editorState) => {
     this.setState({
@@ -60,38 +66,39 @@ class ComposeEmail extends React.Component {
   };
 
   async componentDidMount() {
-    await axios
-      .get("/api/apps/calendar/events")
-      .then((response) => {
-        const data = response.data
-          .filter((item) => item.start >= new Date())
-          .map((item) => {
-            return {
-              start: item.start,
-              end: item.end,
-              value: `${item.start.toISOString().split("T")[0]}  ${
-                item.start.toISOString().split("T")[1].split(":")[0]
-              }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
-                item.end.toISOString().split("T")[1].split(":")[0]
-              }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
-              label: `${item.start.toISOString().split("T")[0]}  ${
-                item.start.toISOString().split("T")[1].split(":")[0]
-              }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
-                item.end.toISOString().split("T")[1].split(":")[0]
-              }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
-            };
-          });
-        const sortedData = data.sort((a, b) => a.start - b.start);
-        this.setState({
-          tournées: sortedData,
-          selectedTournée: sortedData[0],
-        });
-      })
-      .catch((err) => console.log(err));
+    // await axios
+    //   .get("/api/apps/calendar/events")
+    //   .then((response) => {
+    //     const data = response.data
+    //       .filter((item) => item.start >= new Date())
+    //       .map((item) => {
+    //         return {
+    //           start: item.start,
+    //           end: item.end,
+    //           value: `${item.start.toISOString().split("T")[0]}  ${
+    //             item.start.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
+    //             item.end.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
+    //           label: `${item.start.toISOString().split("T")[0]}  ${
+    //             item.start.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
+    //             item.end.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
+    //         };
+    //       });
+    //     const sortedData = data.sort((a, b) => a.start - b.start);
+    //     this.setState({
+    //       tournées: sortedData,
+    //       selectedTournée: sortedData[0],
+    //     });
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   render() {
-    const { editorState } = this.state;
+
+    const { editorState, options } = this.state;
 
     return (
       <Card
@@ -124,12 +131,12 @@ class ComposeEmail extends React.Component {
                 // isDisabled={!this.state.checked}
                 className="React"
                 classNamePrefix="select"
-                // defaultValue={colourOptions[0]}
+                defaultValue={options[0]}
                 name="Role"
-                placeholder="Attestation mutuelle"
-                options={this.state.tournées}
+                placeholder="Attestation Mutuelle"
+                options={this.state.options}
                 onChange={(e) => {
-                  this.setState({ selectedTournée: e });
+                  this.setState({ document_manquant_value: e.value });
                 }}
               />
             </div>
