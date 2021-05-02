@@ -183,7 +183,22 @@ class LivreursMap extends React.Component {
                     iconLeft
                     bg_color="white"
                     iconBg="warning"
-                    icon={<Truck className="warning" size={24} />}
+                    icon={
+                      <div
+                      style={{
+                        marginRight:"auto",
+                        marginLeft:"auto",
+                        padding:"10px",
+                        backgroundColor:"#FBE3C2",
+                        borderRadius:"50%",
+                        height:"50px",
+                        width:"50px",
+                      }}
+                      >
+                      <Truck
+                      className="warning"
+                      size={30} />
+                      </div> }
                     stat={this.state.row.commandes_livrés}
                     statTitle="Commandes livres"
                   />
@@ -194,7 +209,22 @@ class LivreursMap extends React.Component {
                     iconLeft
                     bg_color="white"
                     iconBg="success"
-                    icon={<DollarSign className="success" size={24} />}
+                    icon={
+                      <div
+                      style={{
+                        marginRight:"auto",
+                        marginLeft:"auto",
+                        padding:"10px",
+                        backgroundColor:"#FBE3C2",
+                        borderRadius:"50%",
+                        height:"50px",
+                        width:"50px",
+                      }}
+                      >
+                      <DollarSign 
+                      className="success"
+                      size={30} />
+                      </div> }
                     stat={`${this.state.row.revenue}`}
                     statTitle="Chiffre d'affaire"
                   />
@@ -205,7 +235,22 @@ class LivreursMap extends React.Component {
                     iconLeft
                     bg_color="white"
                     iconBg="primary"
-                    icon={<Calendar className="primary" size={24} />}
+                    icon={
+                      <div
+                      style={{
+                        marginRight:"auto",
+                        marginLeft:"auto",
+                        padding:"10px",
+                        backgroundColor:"#FBE3C2",
+                        borderRadius:"50%",
+                        height:"50px",
+                        width:"50px",
+                      }}
+                      >
+                      <Calendar 
+                      className="primary"
+                      size={30} />
+                      </div> }
                     stat="90"
                     statTitle="Tournées effectués"
                   />
