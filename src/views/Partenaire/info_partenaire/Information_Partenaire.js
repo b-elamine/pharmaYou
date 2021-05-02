@@ -81,7 +81,23 @@ class Partenaire_Info extends React.Component {
                     iconLeft
                     bg_color="white"
                     iconBg="warning"
-                    icon={<TrendingUp className="warning" size={28} />}
+                    
+                    icon={
+                      <div
+                      style={{
+                        marginRight:"auto",
+                        marginLeft:"auto",
+                        padding:"10px",
+                        backgroundColor:"#EAE8FD",
+                        borderRadius:"50%",
+                        height:"50px",
+                        width:"50px",
+                      }}
+                      >
+                      <TrendingUp 
+                      className="warning"
+                      size={30} />
+                      </div> }
                     stat="54"
                     statTitle="Ordonnances envoyées"
                   />
@@ -92,7 +108,22 @@ class Partenaire_Info extends React.Component {
                     iconLeft
                     bg_color="white"
                     iconBg="success"
-                    icon={<DollarSign className="success" size={28} />}
+                    icon={
+                      <div
+                      style={{
+                        marginRight:"auto",
+                        marginLeft:"auto",
+                        padding:"10px",
+                        backgroundColor:"#DFF7EA",
+                        borderRadius:"50%",
+                        height:"50px",
+                        width:"50px",
+                      }}
+                      >
+                      <DollarSign 
+                      className="success"
+                      size={30} />
+                      </div> }
                     stat={this.state.row.montant} //{`${this.state.row.revenue}`}
                     statTitle="Chiffre d'affaire"
                   />
@@ -103,7 +134,22 @@ class Partenaire_Info extends React.Component {
                     iconLeft
                     bg_color="white"
                     iconBg="primary"
-                    icon={<User className="primary" size={28} />}
+                    icon={
+                      <div
+                      style={{
+                        marginRight:"auto",
+                        marginLeft:"auto",
+                        padding:"10px",
+                        backgroundColor:"#FFF1E3",
+                        borderRadius:"50%",
+                        height:"50px",
+                        width:"50px",
+                      }}
+                      >
+                      <User 
+                      className="primary"
+                      size={30} />
+                      </div> }
                     stat="90"
                     statTitle="Patients"
                   />
