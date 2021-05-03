@@ -35,20 +35,8 @@ class StatisticsCards extends React.Component {
           
           `}
         >
-          <div className="icon-section mt-0">
+          <div>
             <div
-              className={`avatar avatar-stats ${
-                this.props.iconBg
-                  ? `bg-rgba-${this.props.iconBg}`
-                  : "bg-rgba-primary"
-              }`}
-              style={{
-                alignItems: "center",
-                marginLeft: "20px",
-                height: "45px",
-                width: "50px",
-
-              }}
             >
               <div className="avatar-content ml-50">{this.props.icon}</div>
             </div>

@@ -3,7 +3,7 @@ import { Row, Col, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-import Icon from "./Icon.svg";
+import Icon from "./ICON.png";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -11,7 +11,9 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { history } from "../../../history";
 
 import {
+  CursorFill,
   EyeFill,
+  ThreeDotsVertical,
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
@@ -21,9 +23,12 @@ import {
   Check2,
   Exclamation,
   Hourglass,
+  DoorClosed,
+  FolderX,
+  FolderMinus,
 } from "react-bootstrap-icons";
 import Select from "react-select";
-//fake database
+// fake database
 
 const data = [
   {
@@ -230,13 +235,14 @@ const columns = [
     name: "#",
     selector: "id",
     sortable: true,
-    maxWidth: "100px",
+    minWidth: "10px",
     cell: (row) => (
       <p
         style={{ cursor: "pointer" }}
         className="text-bold-500 mb-0"
         onClick={() => {
           const url = `/ordonnance/${row.id}`;
+          console.log(row);
           history.push(url, row);
         }}
       >
@@ -247,9 +253,7 @@ const columns = [
   {
     name: "STATUT",
     selector: "status",
-    minWidth: "100px",
-    maxWidth: "150px",
-    center: true,
+    minWidth: "150px",
     cell: (row) =>
       row.status === "en_attente" ? (
         <Badge
@@ -318,7 +322,7 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    minWidth:"250px",
+    minWidth: "180px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-img ml-xl-0 ml-2">
@@ -345,11 +349,9 @@ const columns = [
   {
     name: "TYPE",
     selector: "type",
-    // center: true,
     sortable: true,
-    maxWidth: "130px",
     cell: (row) =>
-      row.type === "Particulier" ? (
+      row.type === "particulier" ? (
         <Badge
           // color="light-primary"
           style={{
@@ -370,27 +372,21 @@ const columns = [
   {
     name: "MONTANT",
     selector: "montant",
-    center: true,
     sortable: true,
-    maxWidth: "100px",
     cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
   },
   {
     name: "DATE",
     selector: "date",
+    minWidth: "180px",
     sortable: true,
-    minWidth: "200px",
     cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">
-        {row.date}
-        <br></br>À {row.heure}
-      </p>
+      <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
     ),
   },
   {
     name: "CODE POSTAL",
     selector: "code_postal",
-    maxWidth: "120px",
     sortable: true,
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
@@ -399,9 +395,8 @@ const columns = [
   {
     name: "ORIGINE",
     selector: "origine",
-    maxWidth: "190px",
-    // center: true,
     sortable: true,
+    minWidth: "150px",
     cell: (row) =>
       row.origine === "infirmier" ? (
         <Badge
@@ -440,8 +435,6 @@ const columns = [
   {
     name: "Actions",
     selector: "actions",
-    center: true,
-    maxWidth: "120px",
     cell: (row) => (
       <div className="data-list-action">
         <EyeFill
@@ -475,7 +468,7 @@ class Ordonnances_recue extends React.Component {
       assigner_tournée: 0,
       dossier_incomplet: 0,
     },
-    value: "",
+    value : ""
   };
 
   extract_distinct_values(data) {
@@ -597,10 +590,6 @@ class Ordonnances_recue extends React.Component {
               month: "long",
               day: "numeric",
             }),
-            heure: `${new Date(item.created_at).getHours()}H${new Date(
-              item.created_at
-            ).getMinutes()}`,
-
             code: item.code_postal_livraison,
             origine: "infirmier",
             email: item.email,
@@ -696,7 +685,24 @@ class Ordonnances_recue extends React.Component {
               second_color="#f5f3f3"
               bg_color="danger"
               iconBg="danger"
-              icon={<ExclamationTriangleFill className="danger" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"8px",
+                  backgroundColor:"#F7CFCF",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <ExclamationTriangleFill 
+                style={{
+                  color:"#EA5455"
+                }}
+                size={30} />
+                </div> }
               stat={nbr_ordo_non_traité}
               statTitle="Ordonnances Non traité"
             />
@@ -707,7 +713,24 @@ class Ordonnances_recue extends React.Component {
               first_color="#faeed8"
               second_color="#faeed8"
               iconBg="primary"
-              icon={<img src={Icon} width="35px" height="35px" alt="Icon" />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#FBE3C2",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <FolderMinus 
+                style={{
+                  color:"#EA5455"
+                }}
+                size={30} />
+                </div> }
               stat={nbr_ordo_incomplet}
               statTitle="Dossiers Incomplet"
             />
@@ -719,7 +742,24 @@ class Ordonnances_recue extends React.Component {
               second_color="#f5fcfd"
               bg_color="info"
               iconBg="info"
-              icon={<HourglassSplit className="info" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#BCF0F8",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <HourglassSplit 
+                style={{
+                  color:"#00CFE8"
+                }}
+                size={30} />
+                </div> }
               stat={nbr_ordo_approvis}
               statTitle="Ordonnances attente approvisionnement"
             />
@@ -731,22 +771,60 @@ class Ordonnances_recue extends React.Component {
               second_color="#feedcf"
               bg_color="primary"
               iconBg="primary"
-              icon={<Calendar3 className="primary" size={25} />}
-              stat={nbr_ordo_assigner_tournée}
-              statTitle="Ordonnances assignés a une tournée"
-            />
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"10px",
+                  backgroundColor:"#FFD8BB",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <Calendar3 
+                style={{
+                  color:"#FF9F43"
+                }}
+                size={30} />
+                </div> }
+                stat={nbr_ordo_assigner_tournée}
+                statTitle="Ordonnances assignés a une tournée"
+                
+              />
+             
+            
           </Col>
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
+           
               hideChart
               first_color="#d0cdd9"
               second_color="#f3f2f6"
               bg_color="warning"
               iconBg="warning"
-              icon={<Truck className="warning" size={25} />}
+              icon={
+              <div
+              style={{
+                marginRight:"auto",
+                marginLeft:"auto",
+                padding:"8px",
+                backgroundColor:"#CAC5E3",
+                borderRadius:"50%",
+                height:"50px",
+                width:"50px",
+              }}
+              >
+              <Truck 
+              className="warning"
+              size={35} />
+              </div> }
               stat={nbr_ordo_en_cours_livraison}
               statTitle="Ordonnances en Cours de livraison"
+              
             />
+            
           </Col>
           <Col xl="2" lg="4" sm="6">
             <StatisticsCard
@@ -755,7 +833,24 @@ class Ordonnances_recue extends React.Component {
               second_color="#ebf7ee"
               bg_color="success"
               iconBg="success"
-              icon={<Check2All className="success" size={25} />}
+              icon={
+                <div
+                style={{
+                  marginRight:"auto",
+                  marginLeft:"auto",
+                  padding:"8px",
+                  backgroundColor:"#BFECCF",
+                  borderRadius:"50%",
+                  height:"50px",
+                  width:"50px",
+                }}
+                >
+                <Check2All 
+                style={{
+                  color:"#28C76F"
+                }}
+                size={35} />
+                </div> }
               stat={nbr_ordo_livrée}
               statTitle="Ordonnances livré Aujourd'hui."
             />
