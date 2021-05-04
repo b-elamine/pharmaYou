@@ -987,7 +987,7 @@ class General_View extends React.Component {
                             Chiffre d'affaire ordonnance
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>3 984 £</b>
+                            <b>3 984 €</b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -1220,7 +1220,7 @@ class General_View extends React.Component {
                             Chiffre d'affaire professionnel
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>6 294 £</b>
+                            <b>6 294 €</b>
                           </h5>
                         </div>
                         <ReactApexChart

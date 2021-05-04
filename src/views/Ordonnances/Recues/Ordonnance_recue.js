@@ -28,6 +28,9 @@ import {
   FolderMinus,
 } from "react-bootstrap-icons";
 import Select from "react-select";
+import moment from "moment-timezone";
+import "moment/locale/fr";
+
 // fake database
 
 // const data = [
@@ -381,7 +384,7 @@ const columns = [
     minWidth: "180px",
     sortable: true,
     cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
+      <p className="text-bold-500 text-wrap mb-0">{row.date}</p>
     ),
   },
   {
@@ -584,11 +587,14 @@ class Ordonnances_recue extends React.Component {
             type: item.type === "ordo" ? "Particulier" : "Professionnel",
             image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
             montant: item.montant_total ? item.montant_total : 0,
-            date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+            // date: moment.tz(item.created_at * 1000, 'Europe/Paris').format('YYYYMMDD HH:mm'),
+            date: new Date(moment(1619844203 * 1000).tz('America/Thule')).toLocaleDateString("fr-FR", {
               weekday: "long",
               year: "numeric",
               month: "long",
               day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit"
             }),
             code: item.code_postal_livraison,
             origine: "infirmier",
@@ -633,7 +639,7 @@ class Ordonnances_recue extends React.Component {
   componentDidMount() {
     // fetching the data from the database and passing it to the state
     this.fetching_data();
-    console.log(this.state.data);
+    // console.log(moment(1619844203 * 1000).tz('Europe/Paris').format('YYYYMMDD HH:mm'))
 
     this.setState({
       columns: columns,
@@ -671,6 +677,7 @@ class Ordonnances_recue extends React.Component {
     );
     const nbr_ordo_incomplet = ordo_incomplet.length;
     const { value, filteredData } = this.state;
+    console.log(new Date().getTimezoneOffset())
     return (
       <React.Fragment>
         <Breadcrumbs
@@ -686,6 +693,7 @@ class Ordonnances_recue extends React.Component {
               bg_color="danger"
               iconBg="danger"
               icon={
+                
                 <div
                 style={{
                   marginRight:"auto",

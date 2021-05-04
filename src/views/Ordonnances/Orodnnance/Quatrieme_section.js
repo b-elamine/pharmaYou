@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import AutoComplete from "./autoCompleteComponent";
+import moment from "moment";
+
 
 import {
   Justify,
@@ -102,7 +104,7 @@ class QuatriemeSection extends React.Component {
         id: 1,
         produit: "",
         quantité: 1,
-        prix: 0,
+        prix: 0.,
       },
     ],
     total: 0,
@@ -231,6 +233,9 @@ class QuatriemeSection extends React.Component {
     let total = 0;
     const total_array = this.state.inputs.map((item) => {
       const prix = item.quantité * item.prix;
+      if (isNaN(prix)){
+        alert("Un Prix n'est pas valide")
+      }
       return !isNaN(prix) ? prix : 0;
     });
     total_array.forEach((item) => {
@@ -353,7 +358,7 @@ class QuatriemeSection extends React.Component {
                             id: new_item_id,
                             produit: "",
                             quantité: 1,
-                            prix: 0,
+                            prix: 0.5,
                           },
                         ];
                         return {
