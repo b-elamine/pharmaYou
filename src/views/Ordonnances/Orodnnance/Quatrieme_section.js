@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import AutoComplete from "./autoCompleteComponent";
+import moment from "moment";
+
 
 import {
   Justify,
@@ -101,7 +103,7 @@ class QuatriemeSection extends React.Component {
         id: 1,
         produit: "",
         quantité: 1,
-        prix: 0,
+        prix: 0.,
       },
     ],
     total: 0,
@@ -347,7 +349,7 @@ class QuatriemeSection extends React.Component {
                             id: new_item_id,
                             produit: "",
                             quantité: 1,
-                            prix: 0,
+                            prix: 0.5,
                           },
                         ];
                         return {
@@ -405,7 +407,6 @@ class QuatriemeSection extends React.Component {
                               bsSize="sm"
                               min="1"
                               max="250"
-                              step="1"
                               className={`w-50 mt-${
                                 item.id === 1 ? "4" : "1"
                               } text-center`}
