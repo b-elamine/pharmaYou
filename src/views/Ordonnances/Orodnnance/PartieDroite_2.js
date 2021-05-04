@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import { ListUl, RecordCircleFill } from "react-bootstrap-icons";
-import Image from "../../../assets/img/portrait/small/avatar-s-2.jpg";
+// import Image from "../../../assets/img/portrait/small/avatar-s-2.jpg";
 
 const CommandeBlock = (props) => {
   return (
