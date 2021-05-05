@@ -25,7 +25,6 @@ import {
   RecordCircleFill,
 } from "react-bootstrap-icons";
 import Select from "react-select";
-import { AlertCircle } from "react-feather";
 
 const CommentaireBlock = (props) => {
   return (
@@ -71,32 +70,32 @@ class QuatriemeSection extends React.Component {
   state = {
     suggestions: [
       {
-        title: "Doliprane",
+        title: "Doliprane"
       },
       {
-        title: "paracetamol",
+        title: "paracetamol"
       },
       {
-        title: "amoxiciline",
+        title: "amoxiciline"
       },
       {
-        title: "azytromicyle",
+        title: "azytromicyle"
       },
       {
-        title: "flazol",
+        title: "flazol"
       },
       {
-        title: "aspirine",
+        title: "aspirine"
       },
       {
-        title: "penisiline",
+        title: "penisiline"
       },
       {
-        title: "clamoxyle",
+        title: "clamoxyle"
       },
       {
-        title: "defirine",
-      },
+        title: "defirine"
+      }
     ],
     commentaires_notes: [],
     inputs: [
@@ -107,6 +106,7 @@ class QuatriemeSection extends React.Component {
         prix: 0.,
       },
     ],
+    
     total: 0,
     note_patient: "",
     commentaire_interne: "",
@@ -135,8 +135,6 @@ class QuatriemeSection extends React.Component {
     });
   }
   prix_input_change_handler(value, id) {
-    console.log(parseFloat("2.5"));
-
     this.setState((prev_state, props) => {
       const updated_produit_index = prev_state.inputs.findIndex((el) => {
         return el.id === id;
@@ -144,9 +142,7 @@ class QuatriemeSection extends React.Component {
       const updated_produit = {
         ...this.state.inputs[updated_produit_index],
       };
-      // updated_produit.prix = isNaN(parseFloat(value)) ? "" : parseFloat(value);
-      updated_produit.prix = value;
-
+      updated_produit.prix = isNaN(parseInt(value)) ? "" : parseInt(value);
       const inputs = [...this.state.inputs];
       inputs[updated_produit_index] = updated_produit;
       return {
@@ -232,11 +228,7 @@ class QuatriemeSection extends React.Component {
   render() {
     let total = 0;
     const total_array = this.state.inputs.map((item) => {
-      const prix = item.quantité * item.prix;
-      if (isNaN(prix)){
-        alert("Un Prix n'est pas valide")
-      }
-      return !isNaN(prix) ? prix : 0;
+      return item.quantité * item.prix;
     });
     total_array.forEach((item) => {
       total = total + item;
@@ -410,14 +402,12 @@ class QuatriemeSection extends React.Component {
                               </Label>
                             ) : null}
                             <Input
-                              type="text"
+                              type="number"
                               id="prix_input"
                               value={item.prix}
                               bsSize="sm"
-                              // pattern="^\d+(?:\.\d{1,2})?$"
-                              // min="1"
-                              // max="250"
-                              // step="any"
+                              min="1"
+                              max="250"
                               className={`w-50 mt-${
                                 item.id === 1 ? "4" : "1"
                               } text-center`}

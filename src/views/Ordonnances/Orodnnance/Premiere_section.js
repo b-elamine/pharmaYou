@@ -19,7 +19,7 @@ import {
   Truck,
   ArrowLeftCircleFill,
 } from "react-bootstrap-icons";
-import {history} from "../../../history";
+import { history } from "../../../history";
 
 class FirstSection extends React.Component {
   state = {
@@ -31,12 +31,23 @@ class FirstSection extends React.Component {
     // });
   }
   render() {
-    return ( 
+    return (
       <Row>
         <Col xl="8">
-        <a href style={{top:"-50px",left:"10px",position:"absolute",zIndex:"100"}} onClick={()=>{history.goBack()}}>
-        <ArrowLeftCircleFill size="40" className="primary"/>
-        </a>
+          <a
+            href
+            style={{
+              top: "-50px",
+              left: "10px",
+              position: "absolute",
+              zIndex: "100",
+            }}
+            onClick={() => {
+              history.goBack();
+            }}
+          >
+            <ArrowLeftCircleFill size="40" className="primary" />
+          </a>
           <CardBody className="d-flex pb-0">
             <img src={Logo} alt="PharmaYouLogo" height="25px" width="150px" />
 
@@ -211,7 +222,7 @@ class FirstSection extends React.Component {
                 style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
                 pill
               >
-                Infirmier MEDADOM
+                MEDADOM
               </Badge>
             ) : this.props.ordonnance.origine === "web" ? (
               <Badge
@@ -219,25 +230,31 @@ class FirstSection extends React.Component {
                 style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
                 pill
               >
-                Infirmier WEB
+                WEB
               </Badge>
-            ) : this.props.ordonnance.origine === "appli" ? (
+            ) : this.props.ordonnance.origine === "app" ? (
               <Badge
                 color="light-success text-wrap text-bold-500 mb-0"
                 style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
                 pill
               >
-                Infirmier Appli
+                Appli
               </Badge>
-            ) : null}
+            ) : (
+              <Badge
+                color="light-success text-wrap text-bold-500 mb-0"
+                style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+                pill
+              >
+                Pro
+              </Badge>
+            )}
           </CardBody>
 
           <CardBody style={{ width: "250px" }} className="font-medium-1">
             <strong className="font-medium-2">Officine de traitement :</strong>
             <br></br>
-            {this.props.ordonnance.adresse_livraison}
-            {this.props.ordonnance.code},{" "}
-            {this.props.ordonnance.ville_livraison}
+            <p>32-36 rue de Vaucouleurs <br></br> 75011 Paris</p>
           </CardBody>
         </Col>
 
@@ -269,11 +286,11 @@ class FirstSection extends React.Component {
             >
               <Label for="readonlyInput">Date Commande</Label>
               <Input
-                className="font-medium-1"
+                className="font-small-3"
                 type="text"
                 id="readonlyInput"
                 readOnly
-                value={new Date(1618964469).toISOString().split("T")[0]}
+                value={this.props.ordonnance.date }
                 bsSize="sm"
               />
             </FormGroup>
@@ -284,7 +301,7 @@ class FirstSection extends React.Component {
                 type="text"
                 id="readonlyInput"
                 readOnly
-                value="App mobile"
+                value={this.props.ordonnance.origine}
                 bsSize="sm"
               />
             </FormGroup>

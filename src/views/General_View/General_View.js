@@ -426,18 +426,9 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    minWidth: "250px",
+    minWidth: "210px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-        <div className="user-img ml-xl-0 ml-2">
-          <img
-            className="img-fluid rounded-circle"
-            height="36"
-            width="36"
-            src={row.image}
-            alt={row.name}
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
@@ -481,7 +472,12 @@ const columns = [
     center: true,
     sortable: true,
     maxWidth: "100px",
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
+    cell: (row) =>
+      row.montant !== null ? (
+        <p className="text-bold-500 mb-0">{row.montant} €</p>
+      ) : (
+        <p className="text-bold-500 mb-0">En calcul</p>
+      ),
   },
   {
     name: "DATE",
@@ -489,11 +485,7 @@ const columns = [
     sortable: true,
     minWidth: "200px",
     cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">
-        {row.date}
-        <br></br>
-        À {row.heure}
-        </p>
+      <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
     ),
   },
   {
@@ -526,28 +518,36 @@ const columns = [
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier MEDADOM
-        </Badge>  
+          MEDADOM
+        </Badge>
       ) : row.origine === "web" ? (
         <Badge
           color="light-success text-wrap text-bold-500 mb-0"
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier WEB
+          WEB
         </Badge>
-      ) : row.origine === "appli" ? (
+      ) : row.origine === "app" ? (
         <Badge
           color="light-success text-wrap text-bold-500 mb-0"
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier Appli
+          Appli
         </Badge>
-      ) : null,
+      ) : (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Pro
+        </Badge>
+      ),
   },
   {
-    name: "Actions",
+    name: "ACTIONS",
     selector: "actions",
     center: true,
     maxWidth: "120px",
@@ -567,7 +567,7 @@ const columns = [
 class General_View extends React.Component {
   state = {
     errorAlert: false,
-    errorText: "Vérifier votre cnnexion",
+    errorText: "Vérifiez votre connexion",
     dataFetched: false,
     pro_chart_bar: {
       series: [
@@ -839,20 +839,20 @@ class General_View extends React.Component {
             name: item.nom_patient + " " + item.prenom_patient,
             // name: 'Akram Ouardas',
             type: item.type === "ordo" ? "Particulier" : "Professionnel",
-            image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-            montant: item.montant_total ? item.montant_total : 0,
-            date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+            montant: item.montant_total,
+            date: new Date(item.updated_at * 1000).toLocaleDateString("fr-FR", {
               weekday: "long",
               year: "numeric",
               month: "long",
               day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
             }),
-            heure : `${new Date(item.created_at).getHours()}H${new Date(item.created_at).getMinutes()}`,
             code: item.code_postal_livraison,
-            origine: "infirmier",
+            origine: item.origine,
             email: item.email,
             ville: item.ville_livraison,
-            paiment: "reglé",
+            paiment: item.status_paiement,
             patient: {
               nom: item.nom_patient,
               prenom: item.prenom_patient,
@@ -865,7 +865,7 @@ class General_View extends React.Component {
                 : "Pas de note pour l'instant.",
             },
             CMU: true,
-            mutuelle: false,
+            mutuelle: item.mutuelle_ok,
           };
         });
         this.setState({
@@ -893,8 +893,8 @@ class General_View extends React.Component {
     } catch (err) {
       const error_message =
         err.message === "Network Error"
-          ? "Une erreur est produite lors de la récupération des données."
-          : "Vérifier votre connexion !";
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
       this.handleAlert("errorAlert", true, error_message);
     }
   };
@@ -984,7 +984,7 @@ class General_View extends React.Component {
                               fontSize: "14px",
                             }}
                           >
-                            Chiffre d'affaire ordonnance
+                            Chiffre d'affaires ordonnances
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
                             <b>3 984 €</b>
@@ -1011,7 +1011,15 @@ class General_View extends React.Component {
                 padding: "1rem",
               }}
             >
-              Statistiques particuliers
+              <h5
+                style={{
+                  marginTop: "0.5rem",
+                  marginBottom: "1rem",
+                  fontSize: "14px",
+                }}
+              >
+                Statistiques particuliers
+              </h5>
               <div
                 style={{
                   marginTop: "2rem",

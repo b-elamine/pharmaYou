@@ -79,11 +79,11 @@ class SecondSection extends React.Component {
               </div>
               <div>
                 <p>
-                  Montant : <strong>En calcul</strong>
+                  Montant : {this.props.ordonnance.montant ? this.props.ordonnance.montant + "€" : "En calcul"}
                 </p>
                 <p>CMU : {this.props.ordonnance.CMU ? "Oui" : "Non"} </p>
                 <p>
-                  Mutuelle: {this.props.ordonnance.muttuelle ? "Oui" : "Non"}{" "}
+                  Mutuelle: {this.props.ordonnance.mutuelle ? "Oui" : "Non"}{" "}
                 </p>
               </div>
             </CardBody>

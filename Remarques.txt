@@ -1,32 +1,44 @@
-vu d'ensemble 
-	regler les icon rodhoum des rond (Done)
-	f le tableau :
-		dir ge3 les commandes (ordo,et pro) (Done)
-		f les actions nkhalou ghir voir (Done)
-		mettre un lien (done)
-		regler la recherche dans le tableau 
-		update chaque minut (done)
-
-Odonnance 
-	regler l'url  (DONE) 
-	regler le redius dans les icons de la card statisqtique  (DONE)  
-	agrandir les info de l'ordonnance (DONE) 
-	il faut regler les inputs dans le prix (DONE)
-	Regler la recherche(DONE)
-
-
-Client Particulier 
-	il faut regles le tableau (DONE)
-	Changer l'url (DONE)
-	regler la recherche (DONE)
-
-Ordonnance recue 
-	il faut ajouter des select pour faire la selection comma dans la page partenaire  (DONE)
-	les couleurs dans les card statistique (DONE)
-
-Livreur 
-	modifier le calendrier pou selectionné que les jours dans le futur,(done)
-	regler flatpicker (done),
-	rendre les dates en francais (done)
-
-
+views/Ordonnances/Orodnnance/Quatrieme_section.js:101-112 : prendre les vraies données
+views/General_View/General_View.js:1040 : écrire "ordonnances livrées"
+views/General_View/General_View.js:1064 : écrire "clients particuliers"
+views/General_View/General_View.js:1087 : écrire "ordonnances en attente"
+views/General_View/General_View.js:1110 : écrire "ordonnances en livraison"
+views/General_View/General_View.js:1129 : ajouter un symbole €
+views/General_View/General_View.js:1136 : écrire "en moyenne par commande"
+views/General_View/General_View.js:1248 : mettre en h5
+views/General_View/General_View.js:1275,1299,1345 : écrire "commandes" en minuscules au lieu de "Commandes"
+views/General_View/General_View.js:1322 : écrire "clients" au lieu de "client"
+views/General_View/General_View.js:1364 : ajouter un symbole €
+views/General_View/General_View.js:1370 : écrire "en moyenne par commande"
+views/Ordonnances/Recues/Ordonnance_recue.js:633 : écrire "Une erreur s'est produite lors de la récupération des données."
+views/Ordonnances/Recues/Ordonnance_recue.js:634 : écrire "Vérifiez votre connexion !"
+views/Ordonnances/Recues/Ordonnance_recue.js:684,685 : écrire "Ordonnances reçues" dans les 2 lignes
+views/Ordonnances/Recues/Ordonnance_recue.js:715 : écrire "Ordonnances non traitées"
+views/Ordonnances/Recues/Ordonnance_recue.js:743 : écrire "Dossiers incomplets"
+views/Ordonnances/Recues/Ordonnance_recue.js:772 : écrire "Ordonnances en attente d'approvisionnement"
+views/Ordonnances/Recues/Ordonnance_recue.js:801 : écrire "Ordonnances assignées à une tournée"
+views/Ordonnances/Recues/Ordonnance_recue.js:832 : écrire "Ordonnances en cours de livraison"
+views/Ordonnances/Recues/Ordonnance_recue.js:863 : écrire "Ordonnances livrées aujourd'hui" (sans point)
+views/Ordonnances/Recues/Ordonnance_recue.js:872 : écrire "Statut"
+views/Ordonnances/Orodnnance/Ordonnance.js:106 : pas de photo de profil
+views/Ordonnances/Orodnnance/Premiere_section.js:115 : écrire "tournée assignée"
+views/Ordonnances/Orodnnance/Premiere_section.js:270 : écrire "Date de la commande"
+views/Ordonnances/Orodnnance/Deuxieme_section.js:39 : sur cette ligne, il faut afficher seulement l'adresse sans code postal ni ville
+views/Ordonnances/Orodnnance/Deuxieme_section.js:43 : sur cette ligne, il faut afficher {code_postal} {ville}
+views/Ordonnances/Orodnnance/Deuxieme_section.js:62 : écrire "Le client veut être rappelé" sans tout mettre en majuscules
+views/Ordonnances/Orodnnance/Deuxieme_section.js:78 : écrire "Facturation" en gras taille 17px
+views/Ordonnances/Orodnnance/Troisieme_section.js:124 : écrire "Documents du client"
+views/Ordonnances/Orodnnance/Troisieme_section.js:125 : cet élément : mettre margin:0
+views/Ordonnances/Orodnnance/Troisieme_section.js:140 : écrire "Ordonnance renouvelable ?"
+views/Ordonnances/Orodnnance/Troisieme_section.js:197 : écrire "Numéro de sécurité sociale"
+views/Ordonnances/Orodnnance/Quatrieme_section.js:275 : Retirer "Pharmacien : Nom du pharmacien"
+views/Ordonnances/Orodnnance/Quatrieme_section.js:293 : écrire "Informations internes"
+views/Ordonnances/Orodnnance/Quatrieme_section.js:499 : retirer la photo de profil
+views/Ordonnances/Orodnnance/PartieDroite_1.js:25 : écrire "Ajouter" au lieu de "Rajouter"
+views/Ordonnances/Orodnnance/PartieDroite_1.js:71 : écrire "Annuler" avec une majuscule au début ; ce bouton doit avoir les mêmes margins que les 3 autres boutons
+views/Ordonnances/Orodnnance/PartieDroite_2.js:55 : augmenter le margin de ce texte
+ 
+ 
+--- A faire plus tard (liste non exhaustive) ---
+Statistiques : prendre en compte les vraies données
+Notifications

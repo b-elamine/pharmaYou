@@ -17,43 +17,43 @@ import SideBarDocumentManquant from "./SideBarDocumentManquant";
 
 import axios from "../../../axios";
 
-const commentaires_notes = [
-  {
-    id: 1,
-    type: "Commentaire interne",
-    commentaire: "Bon client",
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-    nom: "Zongo meryouli",
-  },
-  {
-    id: 2,
-    type: "Commentaire interne",
-    commentaire: "Un client deyer ki tfou",
-    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-    nom: "Benssnan zakzouk",
-  },
-  {
-    id: 3,
-    type: "Note envoyé au client",
-    commentaire: "4 dose de brygabaline",
-    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
-    nom: "Nadjet Boudouara",
-  },
-  {
-    id: 4,
-    type: "Note envoyé au client",
-    commentaire: "4 dose de brygabaline",
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-    nom: "Nadjet Boudouara",
-  },
-  {
-    id: 5,
-    type: "Commentaire interne",
-    commentaire: "Client ki soukour",
-    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
-    nom: "Djaluidji Boufon",
-  },
-];
+// const commentaires_notes = [
+//   {
+//     id: 1,
+//     type: "Commentaire interne",
+//     commentaire: "Bon client",
+//     image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+//     nom: "Zongo meryouli",
+//   },
+//   {
+//     id: 2,
+//     type: "Commentaire interne",
+//     commentaire: "Un client deyer ki tfou",
+//     image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
+//     nom: "Benssnan zakzouk",
+//   },
+//   {
+//     id: 3,
+//     type: "Note envoyé au client",
+//     commentaire: "4 dose de brygabaline",
+//     image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
+//     nom: "Nadjet Boudouara",
+//   },
+//   {
+//     id: 4,
+//     type: "Note envoyé au client",
+//     commentaire: "4 dose de brygabaline",
+//     image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+//     nom: "Nadjet Boudouara",
+//   },
+//   {
+//     id: 5,
+//     type: "Commentaire interne",
+//     commentaire: "Client ki soukour",
+//     image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
+//     nom: "Djaluidji Boufon",
+//   },
+// ];
 
 class Ordonnance extends Component {
   state = {
@@ -82,6 +82,7 @@ class Ordonnance extends Component {
         `/commandes/${id_commande}?access_token=a`
       );
       const commande = response.data;
+      console.log(response.data)
       const custom_commande = {
         ...commande,
         id: commande.commande_id,
@@ -99,23 +100,22 @@ class Ordonnance extends Component {
             : commande.status_commande === 3
             ? "livrée"
             : null,
-        // status :"incomplet",
         name: commande.nom_patient + " " + commande.prenom_patient,
-        // name: 'Akram Ouardas',
         type: commande.type === "ordo" ? "Particulier" : "Professionnel",
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
         montant: commande.montant_total,
-        date: new Date(commande.created_at).toLocaleDateString("fr-FR", {
+        date: new Date(commande.created_at * 1000).toLocaleDateString("fr-FR", {
           weekday: "long",
           year: "numeric",
           month: "long",
           day: "numeric",
+          hour:"2-digit",
+          minute:"2-digit"
         }),
         code: commande.code_postal_livraison,
-        origine: "infirmier",
+        origine: commande.origine,
         email: commande.email,
         ville: commande.ville_livraison,
-        paiment: "reglé",
+        paiment: commande.status_paiement,
         patient: {
           nom: commande.nom_patient,
           prenom: commande.prenom_patient,
@@ -129,7 +129,8 @@ class Ordonnance extends Component {
         },
         historique: commande.historique,
         CMU: commande.cmu,
-        mutuelle: commande.mutuelle ? commande.mutuelle : false,
+        mutuelle: commande.mutuelle_ok,
+        vital: commande.vitale_ok
       };
       this.setState({
         ordonnance: custom_commande,
@@ -208,7 +209,7 @@ class Ordonnance extends Component {
             <hr />
             <ForthSection
               ordonnance={this.state.ordonnance}
-              commentaires_notes={commentaires_notes}
+              commentaires_notes={this.state.ordonnance.patient.note}
             />
           </Card>
         </Col>

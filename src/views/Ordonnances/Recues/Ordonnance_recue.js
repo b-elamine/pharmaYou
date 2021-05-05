@@ -245,7 +245,6 @@ const columns = [
         className="text-bold-500 mb-0"
         onClick={() => {
           const url = `/ordonnance/${row.id}`;
-          console.log(row);
           history.push(url, row);
         }}
       >
@@ -376,7 +375,7 @@ const columns = [
     name: "MONTANT",
     selector: "montant",
     sortable: true,
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
+    cell: (row) => row.montant !== null ? <p className="text-bold-500 mb-0">{row.montant} €</p>:<p className="text-bold-500 mb-0">En calcul</p>,
   },
   {
     name: "DATE",
@@ -415,7 +414,7 @@ const columns = [
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier MEDADOM
+          MEDADOM
         </Badge>
       ) : row.origine === "web" ? (
         <Badge
@@ -423,17 +422,23 @@ const columns = [
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier WEB
+          WEB
         </Badge>
-      ) : row.origine === "appli" ? (
+      ) : row.origine === "app" ? (
         <Badge
           color="light-success text-wrap text-bold-500 mb-0"
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier Appli
+          Appli
         </Badge>
-      ) : null,
+      ) : <Badge
+      color="light-success text-wrap text-bold-500 mb-0"
+      style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+      pill
+    >
+      Pro
+    </Badge>,
   },
   {
     name: "Actions",
@@ -563,6 +568,8 @@ class Ordonnances_recue extends React.Component {
         const commandes_ordo = commandes.data.filter(
           (item) => item.type === "ordo"
         );
+        console.log(commandes_ordo)
+
         const custom_commandes = commandes_ordo.map((item) => {
           return {
             ...item,
@@ -581,14 +588,11 @@ class Ordonnances_recue extends React.Component {
                 : item.status_commande === 3
                 ? "livrée"
                 : null,
-            // status :"incomplet",
             name: item.nom_patient + " " + item.prenom_patient,
-            // name: 'Akram Ouardas',
             type: item.type === "ordo" ? "Particulier" : "Professionnel",
             image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-            montant: item.montant_total ? item.montant_total : 0,
-            // date: moment.tz(item.created_at * 1000, 'Europe/Paris').format('YYYYMMDD HH:mm'),
-            date: new Date(moment(1619844203 * 1000).tz('America/Thule')).toLocaleDateString("fr-FR", {
+            montant: item.montant_total,
+            date: new Date(moment(item.updated_at * 1000).tz('Europe/Paris')).toLocaleDateString("fr-FR", {
               weekday: "long",
               year: "numeric",
               month: "long",
@@ -597,10 +601,10 @@ class Ordonnances_recue extends React.Component {
               minute: "2-digit"
             }),
             code: item.code_postal_livraison,
-            origine: "infirmier",
+            origine: item.origine,
             email: item.email,
             ville: item.ville_livraison,
-            paiment: "reglé",
+            paiment: item.status_paiement,
             patient: {
               nom: item.nom_patient,
               prenom: item.prenom_patient,
@@ -613,7 +617,7 @@ class Ordonnances_recue extends React.Component {
                 : "Pas de note pour l'instant.",
             },
             CMU: true,
-            mutuelle: false,
+            mutuelle: item.vitale_ok,
           };
         });
         this.setState({
@@ -639,8 +643,6 @@ class Ordonnances_recue extends React.Component {
   componentDidMount() {
     // fetching the data from the database and passing it to the state
     this.fetching_data();
-    // console.log(moment(1619844203 * 1000).tz('Europe/Paris').format('YYYYMMDD HH:mm'))
-
     this.setState({
       columns: columns,
       // data: data,
@@ -677,7 +679,6 @@ class Ordonnances_recue extends React.Component {
     );
     const nbr_ordo_incomplet = ordo_incomplet.length;
     const { value, filteredData } = this.state;
-    console.log(new Date().getTimezoneOffset())
     return (
       <React.Fragment>
         <Breadcrumbs
