@@ -15,7 +15,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import AutoComplete from "./autoCompleteComponent";
 import moment from "moment";
 
-
 import {
   Justify,
   Calculator,
@@ -25,7 +24,6 @@ import {
   RecordCircleFill,
 } from "react-bootstrap-icons";
 import Select from "react-select";
-import { AlertCircle } from "react-feather";
 
 const CommentaireBlock = (props) => {
   return (
@@ -48,15 +46,6 @@ const CommentaireBlock = (props) => {
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        <div className="user-img ml-xl-0 ml-3">
-          <img
-            className="img-fluid rounded-circle"
-            height="32"
-            width="32"
-            src={props.image_path}
-            alt="icon"
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
@@ -67,7 +56,7 @@ const CommentaireBlock = (props) => {
   );
 };
 
-class QuatriemeSection extends React.Component {
+class   QuatriemeSection extends React.Component {
   state = {
     suggestions: [
       {
@@ -104,17 +93,22 @@ class QuatriemeSection extends React.Component {
         id: 1,
         produit: "",
         quantité: 1,
-        prix: 0.,
+        prix: 0,
       },
     ],
+
     total: 0,
     note_patient: "",
     commentaire_interne: "",
   };
-  componentDidMount() {
-    this.setState({
-      commentaires_notes: this.props.commentaires_notes,
-    });
+  componentDidUpdate() {
+    // if (this.props.commentaires_notes && this.state.commentaires_notes.length===0){
+    //   this.setState({
+    //     commentaires_notes: this.props.commentaires_notes,
+    //   });
+    // }
+
+    console.log(this.props.commentaires_notes)
   }
 
   quantité_input_change_handler(value, id) {
@@ -135,16 +129,14 @@ class QuatriemeSection extends React.Component {
     });
   }
   prix_input_change_handler(value, id) {
-this.setState((prev_state, props) => {
+    this.setState((prev_state, props) => {
       const updated_produit_index = prev_state.inputs.findIndex((el) => {
         return el.id === id;
       });
       const updated_produit = {
         ...this.state.inputs[updated_produit_index],
       };
-      // updated_produit.prix = isNaN(parseFloat(value)) ? "" : parseFloat(value);
-      updated_produit.prix = value;
-
+      updated_produit.prix = isNaN(parseInt(value)) ? "" : parseInt(value);
       const inputs = [...this.state.inputs];
       inputs[updated_produit_index] = updated_produit;
       return {
@@ -185,13 +177,18 @@ this.setState((prev_state, props) => {
   }
 
   add_commentaire_handler() {
+    console.log(this.state);
     if (this.state.commentaire_interne.length === 0) {
       return alert("Il faut entrer un commentaire");
     }
     const new_commentaire_id =
-      this.state.commentaires_notes.slice(-1)[0].id + 1;
-    const new_commentaire_image = this.state.commentaires_notes.slice(-1)[0]
-      .image;
+      this.state.commentaires_notes.length === 0
+        ? 1
+        : this.state.commentaires_notes.slice(-1)[0].id + 1;
+    const new_commentaire_image =
+      this.state.commentaires_notes.length === 0
+        ? ""
+        : this.state.commentaires_notes.slice(-1)[0].image;
     const new_commentaire_interne = {
       id: new_commentaire_id,
       commentaire: this.state.commentaire_interne,
@@ -200,6 +197,7 @@ this.setState((prev_state, props) => {
       nom: "utilisateur connecter",
     };
     const new_comment_array = this.state.commentaires_notes;
+    console.log(this.state.commentaires_notes);
     new_comment_array.push(new_commentaire_interne);
     this.setState({
       commentaires_notes: new_comment_array,
@@ -228,13 +226,11 @@ this.setState((prev_state, props) => {
   }
 
   render() {
+    console.log(this.state.commentaire_interne)
+    
     let total = 0;
     const total_array = this.state.inputs.map((item) => {
-      const prix = item.quantité * item.prix;
-      if (isNaN(prix)){
-        alert("Un Prix n'est pas valide")
-      }
-      return !isNaN(prix) ? prix : 0;
+      return item.quantité * item.prix;
     });
     total_array.forEach((item) => {
       total = total + item;
@@ -269,11 +265,6 @@ this.setState((prev_state, props) => {
           />
           <Row>
             <Col>
-              <p className="text-dark ml-2 mt-2">
-                Pharmacien : Nom du pharmacien
-              </p>
-            </Col>
-            <Col>
               <Button
                 className="mt-2 bg-success text-white float-right mr-2 p-75  mb-2"
                 onClick={() => {
@@ -288,7 +279,7 @@ this.setState((prev_state, props) => {
 
         <Badge className="bg-rgba-primary mt-2">
           <CardTitle className="font-medium-3 light-secondary text-left ml-2 mt-1">
-            Informations interne
+          Informations internes
           </CardTitle>
           <CardTitle className="font-medium-1 light-secondary text-left ml-2 mt-1 font-weight-bold">
             <Calculator size={17} />
@@ -408,14 +399,12 @@ this.setState((prev_state, props) => {
                               </Label>
                             ) : null}
                             <Input
-                              type="text"
+                              type="number"
                               id="prix_input"
                               value={item.prix}
                               bsSize="sm"
-                              // pattern="^\d+(?:\.\d{1,2})?$"
-                              // min="1"
-                              // max="250"
-                              // step="any"
+                              min="1"
+                              max="250"
                               className={`w-50 mt-${
                                 item.id === 1 ? "4" : "1"
                               } text-center`}
@@ -494,7 +483,6 @@ this.setState((prev_state, props) => {
                         icon_color={icon_color}
                         block_type={comment.type}
                         block_note={comment.commentaire}
-                        image_path={comment.image}
                         name={comment.nom}
                       />
                     );
