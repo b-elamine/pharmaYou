@@ -135,9 +135,7 @@ class QuatriemeSection extends React.Component {
     });
   }
   prix_input_change_handler(value, id) {
-    console.log(parseFloat("2.5"));
-
-    this.setState((prev_state, props) => {
+this.setState((prev_state, props) => {
       const updated_produit_index = prev_state.inputs.findIndex((el) => {
         return el.id === id;
       });
@@ -358,7 +356,7 @@ class QuatriemeSection extends React.Component {
                             id: new_item_id,
                             produit: "",
                             quantité: 1,
-                            prix: 0.5,
+                            prix: 0,
                           },
                         ];
                         return {
