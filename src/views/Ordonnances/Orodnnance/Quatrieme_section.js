@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import AutoComplete from "./autoCompleteComponent";
-import moment from "moment";
+import { readRemoteFile } from "react-papaparse";
 
 import {
   Justify,
@@ -56,37 +56,11 @@ const CommentaireBlock = (props) => {
   );
 };
 
-class   QuatriemeSection extends React.Component {
+class QuatriemeSection extends React.Component {
   state = {
-    suggestions: [
-      {
-        title: "Doliprane",
-      },
-      {
-        title: "paracetamol",
-      },
-      {
-        title: "amoxiciline",
-      },
-      {
-        title: "azytromicyle",
-      },
-      {
-        title: "flazol",
-      },
-      {
-        title: "aspirine",
-      },
-      {
-        title: "penisiline",
-      },
-      {
-        title: "clamoxyle",
-      },
-      {
-        title: "defirine",
-      },
-    ],
+    suggestions: [],
+    medNames: [],
+    medPrises: [],
     commentaires_notes: [],
     inputs: [
       {
@@ -101,14 +75,30 @@ class   QuatriemeSection extends React.Component {
     note_patient: "",
     commentaire_interne: "",
   };
-  componentDidUpdate() {
-    // if (this.props.commentaires_notes && this.state.commentaires_notes.length===0){
-    //   this.setState({
-    //     commentaires_notes: this.props.commentaires_notes,
-    //   });
-    // }
+  // componentDidUpdate() {
+  //   // if (this.props.commentaires_notes && this.state.commentaires_notes.length===0){
+  //   //   this.setState({
+  //   //     commentaires_notes: this.props.commentaires_notes,
+  //   //   });
+  //   // }
 
-    console.log(this.props.commentaires_notes)
+  //   console.log(this.props.commentaires_notes)
+  // }
+
+  componentDidMount() {
+    readRemoteFile(require("../../../medicamentsPrix/medicamentsPrix.txt"), {
+      complete: (results) => {
+        let medicaments = results.data.filter((item) => item[0] !== "");
+        let suggestions = [];
+        for (let index = 0; index < medicaments.length; index++) {
+          suggestions[index] = {
+            title: medicaments[index][0],
+            price: medicaments[index][1],
+          };
+        }
+        this.setState({ suggestions });
+      },
+    });
   }
 
   quantité_input_change_handler(value, id) {
@@ -136,7 +126,7 @@ class   QuatriemeSection extends React.Component {
       const updated_produit = {
         ...this.state.inputs[updated_produit_index],
       };
-      updated_produit.prix = isNaN(parseInt(value)) ? "" : parseInt(value);
+      updated_produit.prix = isNaN(parseFloat(value)) ? "" : parseFloat(value);
       const inputs = [...this.state.inputs];
       inputs[updated_produit_index] = updated_produit;
       return {
@@ -152,6 +142,17 @@ class   QuatriemeSection extends React.Component {
       const updated_produit = {
         ...this.state.inputs[updated_produit_index],
       };
+      let indexfound = this.state.suggestions.findIndex(
+        (item) => item.title === value
+      );
+      if (indexfound !== -1) {
+        updated_produit.prix = isNaN(
+          parseFloat(this.state.suggestions[indexfound].price)
+        )
+          ? 0
+          : parseFloat(this.state.suggestions[indexfound].price);
+          indexfound = -1
+      }
       updated_produit.produit = value;
       const inputs = [...this.state.inputs];
       inputs[updated_produit_index] = updated_produit;
@@ -177,7 +178,6 @@ class   QuatriemeSection extends React.Component {
   }
 
   add_commentaire_handler() {
-    console.log(this.state);
     if (this.state.commentaire_interne.length === 0) {
       return alert("Il faut entrer un commentaire");
     }
@@ -197,7 +197,6 @@ class   QuatriemeSection extends React.Component {
       nom: "utilisateur connecter",
     };
     const new_comment_array = this.state.commentaires_notes;
-    console.log(this.state.commentaires_notes);
     new_comment_array.push(new_commentaire_interne);
     this.setState({
       commentaires_notes: new_comment_array,
@@ -226,8 +225,7 @@ class   QuatriemeSection extends React.Component {
   }
 
   render() {
-    console.log(this.state.commentaire_interne)
-    
+    // console.log(this.state.commentaire_interne)
     let total = 0;
     const total_array = this.state.inputs.map((item) => {
       return item.quantité * item.prix;
@@ -279,7 +277,7 @@ class   QuatriemeSection extends React.Component {
 
         <Badge className="bg-rgba-primary mt-2">
           <CardTitle className="font-medium-3 light-secondary text-left ml-2 mt-1">
-          Informations internes
+            Informations internes
           </CardTitle>
           <CardTitle className="font-medium-1 light-secondary text-left ml-2 mt-1 font-weight-bold">
             <Calculator size={17} />
@@ -304,8 +302,14 @@ class   QuatriemeSection extends React.Component {
                         suggestions={this.state.suggestions}
                         className="form-control mb-2"
                         filterKey="title"
-                        suggestionLimit={7}
+                        suggestionLimit={20}
                         placeholder="Produit 1,produit 2,produit 3"
+                        onSuggestionClick={(e) => {
+                          this.produit_input_change_handler(
+                            e.currentTarget.innerText,
+                            item.id
+                          );
+                        }}
                         onChange={(e) => {
                           this.produit_input_change_handler(
                             e.target.value,
@@ -313,19 +317,6 @@ class   QuatriemeSection extends React.Component {
                           );
                         }}
                       />
-                      // <Input
-                      //   key={item.id}
-                      //   type="text"
-                      //   id="produits"
-                      //   className="mb-2"
-                      //   placeholder="Produit 1,produit 2,produit 3"
-                      //   onChange={(e) => {
-                      //     this.produit_input_change_handler(
-                      //       e.target.value,
-                      //       item.id
-                      //     );
-                      //   }}
-                      // />
                     );
                   })}
                   <Button

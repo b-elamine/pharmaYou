@@ -327,15 +327,6 @@ const columns = [
     minWidth: "180px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-        <div className="user-img ml-xl-0 ml-2">
-          <img
-            className="img-fluid rounded-circle"
-            height="36"
-            width="36"
-            src={row.image}
-            alt={row.name}
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
@@ -590,7 +581,6 @@ class Ordonnances_recue extends React.Component {
                 : null,
             name: item.nom_patient + " " + item.prenom_patient,
             type: item.type === "ordo" ? "Particulier" : "Professionnel",
-            image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
             montant: item.montant_total,
             date: new Date(moment(item.updated_at * 1000).tz('Europe/Paris')).toLocaleDateString("fr-FR", {
               weekday: "long",
