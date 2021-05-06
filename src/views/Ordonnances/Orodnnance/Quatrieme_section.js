@@ -29,29 +29,29 @@ const CommentaireBlock = (props) => {
   return (
     <CardBody>
       <div className="user-info text-truncate ml-xl-50 ml-0 mb-50">
-        <RecordCircleFill
+        {/* <RecordCircleFill
           size={16}
           style={{
             color: props.icon_color,
             marginLeft: "0px",
           }}
-        />
+        /> */}
         <span
-          title={props.block_type}
+          title={props.block_note}
           className="ml-2 font-weight-bold font-medium-2"
         >
-          {props.block_type}
+          {props.block_note}
         </span>
       </div>
-      <small className="ml-3 font-small-2"> {props.block_note} </small>
+      {/* <small className="ml-3 font-small-2"> {props.block_note} </small> */}
 
-      <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
+      {/* <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
           </span>
         </div>
-      </div>
+      </div> */}
     </CardBody>
   );
 };
@@ -74,6 +74,7 @@ class QuatriemeSection extends React.Component {
     total: 0,
     note_patient: "",
     commentaire_interne: "",
+    commentaire_interne_edited: "",
   };
   // componentDidUpdate() {
   //   // if (this.props.commentaires_notes && this.state.commentaires_notes.length===0){
@@ -99,7 +100,19 @@ class QuatriemeSection extends React.Component {
         this.setState({ suggestions });
       },
     });
+    this.setState({
+      commentaire_interne: this.props.ordonnance.note_admin,
+    });
   }
+
+  // componentDidUpdate(){
+  //   if(this.state.commentaire_interne.length===0 && this.props.ordonnance.note_admin){
+  //     this.setState({
+  //       commentaire: this.props.ordonnance.note_admin
+  //     })
+
+  //   }
+  // }
 
   quantité_input_change_handler(value, id) {
     this.setState((prev_state, props) => {
@@ -151,7 +164,7 @@ class QuatriemeSection extends React.Component {
         )
           ? 0
           : parseFloat(this.state.suggestions[indexfound].price);
-          indexfound = -1
+        indexfound = -1;
       }
       updated_produit.produit = value;
       const inputs = [...this.state.inputs];
@@ -172,7 +185,7 @@ class QuatriemeSection extends React.Component {
   commentaire_interne_input_handle_change(value) {
     this.setState((prev_state, props) => {
       return {
-        commentaire_interne: value,
+        commentaire_interne_edited: value,
       };
     });
   }
@@ -181,26 +194,25 @@ class QuatriemeSection extends React.Component {
     if (this.state.commentaire_interne.length === 0) {
       return alert("Il faut entrer un commentaire");
     }
-    const new_commentaire_id =
-      this.state.commentaires_notes.length === 0
-        ? 1
-        : this.state.commentaires_notes.slice(-1)[0].id + 1;
-    const new_commentaire_image =
-      this.state.commentaires_notes.length === 0
-        ? ""
-        : this.state.commentaires_notes.slice(-1)[0].image;
-    const new_commentaire_interne = {
-      id: new_commentaire_id,
-      commentaire: this.state.commentaire_interne,
-      type: "Commentaire interne",
-      image: new_commentaire_image,
-      nom: "utilisateur connecter",
-    };
-    const new_comment_array = this.state.commentaires_notes;
-    new_comment_array.push(new_commentaire_interne);
+    // const new_commentaire_id =
+    //   this.state.commentaires_notes.length === 0
+    //     ? 1
+    //     : this.state.commentaires_notes.slice(-1)[0].id + 1;
+    // const new_commentaire_image =
+    //   this.state.commentaires_notes.length === 0
+    //     ? ""
+    //     : this.state.commentaires_notes.slice(-1)[0].image;
+    // const new_commentaire_interne = {
+    //   id: new_commentaire_id,
+    //   commentaire: this.state.commentaire_interne,
+    //   type: "Commentaire interne",
+    //   image: new_commentaire_image,
+    //   nom: "utilisateur connecter",
+    // };
     this.setState({
-      commentaires_notes: new_comment_array,
-      commentaire_interne: "",
+      // commentaires_notes: new_comment_array,
+      commentaire_interne: this.state.commentaire_interne_edited,
+      commentaire_interne_edited: "",
     });
   }
   add_note_handler() {
@@ -233,6 +245,7 @@ class QuatriemeSection extends React.Component {
     total_array.forEach((item) => {
       total = total + item;
     });
+    console.log(this.state);
 
     const options = [
       { value: "classique", label: "Ordonnance Classique" },
@@ -431,7 +444,7 @@ class QuatriemeSection extends React.Component {
             placeholder="RAS"
             className="ml-2"
             style={{ width: "95%", marginTop: "20px" }}
-            value={this.state.commentaire_interne}
+            value={this.state.commentaire_interne_edited}
             onChange={(e) => {
               this.commentaire_interne_input_handle_change(e.target.value);
             }}
@@ -460,7 +473,10 @@ class QuatriemeSection extends React.Component {
                   wheelPropagation: false,
                 }}
               >
-                {this.state.commentaires_notes.length === 0 ? (
+                <CommentaireBlock block_note={this.state.commentaire_interne} />
+
+                {/* {this.props.ordonnnance.note_admin ?  } */}
+                {/* {this.state.commentaires_notes.length === 0 ? (
                   <strong>Pas de commentaire pour l'instant</strong>
                 ) : (
                   this.state.commentaires_notes.map((comment) => {
@@ -478,7 +494,7 @@ class QuatriemeSection extends React.Component {
                       />
                     );
                   })
-                )}
+                )} */}
               </PerfectScrollbar>
             </div>
           </Card>

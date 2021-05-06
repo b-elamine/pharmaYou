@@ -32,8 +32,8 @@ class ComposeEmail extends React.Component {
     checked: false,
     options: [
       { value: "attestation_mutuelle", label: "Attestation Mututelle" },
-      { value: "problem_ordonnance", label: "Problem ordonnance" },
-      { value: "problem_carte_vital", label: "Problem carte vital" },
+      { value: "probleme_ordonnance", label: "Probleme ordonnance" },
+      { value: "probleme_carte_vital", label: "Probleme carte vital" },
     ],
     document_manquant_value: "",
   };

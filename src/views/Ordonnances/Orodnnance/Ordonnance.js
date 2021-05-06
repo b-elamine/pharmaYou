@@ -107,8 +107,8 @@ class Ordonnance extends Component {
           year: "numeric",
           month: "long",
           day: "numeric",
-          hour:"2-digit",
-          minute:"2-digit"
+          hour: "2-digit",
+          minute: "2-digit",
         }),
         code: commande.code_postal_livraison,
         origine: commande.origine,
@@ -129,7 +129,7 @@ class Ordonnance extends Component {
         historique: commande.historique,
         CMU: commande.cmu,
         mutuelle: commande.mutuelle_ok,
-        vital: commande.vitale_ok
+        vital: commande.vitale_ok,
       };
       this.setState({
         ordonnance: custom_commande,
@@ -206,10 +206,13 @@ class Ordonnance extends Component {
               <ThirdSection ordonnance={this.state.ordonnance} />
             </Card>
             <hr />
-            <ForthSection
-              ordonnance={this.state.ordonnance}
-              commentaires_notes={this.state.ordonnance.patient.note}
-            />
+            {/* {console.log(this.state.ordonnance.note_admin)} */}
+            {this.state.ordonnance.note_admin ? (
+              <ForthSection
+                ordonnance={this.state.ordonnance}
+                commentaires_notes={this.state.ordonnance.patient.note}
+              />
+            ) : null}
           </Card>
         </Col>
         <Col xl="3">
