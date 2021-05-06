@@ -82,7 +82,6 @@ class Ordonnance extends Component {
         `/commandes/${id_commande}?access_token=a`
       );
       const commande = response.data;
-      console.log(response.data)
       const custom_commande = {
         ...commande,
         id: commande.commande_id,
