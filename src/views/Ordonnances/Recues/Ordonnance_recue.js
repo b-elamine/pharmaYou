@@ -634,8 +634,8 @@ class Ordonnances_recue extends React.Component {
     } catch (err) {
       const error_message =
         err.message === "Network Error"
-          ? "Une erreur est produite lors de la récupération des données."
-          : "Vérifier votre connexion !";
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
       this.handleAlert("errorAlert", true, error_message);
     }
   };
@@ -682,8 +682,8 @@ class Ordonnances_recue extends React.Component {
     return (
       <React.Fragment>
         <Breadcrumbs
-          breadCrumbTitle="Ordonnance Reçues."
-          breadCrumbParent="Ordonnance reçues"
+          breadCrumbTitle="Ordonnances reçues."
+          breadCrumbParent="Ordonnances reçues."
         />
         <Row>
           <Col xl="2" lg="4" sm="6">
@@ -713,7 +713,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
               stat={nbr_ordo_non_traité}
-              statTitle="Ordonnances Non traité"
+              statTitle="Ordonnances non traitées"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -741,7 +741,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
               stat={nbr_ordo_incomplet}
-              statTitle="Dossiers Incomplet"
+              statTitle="Dossiers incomplets"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -770,7 +770,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
               stat={nbr_ordo_approvis}
-              statTitle="Ordonnances attente approvisionnement"
+              statTitle="Ordonnances en attente d'approvisionnement"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -799,7 +799,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
                 stat={nbr_ordo_assigner_tournée}
-                statTitle="Ordonnances assignés a une tournée"
+                statTitle="Ordonnances assignées à une tournée"
                 
               />
              
@@ -830,7 +830,7 @@ class Ordonnances_recue extends React.Component {
               size={35} />
               </div> }
               stat={nbr_ordo_en_cours_livraison}
-              statTitle="Ordonnances en Cours de livraison"
+              statTitle="Ordonnances en cours de livraison"
               
             />
             
@@ -861,7 +861,7 @@ class Ordonnances_recue extends React.Component {
                 size={35} />
                 </div> }
               stat={nbr_ordo_livrée}
-              statTitle="Ordonnances livré Aujourd'hui."
+              statTitle="Ordonnances livrées aujourd'hui"
             />
           </Col>
         </Row>
@@ -870,7 +870,7 @@ class Ordonnances_recue extends React.Component {
           <Col md="4" sm="8">
             <Select
               classNamePrefix="select"
-              placeholder="Status"
+              placeholder="Statut"
               name="Status"
               onChange={this.handle_filter_status}
               options={this.state.options.status}

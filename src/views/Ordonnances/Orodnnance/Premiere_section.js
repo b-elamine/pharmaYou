@@ -123,7 +123,7 @@ class FirstSection extends React.Component {
                 color="pl-50 pr-50 text-wrap ml-50 text-left"
               >
                 <Calendar2Check className="mr-50" size={14} />
-                Tournée assigné
+                tournée assignée
               </Badge>
             ) : this.props.ordonnance.status === "attente_approvisionnement" ? (
               <Badge
@@ -284,7 +284,7 @@ class FirstSection extends React.Component {
                 width: "150px",
               }}
             >
-              <Label for="readonlyInput">Date Commande</Label>
+              <Label for="readonlyInput">Date de la commande</Label>
               <Input
                 className="font-small-3"
                 type="text"

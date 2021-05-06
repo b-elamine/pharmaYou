@@ -24,7 +24,7 @@ const UserName = props => {
       username = props.user.login.values.loggedInUser.name
     }
   } else {
-    username = "Zongo Meryoul"
+    username = "Zakaria Behlouli"
   }
 
   return username

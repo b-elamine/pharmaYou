@@ -15,7 +15,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import AutoComplete from "./autoCompleteComponent";
 import moment from "moment";
 
-
 import {
   Justify,
   Calculator,
@@ -47,15 +46,6 @@ const CommentaireBlock = (props) => {
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        <div className="user-img ml-xl-0 ml-3">
-          <img
-            className="img-fluid rounded-circle"
-            height="32"
-            width="32"
-            src={props.image_path}
-            alt="icon"
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
@@ -66,36 +56,36 @@ const CommentaireBlock = (props) => {
   );
 };
 
-class QuatriemeSection extends React.Component {
+class   QuatriemeSection extends React.Component {
   state = {
     suggestions: [
       {
-        title: "Doliprane"
+        title: "Doliprane",
       },
       {
-        title: "paracetamol"
+        title: "paracetamol",
       },
       {
-        title: "amoxiciline"
+        title: "amoxiciline",
       },
       {
-        title: "azytromicyle"
+        title: "azytromicyle",
       },
       {
-        title: "flazol"
+        title: "flazol",
       },
       {
-        title: "aspirine"
+        title: "aspirine",
       },
       {
-        title: "penisiline"
+        title: "penisiline",
       },
       {
-        title: "clamoxyle"
+        title: "clamoxyle",
       },
       {
-        title: "defirine"
-      }
+        title: "defirine",
+      },
     ],
     commentaires_notes: [],
     inputs: [
@@ -103,18 +93,22 @@ class QuatriemeSection extends React.Component {
         id: 1,
         produit: "",
         quantité: 1,
-        prix: 0.,
+        prix: 0,
       },
     ],
-    
+
     total: 0,
     note_patient: "",
     commentaire_interne: "",
   };
-  componentDidMount() {
-    this.setState({
-      commentaires_notes: this.props.commentaires_notes,
-    });
+  componentDidUpdate() {
+    // if (this.props.commentaires_notes && this.state.commentaires_notes.length===0){
+    //   this.setState({
+    //     commentaires_notes: this.props.commentaires_notes,
+    //   });
+    // }
+
+    console.log(this.props.commentaires_notes)
   }
 
   quantité_input_change_handler(value, id) {
@@ -183,13 +177,18 @@ class QuatriemeSection extends React.Component {
   }
 
   add_commentaire_handler() {
+    console.log(this.state);
     if (this.state.commentaire_interne.length === 0) {
       return alert("Il faut entrer un commentaire");
     }
     const new_commentaire_id =
-      this.state.commentaires_notes.slice(-1)[0].id + 1;
-    const new_commentaire_image = this.state.commentaires_notes.slice(-1)[0]
-      .image;
+      this.state.commentaires_notes.length === 0
+        ? 1
+        : this.state.commentaires_notes.slice(-1)[0].id + 1;
+    const new_commentaire_image =
+      this.state.commentaires_notes.length === 0
+        ? ""
+        : this.state.commentaires_notes.slice(-1)[0].image;
     const new_commentaire_interne = {
       id: new_commentaire_id,
       commentaire: this.state.commentaire_interne,
@@ -198,6 +197,7 @@ class QuatriemeSection extends React.Component {
       nom: "utilisateur connecter",
     };
     const new_comment_array = this.state.commentaires_notes;
+    console.log(this.state.commentaires_notes);
     new_comment_array.push(new_commentaire_interne);
     this.setState({
       commentaires_notes: new_comment_array,
@@ -226,6 +226,8 @@ class QuatriemeSection extends React.Component {
   }
 
   render() {
+    console.log(this.state.commentaire_interne)
+    
     let total = 0;
     const total_array = this.state.inputs.map((item) => {
       return item.quantité * item.prix;
@@ -263,11 +265,6 @@ class QuatriemeSection extends React.Component {
           />
           <Row>
             <Col>
-              <p className="text-dark ml-2 mt-2">
-                Pharmacien : Nom du pharmacien
-              </p>
-            </Col>
-            <Col>
               <Button
                 className="mt-2 bg-success text-white float-right mr-2 p-75  mb-2"
                 onClick={() => {
@@ -282,7 +279,7 @@ class QuatriemeSection extends React.Component {
 
         <Badge className="bg-rgba-primary mt-2">
           <CardTitle className="font-medium-3 light-secondary text-left ml-2 mt-1">
-            Informations interne
+          Informations internes
           </CardTitle>
           <CardTitle className="font-medium-1 light-secondary text-left ml-2 mt-1 font-weight-bold">
             <Calculator size={17} />
@@ -350,7 +347,7 @@ class QuatriemeSection extends React.Component {
                             id: new_item_id,
                             produit: "",
                             quantité: 1,
-                            prix: 0.5,
+                            prix: 0,
                           },
                         ];
                         return {
@@ -486,7 +483,6 @@ class QuatriemeSection extends React.Component {
                         icon_color={icon_color}
                         block_type={comment.type}
                         block_note={comment.commentaire}
-                        image_path={comment.image}
                         name={comment.nom}
                       />
                     );

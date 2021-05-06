@@ -471,7 +471,7 @@ const columns = [
     ),
   },
   {
-    name: "CLIENT DEPUIS",
+    name: "PARTENAIRE DEPUIS",
     selector: "date_client",
     minWidth:"200px",
     sortable: true,

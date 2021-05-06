@@ -22,7 +22,7 @@ class PartieDroite_1 extends React.Component {
           }}
         >
           <Truck className="mr-75 text-left" size={17} />
-          Rajouter dans une tournée
+          Ajouter dans une tournée
         </Button>
 
         <Button
@@ -67,8 +67,8 @@ class PartieDroite_1 extends React.Component {
           }}
           className=" border border-dark ml-2 mr-2 mt-1 h-2 text-left font-weight-bold"
         >
-          <X className="mr-75" size={25} />
-          annuler la commande
+          <X className="mr-75" size={17} />
+          Annuler la commande
         </Button>
       </Card>
     );

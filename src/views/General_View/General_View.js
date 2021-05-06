@@ -1045,9 +1045,9 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      ordonnances
                       <br />
-                      pro en attente <br />
+                      livrées <br />
                     </p>
                   </div>
                 </div>
@@ -1069,8 +1069,8 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
-                      pro livrés <br />
+                      clients <br />
+                      particuliers <br />
                     </p>
                   </div>
                 </div>
@@ -1092,8 +1092,8 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      client <br />
-                      pro <br />
+                      ordonnances<br />
+                      en attente <br />
                     </p>
                   </div>
                 </div>
@@ -1115,7 +1115,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      ordonnances
                       <br />
                       en livraison
                       <br />
@@ -1134,14 +1134,14 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>12 €</h7>
 
                     <p
                       style={{
                         fontSize: "12px",
                       }}
                     >
-                      moyenne par
+                      en moyenne par
                       <br />
                       commande
                       <br />
@@ -1253,7 +1253,7 @@ class General_View extends React.Component {
                 padding: "1rem",
               }}
             >
-              Statistiques professionnelles
+              <h5>Statistiques professionnelles</h5>
               <div
                 style={{
                   marginTop: "2rem",
@@ -1280,7 +1280,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      commandes
                       <br />
                       pro en attente <br />
                     </p>
@@ -1304,7 +1304,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
+                      commandes <br />
                       pro livrés <br />
                     </p>
                   </div>
@@ -1327,7 +1327,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      client <br />
+                      clients <br />
                       pro <br />
                     </p>
                   </div>
@@ -1350,7 +1350,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      commandes
                       <br />
                       en livraison
                       <br />
@@ -1369,13 +1369,13 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>12 €</h7>
                     <p
                       style={{
                         fontSize: "12px",
                       }}
                     >
-                      moyenne par
+                      en moyenne par
                       <br />
                       commande
                       <br />

@@ -118,7 +118,7 @@ class Ordonnance extends Component {
         patient: {
           nom: commande.nom_patient,
           prenom: commande.prenom_patient,
-          address: `${commande.adresse_livraison} , ${commande.code_postal_livraison}`,
+          address: `${commande.adresse_livraison}`,
           num_tel: commande.telephone,
           appeler: commande.etrerappele,
           email: commande.email,
