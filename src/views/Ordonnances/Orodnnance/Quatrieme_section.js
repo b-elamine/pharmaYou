@@ -245,8 +245,7 @@ class QuatriemeSection extends React.Component {
     total_array.forEach((item) => {
       total = total + item;
     });
-    console.log(this.state);
-
+    total = total.toFixed(2)
     const options = [
       { value: "classique", label: "Ordonnance Classique" },
       // { value: "option_2", label: "Option 2" },
