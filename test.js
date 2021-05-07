@@ -1,1 +1,3 @@
-console.log(new Date(1618964469).toISOString().split("T")[0]);
+const test = 15.36284584
+
+console.log(test.toFixed(2))

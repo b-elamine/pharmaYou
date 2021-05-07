@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Badge, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
-import { Check, Edit, AlertTriangle, Eye } from "react-feather";
+import { Check,  AlertTriangle, Eye } from "react-feather";
 
 import CustomSelects from "./CustomSelects";
 import { history } from "../../../history";

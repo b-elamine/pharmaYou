@@ -104,24 +104,26 @@ class Troisieme_section extends React.Component {
       const response = await axios.get(
         `/ordonnances/${path}/original?access_token=a`
       );
-      const file = new Blob([response.data], {
-        type: this.props.ordonnance.ordonnance.mime_type,
-      });
-      const fileURL = URL.createObjectURL(file);
+      // console.log(response);
+      // const file = new Blob([response.data], {
+      //   type: this.props.ordonnance.ordonnance.mime_type,
+      // });
+      // const fileURL = URL.createObjectURL(file);
+      // this.setState({
+      //   file_ordonnance_loader: false,
+      // });
+    } catch (err) {
       this.setState({
         file_ordonnance_loader: false,
-      });
-      window.open(fileURL);
-    } catch (err) {
-      alert(err.message);
+      }); 
+      console.log(err.message);
     }
   };
 
   render() {
-    console.log(this.props.ordonnance);
     return (
-      <Card>
-        <CardTitle className="ml-2">Documents Client</CardTitle>
+      <Card className="m-0">
+        <CardTitle className="ml-2">Documents du client</CardTitle>
         <Row>
           <Col className="ml-2">
             <CardDashed
@@ -137,7 +139,7 @@ class Troisieme_section extends React.Component {
               style={{ width: "90%" }}
               className="d-flex flex-sm-row flex-column align-items-center justify-content-between px-0 mb-75"
             >
-              <span className="mr-50 text-wrap">Ordonance renouvlable?</span>
+              <span className="mr-50 text-wrap">Ordonnance renouvelable ?</span>
               <Switch
                 onChange={this.handleChange}
                 checked={this.state.checked}
@@ -194,7 +196,7 @@ class Troisieme_section extends React.Component {
                 <Input
                   size="sm"
                   className="block-example border border-right-0 border-success"
-                  placeholder="Numero de sécurité social"
+                  placeholder="Numéro de sécurité sociale"
                 />
                 <InputGroupAddon addonType="append">
                   <Button.Ripple outline color="success" size="sm">

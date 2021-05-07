@@ -430,6 +430,23 @@ const columns = [
     cell: (row) => <p className="text-bold-200 mb-0">{row.ville}</p>, //row.ville
   },
   {
+    name: "STATUT",
+    selector: "statut",
+    sortable: true,
+    minWidth: "200px",
+    cell: (row) => (
+      <Badge
+        color={`light-${
+          row.status === "active" ? "success" : "danger"
+        } text-wrap text-bold-500 mb-0`}
+        style={{ width: "7rem", fontSize: "74%", lineHeight: "1.1" }}
+        pill
+      >
+        {row.status}
+      </Badge>
+    ),
+  },
+  {
     name: "CODE POSTAL",
     selector: "code_postal",
     minWidth: "150px",
@@ -440,7 +457,7 @@ const columns = [
     name: "PROFESSION",
     selector: "profession",
     sortable: true,
-    minWidth: "200px",
+    minWidth: "150px",
     cell: (row) => (
       <Badge
         color={`light-${
@@ -454,8 +471,9 @@ const columns = [
     ),
   },
   {
-    name: "CLIENT DEPUIS",
+    name: "PARTENAIRE DEPUIS",
     selector: "date_client",
+    minWidth:"200px",
     sortable: true,
     cell: (row) => <p className="text-truncate mb-0">{row.date}</p>,
   },

@@ -20,319 +20,319 @@ import axios from "../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 const dt = 333; //test à supprimer
-const data = [
-  {
-    id: "589547",
-    image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Alyss Lillecrop",
-    email: "alillecrop0@twitpic.com",
-    date: "May 13, 2018",
-    status: "Annuler",
-    montant: "$32,000",
-    ratings: "good",
-    type: "particulier",
-    code: 12345,
-    origine: "Partenaire App",
-  },
-  {
-    id: "349810",
-    image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Shep Pentlow",
-    email: "spentlow1@home.pl",
-    date: "June 5, 2019",
-    status: "active",
-    montant: "$50,000",
-    ratings: "good",
-    type: "particulier",
-    code: 56789,
-    origine: "Partenaire infermier",
-  },
-  {
-    id: "689527",
-    image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Gasper Morley",
-    email: "gmorley2@chronoengine.com",
-    date: "December 20, 2019",
-    status: "En livraison",
-    montant: "$78,000",
-    ratings: "average",
-    type: "professionnel",
-    code: 1205,
-    origine: "Partenaire MEDADOM",
-  },
-  {
-    id: "981536",
-    image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Phaedra Jerrard",
-    email: "pjerrard3@blogs.com",
-    date: "November 30, 2018",
-    status: "Non-traité",
-    montant: "$10,000",
-    ratings: "bad",
-  },
-  {
-    id: "401536",
-    image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Conn Plose",
-    email: "cplose4@geocities.com",
-    date: "April 8, 2017",
-    status: "active",
-    montant: "$22,000",
-    ratings: "average",
-  },
-  {
-    id: "281516",
-    image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Tootsie Brandsma",
-    email: "tbrandsma5@theatlantic.com",
-    date: "August 12, 2019",
-    status: "inactive",
-    montant: "$49,000",
-    ratings: "bad",
-  },
-  {
-    id: "731530",
-    image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Sibley Bum",
-    email: "sbum6@sourceforge.net",
-    date: "October 1, 2017",
-    status: "active",
-    montant: "$56,000",
-    ratings: "good",
-  },
-  {
-    id: "081431",
-    image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Kristoffer Thew",
-    email: "kthew7@amazon.com",
-    date: "February 28, 2018",
-    status: "inactive",
-    montant: "$83,000",
-    ratings: "bad",
-  },
-  {
-    id: "111536",
-    image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Fay Hasard",
-    email: "fhasard8@java.com",
-    date: "January 29, 2018",
-    status: "active",
-    montant: "$26,000",
-    ratings: "good",
-  },
-  {
-    id: "536222",
-    image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Tabby Abercrombie",
-    email: "tabercrombie9@statcounter.com",
-    date: "April 1, 2019",
-    status: "active",
-    montant: "$60,000",
-    ratings: "average",
-  },
-  {
-    id: "313516",
-    image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
-    name: "	Stella Indruch",
-    email: "sindruch1@mayoclinic.com",
-    date: "Dec 4, 2019",
-    status: "active",
-    montant: "$21,000",
-    ratings: "good",
-  },
-  {
-    id: "451716",
-    image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
-    name: "	Aron McNirlin",
-    email: "amcnirlin2@samsung.com",
-    date: "Jan 4, 2018",
-    status: "inactive",
-    montant: "$30,000",
-    ratings: "bad",
-  },
-  {
-    id: "121536",
-    image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-    name: "Ange Trenholm",
-    email: "atrenholm4@slideshare.net	",
-    date: "February 23, 2019",
-    status: "active",
-    montant: "$12,000",
-    ratings: "good",
-  },
-  {
-    id: "451712",
-    image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
-    name: "Caterina Starkie",
-    email: "cstarkie5@feedburner.com",
-    date: "September 8, 2018",
-    status: "active",
-    montant: "$40,000",
-    ratings: "average",
-  },
-  {
-    id: "881716",
-    image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
-    name: "Hugibert McGeagh",
-    email: "hmcgeaghf@smh.com.au",
-    date: "August 20, 2017",
-    status: "active",
-    montant: "$90,000",
-    ratings: "good",
-  },
-  {
-    id: "651726",
-    image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
-    name: "Jaime Maher",
-    email: "jmaher1@msu.edu",
-    date: "April 7, 2019",
-    status: "active",
-    montant: "$38,000",
-    ratings: "good",
-  },
-  {
-    id: "151716",
-    image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-    name: "Amalle Pladen",
-    email: "jmaher1@msu.edu",
-    date: "March 30, 2018",
-    status: "active",
-    montant: "$18,000",
-    ratings: "average",
-  },
-  {
-    id: "221716",
-    image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
-    name: "Dorris Ferries",
-    email: "dferries7@ucoz.com",
-    date: "August 25, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "bad",
-  },
-  {
-    id: "459916",
-    image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
-    name: "Andy Fettes",
-    email: "afettesh@upenn.edu",
-    date: "September 30, 2017",
-    status: "inactive",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    id: "991716",
-    image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Allene Hughf",
-    email: "ahughf0@dropbox.com",
-    date: "June 21, 2018",
-    status: "active",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    id: "541716",
-    image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Petra Rheubottom",
-    email: "prheubottom0@globo.com",
-    date: "July 4, 2018",
-    status: "active",
-    montant: "$72,000",
-    ratings: "good",
-  },
-  {
-    id: "001716",
-    image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Ambrosius Olyfant",
-    email: "aolyfant1@timesonline.co.uk",
-    date: "May 5, 2019",
-    status: "inactive",
-    montant: "$13,000",
-    ratings: "bad",
-  },
-  {
-    id: "561716",
-    image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Letti Trineman",
-    email: "ltrineman2@cnbc.com",
-    date: "February 15, 2017",
-    status: "active",
-    montant: "$84,000",
-    ratings: "average",
-  },
-  {
-    id: "101716",
-    image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Sayer Rodger",
-    email: "srodgerb@rakuten.co.jp",
-    date: "January 30, 2018",
-    status: "inactive",
-    montant: "$15,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Skyler Scotcher",
-    email: "sscotcher3@soup.io",
-    date: "November 3, 2018",
-    status: "active",
-    montant: "$26,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Florette Shotbolt",
-    email: "fshotbolt7@wiley.com",
-    date: "March 12, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Janis Bakhrushkin",
-    email: "jbakhrushkina@epa.gov",
-    date: "July 10, 2017",
-    status: "active",
-    montant: "$65,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Alric Peinton",
-    email: "apeinton0@google.cn",
-    date: "February 6, 2017",
-    status: "inactive",
-    montant: "$38,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Rubie Pitkethly",
-    email: "rpitkethlyf@51.la",
-    date: "February 20, 2018",
-    status: "active",
-    montant: "$62,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Hortensia Soaper",
-    email: "hsoaperh@mapy.cz",
-    date: "June 1, 2017",
-    status: "active",
-    montant: "$60,000",
-    ratings: "good",
-  },
-];
-const ordonnances = {
-  non_traité: 10,
-  en_attente: 2,
-  en_cours_livraison: 20,
-  livrée: 30,
-  assigner_tournée: 14,
-  dossier_incomplet: 4,
-};
+// const data = [
+//   {
+//     id: "589547",
+//     image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
+//     name: "Alyss Lillecrop",
+//     email: "alillecrop0@twitpic.com",
+//     date: "May 13, 2018",
+//     status: "Annuler",
+//     montant: "$32,000",
+//     ratings: "good",
+//     type: "particulier",
+//     code: 12345,
+//     origine: "Partenaire App",
+//   },
+//   {
+//     id: "349810",
+//     image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
+//     name: "Shep Pentlow",
+//     email: "spentlow1@home.pl",
+//     date: "June 5, 2019",
+//     status: "active",
+//     montant: "$50,000",
+//     ratings: "good",
+//     type: "particulier",
+//     code: 56789,
+//     origine: "Partenaire infermier",
+//   },
+//   {
+//     id: "689527",
+//     image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
+//     name: "Gasper Morley",
+//     email: "gmorley2@chronoengine.com",
+//     date: "December 20, 2019",
+//     status: "En livraison",
+//     montant: "$78,000",
+//     ratings: "average",
+//     type: "professionnel",
+//     code: 1205,
+//     origine: "Partenaire MEDADOM",
+//   },
+//   {
+//     id: "981536",
+//     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
+//     name: "Phaedra Jerrard",
+//     email: "pjerrard3@blogs.com",
+//     date: "November 30, 2018",
+//     status: "Non-traité",
+//     montant: "$10,000",
+//     ratings: "bad",
+//   },
+//   {
+//     id: "401536",
+//     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
+//     name: "Conn Plose",
+//     email: "cplose4@geocities.com",
+//     date: "April 8, 2017",
+//     status: "active",
+//     montant: "$22,000",
+//     ratings: "average",
+//   },
+//   {
+//     id: "281516",
+//     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
+//     name: "Tootsie Brandsma",
+//     email: "tbrandsma5@theatlantic.com",
+//     date: "August 12, 2019",
+//     status: "inactive",
+//     montant: "$49,000",
+//     ratings: "bad",
+//   },
+//   {
+//     id: "731530",
+//     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
+//     name: "Sibley Bum",
+//     email: "sbum6@sourceforge.net",
+//     date: "October 1, 2017",
+//     status: "active",
+//     montant: "$56,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "081431",
+//     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
+//     name: "Kristoffer Thew",
+//     email: "kthew7@amazon.com",
+//     date: "February 28, 2018",
+//     status: "inactive",
+//     montant: "$83,000",
+//     ratings: "bad",
+//   },
+//   {
+//     id: "111536",
+//     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
+//     name: "Fay Hasard",
+//     email: "fhasard8@java.com",
+//     date: "January 29, 2018",
+//     status: "active",
+//     montant: "$26,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "536222",
+//     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
+//     name: "Tabby Abercrombie",
+//     email: "tabercrombie9@statcounter.com",
+//     date: "April 1, 2019",
+//     status: "active",
+//     montant: "$60,000",
+//     ratings: "average",
+//   },
+//   {
+//     id: "313516",
+//     image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
+//     name: "	Stella Indruch",
+//     email: "sindruch1@mayoclinic.com",
+//     date: "Dec 4, 2019",
+//     status: "active",
+//     montant: "$21,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "451716",
+//     image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
+//     name: "	Aron McNirlin",
+//     email: "amcnirlin2@samsung.com",
+//     date: "Jan 4, 2018",
+//     status: "inactive",
+//     montant: "$30,000",
+//     ratings: "bad",
+//   },
+//   {
+//     id: "121536",
+//     image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
+//     name: "Ange Trenholm",
+//     email: "atrenholm4@slideshare.net	",
+//     date: "February 23, 2019",
+//     status: "active",
+//     montant: "$12,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "451712",
+//     image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
+//     name: "Caterina Starkie",
+//     email: "cstarkie5@feedburner.com",
+//     date: "September 8, 2018",
+//     status: "active",
+//     montant: "$40,000",
+//     ratings: "average",
+//   },
+//   {
+//     id: "881716",
+//     image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
+//     name: "Hugibert McGeagh",
+//     email: "hmcgeaghf@smh.com.au",
+//     date: "August 20, 2017",
+//     status: "active",
+//     montant: "$90,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "651726",
+//     image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
+//     name: "Jaime Maher",
+//     email: "jmaher1@msu.edu",
+//     date: "April 7, 2019",
+//     status: "active",
+//     montant: "$38,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "151716",
+//     image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
+//     name: "Amalle Pladen",
+//     email: "jmaher1@msu.edu",
+//     date: "March 30, 2018",
+//     status: "active",
+//     montant: "$18,000",
+//     ratings: "average",
+//   },
+//   {
+//     id: "221716",
+//     image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
+//     name: "Dorris Ferries",
+//     email: "dferries7@ucoz.com",
+//     date: "August 25, 2017",
+//     status: "active",
+//     montant: "$69,000",
+//     ratings: "bad",
+//   },
+//   {
+//     id: "459916",
+//     image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
+//     name: "Andy Fettes",
+//     email: "afettesh@upenn.edu",
+//     date: "September 30, 2017",
+//     status: "inactive",
+//     montant: "$35,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "991716",
+//     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
+//     name: "Allene Hughf",
+//     email: "ahughf0@dropbox.com",
+//     date: "June 21, 2018",
+//     status: "active",
+//     montant: "$35,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "541716",
+//     image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
+//     name: "Petra Rheubottom",
+//     email: "prheubottom0@globo.com",
+//     date: "July 4, 2018",
+//     status: "active",
+//     montant: "$72,000",
+//     ratings: "good",
+//   },
+//   {
+//     id: "001716",
+//     image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
+//     name: "Ambrosius Olyfant",
+//     email: "aolyfant1@timesonline.co.uk",
+//     date: "May 5, 2019",
+//     status: "inactive",
+//     montant: "$13,000",
+//     ratings: "bad",
+//   },
+//   {
+//     id: "561716",
+//     image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
+//     name: "Letti Trineman",
+//     email: "ltrineman2@cnbc.com",
+//     date: "February 15, 2017",
+//     status: "active",
+//     montant: "$84,000",
+//     ratings: "average",
+//   },
+//   {
+//     id: "101716",
+//     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
+//     name: "Sayer Rodger",
+//     email: "srodgerb@rakuten.co.jp",
+//     date: "January 30, 2018",
+//     status: "inactive",
+//     montant: "$15,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
+//     name: "Skyler Scotcher",
+//     email: "sscotcher3@soup.io",
+//     date: "November 3, 2018",
+//     status: "active",
+//     montant: "$26,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
+//     name: "Florette Shotbolt",
+//     email: "fshotbolt7@wiley.com",
+//     date: "March 12, 2017",
+//     status: "active",
+//     montant: "$69,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
+//     name: "Janis Bakhrushkin",
+//     email: "jbakhrushkina@epa.gov",
+//     date: "July 10, 2017",
+//     status: "active",
+//     montant: "$65,000",
+//     ratings: "good",
+//   },
+//   {
+//     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
+//     name: "Alric Peinton",
+//     email: "apeinton0@google.cn",
+//     date: "February 6, 2017",
+//     status: "inactive",
+//     montant: "$38,000",
+//     ratings: "bad",
+//   },
+//   {
+//     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
+//     name: "Rubie Pitkethly",
+//     email: "rpitkethlyf@51.la",
+//     date: "February 20, 2018",
+//     status: "active",
+//     montant: "$62,000",
+//     ratings: "average",
+//   },
+//   {
+//     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
+//     name: "Hortensia Soaper",
+//     email: "hsoaperh@mapy.cz",
+//     date: "June 1, 2017",
+//     status: "active",
+//     montant: "$60,000",
+//     ratings: "good",
+//   },
+// ];
+// const ordonnances = {
+//   non_traité: 10,
+//   en_attente: 2,
+//   en_cours_livraison: 20,
+//   livrée: 30,
+//   assigner_tournée: 14,
+//   dossier_incomplet: 4,
+// };
 const columns = [
   {
     name: "#",
@@ -426,18 +426,9 @@ const columns = [
     name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    minWidth: "250px",
+    minWidth: "210px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-        <div className="user-img ml-xl-0 ml-2">
-          <img
-            className="img-fluid rounded-circle"
-            height="36"
-            width="36"
-            src={row.image}
-            alt={row.name}
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
@@ -481,7 +472,12 @@ const columns = [
     center: true,
     sortable: true,
     maxWidth: "100px",
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
+    cell: (row) =>
+      row.montant !== null ? (
+        <p className="text-bold-500 mb-0">{row.montant} €</p>
+      ) : (
+        <p className="text-bold-500 mb-0">En calcul</p>
+      ),
   },
   {
     name: "DATE",
@@ -489,11 +485,7 @@ const columns = [
     sortable: true,
     minWidth: "200px",
     cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">
-        {row.date}
-        <br></br>
-        À {row.heure}
-        </p>
+      <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
     ),
   },
   {
@@ -526,28 +518,36 @@ const columns = [
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier MEDADOM
-        </Badge>  
+          MEDADOM
+        </Badge>
       ) : row.origine === "web" ? (
         <Badge
           color="light-success text-wrap text-bold-500 mb-0"
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier WEB
+          WEB
         </Badge>
-      ) : row.origine === "appli" ? (
+      ) : row.origine === "app" ? (
         <Badge
           color="light-success text-wrap text-bold-500 mb-0"
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier Appli
+          Appli
         </Badge>
-      ) : null,
+      ) : (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Pro
+        </Badge>
+      ),
   },
   {
-    name: "Actions",
+    name: "ACTIONS",
     selector: "actions",
     center: true,
     maxWidth: "120px",
@@ -567,7 +567,7 @@ const columns = [
 class General_View extends React.Component {
   state = {
     errorAlert: false,
-    errorText: "Vérifier votre cnnexion",
+    errorText: "Vérifiez votre connexion",
     dataFetched: false,
     pro_chart_bar: {
       series: [
@@ -839,20 +839,20 @@ class General_View extends React.Component {
             name: item.nom_patient + " " + item.prenom_patient,
             // name: 'Akram Ouardas',
             type: item.type === "ordo" ? "Particulier" : "Professionnel",
-            image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-            montant: item.montant_total ? item.montant_total : 0,
-            date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+            montant: item.montant_total,
+            date: new Date(item.updated_at * 1000).toLocaleDateString("fr-FR", {
               weekday: "long",
               year: "numeric",
               month: "long",
               day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
             }),
-            heure : `${new Date(item.created_at).getHours()}H${new Date(item.created_at).getMinutes()}`,
             code: item.code_postal_livraison,
-            origine: "infirmier",
+            origine: item.origine,
             email: item.email,
             ville: item.ville_livraison,
-            paiment: "reglé",
+            paiment: item.status_paiement,
             patient: {
               nom: item.nom_patient,
               prenom: item.prenom_patient,
@@ -865,7 +865,7 @@ class General_View extends React.Component {
                 : "Pas de note pour l'instant.",
             },
             CMU: true,
-            mutuelle: false,
+            mutuelle: item.mutuelle_ok,
           };
         });
         this.setState({
@@ -893,8 +893,8 @@ class General_View extends React.Component {
     } catch (err) {
       const error_message =
         err.message === "Network Error"
-          ? "Une erreur est produite lors de la récupération des données."
-          : "Vérifier votre connexion !";
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
       this.handleAlert("errorAlert", true, error_message);
     }
   };
@@ -984,10 +984,10 @@ class General_View extends React.Component {
                               fontSize: "14px",
                             }}
                           >
-                            Chiffre d'affaire ordonnance
+                            Chiffre d'affaires ordonnances
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>3 984 £</b>
+                            <b>3 984 €</b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -1011,7 +1011,15 @@ class General_View extends React.Component {
                 padding: "1rem",
               }}
             >
-              Statistiques particuliers
+              <h5
+                style={{
+                  marginTop: "0.5rem",
+                  marginBottom: "1rem",
+                  fontSize: "14px",
+                }}
+              >
+                Statistiques particuliers
+              </h5>
               <div
                 style={{
                   marginTop: "2rem",
@@ -1037,9 +1045,9 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      ordonnances
                       <br />
-                      pro en attente <br />
+                      livrées <br />
                     </p>
                   </div>
                 </div>
@@ -1061,8 +1069,8 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
-                      pro livrés <br />
+                      clients <br />
+                      particuliers <br />
                     </p>
                   </div>
                 </div>
@@ -1084,8 +1092,8 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      client <br />
-                      pro <br />
+                      ordonnances<br />
+                      en attente <br />
                     </p>
                   </div>
                 </div>
@@ -1107,7 +1115,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      ordonnances
                       <br />
                       en livraison
                       <br />
@@ -1126,14 +1134,14 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>12 €</h7>
 
                     <p
                       style={{
                         fontSize: "12px",
                       }}
                     >
-                      moyenne par
+                      en moyenne par
                       <br />
                       commande
                       <br />
@@ -1220,7 +1228,7 @@ class General_View extends React.Component {
                             Chiffre d'affaire professionnel
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>6 294 £</b>
+                            <b>6 294 €</b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -1245,7 +1253,7 @@ class General_View extends React.Component {
                 padding: "1rem",
               }}
             >
-              Statistiques professionnelles
+              <h5>Statistiques professionnelles</h5>
               <div
                 style={{
                   marginTop: "2rem",
@@ -1272,7 +1280,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      commandes
                       <br />
                       pro en attente <br />
                     </p>
@@ -1296,7 +1304,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
+                      commandes <br />
                       pro livrés <br />
                     </p>
                   </div>
@@ -1319,7 +1327,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      client <br />
+                      clients <br />
                       pro <br />
                     </p>
                   </div>
@@ -1342,7 +1350,7 @@ class General_View extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      commandes
                       <br />
                       en livraison
                       <br />
@@ -1361,13 +1369,13 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>12 €</h7>
                     <p
                       style={{
                         fontSize: "12px",
                       }}
                     >
-                      moyenne par
+                      en moyenne par
                       <br />
                       commande
                       <br />

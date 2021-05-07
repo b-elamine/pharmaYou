@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import { ListUl, RecordCircleFill } from "react-bootstrap-icons";
-import Image from "../../../assets/img/portrait/small/avatar-s-2.jpg";
+// import Image from "../../../assets/img/portrait/small/avatar-s-2.jpg";
 
 const CommandeBlock = (props) => {
   return (
@@ -52,7 +52,7 @@ class PartieDroite_2 extends React.Component {
           Historique de la commande
         </CardTitle>
         {this.props.historique_commande.length === 0 ? (
-          <strong>Pas de commentaire pour l'instant</strong>
+          <strong className="ml-2">Pas de commentaire pour l'instant</strong>
         ) : (
           this.props.historique_commande.map((comment) => {
             const icon_color =

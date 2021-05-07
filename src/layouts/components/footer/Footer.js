@@ -17,18 +17,18 @@ const Footer = props => {
         <span className="float-md-left d-block d-md-inline-block mt-25">
           COPYRIGHT © {new Date().getFullYear()}
           <a
-            href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent"
+            href="http://pharmayou-2b2a9.web.app/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Pixinvent,
+            PHARMAYOU,
           </a>
-          All rights reserved
+          Tous droits réservés
         </span>
-        <span className="float-md-right d-none d-md-block">
+        {/* <span className="float-md-right d-none d-md-block">
           <span className="align-middle">Hand-crafted & Made with</span>{" "}
           <Heart className="text-danger" size={15} />
-        </span>
+        </span> */}
       </p>
       {props.hideScrollToTop === false ? (
         <ScrollToTop showUnder={160}>

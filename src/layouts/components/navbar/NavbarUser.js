@@ -689,7 +689,7 @@ class NavbarUser extends React.PureComponent {
               </span>
               <span className="user-status">Admin</span>
             </div>
-            <span data-tour="user">
+            {/* <span data-tour="user">
               <img
                 src={this.props.userImg}
                 className="round"
@@ -697,7 +697,7 @@ class NavbarUser extends React.PureComponent {
                 width="40"
                 alt="avatar"
               />
-            </span>
+            </span> */}
           </DropdownToggle>
           <UserDropdown {...this.props} />
         </UncontrolledDropdown>

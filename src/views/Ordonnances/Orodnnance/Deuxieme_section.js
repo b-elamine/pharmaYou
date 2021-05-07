@@ -16,16 +16,23 @@ class SecondSection extends React.Component {
     },
   };
   componentDidMount() {
-      this.setState({
-        ordonnance: this.props.ordonnance,
-      });
+    this.setState({
+      ordonnance: this.props.ordonnance,
+    });
   }
   render() {
     return (
       <Row>
         <Col xl="6">
           <CardBody>
-            <div style={{ width: "50%", marginBottom: "20px", fontSize:"17px",fontWeight:"bold" }}>
+            <div
+              style={{
+                width: "50%",
+                marginBottom: "20px",
+                fontSize: "17px",
+                fontWeight: "bold",
+              }}
+            >
               <span>Information, livraison et facturation</span>
             </div>
             <div style={{ height: "50%" }}>
@@ -34,16 +41,21 @@ class SecondSection extends React.Component {
                 {this.props.ordonnance.patient.prenom}
               </h3>
               <div className="font-medium-1">
-                <p style={{ marginBottom: "0"}}>
+                <p style={{ marginBottom: "0" }}>
                   {" "}
                   {this.props.ordonnance.patient.address}{" "}
                 </p>
-                <p style={{ marginBottom: "0"}}>
-                  {" "}
-                  {this.props.ordonnance.ville}{" "}
+                <p>
+                  {this.props.ordonnance.ville} {this.props.ordonnance.code}
                 </p>
                 <div className="d-flex mt-50">
-                  <p  style={{ marginBottom: "0",fontSize:"15px",cursor:"pointer"}}>
+                  <p
+                    style={{
+                      marginBottom: "0",
+                      fontSize: "15px",
+                      cursor: "pointer",
+                    }}
+                  >
                     {" "}
                     {this.props.ordonnance.patient.num_tel}{" "}
                   </p>
@@ -59,11 +71,11 @@ class SecondSection extends React.Component {
                       }}
                     >
                       <PhoneCall className="mr-25" size={15} />
-                      Le client veut étre appelé
+                      Le client veut être rappelé
                     </Badge>
                   ) : null}
                 </div>
-                <p style={{ marginBottom: "0" , marginTop:"10px" }}>
+                <p style={{ marginBottom: "0", marginTop: "10px" }}>
                   {this.props.ordonnance.patient.email}
                 </p>
               </div>
@@ -75,15 +87,20 @@ class SecondSection extends React.Component {
           <CardBody>
             <CardBody>
               <div className="mb-3 mt-0">
-                <span>Facturation</span>
+                <span style={{ fontSize: "17px", fontWeight: "bold" }}>
+                  Facturation
+                </span>
               </div>
               <div>
                 <p>
-                  Montant : <strong>En calcul</strong>
+                  Montant :{" "}
+                  {this.props.ordonnance.montant
+                    ? this.props.ordonnance.montant + "€"
+                    : "En calcul"}
                 </p>
                 <p>CMU : {this.props.ordonnance.CMU ? "Oui" : "Non"} </p>
                 <p>
-                  Mutuelle: {this.props.ordonnance.muttuelle ? "Oui" : "Non"}{" "}
+                  Mutuelle: {this.props.ordonnance.mutuelle ? "Oui" : "Non"}{" "}
                 </p>
               </div>
             </CardBody>

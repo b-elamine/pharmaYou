@@ -1,9 +1,8 @@
 import React from "react";
-import axios from "axios";
-import { Input, Card, CardHeader, CardBody, Button } from "reactstrap";
-import { X, Users, Truck } from "react-feather";
+import {  Card, CardHeader, CardBody, Button } from "reactstrap";
+import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import Switch from "react-switch";
+// import Switch from "react-switch";
 import Select from "react-select";
 
 import { ContentState, EditorState } from "draft-js";
@@ -33,8 +32,8 @@ class ComposeEmail extends React.Component {
     checked: false,
     options: [
       { value: "attestation_mutuelle", label: "Attestation Mututelle" },
-      { value: "problem_ordonnance", label: "Problem ordonnance" },
-      { value: "problem_carte_vital", label: "Problem carte vital" },
+      { value: "probleme_ordonnance", label: "Probleme ordonnance" },
+      { value: "probleme_carte_vital", label: "Probleme carte vital" },
     ],
     document_manquant_value: "",
   };

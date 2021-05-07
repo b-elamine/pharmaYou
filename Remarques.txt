@@ -1,32 +1,9 @@
-vu d'ensemble 
-	regler les icon rodhoum des rond (Done)
-	f le tableau :
-		dir ge3 les commandes (ordo,et pro) (Done)
-		f les actions nkhalou ghir voir (Done)
-		mettre un lien (done)
-		regler la recherche dans le tableau 
-		update chaque minut (done)
 
-Odonnance 
-	regler l'url  (DONE) 
-	regler le redius dans les icons de la card statisqtique  (DONE)  
-	agrandir les info de l'ordonnance (DONE) 
-	il faut regler les inputs dans le prix (DONE)
-	Regler la recherche(DONE)
+views/Ordonnances/Orodnnance/Ordonnance.js:106 : pas de photo de profil    PAS COMPRIS
 
 
-Client Particulier 
-	il faut regles le tableau (DONE)
-	Changer l'url (DONE)
-	regler la recherche (DONE)
 
-Ordonnance recue 
-	il faut ajouter des select pour faire la selection comma dans la page partenaire  (DONE)
-	les couleurs dans les card statistique (DONE)
-
-Livreur 
-	modifier le calendrier pou selectionné que les jours dans le futur,(done)
-	regler flatpicker (done),
-	rendre les dates en francais (done)
-
-
+ 
+--- A faire plus tard (liste non exhaustive) ---
+Statistiques : prendre en compte les vraies données
+Notifications

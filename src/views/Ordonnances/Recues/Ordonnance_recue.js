@@ -3,7 +3,7 @@ import { Row, Col, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-import Icon from "./ICON.png";
+// import Icon from "./ICON.png";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -11,9 +11,9 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { history } from "../../../history";
 
 import {
-  CursorFill,
+  // CursorFill,
   EyeFill,
-  ThreeDotsVertical,
+  // ThreeDotsVertical,
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
@@ -23,213 +23,216 @@ import {
   Check2,
   Exclamation,
   Hourglass,
-  DoorClosed,
-  FolderX,
+  // DoorClosed,
+  // FolderX,
   FolderMinus,
 } from "react-bootstrap-icons";
 import Select from "react-select";
+import moment from "moment-timezone";
+import "moment/locale/fr";
+
 // fake database
 
-const data = [
-  {
-    commande_id: "1-IZ-62",
-    commande_serial_id: 1749,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497935,
-    nom_complet_livraison: "Ian Atlas",
-    adresse_livraison: "2 rue du Commerce",
-    code_postal_livraison: "75015",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 2,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Ian",
-    prenom_patient: "Atlas",
-  },
-  {
-    commande_id: "1-LE-27",
-    commande_serial_id: 1762,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Dean Ethan",
-    adresse_livraison: "125",
-    code_postal_livraison: "75013",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Dean",
-    prenom_patient: "Ethan",
-  },
-  {
-    commande_id: "1-NH-04",
-    commande_serial_id: 1763,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "David Hunter",
-    adresse_livraison: "117 rue de Losserand",
-    code_postal_livraison: "75014",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "David",
-    prenom_patient: "Hunter",
-  },
-  {
-    commande_id: "1-JB-50",
-    commande_serial_id: 1761,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Luca Arthur",
-    adresse_livraison: "119 rue de Flandres",
-    code_postal_livraison: "75019",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Luca",
-    prenom_patient: "Arthur",
-  },
-  {
-    commande_id: "1-GY-73",
-    commande_serial_id: 1760,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Alex August",
-    adresse_livraison: "129 rue d\u2019Al\u00e9sia",
-    code_postal_livraison: "75014",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Alex",
-    prenom_patient: "August",
-  },
-  {
-    commande_id: "1-EV-96",
-    commande_serial_id: 1759,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Luka Braxton",
-    adresse_livraison: "117 rue de Losserand",
-    code_postal_livraison: "75014",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Luka",
-    prenom_patient: "Braxton",
-  },
-  {
-    commande_id: "1-XT-01",
-    commande_serial_id: 1756,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Hunter Luis",
-    adresse_livraison: "91 rue du faubourg Saint-Denis",
-    code_postal_livraison: "75010",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Hunter",
-    prenom_patient: "Luis",
-  },
-  {
-    commande_id: "1-TN-47",
-    commande_serial_id: 1754,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Elias Felix",
-    adresse_livraison: "54 bd de l\u2019H\u00f4pital",
-    code_postal_livraison: "75013",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Elias",
-    prenom_patient: "Felix",
-  },
-  {
-    commande_id: "1-VQ-24",
-    commande_serial_id: 1755,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Javier Finn",
-    adresse_livraison: "92 rue d\u2019Al\u00e9sia",
-    code_postal_livraison: "75014",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Javier",
-    prenom_patient: "Finn",
-  },
-  {
-    commande_id: "1-CT-19",
-    commande_serial_id: 1758,
-    type: "ordo",
-    created_at: 1619497729,
-    updated_at: 1619497729,
-    nom_complet_livraison: "Parker Santiago",
-    adresse_livraison: "125",
-    code_postal_livraison: "75013",
-    ville_livraison: "Paris",
-    geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
-    telephone: "0612345678",
-    email: null,
-    status_commande: 0,
-    montant_total: null,
-    origine: null,
-    nom_patient: "Parker",
-    prenom_patient: "Santiago",
-  },
-];
-const ordonnances = {
-  non_traité: 10,
-  en_attente: 2,
-  en_cours_livraison: 20,
-  livrée: 30,
-  assigner_tournée: 14,
-  dossier_incomplet: 4,
-};
+// const data = [
+//   {
+//     commande_id: "1-IZ-62",
+//     commande_serial_id: 1749,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497935,
+//     nom_complet_livraison: "Ian Atlas",
+//     adresse_livraison: "2 rue du Commerce",
+//     code_postal_livraison: "75015",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 2,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Ian",
+//     prenom_patient: "Atlas",
+//   },
+//   {
+//     commande_id: "1-LE-27",
+//     commande_serial_id: 1762,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Dean Ethan",
+//     adresse_livraison: "125",
+//     code_postal_livraison: "75013",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Dean",
+//     prenom_patient: "Ethan",
+//   },
+//   {
+//     commande_id: "1-NH-04",
+//     commande_serial_id: 1763,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "David Hunter",
+//     adresse_livraison: "117 rue de Losserand",
+//     code_postal_livraison: "75014",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "David",
+//     prenom_patient: "Hunter",
+//   },
+//   {
+//     commande_id: "1-JB-50",
+//     commande_serial_id: 1761,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Luca Arthur",
+//     adresse_livraison: "119 rue de Flandres",
+//     code_postal_livraison: "75019",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Luca",
+//     prenom_patient: "Arthur",
+//   },
+//   {
+//     commande_id: "1-GY-73",
+//     commande_serial_id: 1760,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Alex August",
+//     adresse_livraison: "129 rue d\u2019Al\u00e9sia",
+//     code_postal_livraison: "75014",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Alex",
+//     prenom_patient: "August",
+//   },
+//   {
+//     commande_id: "1-EV-96",
+//     commande_serial_id: 1759,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Luka Braxton",
+//     adresse_livraison: "117 rue de Losserand",
+//     code_postal_livraison: "75014",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Luka",
+//     prenom_patient: "Braxton",
+//   },
+//   {
+//     commande_id: "1-XT-01",
+//     commande_serial_id: 1756,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Hunter Luis",
+//     adresse_livraison: "91 rue du faubourg Saint-Denis",
+//     code_postal_livraison: "75010",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Hunter",
+//     prenom_patient: "Luis",
+//   },
+//   {
+//     commande_id: "1-TN-47",
+//     commande_serial_id: 1754,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Elias Felix",
+//     adresse_livraison: "54 bd de l\u2019H\u00f4pital",
+//     code_postal_livraison: "75013",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Elias",
+//     prenom_patient: "Felix",
+//   },
+//   {
+//     commande_id: "1-VQ-24",
+//     commande_serial_id: 1755,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Javier Finn",
+//     adresse_livraison: "92 rue d\u2019Al\u00e9sia",
+//     code_postal_livraison: "75014",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Javier",
+//     prenom_patient: "Finn",
+//   },
+//   {
+//     commande_id: "1-CT-19",
+//     commande_serial_id: 1758,
+//     type: "ordo",
+//     created_at: 1619497729,
+//     updated_at: 1619497729,
+//     nom_complet_livraison: "Parker Santiago",
+//     adresse_livraison: "125",
+//     code_postal_livraison: "75013",
+//     ville_livraison: "Paris",
+//     geocoords_livraison: { lat: 48.8566, lon: 2.3522 },
+//     telephone: "0612345678",
+//     email: null,
+//     status_commande: 0,
+//     montant_total: null,
+//     origine: null,
+//     nom_patient: "Parker",
+//     prenom_patient: "Santiago",
+//   },
+// ];
+// const ordonnances = {
+//   non_traité: 10,
+//   en_attente: 2,
+//   en_cours_livraison: 20,
+//   livrée: 30,
+//   assigner_tournée: 14,
+//   dossier_incomplet: 4,
+// };
 const columns = [
   {
     name: "#",
@@ -242,7 +245,6 @@ const columns = [
         className="text-bold-500 mb-0"
         onClick={() => {
           const url = `/ordonnance/${row.id}`;
-          console.log(row);
           history.push(url, row);
         }}
       >
@@ -325,15 +327,6 @@ const columns = [
     minWidth: "180px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-        <div className="user-img ml-xl-0 ml-2">
-          <img
-            className="img-fluid rounded-circle"
-            height="36"
-            width="36"
-            src={row.image}
-            alt={row.name}
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
@@ -373,7 +366,7 @@ const columns = [
     name: "MONTANT",
     selector: "montant",
     sortable: true,
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant} €</p>,
+    cell: (row) => row.montant !== null ? <p className="text-bold-500 mb-0">{row.montant} €</p>:<p className="text-bold-500 mb-0">En calcul</p>,
   },
   {
     name: "DATE",
@@ -381,7 +374,7 @@ const columns = [
     minWidth: "180px",
     sortable: true,
     cell: (row) => (
-      <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
+      <p className="text-bold-500 text-wrap mb-0">{row.date}</p>
     ),
   },
   {
@@ -412,7 +405,7 @@ const columns = [
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier MEDADOM
+          MEDADOM
         </Badge>
       ) : row.origine === "web" ? (
         <Badge
@@ -420,17 +413,23 @@ const columns = [
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier WEB
+          WEB
         </Badge>
-      ) : row.origine === "appli" ? (
+      ) : row.origine === "app" ? (
         <Badge
           color="light-success text-wrap text-bold-500 mb-0"
           style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
           pill
         >
-          Infirmier Appli
+          Appli
         </Badge>
-      ) : null,
+      ) : <Badge
+      color="light-success text-wrap text-bold-500 mb-0"
+      style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+      pill
+    >
+      Pro
+    </Badge>,
   },
   {
     name: "Actions",
@@ -561,6 +560,8 @@ class Ordonnances_recue extends React.Component {
         const commandes_ordo = commandes.data.filter(
           (item) => item.type === "ordo"
         );
+        console.log(commandes_ordo)
+
         const custom_commandes = commandes_ordo.map((item) => {
           return {
             ...item,
@@ -579,23 +580,22 @@ class Ordonnances_recue extends React.Component {
                 : item.status_commande === 3
                 ? "livrée"
                 : null,
-            // status :"incomplet",
             name: item.nom_patient + " " + item.prenom_patient,
-            // name: 'Akram Ouardas',
             type: item.type === "ordo" ? "Particulier" : "Professionnel",
-            image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-            montant: item.montant_total ? item.montant_total : 0,
-            date: new Date(item.created_at).toLocaleDateString("fr-FR", {
+            montant: item.montant_total,
+            date: new Date(moment(item.updated_at * 1000).tz('Europe/Paris')).toLocaleDateString("fr-FR", {
               weekday: "long",
               year: "numeric",
               month: "long",
               day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit"
             }),
             code: item.code_postal_livraison,
-            origine: "infirmier",
+            origine: item.origine,
             email: item.email,
             ville: item.ville_livraison,
-            paiment: "reglé",
+            paiment: item.status_paiement,
             patient: {
               nom: item.nom_patient,
               prenom: item.prenom_patient,
@@ -608,7 +608,7 @@ class Ordonnances_recue extends React.Component {
                 : "Pas de note pour l'instant.",
             },
             CMU: true,
-            mutuelle: false,
+            mutuelle: item.vitale_ok,
           };
         });
         this.setState({
@@ -625,8 +625,8 @@ class Ordonnances_recue extends React.Component {
     } catch (err) {
       const error_message =
         err.message === "Network Error"
-          ? "Une erreur est produite lors de la récupération des données."
-          : "Vérifier votre connexion !";
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
       this.handleAlert("errorAlert", true, error_message);
     }
   };
@@ -634,8 +634,6 @@ class Ordonnances_recue extends React.Component {
   componentDidMount() {
     // fetching the data from the database and passing it to the state
     this.fetching_data();
-    console.log(this.state.data);
-
     this.setState({
       columns: columns,
       // data: data,
@@ -675,8 +673,8 @@ class Ordonnances_recue extends React.Component {
     return (
       <React.Fragment>
         <Breadcrumbs
-          breadCrumbTitle="Ordonnance Reçues."
-          breadCrumbParent="Ordonnance reçues"
+          breadCrumbTitle="Ordonnances reçues."
+          breadCrumbParent="Ordonnances reçues."
         />
         <Row>
           <Col xl="2" lg="4" sm="6">
@@ -687,6 +685,7 @@ class Ordonnances_recue extends React.Component {
               bg_color="danger"
               iconBg="danger"
               icon={
+                
                 <div
                 style={{
                   marginRight:"auto",
@@ -705,7 +704,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
               stat={nbr_ordo_non_traité}
-              statTitle="Ordonnances Non traité"
+              statTitle="Ordonnances non traitées"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -733,7 +732,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
               stat={nbr_ordo_incomplet}
-              statTitle="Dossiers Incomplet"
+              statTitle="Dossiers incomplets"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -762,7 +761,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
               stat={nbr_ordo_approvis}
-              statTitle="Ordonnances attente approvisionnement"
+              statTitle="Ordonnances en attente d'approvisionnement"
             />
           </Col>
           <Col xl="2" lg="4" sm="6">
@@ -791,7 +790,7 @@ class Ordonnances_recue extends React.Component {
                 size={30} />
                 </div> }
                 stat={nbr_ordo_assigner_tournée}
-                statTitle="Ordonnances assignés a une tournée"
+                statTitle="Ordonnances assignées à une tournée"
                 
               />
              
@@ -822,7 +821,7 @@ class Ordonnances_recue extends React.Component {
               size={35} />
               </div> }
               stat={nbr_ordo_en_cours_livraison}
-              statTitle="Ordonnances en Cours de livraison"
+              statTitle="Ordonnances en cours de livraison"
               
             />
             
@@ -853,7 +852,7 @@ class Ordonnances_recue extends React.Component {
                 size={35} />
                 </div> }
               stat={nbr_ordo_livrée}
-              statTitle="Ordonnances livré Aujourd'hui."
+              statTitle="Ordonnances livrées aujourd'hui"
             />
           </Col>
         </Row>
@@ -862,7 +861,7 @@ class Ordonnances_recue extends React.Component {
           <Col md="4" sm="8">
             <Select
               classNamePrefix="select"
-              placeholder="Status"
+              placeholder="Statut"
               name="Status"
               onChange={this.handle_filter_status}
               options={this.state.options.status}
