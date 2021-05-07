@@ -6,6 +6,7 @@ import "../../assets/scss/pages/dashboard-analytics.scss";
 import { ButtonGroup } from "reactstrap";
 import { BellFill, HourglassSplit } from "react-bootstrap-icons";
 import { User, FileText, DollarSign } from "react-feather";
+import axios from "../../axios";
 
 class stats extends React.Component {
   state = {
@@ -292,6 +293,18 @@ class stats extends React.Component {
       },
     });
   };
+
+  fetching_data = async () => {
+
+      const statistiques = await axios.get("/statistiques?access_token=a");
+      console.log(statistiques.data)
+  
+  }
+
+  componentDidMount(){
+    this.fetching_data()
+  }
+
   render() {
     window.setInterval(this.updateState, 10000);
     return (
