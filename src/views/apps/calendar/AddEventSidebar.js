@@ -420,7 +420,7 @@ class AddEvent extends React.Component {
                       label: this.state.label,
                       start: this.state.startDate,
                       end: this.state.endDate,
-                      allDay: true,
+                      allDay: false,
                       selectable: true,
                       facturation: this.state.facturation,
                       renumeration: this.state.renumeration,

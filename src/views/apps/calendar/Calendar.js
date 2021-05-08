@@ -183,7 +183,7 @@ class CalendarApp extends React.Component {
     const idx = events.indexOf(event);
     let allDay = event.allDay;
     if (!event.allDay && droppedOnAllDaySlot) {
-      allDay = true;
+      allDay = false;
     } else if (event.allDay && !droppedOnAllDaySlot) {
       allDay = false;
     }
@@ -222,6 +222,7 @@ class CalendarApp extends React.Component {
   };
 
   handleSelectEvent = (event) => {
+    console.log(event);
     let filteredState = this.state.events.filter((i) => i.id === event.id);
     this.props.handleSidebar(true);
     this.props.handleSelectedEvent(filteredState[0]);
@@ -231,7 +232,7 @@ class CalendarApp extends React.Component {
   };
 
   render() {
-    let { checkAll, checkCreneau,filterEvents, events, views, sidebar } = this.state;
+    let { events, views, sidebar } = this.state;
     return (
       <div className="app-calendar position-relative">
         <div
@@ -259,47 +260,47 @@ class CalendarApp extends React.Component {
               </div>
               <div style={{ marginBottom: "20px" }}>
                 <Checkbox
-                  checked={checkAll}
+                  // checked={checkAll}
                   size="sm"
                   color="warning"
                   icon={<Check className="vx-icon" size={12} />}
                   label="tout voir"
-                  onChange={() => {
-                    if (!checkAll) {
-                      this.setState({
-                        filterEvents: events,
-                        checkAll: !checkAll,
-                        checkCreneau: false,
-                      });
-                    }
-                  }}
+                  // onChange={() => {
+                  //   if (!checkAll) {
+                  //     this.setState({
+                  //       filterEvents: events,
+                  //       checkAll: !checkAll,
+                  //       checkCreneau: false,
+                  //     });
+                  //   }
+                  // }}
                 />
               </div>
               <div style={{ marginBottom: "20px" }}>
                 <Checkbox
-                  checked={checkCreneau}
+                  // checked={checkCreneau}
                   size="sm"
                   color="primary"
                   icon={<Check className="vx-icon" size={12} />}
                   label="créneaux livraison"
-                  onChange={() => {
-                    if (!checkCreneau) {
-                      let filterEvents = events.filter(
-                        (item) => item.label === "créneau_de_livraison"
-                      );
-                      this.setState({
-                        filterEvents,
-                        checkCreneau: !checkCreneau,
-                        checkAll: false,
-                      });
-                    }
-                  }}
+                  // onChange={() => {
+                  //   if (!checkCreneau) {
+                  //     let filterEvents = events.filter(
+                  //       (item) => item.label === "créneau_de_livraison"
+                  //     );
+                  //     this.setState({
+                  //       filterEvents,
+                  //       checkCreneau: !checkCreneau,
+                  //       checkAll: false,
+                  //     });
+                  //   }
+                  // }}
                 />
               </div>
             </div>
             <DragAndDropCalendar
               localizer={localizer}
-              events={filterEvents.length !== 0 ? filterEvents : events}
+              events={events}
               onEventDrop={this.moveEvent}
               onEventResize={this.resizeEvent}
               startAccessor="start"
@@ -309,6 +310,9 @@ class CalendarApp extends React.Component {
               components={{ toolbar: Toolbar }}
               eventPropGetter={this.handleEventColors}
               popup={true}
+              // just a random date it wont affect the day but the time 
+              min={new Date(2020, 5, 7, 8, 0, 0)}
+              max={new Date(2020, 5, 7, 22, 0, 0)}
               onSelectEvent={(event) => {
                 this.handleSelectEvent(event);
               }}

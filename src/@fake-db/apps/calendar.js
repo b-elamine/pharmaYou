@@ -3,45 +3,8 @@ import { EditorState } from "draft-js";
 
 let data = {
   events: [
-    {
-      id: 1,
-      title:"event1",
-      start: new Date(2021,4,29,14,23,0),
-      end: new Date(2021,4,29,15,40,0),
-      label: "personel",
-      allDay: false,
-      selectable: true,
-      facturation: 13,
-      renumeration: 17,
-      checked: true,
-      editorState: EditorState.createEmpty(),
-    },
-    {
-      id: 2,
-      title:"event2",
-      start: new Date(2021,4,28,14,23,0),
-      end: new Date(2021,4,28,15,40,0),
-      label: "travail",
-      allDay: false,
-      selectable: true,
-      facturation: 13,
-      renumeration: 17,
-      checked: true,
-      editorState: EditorState.createEmpty(),
-    },
-    {
-      id: 3,
-      title:"event3",
-      start: new Date(2021,4,12,14,23,0),
-      end: new Date(2021,4,12,15,40,0),
-      label: "personel",
-      allDay: false,
-      selectable: true,
-      facturation: 13,
-      renumeration: 17,
-      checked: true,
-      editorState: EditorState.createEmpty(),
-    },
+
+
     {
       id: 4,
       title:"event4",
