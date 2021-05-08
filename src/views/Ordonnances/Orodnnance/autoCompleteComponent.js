@@ -108,6 +108,7 @@ class Autocomplete extends React.Component {
         userInput: this.filteredData[activeSuggestion][filterKey],
         showSuggestions: false
       })
+      this.props.setitemchosen(this.filteredData[activeSuggestion][filterKey],this.props.item)
     } else {
       return
     }

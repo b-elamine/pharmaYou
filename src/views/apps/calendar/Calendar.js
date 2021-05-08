@@ -17,6 +17,8 @@ import {
   updateDrag,
   updateResize,
 } from "../../../redux/actions/calendar/index";
+import { EditorState } from "draft-js";
+
 import { ChevronLeft, ChevronRight, Check } from "react-feather";
 
 import "react-big-calendar/lib/addons/dragAndDrop/styles.scss";
@@ -222,7 +224,6 @@ class CalendarApp extends React.Component {
   };
 
   handleSelectEvent = (event) => {
-    console.log(event);
     let filteredState = this.state.events.filter((i) => i.id === event.id);
     this.props.handleSidebar(true);
     this.props.handleSelectedEvent(filteredState[0]);
@@ -310,21 +311,32 @@ class CalendarApp extends React.Component {
               components={{ toolbar: Toolbar }}
               eventPropGetter={this.handleEventColors}
               popup={true}
-              // just a random date it wont affect the day but the time 
+              // just a random date it wont affect the day but the time
               min={new Date(2020, 5, 7, 8, 0, 0)}
               max={new Date(2020, 5, 7, 22, 0, 0)}
               onSelectEvent={(event) => {
                 this.handleSelectEvent(event);
               }}
               onSelectSlot={({ start, end }) => {
-                this.props.handleSidebar(true);
-                this.props.handleSelectedEvent({
-                  title: "",
-                  label: null,
-                  start: new Date(start),
-                  end: new Date(end),
-                  url: "",
-                });
+                if (new Date(start) > new Date()) {
+                  this.props.handleSidebar(true);
+                  this.props.handleSelectedEvent({
+                    start: new Date(start),
+                    end: new Date(end),
+                    title: "",
+                    label: null,
+                    allDay: false,
+                    selectable: true,
+                    facturation: 1,
+                    renumeration: 1,
+                    editorState: EditorState.createEmpty(),
+                    checked: false,
+                  });
+                } else {
+                  alert(
+                    "Vous pouver pas ajouter ou modifier un créneau dans le passé!"
+                  );
+                }
               }}
               selectable={true}
             />
