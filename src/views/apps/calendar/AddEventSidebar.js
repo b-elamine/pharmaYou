@@ -11,7 +11,6 @@ import {
   Button,
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
-
 import Flatpickr from "react-flatpickr";
 import NumericInput from "react-numeric-input";
 import { mobileStyle } from "../../forms/form-elements/number-input/InputStyles";
@@ -381,11 +380,10 @@ class AddEvent extends React.Component {
                 />
               </FormGroup>
               <FormGroup>
-                <div style={{ height: "200px" }}>
                   <Editor
                     // onChange={(e)=>{console.log(e.blocks)}}
                     wrapperClassName="demo-wrapper"
-                    editorClassName="demo-editor"
+                    // editorClassName="editor"
                     defaultEditorState={this.state.editorState}
                     onEditorStateChange={this.onEditorStateChange}
                     toolbar={{
@@ -398,7 +396,6 @@ class AddEvent extends React.Component {
                       },
                     }}
                   />
-                </div>
               </FormGroup>
             </div>
             <hr className="my-2" />
@@ -420,7 +417,7 @@ class AddEvent extends React.Component {
                       label: this.state.label,
                       start: this.state.startDate,
                       end: this.state.endDate,
-                      allDay: true,
+                      allDay: false,
                       selectable: true,
                       facturation: this.state.facturation,
                       renumeration: this.state.renumeration,

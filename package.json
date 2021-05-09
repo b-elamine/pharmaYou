@@ -48,6 +48,7 @@
     "react-copy-to-clipboard": "~5.0.2",
     "react-countdown-now": "~2.1.2",
     "react-country-flag": "^2.0.1",
+    "react-csv-reader": "^3.3.0",
     "react-data-table-component": "^6.2.3",
     "react-dom": "^16.12.0",
     "react-draft-wysiwyg": "^1.14.4",

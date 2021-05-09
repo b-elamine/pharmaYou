@@ -193,15 +193,17 @@ class ComposeEmail extends React.Component {
                 onChange={this.handleSelect}
               />
             </div>
-            <div id="email-notif" style={{ marginTop: "80px" }}>
+            <div style={{marginBottom:"50px"}}>
+            <div id="email-notif" style={{ marginTop: "20px" }}>
               <span style={{ fontSize: "15px" }}>
                 <Users className="mr-75" size="20" color="#ff9f43" />
                 Notification client sms et email
               </span>
+              
               <Editor
                 editorState={editorState}
                 wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
+                // editorClassName="demo-editor"
                 onEditorStateChange={this.onEditorStateChange}
                 onChange={(e) => this.setState({ emailBody: e.blocks })}
                 toolbar={{
@@ -223,7 +225,7 @@ class ComposeEmail extends React.Component {
               <Editor
                 editorState={editorState1}
                 wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
+                // editorClassName="demo-editor"
                 onEditorStateChange={this.onEditorStateChange1}
                 onChange={(e) => this.setState({ commentaire: e.blocks })}
                 toolbar={{
@@ -236,6 +238,7 @@ class ComposeEmail extends React.Component {
                   },
                 }}
               />
+            </div>
             </div>
             <div className="action-btns d-flex justify-content-start mt-1">
               <Button.Ripple

@@ -6,6 +6,9 @@ import "../../assets/scss/pages/dashboard-analytics.scss";
 import { ButtonGroup } from "reactstrap";
 import { BellFill, HourglassSplit } from "react-bootstrap-icons";
 import { User, FileText, DollarSign } from "react-feather";
+import axios from "../../axios";
+import { data } from "jquery";
+import { object } from "yup";
 
 class stats extends React.Component {
   state = {
@@ -203,22 +206,18 @@ class stats extends React.Component {
         },
         xaxis: {
           categories: [
-            "South Korea",
-            "Canada",
-            "United Kingdom",
-            "Netherlands",
-            "Italy",
-            "France",
-            "Japan",
-            "United States",
-            "China",
-            "Germany",
+           "hh",
+           "hh",
+           "hh",
+           "hh",
+           "hh",
+           "hh",
           ],
         },
       },
       series: [
         {
-          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380],
+          data: [1,45,67,88,94,24],
         },
       ],
     },
@@ -258,11 +257,12 @@ class stats extends React.Component {
           ],
         },
       },
-      series: [
+      series: 
+        [
         {
           data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380],
         },
-      ],
+        ],
     },
 
     table: {
@@ -282,18 +282,76 @@ class stats extends React.Component {
       },
     },
   };
-  updateState = () => {
-    this.setState({
-      table: {
-        cmd_pro: Math.floor(Math.random() * 100),
-        cmd_pro_livre: Math.floor(Math.random() * 100),
-        client: Math.floor(Math.random() * 100),
-        moyenne_par_cmd: Math.floor(Math.random() * 100),
-      },
-    });
-  };
+  // updateState = () => {
+  //   this.setState({
+  //     table: {
+  //       cmd_pro: Math.floor(Math.random() * 100),
+  //       cmd_pro_livre: Math.floor(Math.random() * 100),
+  //       client: Math.floor(Math.random() * 100),
+  //       moyenne_par_cmd: Math.floor(Math.random() * 100),
+  //     },
+  //   });
+  // };
+
+  fetching_data = async () => {
+
+      const statistiques = await axios.get("/statistiques_ca?access_token=a");
+      console.log(statistiques.data)
+      const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers
+      const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels
+
+      this.setState((prev_state,props)=> {
+        return {
+          ...prev_state,
+          horizontal_Chart2: {
+            ...prev_state.horizontal_Chart2, 
+            series : 
+            [
+              {
+                data : Object.values(statistiques_ca_professionnels)
+              }
+            ],
+            options : 
+            
+            {
+              xaxis : {
+                categories : Object.keys(statistiques_ca_professionnels)
+              }
+            }
+          },
+          horizontal_Chart1: {
+            ...prev_state.horizontal_Chart1, 
+            series : 
+            [
+              {
+                data : Object.values(statistiques_ca_par)
+              }
+            ],
+            options : 
+            
+              {
+                xaxis : {
+                  categories : Object.keys(statistiques_ca_par)
+                }
+              }
+
+          } 
+
+        }
+
+        
+      })
+    }
+    
+
+  componentDidMount(){
+    this.fetching_data()
+  }
+
   render() {
-    window.setInterval(this.updateState, 10000);
+    console.log(this.state.horizontal_Chart2)
+    console.log(this.state.horizontal_Chart1)
+    // window.setInterval(this.updateState, 10000);
     return (
       <div>
         <Row>

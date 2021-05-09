@@ -177,7 +177,7 @@ class ComposeEmail extends React.Component {
               <Editor
                 editorState={editorState}
                 wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
+                // editorClassName="demo-editor"
                 onEditorStateChange={this.onEditorStateChange}
                 onChange={(e) => this.setState({ emailBody: e.blocks })}
                 value={this.state.editorMessage}

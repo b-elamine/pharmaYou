@@ -553,6 +553,7 @@ class Ordonnances_recue extends React.Component {
   fetching_data = async () => {
     try {
       const commandes = await axios.get("/commandes?access_token=a");
+      console.log(commandes)
       // const commandes = {statusText :"OK",data : data };
 
       if (commandes.statusText === "OK") {

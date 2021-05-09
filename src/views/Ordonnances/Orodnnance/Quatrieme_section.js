@@ -245,7 +245,7 @@ class QuatriemeSection extends React.Component {
     total_array.forEach((item) => {
       total = total + item;
     });
-    total = total.toFixed(2)
+    total = total.toFixed(2);
     const options = [
       { value: "classique", label: "Ordonnance Classique" },
       // { value: "option_2", label: "Option 2" },
@@ -316,6 +316,15 @@ class QuatriemeSection extends React.Component {
                         filterKey="title"
                         suggestionLimit={20}
                         placeholder="Produit 1,produit 2,produit 3"
+                        // onKeyDown={(e, inpt)=>{
+                        //   if(e.keyCode === 13){
+                        //     console.log(inpt)
+                        //   }
+                        // }}
+                        item={item.id}
+                        setitemchosen={(value, id) =>
+                          this.produit_input_change_handler(value, id)
+                        }
                         onSuggestionClick={(e) => {
                           this.produit_input_change_handler(
                             e.currentTarget.innerText,
