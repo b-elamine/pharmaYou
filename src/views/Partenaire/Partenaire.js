@@ -4,6 +4,7 @@ import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
 // import DataTableCustom from "../DataTableCustom/DataTableCustom";
 import { Edit, Eye } from "react-feather";
 import Select from "react-select";
+import axios from "../../axios";
 import { history } from "../../history";
 import DataTablePartenaire from "./DataTablePartenaire";
 
@@ -25,7 +26,7 @@ const data = [
     carte_vital: true,
     mutuelle: false,
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     // id: 2,
@@ -43,7 +44,7 @@ const data = [
     carte_vital: false,
     mutuelle: true,
     profession: "infirmier",
-    ville:"marseille",
+    ville: "marseille",
   },
   {
     // id: 3,
@@ -61,7 +62,7 @@ const data = [
     carte_vital: false,
     mutuelle: true,
     profession: "Application Externe",
-    ville:"lyon",
+    ville: "lyon",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
@@ -74,7 +75,7 @@ const data = [
     carte_vital: true,
     mutuelle: true,
     profession: "Application Externe",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
@@ -87,7 +88,7 @@ const data = [
     ordonnances: 10,
     mutuelle: true,
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
@@ -100,7 +101,7 @@ const data = [
     ordonnances: 0,
     mutuelle: true,
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
@@ -113,7 +114,7 @@ const data = [
     mutuelle: true,
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
@@ -125,7 +126,7 @@ const data = [
     ratings: "bad",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
@@ -137,7 +138,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
@@ -148,7 +149,7 @@ const data = [
     montant: "$60,000",
     ratings: "average",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
@@ -160,7 +161,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
@@ -172,7 +173,7 @@ const data = [
     ratings: "bad",
     profession: "infirmier",
 
-    ville:"paris",
+    ville: "paris",
     origine: "Partenaire App",
   },
   {
@@ -185,7 +186,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
@@ -197,7 +198,7 @@ const data = [
     ratings: "average",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
@@ -209,7 +210,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
@@ -221,7 +222,7 @@ const data = [
     ratings: "good",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-24.jpg"),
@@ -233,7 +234,7 @@ const data = [
     ratings: "average",
     origine: "Partenaire App",
     profession: "infirmier",
-    ville:"paris",
+    ville: "paris",
   },
   {
     image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
@@ -473,7 +474,7 @@ const columns = [
   {
     name: "PARTENAIRE DEPUIS",
     selector: "date_client",
-    minWidth:"200px",
+    minWidth: "200px",
     sortable: true,
     cell: (row) => <p className="text-truncate mb-0">{row.date}</p>,
   },
@@ -494,17 +495,15 @@ const columns = [
         <Eye
           className="cursor-pointer mr-1"
           size={20}
-          onClick=
-            {() => {
-              history.push("/partenaires/info",row);
-            }}
+          onClick={() => {
+            history.push("/partenaires/info", row);
+          }}
         />
         <Edit
           className="cursor-pointer"
           size={20}
           onClick={() => {
-            history.push("/partenaires/modifier_partenaire",row)
-
+            history.push("/partenaires/modifier_partenaire", row);
           }}
         />
       </div>
@@ -586,7 +585,16 @@ class Partenaire extends React.Component {
     this.setState({
       data: data,
     });
+    // this.fetch_data();
   }
+
+  // fetch_data = async () => {
+  //   const res = await axios.get("/statistiques?access_token=a");
+  //   console.log((res.data))
+  //   const data = JSON.parse(res.data);
+  //   console.log("datais : ",data);
+  // };
+
   componentDidUpdate() {
     if (
       this.state.options.professions.length === 0 &&
@@ -631,9 +639,9 @@ class Partenaire extends React.Component {
     }
   };
 
-  add_new =()=>{
-    history.push("/partenaires/nouveau_partenaire")
-  }
+  add_new = () => {
+    history.push("/partenaires/nouveau_partenaire");
+  };
   handle_filter_profession = (e) => {
     let value = e.value;
     let data = this.state.data;
@@ -644,7 +652,8 @@ class Partenaire extends React.Component {
         if (!item.profession) {
           return null;
         }
-        let equalCondition = item.profession.toLowerCase() === value.toLowerCase();
+        let equalCondition =
+          item.profession.toLowerCase() === value.toLowerCase();
         if (equalCondition) {
           return equalCondition;
         } else return null;
