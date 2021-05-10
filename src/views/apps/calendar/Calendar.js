@@ -313,7 +313,7 @@ class CalendarApp extends React.Component {
               popup={true}
               // just a random date it wont affect the day but the time
               min={new Date(2020, 5, 7, 7, 0, 0)}
-              max={new Date(2020, 5, 7, 13, 0, 0)}
+              max={new Date(2020, 5, 7, 23, 0, 0)}
               onSelectEvent={(event) => {
                 this.handleSelectEvent(event);
               }}
