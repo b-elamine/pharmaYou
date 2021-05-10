@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
-// import DataTableCustom from "../DataTableCustom/DataTableCustom"
 import "../../assets/scss/pages/dashboard-analytics.scss";
 import { ButtonGroup } from "reactstrap";
 import { BellFill, HourglassSplit } from "react-bootstrap-icons";
@@ -13,11 +12,14 @@ class stats extends React.Component {
     pro_chart_bar: {
       series: [
         {
-          data: [0,1,2,3,4],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
@@ -27,7 +29,7 @@ class stats extends React.Component {
         colors: ["#FF5614"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -58,11 +60,14 @@ class stats extends React.Component {
     pro_chart_line: {
       series: [
         {
-          data: [42, 21, 22, 10, 28],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
@@ -72,7 +77,7 @@ class stats extends React.Component {
         colors: ["#28C76F"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -84,7 +89,7 @@ class stats extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [["John"], ["Joe"], ["Jake"], ["Peter"]],
+          categories: [],
           labels: {
             show: false,
           },
@@ -97,14 +102,17 @@ class stats extends React.Component {
         },
       },
     },
-    particular_char_bar: {
+    particular_chart_bar: {
       series: [
         {
-          data: [42, 21, 22, 10, 28],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
@@ -114,7 +122,7 @@ class stats extends React.Component {
         colors: ["#FC8F04"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -126,7 +134,6 @@ class stats extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [["John"], ["Joe"], ["Jake"], ["Peter"], ["Peter"]],
           labels: {
             show: false,
           },
@@ -139,14 +146,17 @@ class stats extends React.Component {
         },
       },
     },
-    particular_char_line: {
+    particular_chart_line: {
       series: [
         {
-          data: [42, 21, 22, 10, 28],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
@@ -156,7 +166,7 @@ class stats extends React.Component {
         colors: ["#00CFE8"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -168,7 +178,6 @@ class stats extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [["John"], ["Joe"], ["Jake"], ["Peter"]],
           labels: {
             show: false,
           },
@@ -184,7 +193,12 @@ class stats extends React.Component {
     horizontal_Chart1: {
       options: {
         chart: {
-          toolbar: false,
+          zoom: {
+            enable: false,
+          },
+          toolbar: {
+            show:false
+          },
           height: "15rem",
         },
         colors: ["#fb8705"],
@@ -203,26 +217,21 @@ class stats extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [
-           "hh",
-           "hh",
-           "hh",
-           "hh",
-           "hh",
-           "hh",
-          ],
+          categories: ["hh", "hh", "hh", "hh", "hh", "hh"],
         },
       },
       series: [
         {
-          data: [1,45,67,88,94,24],
+          data: [1, 45, 67, 88, 94, 24],
         },
       ],
     },
     horizontal_Chart2: {
       options: {
         chart: {
-          toolbar: false,
+          toolbar: {
+            show  : false
+          },
           height: "15rem",
         },
         colors: ["#0981f6"],
@@ -246,12 +255,11 @@ class stats extends React.Component {
           ],
         },
       },
-      series: 
-        [
+      series: [
         {
           data: [],
         },
-        ],
+      ],
     },
     statistiques_particuliers : {
       moy_par_commande:0,
@@ -295,81 +303,134 @@ class stats extends React.Component {
   // };
 
   fetching_data = async () => {
-    try {
-      const statistiques2 = await axios.get("/statistiques?access_token=a");
-      const statistiques = await axios.get("/statistiques_ca?access_token=a");
-      console.log(statistiques.data)
-      const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers
-      const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels
-      // this.setState((prev_state,props)=> {
-      //   return {
-      //     ...prev_state,
-      //     horizontal_Chart2: {
-      //       ...prev_state.horizontal_Chart2, 
-      //       series : 
-      //       [
-      //         {
-      //           data : Object.values(statistiques_ca_professionnels)
-      //         }
-      //       ],
-      //       options : 
-            
-      //       {
-      //         xaxis : {
-      //           categories : Object.keys(statistiques_ca_professionnels)
-      //         }
-      //       }
-      //     },
-      //     horizontal_Chart1: {
-      //       ...prev_state.horizontal_Chart1, 
-      //       series : 
-      //       [
-      //         {
-      //           data : Object.values(statistiques_ca_par)
-      //         }
-      //       ],
-      //       options : 
-            
-      //         {
-      //           xaxis : {
-      //             categories : Object.keys(statistiques_ca_par)
-      //           }
-      //         }
 
-      //     } 
+    const statistiques = await axios.get("/statistiques_ca?access_token=a");
+    const statistiques2 = await axios.get("/statistiques?access_token=a");
+    console.log(statistiques2.data)
+    const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
+    const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels;
 
-      //   } 
-      // })
-      this.setState(  (prev_state, props) => {
-        return {
-        ...prev_state,
-        statistiques_particuliers : statistiques2.data.statistiques_particuliers.jour,
-        statistiques_pro : statistiques2.data.statistiques_professionnels.jour,
-        pro_chart_bar : {
-        ...prev_state.pro_chart_bar,
+    const new_horizontal_chart_1 = {
+      options: {
+        chart: {
+          ...this.state.horizontal_Chart1.options.chart,
+        },
+        colors: this.state.horizontal_Chart1.options.colors,
+        plotOptions: {
+          ...this.state.horizontal_Chart1.options.plotOptions,
+        },
+        dataLabels: {
+          ...this.state.horizontal_Chart1.options.dataLabels,
+        },
+        legend: {
+          ...this.state.horizontal_Chart1.options.legend,
+        },
+        xaxis: {
+          categories: Object.keys(statistiques_ca_par),
+        },
+      },
+      series: [
+        {
+          data: Object.values(statistiques_ca_par),
+        },
+      ],
+    };
+
+    const new_horizontal_chart_2 = {
+      options: {
+        chart: {
+          ...this.state.horizontal_Chart2.options.chart,
+        },
+        colors: this.state.horizontal_Chart2.options.colors,
+        plotOptions: {
+          ...this.state.horizontal_Chart2.options.plotOptions,
+        },
+        dataLabels: {
+          ...this.state.horizontal_Chart2.options.dataLabels,
+        },
+        legend: {
+          ...this.state.horizontal_Chart2.options.legend,
+        },
+        xaxis: {
+          categories: Object.keys(statistiques_ca_professionnels),
+        },
+      },
+      series: [
+        {
+          data: Object.values(statistiques_ca_professionnels),
+        },
+      ],
+    };
+
+
+    this.setState(  (prev_state, props) => {
+      return {
+      //setting Last 2 horizontal charts values
+
+      horizontal_Chart1: new_horizontal_chart_1,
+      horizontal_Chart2: new_horizontal_chart_2,
+
+      //setting first card statistics
+
+      
+      statistiques_particuliers : statistiques2.data.statistiques_particuliers.jour,
+      statistiques_pro : statistiques2.data.statistiques_professionnels.jour,
+      pro_chart_bar : {
+      ...prev_state.pro_chart_bar,
+          series : [
+          prev_state.pro_chart_bar.series,
+            {
+              data :  statistiques2.data.statistiques_professionnels.jour.n_commandes_plot
+            }
+          ]
+      }  ,
+      pro_chart_line : {
+        ...prev_state.pro_chart_line,
             series : [
-            prev_state.pro_chart_bar.series,
+            prev_state.pro_chart_line.series,
               {
-                data :  [232,34,62,43,32]
+                data :  statistiques2.data.statistiques_professionnels.jour.chiffre_daffaire_plot
               }
             ]
         }  ,
-        stats_objet : statistiques2.data,
-      }
-      })
+        particular_chart_bar : {
+          ...prev_state.particular_chart_bar,
+              series : [
+              prev_state.particular_chart_bar.series,
+                {
+                  data :  statistiques2.data.statistiques_particuliers.jour.n_commandes_plot
+                }
+              ]
+          }  ,
+          particular_chart_line : {
+            ...prev_state.particular_chart_line,
+                series : [
+                prev_state.particular_chart_line.series,
+                  {
+                    data :  statistiques2.data.statistiques_particuliers.jour.chiffre_daffaire_plot
+                  }
+                ]
+            }  ,
+      stats_objet : statistiques2.data,
     }
-    catch(err){
-        console.log(err)
-    }
-      
-   
-    }
+    })
     
+  };
 
-  componentDidMount(){
-    console.log("cc")
-    this.fetching_data()
+
+  componentDidUpdate(){
+    console.log(this.state.horizontal_Chart1)
+
   }
+  
+  
+  
+  componentDidMount() {
+    this.fetching_data();
+  }
+  // componentDidUpdate(){
+  //   console.log("hey")
+  // }
 
   render() {
     console.log(this.state.pro_chart_bar.series.data)
@@ -478,8 +539,8 @@ class stats extends React.Component {
                           </h5>
                         </div>
                         <ReactApexChart
-                          options={this.state.pro_chart_bar.options}
-                          series={this.state.pro_chart_bar.series}
+                          options={this.state.particular_chart_bar.options}
+                          series={this.state.particular_chart_bar.series}
                           type="bar"
                           height={"60%"}
                           width={"90%"}
@@ -515,8 +576,8 @@ class stats extends React.Component {
                           </h5>
                         </div>
                         <ReactApexChart
-                          options={this.state.pro_chart_line.options}
-                          series={this.state.pro_chart_line.series}
+                          options={this.state.particular_chart_line.options}
+                          series={this.state.particular_chart_line.series}
                           // type="bar"
                           height={"60%"}
                           width={"90%"}

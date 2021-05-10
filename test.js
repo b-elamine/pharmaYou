@@ -1,3 +1,3 @@
-const test = 15.36284584
+const test = ""
 
 console.log(test.toFixed(2))
