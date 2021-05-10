@@ -217,12 +217,12 @@ class stats extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: ["hh", "hh", "hh", "hh", "hh", "hh"],
+          categories: [],
         },
       },
       series: [
         {
-          data: [1, 45, 67, 88, 94, 24],
+          data: [],
         },
       ],
     },
@@ -250,9 +250,7 @@ class stats extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [
-            
-          ],
+          categories: [ ],
         },
       },
       series: [
@@ -291,22 +289,9 @@ class stats extends React.Component {
     }
   }
 
-  // updateState = () => {
-  //   this.setState({
-  //     table: {
-  //       cmd_pro: Math.floor(Math.random() * 100),
-  //       cmd_pro_livre: Math.floor(Math.random() * 100),
-  //       client: Math.floor(Math.random() * 100),
-  //       moyenne_par_cmd: Math.floor(Math.random() * 100),
-  //     },
-  //   });
-  // };
-
   fetching_data = async () => {
-
     const statistiques = await axios.get("/statistiques_ca?access_token=a");
     const statistiques2 = await axios.get("/statistiques?access_token=a");
-    console.log(statistiques2.data)
     const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
     const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels;
 
@@ -362,7 +347,6 @@ class stats extends React.Component {
       ],
     };
 
-
     this.setState(  (prev_state, props) => {
       return {
       //setting Last 2 horizontal charts values
@@ -417,23 +401,11 @@ class stats extends React.Component {
     
   };
 
-
-  componentDidUpdate(){
-    console.log(this.state.horizontal_Chart1)
-
-  }
-  
-  
-  
   componentDidMount() {
     this.fetching_data();
   }
-  // componentDidUpdate(){
-  //   console.log("hey")
-  // }
 
   render() {
-    console.log(this.state.pro_chart_bar.series.data)
     // window.setInterval(this.updateState, 10000);
     return (
       <div>
@@ -458,7 +430,6 @@ class stats extends React.Component {
                     }`}
                     onClick={() => {
                       this.setState({
-
                       })
                     }}
                   >
@@ -473,7 +444,7 @@ class stats extends React.Component {
                     }`}
                     onClick={() => {
                       this.setState({
-                        logique:"semaine"
+                        
                       })
                     }}
                   >
@@ -488,7 +459,6 @@ class stats extends React.Component {
                     }`}
                     onClick={() => {
                       this.setState({
-                        logique:"jour"
                       })
                     }}
                   >
@@ -725,9 +695,8 @@ class stats extends React.Component {
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
-                    // onClick={() => {
-                    //   this.props.onView("month");
-                    // }}
+                    onClick={() => {
+                    }}
                   >
                     Mois
                   </button>
@@ -738,9 +707,8 @@ class stats extends React.Component {
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
-                    // onClick={() => {
-                    //   this.props.onView("week");
-                    // }}
+                    onClick={() => {
+                    }}
                   >
                     Semaine
                   </button>
@@ -751,9 +719,8 @@ class stats extends React.Component {
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
-                    // onClick={() => {
-                    //   this.props.onView("day");
-                    // }}
+                    onClick={() => {
+                    }}
                   >
                     Jour
                   </button>
