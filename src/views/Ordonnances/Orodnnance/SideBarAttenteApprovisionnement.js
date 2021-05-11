@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import axios from "../../../axios";
 import { Card, CardHeader, CardBody, Button } from "reactstrap";
 import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -39,11 +39,11 @@ class ComposeEmail extends React.Component {
       editorState,
     });
   };
-  onEditorStateChange1 = (editorState1) => {
-    this.setState({
-      editorState1,
-    });
-  };
+  // onEditorStateChange1 = (editorState1) => {
+  //   this.setState({
+  //     editorState1,
+  //   });
+  // };
 
   handleChange = (checked) => {
     this.setState({ checked });
@@ -53,7 +53,7 @@ class ComposeEmail extends React.Component {
     this.props.handleComposeSidebar("close");
     this.setState({
       editorState: EditorState.createEmpty(),
-      editorState1: EditorState.createEmpty(),
+      // editorState1: EditorState.createEmpty(),
       commentaire: "",
       listeTournes: "",
       emailBody: "",
@@ -91,33 +91,56 @@ class ComposeEmail extends React.Component {
 
   async componentDidMount() {
     await axios
-      .get("/api/apps/calendar/events")
+      .get("/tournees?access_token=a")
       .then((response) => {
         const data = response.data
-          .filter((item) => item.start >= new Date())
           .map((item) => {
+            const date = item.date.split("-");
+            const start = new Date(
+              date[0],
+              date[1] - 1,
+              date[2],
+              item.plage_debut,
+              0,
+              0
+            );
+            const end = new Date(
+              date[0],
+              date[1] - 1,
+              date[2],
+              item.plage_fin,
+              0,
+              0
+            );
             return {
-              start: item.start,
-              end: item.end,
-              value: `${item.start.toISOString().split("T")[0]}  ${
-                item.start.toISOString().split("T")[1].split(":")[0]
-              }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
-                item.end.toISOString().split("T")[1].split(":")[0]
-              }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
-              label: `${item.start.toISOString().split("T")[0]}  ${
-                item.start.toISOString().split("T")[1].split(":")[0]
-              }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
-                item.end.toISOString().split("T")[1].split(":")[0]
-              }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
+              id: item.tournee_id,
+              start: start,
+              end: end,
+              value: `${start.toISOString().split("T")[0]}  ${
+                start.toISOString().split("T")[1].split(":")[0]
+              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+                end.toISOString().split("T")[1].split(":")[0]
+              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+              label: `${start.toISOString().split("T")[0]}  ${
+                start.toISOString().split("T")[1].split(":")[0]
+              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+                end.toISOString().split("T")[1].split(":")[0]
+              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
             };
-          });
+          })
+          .filter((item) => item.start >= new Date());
         const sortedData = data.sort((a, b) => a.start - b.start);
+        const tourneeParDefaut = this.props.ordonnance.tournee_id
+          ? sortedData.filter(
+              (item) => item.id === this.props.ordonnance.tournee_id
+            )[0]
+          : sortedData[0];
         this.setState({
           tournées: sortedData,
-          selectedTournée: sortedData[0],
+          selectedTournée: [tourneeParDefaut],
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err.message));
 
     this.fetch_email_text(this.props.ordonnance.id);
   }

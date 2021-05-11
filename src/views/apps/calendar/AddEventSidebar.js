@@ -31,7 +31,7 @@ const eventColors = {
 };
 class AddEvent extends React.Component {
   state = {
-    title: "",
+    title: "créneau de livraison",
     startDate: new Date(),
     endDate: new Date(),
     facturation: 1,
@@ -140,7 +140,7 @@ class AddEvent extends React.Component {
       });
     }
     this.setState({
-      title: "",
+      title: "créneau de livraison",
       startDate: new Date(),
       endDate: new Date(),
       label: null,
@@ -155,7 +155,7 @@ class AddEvent extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
-      title: nextProps.eventInfo === null ? "" : nextProps.eventInfo.title,
+      title: nextProps.eventInfo === null ? "créneau de livraison" : nextProps.eventInfo.title,
       url: nextProps.eventInfo === null ? "" : nextProps.eventInfo.url,
       startDate:
         nextProps.eventInfo === null
@@ -266,11 +266,11 @@ class AddEvent extends React.Component {
                 <Input
                   type="text"
                   id="EventTitle"
-                  placeholder="Event Title"
+                  // placeholder="Titre du créneau"
                   value={this.state.title}
                   onChange={(e) => this.setState({ title: e.target.value })}
                 />
-                <Label for="EventTitle">Titre du creneau</Label>
+                <Label for="EventTitle">Titre du créneau</Label>
               </FormGroup>
               <FormGroup className="form-label-group">
                 <FormGroup>
@@ -296,7 +296,7 @@ class AddEvent extends React.Component {
                     options={{
                       enableTime: true,
                       noCalendar: true,
-                      dateFormat: "H:i",
+                      dateFormat: "H",
                       time_24hr: true,
                       minTime:
                         this.state.startDate.getDate() ===
@@ -322,7 +322,7 @@ class AddEvent extends React.Component {
                   options={{
                     enableTime: true,
                     noCalendar: true,
-                    dateFormat: "H:i",
+                    dateFormat: "H",
                     time_24hr: true,
                     minTime:
                       this.state.startDate.getDate() === new Date().getDate() &&

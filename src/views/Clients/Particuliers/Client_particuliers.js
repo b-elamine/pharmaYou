@@ -145,7 +145,7 @@ const columns = [
     minWidth: "230px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-        <div className="user-img ml-xl-0 ml-2">
+        {/* <div className="user-img ml-xl-0 ml-2">
           <img
             className="img-fluid rounded-circle"
             height="36"
@@ -153,7 +153,7 @@ const columns = [
             src={row.image}
             alt={row.name}
           />
-        </div>
+        </div> */}
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
@@ -305,7 +305,6 @@ class Client_particuliers extends React.Component {
         const data = clientParticulier.data.map((item) => {
           return {
             id: item.user_id,
-            image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
             name: `${item.nom} ${item.prenom}`,
             email: item.email,
             ville: item.ville_livraison,

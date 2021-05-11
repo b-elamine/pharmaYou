@@ -130,6 +130,7 @@ class Ordonnance extends Component {
         CMU: commande.cmu,
         mutuelle: commande.mutuelle_ok,
         vital: commande.vitale_ok,
+
       };
       this.setState({
         ordonnance: custom_commande,

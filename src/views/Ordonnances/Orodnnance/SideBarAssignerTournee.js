@@ -37,9 +37,13 @@ class ComposeEmail extends React.Component {
 
   handleChange = (checked) => {
     this.setState({ checked });
-    if (!checked) {
-      this.setState({ selectedTournée: [this.state.tournées[0]] });
-    }
+    // if (!checked) {
+    //   this.setState({ selectedTournée: [this.props.ordonnance.tournee_id
+    //       ? this.state.tournées.filter(
+    //         (item) => item.id === this.props.ordonnance.tournee_id
+    //       )
+    //     : this.state.tournées[0]] });
+    // }
   };
 
   handleSidebarClose = () => {
@@ -56,56 +60,92 @@ class ComposeEmail extends React.Component {
 
   async componentDidMount() {
     await axios
-      .get("/api/apps/calendar/events")
+      .get("/tournees?access_token=a")
       .then((response) => {
         const data = response.data
-          .filter((item) => item.start >= new Date())
           .map((item) => {
+            const date = item.date.split("-");
+            const start = new Date(
+              date[0],
+              date[1] - 1,
+              date[2],
+              item.plage_debut,
+              0,
+              0
+            );
+            const end = new Date(
+              date[0],
+              date[1] - 1,
+              date[2],
+              item.plage_fin,
+              0,
+              0
+            );
             return {
-              id : item.id,
-              start: item.start,
-              end: item.end,
-              value: `${item.start.toISOString().split("T")[0]}  ${
-                item.start.toISOString().split("T")[1].split(":")[0]
-              }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
-                item.end.toISOString().split("T")[1].split(":")[0]
-              }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
-              label: `${item.start.toISOString().split("T")[0]}  ${
-                item.start.toISOString().split("T")[1].split(":")[0]
-              }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
-                item.end.toISOString().split("T")[1].split(":")[0]
-              }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
+              id: item.tournee_id,
+              start: start,
+              end: end,
+              value: `${start.toISOString().split("T")[0]}  ${
+                start.toISOString().split("T")[1].split(":")[0]
+              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+                end.toISOString().split("T")[1].split(":")[0]
+              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+              label: `${start.toISOString().split("T")[0]}  ${
+                start.toISOString().split("T")[1].split(":")[0]
+              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+                end.toISOString().split("T")[1].split(":")[0]
+              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
             };
-          });
+          })
+          .filter((item) => item.start >= new Date());
         const sortedData = data.sort((a, b) => a.start - b.start);
+        const tourneeParDefaut = this.props.ordonnance.tournee_id
+          ? sortedData.filter(
+              (item) => item.id === this.props.ordonnance.tournee_id
+            )[0]
+          : sortedData[0];
         this.setState({
           tournées: sortedData,
-          selectedTournée: [sortedData[0]],
+          selectedTournée: [tourneeParDefaut],
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   }
 
   handleSelect = (e) => {
     this.setState({ selectedTournée: e });
-    // if (!this.state.checked) {
-    //   this.setState({ selectedTournée: [this.state.tournées[0]] });
-    // } else {
-    //   this.setState({ selectedTournée: e });
-    // }
     if (!e || e.length === 0) {
       this.setState({
-        selectedTournée: [this.state.tournées[0]],
+        selectedTournée: [
+          this.props.ordonnance.tournee_id
+            ? this.state.tournées.filter(
+                (item) => item.id === this.props.ordonnance.tournee_id
+              )[0]
+            : this.state.tournées[0],
+        ],
       });
     }
   };
 
   ValiderTournée = async () => {
+    const tournees = this.state.selectedTournée.map(item =>{
+      return {
+        tournee_id : item.id,
+        date : `${item.start.toISOString().split("T")[0]}`,
+        plage_debut : item.start.getHours(),
+        plage_fin : item.end.getHours()
+      }
+    })
     const response = await axios.post(
-      `commandes/${this.props.ordonnance.id}/assigner_tournee`,
+      `commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`,
       {
-        tournee_id: this.state.selectedTournée[0].id,
-        access_token: "a",
+        tournees: tournees,
+        default_message: {
+          "email_title": "[Commande 1-NU-45] Votre commande a \u00e9t\u00e9 valid\u00e9e",
+          "email_text": "Bonjour,\n\nVotre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You",
+          "sms_text": "Votre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e.",
+          "push_text": "Votre commande a \u00e9t\u00e9 valid\u00e9e."
+      }
       }
     );
     console.log(response)
@@ -117,7 +157,7 @@ class ComposeEmail extends React.Component {
     let tours = "";
     for (let index = 0; index < this.state.selectedTournée.length; index++) {
       tours = tours + `${this.state.selectedTournée[index].value} ${"\n"} `;
-      // console.log(this.props.ordonnance)
+      //   // console.log(this.props.ordonnance)
     }
     return (
       <Card
@@ -155,9 +195,6 @@ class ComposeEmail extends React.Component {
                 readOnly
                 id="prochaine_tournée"
                 value={tours}
-                // onChange={(e) =>
-                //   this.setState({ listeTournes: e.target.value })
-                // }
               />
             </div>
             <div className="form-label-group">
@@ -193,52 +230,52 @@ class ComposeEmail extends React.Component {
                 onChange={this.handleSelect}
               />
             </div>
-            <div style={{marginBottom:"50px"}}>
-            <div id="email-notif" style={{ marginTop: "20px" }}>
-              <span style={{ fontSize: "15px" }}>
-                <Users className="mr-75" size="20" color="#ff9f43" />
-                Notification client sms et email
-              </span>
-              
-              <Editor
-                editorState={editorState}
-                wrapperClassName="demo-wrapper"
-                // editorClassName="demo-editor"
-                onEditorStateChange={this.onEditorStateChange}
-                onChange={(e) => this.setState({ emailBody: e.blocks })}
-                toolbar={{
-                  options: ["inline", "fontSize", "textAlign"],
-                  inline: {
-                    options: ["bold", "italic", "underline"],
-                    bold: { className: "bordered-option-classname" },
-                    italic: { className: "bordered-option-classname" },
-                    underline: { className: "bordered-option-classname" },
-                  },
-                }}
-              />
-            </div>
-            <div id="commonataire" className="mt-3">
-              <span style={{ fontSize: "15px" }}>
-                <Truck className="mr-75" size="20" color="#ff9f43" />
-                Commentaire pour le livreur
-              </span>
-              <Editor
-                editorState={editorState1}
-                wrapperClassName="demo-wrapper"
-                // editorClassName="demo-editor"
-                onEditorStateChange={this.onEditorStateChange1}
-                onChange={(e) => this.setState({ commentaire: e.blocks })}
-                toolbar={{
-                  options: ["inline", "fontSize", "textAlign"],
-                  inline: {
-                    options: ["bold", "italic", "underline"],
-                    bold: { className: "bordered-option-classname" },
-                    italic: { className: "bordered-option-classname" },
-                    underline: { className: "bordered-option-classname" },
-                  },
-                }}
-              />
-            </div>
+            <div style={{ marginBottom: "50px" }}>
+              <div id="email-notif" style={{ marginTop: "20px" }}>
+                <span style={{ fontSize: "15px" }}>
+                  <Users className="mr-75" size="20" color="#ff9f43" />
+                  Notification client sms et email
+                </span>
+
+                <Editor
+                  editorState={editorState}
+                  wrapperClassName="demo-wrapper"
+                  // editorClassName="demo-editor"
+                  onEditorStateChange={this.onEditorStateChange}
+                  onChange={(e) => this.setState({ emailBody: e.blocks })}
+                  toolbar={{
+                    options: ["inline", "fontSize", "textAlign"],
+                    inline: {
+                      options: ["bold", "italic", "underline"],
+                      bold: { className: "bordered-option-classname" },
+                      italic: { className: "bordered-option-classname" },
+                      underline: { className: "bordered-option-classname" },
+                    },
+                  }}
+                />
+              </div>
+              <div id="commonataire" className="mt-3">
+                <span style={{ fontSize: "15px" }}>
+                  <Truck className="mr-75" size="20" color="#ff9f43" />
+                  Commentaire pour le livreur
+                </span>
+                <Editor
+                  editorState={editorState1}
+                  wrapperClassName="demo-wrapper"
+                  // editorClassName="demo-editor"
+                  onEditorStateChange={this.onEditorStateChange1}
+                  onChange={(e) => this.setState({ commentaire: e.blocks })}
+                  toolbar={{
+                    options: ["inline", "fontSize", "textAlign"],
+                    inline: {
+                      options: ["bold", "italic", "underline"],
+                      bold: { className: "bordered-option-classname" },
+                      italic: { className: "bordered-option-classname" },
+                      underline: { className: "bordered-option-classname" },
+                    },
+                  }}
+                />
+              </div>
             </div>
             <div className="action-btns d-flex justify-content-start mt-1">
               <Button.Ripple
