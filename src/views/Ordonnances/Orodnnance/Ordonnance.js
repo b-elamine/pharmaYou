@@ -206,13 +206,27 @@ class Ordonnance extends Component {
               <ThirdSection ordonnance={this.state.ordonnance} />
             </Card>
             <hr />
-            {/* {console.log(this.state.ordonnance.note_admin)} */}
-            {this.state.ordonnance.note_admin ? (
+
+            <ForthSection
+              note_admin={
+                this.state.ordonnance.note_admin
+                  ? this.state.ordonnance.note_admin
+                  : "pas de note."
+              }
+              ordonnance={this.state.ordonnance}
+              commentaires_notes={this.state.ordonnance.patient.note}
+            />
+            {/* {this.state.ordonnance.note_admin ? (
+            <ForthSection
+              ordonnance={this.state.ordonnance}
+              commentaires_notes={this.state.ordonnance.patient.note}
+            />
+            ) : (
               <ForthSection
                 ordonnance={this.state.ordonnance}
                 commentaires_notes={this.state.ordonnance.patient.note}
               />
-            ) : null}
+            )} */}
           </Card>
         </Col>
         <Col xl="3">

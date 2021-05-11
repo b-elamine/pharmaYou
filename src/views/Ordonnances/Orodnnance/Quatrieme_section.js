@@ -21,7 +21,7 @@ import {
   Plus,
   FileText,
   ListUl,
-  RecordCircleFill,
+  // RecordCircleFill,
 } from "react-bootstrap-icons";
 import Select from "react-select";
 
@@ -101,7 +101,7 @@ class QuatriemeSection extends React.Component {
       },
     });
     this.setState({
-      commentaire_interne: this.props.ordonnance.note_admin,
+      commentaire_interne: this.props.note_admin,
     });
   }
 
@@ -251,6 +251,7 @@ class QuatriemeSection extends React.Component {
       // { value: "option_2", label: "Option 2" },
       // { value: "option_3", label: "Option 3" },
     ];
+    console.log(this.props.note_admin)
     return (
       <Card>
         <Badge

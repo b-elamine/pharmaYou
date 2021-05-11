@@ -21,7 +21,7 @@ ReactDOM.render(
     client_id={config.clientId}
     redirect_uri={window.location.origin + process.env.REACT_APP_PUBLIC_PATH}>
     <Provider store={store}>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner color="warning"/>}>
         <Layout>
           <IntlProviderWrapper>
             <LazyApp />
