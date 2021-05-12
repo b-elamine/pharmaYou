@@ -24,7 +24,6 @@ import { ChevronLeft, ChevronRight, Check } from "react-feather";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.scss";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "../../../assets/scss/plugins/calendars/react-big-calendar.scss";
-import axios from "../../../axios";
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 const eventColors = {
@@ -321,7 +320,7 @@ class CalendarApp extends React.Component {
                   this.props.handleSelectedEvent({
                     start: new Date(start),
                     end: new Date(end),
-                    title: "",
+                    title: "créneau de livraison",
                     label: null,
                     allDay: false,
                     selectable: true,
