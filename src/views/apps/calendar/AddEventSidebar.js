@@ -155,7 +155,10 @@ class AddEvent extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
-      title: nextProps.eventInfo === null ? "créneau de livraison" : nextProps.eventInfo.title,
+      title:
+        nextProps.eventInfo === null
+          ? "créneau de livraison"
+          : nextProps.eventInfo.title,
       url: nextProps.eventInfo === null ? "" : nextProps.eventInfo.url,
       startDate:
         nextProps.eventInfo === null
@@ -184,7 +187,7 @@ class AddEvent extends React.Component {
 
   render() {
     let events = this.props.events.map((i) => i.id);
-    let lastId = events.pop();
+    let lastId = events.sort((a, b) => a - b).pop();
     let newEventId = lastId + 1;
     return (
       <div
@@ -355,6 +358,8 @@ class AddEvent extends React.Component {
                 </span>
                 <NumericInput
                   min={0}
+                  step={0.1}
+                  precision={2}
                   value={this.state.facturation}
                   mobile
                   format={this.myFormat}
@@ -370,6 +375,8 @@ class AddEvent extends React.Component {
                 </span>
                 <NumericInput
                   min={0}
+                  step={0.1}
+                  precision={2}
                   value={this.state.renumeration}
                   mobile
                   format={this.myFormat}
@@ -380,22 +387,22 @@ class AddEvent extends React.Component {
                 />
               </FormGroup>
               <FormGroup>
-                  <Editor
-                    // onChange={(e)=>{console.log(e.blocks)}}
-                    wrapperClassName="demo-wrapper"
-                    // editorClassName="editor"
-                    defaultEditorState={this.state.editorState}
-                    onEditorStateChange={this.onEditorStateChange}
-                    toolbar={{
-                      options: ["inline", "fontSize", "textAlign"],
-                      inline: {
-                        options: ["bold", "italic", "underline"],
-                        bold: { className: "bordered-option-classname" },
-                        italic: { className: "bordered-option-classname" },
-                        underline: { className: "bordered-option-classname" },
-                      },
-                    }}
-                  />
+                <Editor
+                  // onChange={(e)=>{console.log(e.blocks)}}
+                  wrapperClassName="demo-wrapper"
+                  // editorClassName="editor"
+                  defaultEditorState={this.state.editorState}
+                  onEditorStateChange={this.onEditorStateChange}
+                  toolbar={{
+                    options: ["inline", "fontSize", "textAlign"],
+                    inline: {
+                      options: ["bold", "italic", "underline"],
+                      bold: { className: "bordered-option-classname" },
+                      italic: { className: "bordered-option-classname" },
+                      underline: { className: "bordered-option-classname" },
+                    },
+                  }}
+                />
               </FormGroup>
             </div>
             <hr className="my-2" />
