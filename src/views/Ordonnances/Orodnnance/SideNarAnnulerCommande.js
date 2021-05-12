@@ -55,6 +55,8 @@ class ComposeEmail extends React.Component {
       const message = response.data.default_message.email_text
         ? response.data.default_message.email_text
         : null;
+      
+
       const email_text = message ? message : "Pas de message pour l'instant";
       const newEditorState = EditorState.createWithContent(
         ContentState.createFromText(email_text)

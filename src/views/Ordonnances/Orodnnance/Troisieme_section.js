@@ -114,6 +114,7 @@ class Troisieme_section extends React.Component {
     modal: false,
     modal_file: "",
     modal_title: "",
+    modal_file_type: null,
   };
   myFormat = (num) => {
     return `${num} jours`;
@@ -132,16 +133,21 @@ class Troisieme_section extends React.Component {
         `/ordonnances/${path}/original?access_token=a`
       );
       // juste pour savoir le type du fichier
+      let modal_file;
       if (response.headers["content-type"].includes("image")) {
-        console.log("it's an image");
+        this.setState({
+          modal_file_type: "image",
+        });
+        modal_file = `https://ordo.pharmayou.fr:3003/ordonnances/${path}/original?access_token=a`;
       } else {
-        console.log("not an image , a pdf");
+        this.setState({
+          modal_file_type: "pdf",
+        });
+        // dealing with the pdf
       }
       this.setState((prevState) => ({
         modal: !prevState.modal,
-        // cette solution est un plan Z
-        // image_modal:`https://ordo.pharmayou.fr:3003/ordonnances/${path}/original?access_token=a`,
-        modal_file: "_img",
+        modal_file: modal_file,
         file_ordonnance_loader: false,
       }));
     } catch (err) {
@@ -182,8 +188,8 @@ class Troisieme_section extends React.Component {
               file_loader={this.state.file_ordonnance_loader}
               get_file={() => {
                 this.setState({
-                  modal_title:"Ordonnace"
-                })
+                  modal_title: "Ordonnace",
+                });
                 this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
               }}
               bg_color="#3397da"
@@ -198,7 +204,11 @@ class Troisieme_section extends React.Component {
               modal_state={this.state.modal}
               btn_color="primary"
             >
-              <h1>Le PDF/IMAGE</h1>
+              {this.state.modal_file_type === "image" ? (
+                <img src={this.state.modal_file} alt="test" />
+              ) : (
+                <h1>Le PDF</h1>
+              )}
             </ModaL>
             <div
               style={{ width: "90%" }}
