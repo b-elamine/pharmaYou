@@ -11,6 +11,10 @@ import {
   InputGroupAddon,
   Label,
   Spinner,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { PlusCircle, Send } from "react-feather";
 import Flatpickr from "react-flatpickr";
@@ -20,7 +24,9 @@ import Switch from "react-switch";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 import axios from "../../../axios";
+import test_image from "../../../assets/img/backgrounds/chat-bg-2.png";
 
+import pdf_test from "./10.1.1.695.7550.pdf";
 const CardDashed = (props) => {
   return (
     <Card>
@@ -81,13 +87,33 @@ const CardDashed = (props) => {
   );
 };
 
+const ModaL = (props) => {
+  return (
+    <Modal
+      isOpen={props.modal_state}
+      toggle={props.toggle_modal}
+      className="modal-dialog-centered"
+    >
+      <ModalHeader toggle={props.toggle_modal}>{props.title}</ModalHeader>
+      <ModalBody>{props.children}</ModalBody>
+      <ModalFooter>
+        <Button color={props.btn_color} onClick={props.toggle_modal}>
+          OK
+        </Button>{" "}
+      </ModalFooter>
+    </Modal>
+  );
+};
+
 class Troisieme_section extends React.Component {
   state = {
     checked: false,
     nbrFois: 1,
     tousLes: 1,
     Date: new Date(),
-    file_ordonnance_loader: false,
+    modal: false,
+    modal_file: "",
+    modal_title: "",
   };
   myFormat = (num) => {
     return `${num} jours`;
@@ -99,26 +125,52 @@ class Troisieme_section extends React.Component {
   get_ordonnance_file = async (path) => {
     try {
       this.setState({
+        // file_ordonnance_loader pour le spinner qui se trouve en bas du button
         file_ordonnance_loader: true,
       });
       const response = await axios.get(
         `/ordonnances/${path}/original?access_token=a`
       );
-      // console.log(response);
-      // const file = new Blob([response.data], {
-      //   type: this.props.ordonnance.ordonnance.mime_type,
-      // });
-      // const fileURL = URL.createObjectURL(file);
-      // this.setState({
-      //   file_ordonnance_loader: false,
-      // });
+      // juste pour savoir le type du fichier
+      if (response.headers["content-type"].includes("image")) {
+        console.log("it's an image");
+      } else {
+        console.log("not an image , a pdf");
+      }
+      this.setState((prevState) => ({
+        modal: !prevState.modal,
+        // cette solution est un plan Z
+        // image_modal:`https://ordo.pharmayou.fr:3003/ordonnances/${path}/original?access_token=a`,
+        modal_file: "_img",
+        file_ordonnance_loader: false,
+      }));
     } catch (err) {
       this.setState({
         file_ordonnance_loader: false,
-      }); 
+      });
       console.log(err.message);
     }
   };
+  toggleModal = () => {
+    this.setState((prevState) => ({
+      modal: !prevState.modal,
+    }));
+  };
+
+  // convertBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
+
+  //     fileReader.onload = () => {
+  //       resolve(fileReader.result);
+  //     };
+
+  //     fileReader.onerror = (error) => {
+  //       reject(error);
+  //     };
+  //   });
+  // };
 
   render() {
     return (
@@ -129,12 +181,25 @@ class Troisieme_section extends React.Component {
             <CardDashed
               file_loader={this.state.file_ordonnance_loader}
               get_file={() => {
+                this.setState({
+                  modal_title:"Ordonnace"
+                })
                 this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
               }}
               bg_color="#3397da"
               label="Ordonnance"
               ordonnance={this.props.ordonnance}
+              toggle_modal={this.toggleModal}
             ></CardDashed>
+            <ModaL
+              title={this.state.modal_title}
+              footer="The footer."
+              toggle_modal={this.toggleModal}
+              modal_state={this.state.modal}
+              btn_color="primary"
+            >
+              <h1>Le PDF/IMAGE</h1>
+            </ModaL>
             <div
               style={{ width: "90%" }}
               className="d-flex flex-sm-row flex-column align-items-center justify-content-between px-0 mb-75"
@@ -189,6 +254,12 @@ class Troisieme_section extends React.Component {
             <CardDashed
               bg_color="#1aac1a"
               label="Carte Vital"
+              get_file={() => {
+                this.setState({
+                  modal_title: "Carte vitalle",
+                });
+                this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
+              }}
               ordonnance={this.props.ordonnance}
             ></CardDashed>
             <div style={{ width: "90%" }}>
@@ -210,6 +281,12 @@ class Troisieme_section extends React.Component {
             <CardDashed
               bg_color="#d01b47"
               label="Mutuelle"
+              get_file={() => {
+                this.setState({
+                  modal_title: "Mutuelle",
+                });
+                this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
+              }}
               ordonnance={this.props.ordonnance}
             ></CardDashed>
             <div style={{ width: "90%", marginTop: "-20px" }}>
