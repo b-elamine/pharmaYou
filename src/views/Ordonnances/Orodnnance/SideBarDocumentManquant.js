@@ -12,20 +12,13 @@ import "../../../assets/scss/plugins/extensions/editor.scss";
 import "../../../assets/scss/pages/app-email.scss";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
+import externalAxios from "../../../axios";
+
 class ComposeEmail extends React.Component {
   state = {
     selectedTournée: {},
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-    editorState: EditorState.createWithContent(
-      ContentState.createFromText(
-        `Bonjour, votre mutuelle est expiré,veulliez nous faire prévenir par email le document,via l'email suivant.ordonnances@pharmayou.fr.
-
-        Réference commande # ${this.props.ordonnance.id}
-
-        Docteur House, pour vous servir
-        `
-      )
-    ),
+    editorState: EditorState.createEmpty(),
     commentaire: "",
     listeTournes: "",
     emailBody: "",
@@ -52,6 +45,31 @@ class ComposeEmail extends React.Component {
     this.setState({ checked });
   };
 
+
+  fetch_email_text = async (commande_id) => {
+    try {
+      const response = await externalAxios.get(
+        `/commandes/${commande_id}/invalider_form?access_token=a`
+      );
+      console.log(response.data.default_message.email_text);
+      const message = response.data.default_message.email_text
+        ? response.data.default_message.email_text
+        : null;
+      const email_text = message ? message : "Pas de message pour l'instant";
+      const newEditorState = EditorState.createWithContent(
+        ContentState.createFromText(email_text)
+      );
+      this.setState({
+        editorState: newEditorState,
+        email_text: email_text,
+      });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+
+  
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
     this.setState({
@@ -93,10 +111,10 @@ class ComposeEmail extends React.Component {
     //     });
     //   })
     //   .catch((err) => console.log(err));
+    this.fetch_email_text(this.props.ordonnance.id)
   }
 
   render() {
-
     const { editorState, options } = this.state;
 
     return (

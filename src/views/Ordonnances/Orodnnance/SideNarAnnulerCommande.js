@@ -1,8 +1,8 @@
 import React from "react";
-import axios from "../../../axios";
-import { Card, CardHeader, CardBody, Button } from "reactstrap";
+import {  Card, CardHeader, CardBody, Button } from "reactstrap";
 import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
+// import Switch from "react-switch";
 import Select from "react-select";
 
 import { ContentState, EditorState } from "draft-js";
@@ -14,14 +14,6 @@ import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
 import externalAxios from "../../../axios";
 
-const Response = {
-  message: {
-    email_title: "[Commande 1-PE-17] Votre commande a été mise en attente",
-    email_text: "",
-    sms_text: "Votre commande 1-PE-17 a été mise en attente.",
-    push_text: "Votre commande a été mise en attente.",
-  },
-};
 class ComposeEmail extends React.Component {
   state = {
     selectedTournée: {},
@@ -30,40 +22,34 @@ class ComposeEmail extends React.Component {
     commentaire: "",
     listeTournes: "",
     emailBody: "",
-    email_text: "",
     checked: false,
+    options: [
+      { value: "attestation_mutuelle", label: "Attestation Mututelle" },
+      { value: "probleme_ordonnance", label: "Probleme ordonnance" },
+      { value: "probleme_carte_vital", label: "Probleme carte vital" },
+    ],
+    document_manquant_value: "",
   };
   onEditorStateChange = (editorState) => {
     this.setState({
       editorState,
     });
   };
-  // onEditorStateChange1 = (editorState1) => {
-  //   this.setState({
-  //     editorState1,
-  //   });
-  // };
+  onEditorStateChange1 = (editorState1) => {
+    this.setState({
+      editorState1,
+    });
+  };
 
   handleChange = (checked) => {
     this.setState({ checked });
   };
 
-  handleSidebarClose = () => {
-    this.props.handleComposeSidebar("close");
-    this.setState({
-      editorState: EditorState.createEmpty(),
-      // editorState1: EditorState.createEmpty(),
-      commentaire: "",
-      listeTournes: "",
-      emailBody: "",
-      checked: false,
-    });
-  };
 
   fetch_email_text = async (commande_id) => {
     try {
       const response = await externalAxios.get(
-        `/commandes/${commande_id}/mettre_en_attente_form?access_token=a`
+        `/commandes/${commande_id}/annuler_form?access_token=a`
       );
       console.log(response.data.default_message.email_text);
       const message = response.data.default_message.email_text
@@ -82,66 +68,55 @@ class ComposeEmail extends React.Component {
     }
   };
 
-  async componentDidMount() {
-    await axios
-      .get("/tournees?access_token=a")
-      .then((response) => {
-        const data = response.data
-          .map((item) => {
-            const date = item.date.split("-");
-            const start = new Date(
-              date[0],
-              date[1] - 1,
-              date[2],
-              item.plage_debut,
-              0,
-              0
-            );
-            const end = new Date(
-              date[0],
-              date[1] - 1,
-              date[2],
-              item.plage_fin,
-              0,
-              0
-            );
-            return {
-              id: item.tournee_id,
-              start: start,
-              end: end,
-              value: `${start.toISOString().split("T")[0]}  ${
-                start.toISOString().split("T")[1].split(":")[0]
-              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-                end.toISOString().split("T")[1].split(":")[0]
-              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-              label: `${start.toISOString().split("T")[0]}  ${
-                start.toISOString().split("T")[1].split(":")[0]
-              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-                end.toISOString().split("T")[1].split(":")[0]
-              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-            };
-          })
-          .filter((item) => item.start >= new Date());
-        const sortedData = data.sort((a, b) => a.start - b.start);
-        const tourneeParDefaut = this.props.ordonnance.tournee_id
-          ? sortedData.filter(
-              (item) => item.id === this.props.ordonnance.tournee_id
-            )[0]
-          : sortedData[0];
-        this.setState({
-          tournées: sortedData,
-          selectedTournée: [tourneeParDefaut],
-        });
-      })
-      .catch((err) => alert(err.message));
 
-    this.fetch_email_text(this.props.ordonnance.id);
+  
+  handleSidebarClose = () => {
+    this.props.handleComposeSidebar("close");
+    this.setState({
+      editorState: EditorState.createEmpty(),
+      editorState1: EditorState.createEmpty(),
+      commentaire: "",
+      listeTournes: "",
+      emailBody: "",
+      checked: false,
+    });
+  };
+
+  async componentDidMount() {
+    // await axios
+    //   .get("/api/apps/calendar/events")
+    //   .then((response) => {
+    //     const data = response.data
+    //       .filter((item) => item.start >= new Date())
+    //       .map((item) => {
+    //         return {
+    //           start: item.start,
+    //           end: item.end,
+    //           value: `${item.start.toISOString().split("T")[0]}  ${
+    //             item.start.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
+    //             item.end.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
+    //           label: `${item.start.toISOString().split("T")[0]}  ${
+    //             item.start.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.start.toISOString().split("T")[1].split(":")[1]} - ${
+    //             item.end.toISOString().split("T")[1].split(":")[0]
+    //           }H:${item.end.toISOString().split("T")[1].split(":")[1]}`,
+    //         };
+    //       });
+    //     const sortedData = data.sort((a, b) => a.start - b.start);
+    //     this.setState({
+    //       tournées: sortedData,
+    //       selectedTournée: sortedData[0],
+    //     });
+    //   })
+    //   .catch((err) => console.log(err));
+    this.fetch_email_text(this.props.ordonnance.id)
   }
 
   render() {
-    const { editorState } = this.state;
+    const { editorState, options } = this.state;
 
-    // console.log(this.state.editorState.getCurrentContent().getFirstBlock().getText())
     return (
       <Card
         className={`compose-email shadow-none ${
@@ -150,9 +125,7 @@ class ComposeEmail extends React.Component {
       >
         <CardHeader className="compose-mail-header align-items-center">
           <div className="compose-mail-title">
-            <h3 className="text-bold-600 card-title">
-              En attente d'approvisionnement
-            </h3>
+            <h3 className="text-bold-600 card-title">Annuler commande</h3>
           </div>
           <div
             className="close-compose-mail"
@@ -169,26 +142,25 @@ class ComposeEmail extends React.Component {
           }}
         >
           <CardBody className="compose-mail-body p-1">
-            <div className="form-label-group mt-5">
-              <span style={{ fontSize: "15px" }}>
-                Déplacer dans une autre tournée
-              </span>
+            {/* <div className="form-label-group mt-5">
+              <span style={{ fontSize: "15px" }}>Annuler commande</span>
               <Select
                 // isDisabled={!this.state.checked}
                 className="React"
                 classNamePrefix="select"
+                defaultValue={options[0]}
                 name="Role"
-                placeholder="Liste des prochaines tournées"
-                options={this.state.tournées}
+                placeholder="Attestation Mutuelle"
+                options={this.state.options}
                 onChange={(e) => {
-                  this.setState({ selectedTournée: e });
+                  this.setState({ document_manquant_value: e.value });
                 }}
               />
-            </div>
+            </div> */}
             <div id="email-notif" style={{ marginTop: "50px" }}>
               <span style={{ fontSize: "15px" }}>
-                <Users className="mr-75" size="20" color="#378af9" />
-                Notification client sms et email
+                <Users className="mr-75" size="20" color="red" />
+                Notification client sms et Email
               </span>
               <Editor
                 editorState={editorState}
@@ -196,7 +168,6 @@ class ComposeEmail extends React.Component {
                 // editorClassName="demo-editor"
                 onEditorStateChange={this.onEditorStateChange}
                 onChange={(e) => this.setState({ emailBody: e.blocks })}
-                value={this.state.editorMessage}
                 toolbar={{
                   options: ["inline", "fontSize", "textAlign"],
                   inline: {
@@ -208,29 +179,35 @@ class ComposeEmail extends React.Component {
                 }}
               />
             </div>
-
-            <div className="action-btns d-flex justify-content-start mt-5">
-              <Button
+            <div className="action-btns d-flex justify-content-start mt-1">
+              <Button.Ripple
                 color="light-info"
                 style={{
-                  backgroundColor: "#e8fbfd",
+                  backgroundColor: "#fbdddd",
                 }}
-                className=" text-info mr-1"
+                className=" font-weight-bold text-danger mr-1"
+                // disabled={
+                //   this.state.emailTo.length && this.state.emailBody.length > 0
+                //     ? false
+                //     : true
+                // }
                 onClick={() => {
                   this.handleSidebarClose();
+
                   alert(
                     this.state.editorState.getCurrentContent().getPlainText()
                   );
-                  const newEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(this.state.email_text)
-                  );
                   this.setState({
-                    editorState: newEditorState,
+                    editorState: EditorState.createWithContent(
+                      ContentState.createFromText(
+                        this.state.editorState.getCurrentContent().getPlainText()
+                      )
+                    ),
                   });
                 }}
               >
-                Valider
-              </Button>
+                Envoyer
+              </Button.Ripple>
               <Button.Ripple
                 outline
                 color="danger"

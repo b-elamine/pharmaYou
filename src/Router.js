@@ -270,7 +270,7 @@ class AppRouter extends React.Component {
           <AppRoute exact path="/livreurs/info" component= {InfoLivreurs} />
           <AppRoute exact path="/livreurs/salaire" component= {() => <h1>component of the salaire of the livreurs </h1>} />
           <AppRoute exact path="/users" component= {() => <h1>USERS </h1>} />
-          <AppRoute exact path="/partenaires/info" component= {Partenaire_Info} />
+          <AppRoute exact path="/partenaire/:id_partenaire" component= {Partenaire_Info} />
           <AppRoute exact path="/partenaires/nouveau_partenaire" component= {Nv_Partenaire} />
           <AppRoute exact path="/partenaires/modifier_Partenaire" component= {modifier_Partenaire} />
           <AppRoute exact path="/partenaires/info_Partenaire" component= {info_Partenaire} />

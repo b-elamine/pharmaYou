@@ -66,6 +66,10 @@ class PartieDroite_1 extends React.Component {
             borderColor: "black",
           }}
           className=" border border-dark ml-2 mr-2 mt-1 h-2 text-left font-weight-bold"
+          onClick={() => {
+            console.log("open")
+            this.props.toggleACSidebar("open");
+          }}
         >
           <X className="mr-75" size={17} />
           Annuler la commande

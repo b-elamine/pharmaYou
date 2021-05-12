@@ -137,12 +137,6 @@ class DataTableCustom extends React.Component {
     return (
       <Card className="mt-5">
         <CardBody className="rdt_Wrapper pt-75">
-          {/* <select>
-            <option>hey</option>
-            <option>hey</option>
-            <option>hey</option>
-            <option>hey</option>
-          </select> */}
           <DataTable
             className="dataTable-custom"
             data={value.length ? filteredData : this.props.data}

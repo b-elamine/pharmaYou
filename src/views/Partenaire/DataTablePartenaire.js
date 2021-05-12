@@ -41,20 +41,20 @@ class DataTablePartenaire extends React.Component {
     data_fetched: false,
   };
 
-  componentDidUpdate() {
-    if (this.state.data.length === 0) {
-      this.setState({
-        data: this.props.data,
-      });
-    }
-  }
+  // componentDidUpdate() {
+  //   if (this.state.data.length === 0) {
+  //     this.setState({
+  //       data: this.props.data,
+  //     });
+  //   }
+  // }
 
   componentDidMount() {
     this.setState({
       data: this.props.data,
     });
   }
-  handleFilter = (e) => {
+  handleFilterClient = (e) => {
     let value = e.target.value;
     let data = this.state.data;
     let filteredData = this.state.filteredData;
@@ -62,19 +62,21 @@ class DataTablePartenaire extends React.Component {
     if (value.length) {
       filteredData = data.filter((item) => {
         let startsWithCondition =
-          item.name.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.name
+            .toLowerCase()
+            .startsWith(value.toLowerCase()) ||
           item.date.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.type.toLowerCase().startsWith(value.toLowerCase()) ||
           item.email.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.montant.toLowerCase().startsWith(value.toLowerCase()) ||
-          // item.origine.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.status.toLowerCase().startsWith(value.toLowerCase());
+          item.origine.toLowerCase().startsWith(value.toLowerCase())
+          ;
         let includesCondition =
-          item.name.toLowerCase().includes(value.toLowerCase()) ||
-          item.date.toLowerCase().includes(value.toLowerCase()) ||
+        item.name
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
           item.email.toLowerCase().includes(value.toLowerCase()) ||
-          // item.origine.toLowerCase().includes(value.toLowerCase()) ||
-          item.montant.toLowerCase().includes(value.toLowerCase()) ||
-          item.status.toLowerCase().includes(value.toLowerCase());
+          item.origine.toLowerCase().includes(value.toLowerCase()) ||
+          item.type.toLowerCase().startsWith(value.toLowerCase()) 
 
         if (startsWithCondition) {
           return startsWithCondition;
@@ -117,7 +119,7 @@ class DataTablePartenaire extends React.Component {
               <CustomHeader
                 add_new={this.props.add_new}
                 value={value}
-                handleFilter={this.handleFilter}
+                handleFilter={this.handleFilterClient}
               />
             }
           />
