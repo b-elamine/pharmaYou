@@ -19,17 +19,54 @@ import {
   TelephoneFill,
   ArrowLeftCircleFill,
 } from "react-bootstrap-icons";
+import axios from "../../../axios";
 
 class Partenaire_Info extends React.Component {
   state = {
-    row: this.props.location.state,
+    row: {},
   };
+  fetcher_data = async (id_partenaire) => {
+    try {
+      const res = await axios.get(
+        `users/${id_partenaire}?access_token=a&type=infirmier`
+      );
+      const partenaire = {
+        name: `${res.data.nom} ${res.data.prenom}`,
+        email: res.data.email,
+        montant: res.data.chiffre_affaire,
+        telephone: res.data.telephone,
+        ville: res.data.ville_livraison ? res.data.ville_livraison : "Paris",
+        status: res.data.is_active ? "active" : "inactive",
+        type: res.data.type,
+        nbr_ordo : res.data.n_commandes,
+      };
+      this.setState({
+        row: partenaire,
+      });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+  componentDidMount(){
+    const id_partenaire = this.props.match.params.id_partenaire; 
+    this.fetcher_data(id_partenaire)
+  }
   render() {
-    // console.log(this.state.row);
+    console.log(this.state.row);
     return (
       <Card>
-        <a style={{top:"-50px",left:"10px",position:"absolute",zIndex:"100"}} onClick={()=>{history.goBack()}}>
-        <ArrowLeftCircleFill size="40" className="primary"/>
+        <a
+          style={{
+            top: "-50px",
+            left: "10px",
+            position: "absolute",
+            zIndex: "100",
+          }}
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <ArrowLeftCircleFill size="40" className="primary" />
         </a>
         <CardHeader>
           <CardTitle>Informations partenaire</CardTitle>
@@ -38,16 +75,6 @@ class Partenaire_Info extends React.Component {
           <div className="d-flex flex-sm-row flex-column ">
             <div>
               <Media>
-                <Media className="mr-1" left href="#">
-                  <Media
-                    style={{ borderRadius: "10px" }}
-                    object
-                    src={this.state.row.image}
-                    alt="User"
-                    height="100"
-                    width="100"
-                  />
-                </Media>
                 <Media body>
                   <h4>{this.state.row.name}</h4>
                   <p style={{ marginTop: "-10px" }}>
@@ -81,24 +108,22 @@ class Partenaire_Info extends React.Component {
                     iconLeft
                     bg_color="white"
                     iconBg="warning"
-                    
                     icon={
                       <div
-                      style={{
-                        marginRight:"auto",
-                        marginLeft:"auto",
-                        padding:"10px",
-                        backgroundColor:"#EAE8FD",
-                        borderRadius:"50%",
-                        height:"50px",
-                        width:"50px",
-                      }}
+                        style={{
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          padding: "10px",
+                          backgroundColor: "#EAE8FD",
+                          borderRadius: "50%",
+                          height: "50px",
+                          width: "50px",
+                        }}
                       >
-                      <TrendingUp 
-                      className="warning"
-                      size={30} />
-                      </div> }
-                    stat="54"
+                        <TrendingUp className="warning" size={30} />
+                      </div>
+                    }
+                    stat={this.state.row.nbr_ordo}
                     statTitle="Ordonnances envoyées"
                   />
                 </Col>
@@ -110,20 +135,19 @@ class Partenaire_Info extends React.Component {
                     iconBg="success"
                     icon={
                       <div
-                      style={{
-                        marginRight:"auto",
-                        marginLeft:"auto",
-                        padding:"10px",
-                        backgroundColor:"#DFF7EA",
-                        borderRadius:"50%",
-                        height:"50px",
-                        width:"50px",
-                      }}
+                        style={{
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          padding: "10px",
+                          backgroundColor: "#DFF7EA",
+                          borderRadius: "50%",
+                          height: "50px",
+                          width: "50px",
+                        }}
                       >
-                      <DollarSign 
-                      className="success"
-                      size={30} />
-                      </div> }
+                        <DollarSign className="success" size={30} />
+                      </div>
+                    }
                     stat={this.state.row.montant} //{`${this.state.row.revenue}`}
                     statTitle="Chiffre d'affaire"
                   />
@@ -136,20 +160,19 @@ class Partenaire_Info extends React.Component {
                     iconBg="primary"
                     icon={
                       <div
-                      style={{
-                        marginRight:"auto",
-                        marginLeft:"auto",
-                        padding:"10px",
-                        backgroundColor:"#FFF1E3",
-                        borderRadius:"50%",
-                        height:"50px",
-                        width:"50px",
-                      }}
+                        style={{
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          padding: "10px",
+                          backgroundColor: "#FFF1E3",
+                          borderRadius: "50%",
+                          height: "50px",
+                          width: "50px",
+                        }}
                       >
-                      <User 
-                      className="primary"
-                      size={30} />
-                      </div> }
+                        <User className="primary" size={30} />
+                      </div>
+                    }
                     stat="90"
                     statTitle="Patients"
                   />
@@ -176,10 +199,10 @@ class Partenaire_Info extends React.Component {
                 </div>
               </div>
               <div>
-                <p className=" font-small-3">Actif</p>
-                <p className="">Khadem</p>
-                <p className="">Saida</p>
-                <p className="">0559863111</p>
+                <p className=" font-small-3">{this.state.row.status}</p>
+                <p className="">{this.state.row.type}</p>
+                <p className="">{this.state.row.ville}</p>
+                <p className="">{this.state.row.telephone}</p>
               </div>
             </div>
           </div>

@@ -50,7 +50,7 @@ class Nouveau_Partenaire extends React.Component {
                     </Button>
                 <CardBody>
                     <div className="d-flex flex-sm-row ">
-                        <div>
+                        {/* <div>
                         <Media>
                             <Media className="mr-1" left href="#">
                             <Media
@@ -63,7 +63,7 @@ class Nouveau_Partenaire extends React.Component {
                             />
                             </Media>
                             </Media>
-                        </div>
+                        </div> */}
                         <div>
                             <h7 style={{color:"#3A3B3C"}} ><b>Le Nom et Prenom</b></h7>
                             <div>

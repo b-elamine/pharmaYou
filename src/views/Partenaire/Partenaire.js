@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Badge } from "reactstrap";
+import { Row, Col, Badge, Spinner } from "reactstrap";
 import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
 // import DataTableCustom from "../DataTableCustom/DataTableCustom";
 import { Edit, Eye } from "react-feather";
@@ -7,387 +7,10 @@ import Select from "react-select";
 import axios from "../../axios";
 import { history } from "../../history";
 import DataTablePartenaire from "./DataTablePartenaire";
+import moment from "moment-timezone";
+import "moment/locale/fr";
 
 // fake database
-const data = [
-  {
-    // id: 1,
-    image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Alyss Lillecrop",
-    email: "alillecrop0@twitpic.com",
-    date: "May 13, 2018",
-    status: "active",
-    montant: "$32,000",
-    ratings: "good",
-    type: "particulier",
-    code: 12345,
-    origine: "Partenaire App",
-    ordonnances: 150,
-    carte_vital: true,
-    mutuelle: false,
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    // id: 2,
-    image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Shep Pentlow",
-    email: "spentlow1@home.pl",
-    date: "June 5, 2019",
-    status: "active",
-    montant: "$50,000",
-    ratings: "good",
-    type: "particulier",
-    code: 56789,
-    origine: "Partenaire infermier",
-    ordonnances: 20,
-    carte_vital: false,
-    mutuelle: true,
-    profession: "infirmier",
-    ville: "marseille",
-  },
-  {
-    // id: 3,
-    image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Gasper Morley",
-    email: "gmorley2@chronoengine.com",
-    date: "December 24, 2019",
-    status: "active",
-    montant: "$78,000",
-    ratings: "average",
-    type: "professionnel",
-    code: 1245,
-    origine: "Partenaire MEDADOM",
-    ordonnances: 123,
-    carte_vital: false,
-    mutuelle: true,
-    profession: "Application Externe",
-    ville: "lyon",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Phaedra Jerrard",
-    email: "pjerrard3@blogs.com",
-    date: "November 30, 2018",
-    status: "inactive",
-    montant: "$10,000",
-    ratings: "bad",
-    carte_vital: true,
-    mutuelle: true,
-    profession: "Application Externe",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Conn Plose",
-    email: "cplose4@geocities.com",
-    date: "April 8, 2017",
-    status: "active",
-    montant: "$22,000",
-    ratings: "average",
-    ordonnances: 10,
-    mutuelle: true,
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Tootsie Brandsma",
-    email: "tbrandsma5@theatlantic.com",
-    date: "August 12, 2019",
-    status: "inactive",
-    montant: "$49,000",
-    ratings: "bad",
-    ordonnances: 0,
-    mutuelle: true,
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Sibley Bum",
-    email: "sbum6@sourceforge.net",
-    date: "October 1, 2017",
-    status: "active",
-    montant: "$56,000",
-    ratings: "good",
-    mutuelle: true,
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Kristoffer Thew",
-    email: "kthew7@amazon.com",
-    date: "February 28, 2018",
-    status: "inactive",
-    montant: "$83,000",
-    ratings: "bad",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Fay Hasard",
-    email: "fhasard8@java.com",
-    date: "January 29, 2018",
-    status: "active",
-    montant: "$26,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Tabby Abercrombie",
-    email: "tabercrombie9@statcounter.com",
-    date: "April 1, 2019",
-    status: "active",
-    montant: "$60,000",
-    ratings: "average",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
-    name: "	Stella Indruch",
-    email: "sindruch1@mayoclinic.com",
-    date: "Dec 4, 2019",
-    status: "active",
-    montant: "$21,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
-    name: "	Aron McNirlin",
-    email: "amcnirlin2@samsung.com",
-    date: "Jan 4, 2018",
-    status: "inactive",
-    montant: "$30,000",
-    ratings: "bad",
-    profession: "infirmier",
-
-    ville: "paris",
-    origine: "Partenaire App",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-    name: "Ange Trenholm",
-    email: "atrenholm4@slideshare.net	",
-    date: "February 23, 2019",
-    status: "active",
-    montant: "$12,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
-    name: "Caterina Starkie",
-    email: "cstarkie5@feedburner.com",
-    date: "September 8, 2018",
-    status: "active",
-    montant: "$40,000",
-    ratings: "average",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
-    name: "Hugibert McGeagh",
-    email: "hmcgeaghf@smh.com.au",
-    date: "August 20, 2017",
-    status: "active",
-    montant: "$90,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
-    name: "Jaime Maher",
-    email: "jmaher1@msu.edu",
-    date: "April 7, 2019",
-    status: "active",
-    montant: "$38,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-24.jpg"),
-    name: "Amalle Pladen",
-    email: "jmaher1@msu.edu",
-    date: "March 30, 2018",
-    status: "active",
-    montant: "$18,000",
-    ratings: "average",
-    origine: "Partenaire App",
-    profession: "infirmier",
-    ville: "paris",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
-    name: "Dorris Ferries",
-    email: "dferries7@ucoz.com",
-    date: "August 25, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "bad",
-    profession: "infirmier",
-
-    origine: "Partenaire App",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
-    name: "Andy Fettes",
-    email: "afettesh@upenn.edu",
-    date: "September 30, 2017",
-    status: "inactive",
-    montant: "$35,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Allene Hughf",
-    email: "ahughf0@dropbox.com",
-    date: "June 21, 2018",
-    status: "active",
-    montant: "$35,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Petra Rheubottom",
-    email: "prheubottom0@globo.com",
-    date: "July 4, 2018",
-    status: "active",
-    montant: "$72,000",
-    ratings: "good",
-    origine: "Partenaire App",
-    profession: "infirmier",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Ambrosius Olyfant",
-    email: "aolyfant1@timesonline.co.uk",
-    date: "May 5, 2019",
-    status: "inactive",
-    montant: "$13,000",
-    origine: "Partenaire App",
-    profession: "infirmier",
-
-    ratings: "bad",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Letti Trineman",
-    email: "ltrineman2@cnbc.com",
-    date: "February 15, 2017",
-    status: "active",
-    montant: "$84,000",
-    ratings: "average",
-    profession: "infirmier",
-
-    origine: "Partenaire App",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Sayer Rodger",
-    email: "srodgerb@rakuten.co.jp",
-    date: "January 30, 2018",
-    status: "inactive",
-    montant: "$15,000",
-    ratings: "bad",
-    origine: "Partenaire App",
-    profession: "infirmier",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Skyler Scotcher",
-    email: "sscotcher3@soup.io",
-    date: "November 3, 2018",
-    status: "active",
-    montant: "$26,000",
-    ratings: "average",
-    profession: "infirmier",
-
-    origine: "Partenaire App",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Florette Shotbolt",
-    email: "fshotbolt7@wiley.com",
-    date: "March 12, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "good",
-    profession: "infirmier",
-
-    origine: "Partenaire App",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Janis Bakhrushkin",
-    email: "jbakhrushkina@epa.gov",
-    date: "July 10, 2017",
-    status: "active",
-    montant: "$65,000",
-    ratings: "good",
-    profession: "infirmier",
-
-    origine: "Partenaire App",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Alric Peinton",
-    email: "apeinton0@google.cn",
-    date: "February 6, 2017",
-    status: "inactive",
-    montant: "$38,000",
-    ratings: "bad",
-    origine: "Partenaire App",
-    profession: "infirmier",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Rubie Pitkethly",
-    email: "rpitkethlyf@51.la",
-    date: "February 20, 2018",
-    status: "active",
-    montant: "$62,000",
-    ratings: "average",
-    origine: "Partenaire App",
-    profession: "infirmier",
-  },
-  {
-    image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Hortensia Soaper",
-    email: "hsoaperh@mapy.cz",
-    date: "June 1, 2017",
-    status: "active",
-    montant: "$60,000",
-    ratings: "good",
-    profession: "infirmier",
-
-    origine: "Partenaire App",
-  },
-];
-
 const columns = [
   {
     name: "NOM",
@@ -396,15 +19,6 @@ const columns = [
     minWidth: "230px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-        <div className="user-img ml-xl-0 ml-2">
-          <img
-            className="img-fluid rounded-circle"
-            height="36"
-            width="36"
-            src={row.image}
-            alt={row.name}
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
@@ -426,7 +40,7 @@ const columns = [
   {
     name: "VILLE",
     selector: "ville",
-    minWidth: "150px",
+    maxWidth: "80px",
     sortable: true,
     cell: (row) => <p className="text-bold-200 mb-0">{row.ville}</p>, //row.ville
   },
@@ -434,7 +48,8 @@ const columns = [
     name: "STATUT",
     selector: "statut",
     sortable: true,
-    minWidth: "200px",
+    center: true,
+    minWidth: "180px",
     cell: (row) => (
       <Badge
         color={`light-${
@@ -450,7 +65,8 @@ const columns = [
   {
     name: "CODE POSTAL",
     selector: "code_postal",
-    minWidth: "150px",
+    minWidth: "140px",
+    center: true,
     sortable: true,
     cell: (row) => <p className="text-truncate mb-0">{row.code}</p>,
   },
@@ -462,28 +78,28 @@ const columns = [
     cell: (row) => (
       <Badge
         color={`light-${
-          row.profession === "infirmier" ? "success" : "primary"
+          row.type === "individu" ? "success" : "primary"
         } text-wrap text-bold-500 mb-0`}
         style={{ width: "7rem", fontSize: "74%", lineHeight: "1.1" }}
         pill
       >
-        {row.profession}
+        {row.type}
       </Badge>
     ),
   },
   {
     name: "PARTENAIRE DEPUIS",
     selector: "date_client",
-    minWidth: "200px",
+    minWidth: "180px",
     sortable: true,
-    cell: (row) => <p className="text-truncate mb-0">{row.date}</p>,
+    cell: (row) => <p className="text-bold-500 text-wrap mb-0">{row.date}</p>,
   },
   {
     name: "NOMBRE DE PATIENTS",
     selector: "nbr_patients",
     sortable: true,
     cell: (row) => (
-      <p className="font-small-4 text-truncate mb-0">{row.ordonnances}</p>
+      <p className="font-small-4 text-truncate mb-0">{row.nbr_ordonnances}</p>
     ),
   },
   {
@@ -496,7 +112,8 @@ const columns = [
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            history.push("/partenaires/info", row);
+            // il faut le remplacer
+            history.push(`/partenaire/${row.id}`);
           }}
         />
         <Edit
@@ -521,8 +138,46 @@ class Partenaire extends React.Component {
     },
     value: "",
     filteredData: [],
+    errorAlert: false,
+    errorText: "Vérifier votre cnnexion",
+  };
+  
+
+  handle_filter_status = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        let equalCondition = item.status.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
   };
 
+
+  handle_filter_origine = (e) => {
+    let value = e.value;
+    let data = this.state.data;
+    let filteredData = this.state.filteredData;
+    this.setState({ value: value });
+    if (value.length) {
+      filteredData = data.filter((item) => {
+        if (!item.origine) {
+          return null;
+        }
+        let equalCondition = item.origine.toLowerCase() === value.toLowerCase();
+        if (equalCondition) {
+          return equalCondition;
+        } else return null;
+      });
+      this.setState({ filteredData });
+    }
+  };
   extract_distinct_values(data) {
     const origines = [];
     const professions = [];
@@ -533,9 +188,9 @@ class Partenaire extends React.Component {
           origines.push(row.origine);
         }
       }
-      if (row.profession) {
-        if (!professions.includes(row.profession)) {
-          professions.push(row.profession);
+      if (row.type) {
+        if (!professions.includes(row.type)) {
+          professions.push(row.type);
         }
       }
       if (row.status) {
@@ -580,32 +235,64 @@ class Partenaire extends React.Component {
     });
   }
 
-  componentDidMount() {
-    // fetching the data from the database and passing it to the state
-    this.setState({
-      data: data,
-    });
-    // this.fetch_data();
-  }
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
+  };
 
-  // fetch_data = async () => {
-  //   const res = await axios.get("/statistiques?access_token=a");
-  //   console.log((res.data))
-  //   const data = JSON.parse(res.data);
-  //   console.log("datais : ",data);
-  // };
-
-  componentDidUpdate() {
-    if (
-      this.state.options.professions.length === 0 &&
-      this.state.options.origines.length === 0 &&
-      this.state.options.status.length === 0 &&
-      this.state.data.length !== 0
-    ) {
-      this.extract_distinct_values(this.state.data);
+  fetch_data = async () => {
+    try {
+      const partenaires = await axios.get(
+        "/users?access_token=a&type=infirmier"
+      );
+      if (partenaires.statusText === "OK") {
+        const custom_partenaires = partenaires.data.map((item) => {
+          return {
+            id: item.user_id,
+            name: `${item.nom} ${item.prenom}`,
+            email: item.email,
+            ville: item.ville_livraison,
+            code: item.code_postal_livraison,
+            origine: item.origine,
+            date: new Date(
+              moment(item.created_at * 1000).tz("Europe/Paris")
+            ).toLocaleDateString("fr-FR", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            status :item.is_active? "active" : "inactive",
+            nbr_ordonnances: item.n_commandes,
+            carte_vital: item.vitale_ok,
+            mutuelle: item.mutuelle_ok,
+            adresse_livraison: item.adresse_livraison,
+            chiffre_affaire: item.chiffre_affaire,
+            geocoords_livraison: item.geocoords_livraison,
+            telephone: item.telephone,
+            type: item.type,
+          };
+        });
+        this.setState({
+          data: custom_partenaires,
+        });
+        this.extract_distinct_values(this.state.data ? this.state.data : []);
+      } else {
+        this.handleAlert("errorAlert", true, partenaires.statusText);
+      }
+    } catch (err) {
+      const error_message =
+        err.message === "Network Error"
+          ? "Vérifier votre connexion !"
+          : "Une erreur est produite lors de la récupération des données.";
+      this.handleAlert("errorAlert", true, error_message);
     }
+  };
+  componentDidMount() {
+    this.fetch_data();
   }
-  handle_filter_status = (e) => {
+ handle_filter_status = (e) => {
     let value = e.value;
     let data = this.state.data;
     let filteredData = this.state.filteredData;
@@ -649,11 +336,11 @@ class Partenaire extends React.Component {
     this.setState({ value: value });
     if (value.length) {
       filteredData = data.filter((item) => {
-        if (!item.profession) {
+        if (!item.type) {
           return null;
         }
         let equalCondition =
-          item.profession.toLowerCase() === value.toLowerCase();
+          item.type.toLowerCase() === value.toLowerCase();
         if (equalCondition) {
           return equalCondition;
         } else return null;
@@ -663,7 +350,7 @@ class Partenaire extends React.Component {
   };
 
   render() {
-    const { value, filteredData } = this.state;
+    const { value, filteredData, data } = this.state;
     let element = [];
     element.push(data.length);
     return (
@@ -701,11 +388,21 @@ class Partenaire extends React.Component {
             />
           </Col>
           <Col sm="12">
-            <DataTablePartenaire
-              add_new={this.add_new}
-              columns={columns}
-              data={value.length ? filteredData : this.state.data}
-            />
+            {console.log(this.state.data.length)}
+            {this.state.data.length !== 0 ? (
+              <DataTablePartenaire
+                add_new={this.add_new}
+                columns={columns}
+                data={value.length ? filteredData : this.state.data}
+              />
+            ) : (
+              <div className="text-center mt-4">
+                <Spinner
+                  style={{ width: "5rem", height: "5rem" }}
+                  color="warning"
+                />
+              </div>
+            )}
           </Col>
         </Row>
       </React.Fragment>

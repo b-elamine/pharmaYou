@@ -14,6 +14,7 @@ import "../../../assets/scss/pages/app-email.scss";
 import SidebarAssignerTournee from "./SideBarAssignerTournee";
 import SideBarAttenteApprovisionnement from "./SideBarAttenteApprovisionnement";
 import SideBarDocumentManquant from "./SideBarDocumentManquant";
+import SideBarAnnulerCommande from "./SideNarAnnulerCommande";
 
 import axios from "../../../axios";
 
@@ -61,6 +62,7 @@ class Ordonnance extends Component {
     statusAssignerTourneSideBar: false,
     statusDocumentManquantSideBar: false,
     statusAttenteApproSideBar: false,
+    statusAnnulerCommandeSideBar : false,
     ordonnance: {
       patient: {
         note: "",
@@ -130,7 +132,6 @@ class Ordonnance extends Component {
         CMU: commande.cmu,
         mutuelle: commande.mutuelle_ok,
         vital: commande.vitale_ok,
-
       };
       this.setState({
         ordonnance: custom_commande,
@@ -172,6 +173,17 @@ class Ordonnance extends Component {
     } else {
       this.setState({
         statusDocumentManquantSideBar: false,
+      });
+    }
+  };
+  handleAnnulerCommandeSideBar = (status) => {
+    if (status === "open") {
+      this.setState({
+        statusAnnulerCommandeSideBar: true,
+      });
+    } else {
+      this.setState({
+        statusAnnulerCommandeSideBar: false,
       });
     }
   };
@@ -236,6 +248,7 @@ class Ordonnance extends Component {
               toggleAASidebar={this.handleAttenteApproSideBar}
               toggleDMSidebar={this.handleDocumentManquantSideBar}
               toggleATSidebar={this.handleAssignerTourneSideBar}
+              toggleACSidebar={this.handleAnnulerCommandeSideBar}
             />
           </Card>
           <Card style={{ boxShadow: "none" }}>
@@ -254,11 +267,20 @@ class Ordonnance extends Component {
           handleComposeSidebar={this.handleAssignerTourneSideBar}
           currentStatus={this.state.statusAssignerTourneSideBar}
         />
-        <SideBarDocumentManquant
-          ordonnance={this.state.ordonnance}
-          handleComposeSidebar={this.handleDocumentManquantSideBar}
-          currentStatus={this.state.statusDocumentManquantSideBar}
-        />
+        {this.state.ordonnance.id ? (
+          <SideBarDocumentManquant
+            ordonnance={this.state.ordonnance}
+            handleComposeSidebar={this.handleDocumentManquantSideBar}
+            currentStatus={this.state.statusDocumentManquantSideBar}
+          />
+        ) : null}
+        {this.state.ordonnance.id ? (
+          <SideBarAnnulerCommande
+            ordonnance={this.state.ordonnance}
+            handleComposeSidebar={this.handleAnnulerCommandeSideBar}
+            currentStatus={this.state.statusAnnulerCommandeSideBar}
+          />
+        ) : null}
         <SideBarAttenteApprovisionnement
           ordonnance={this.state.ordonnance}
           handleComposeSidebar={this.handleAttenteApproSideBar}

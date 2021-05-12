@@ -42,7 +42,7 @@ class modifier_Partenaire extends React.Component {
           </Button>
           <CardBody>
             <div className="d-flex flex-sm-row ">
-              <div>
+              {/* <div>
                 <Media>
                   <Media className="mr-1" left href="#">
                     <Media
@@ -55,7 +55,7 @@ class modifier_Partenaire extends React.Component {
                     />
                   </Media>
                 </Media>
-              </div>
+              </div> */}
               <div>
                 <h7 style={{ color: "#3A3B3C" }}>
                   <b>{this.state.row.name}</b>
