@@ -24,9 +24,8 @@ import Switch from "react-switch";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 import axios from "../../../axios";
-import test_image from "../../../assets/img/backgrounds/chat-bg-2.png";
-
 import pdf_test from "./10.1.1.695.7550.pdf";
+
 const CardDashed = (props) => {
   return (
     <Card>
@@ -43,7 +42,6 @@ const CardDashed = (props) => {
             color: "white",
             alignItems: "center",
             display: "flex",
-            // textAlign:"left"
           }}
         >
           <p className="font-small-1 ml-0 mr-1">{props.label} </p>
@@ -92,15 +90,10 @@ const ModaL = (props) => {
     <Modal
       isOpen={props.modal_state}
       toggle={props.toggle_modal}
-      className="modal-dialog-centered"
+      keyboard = {true}
+      centered = {true}
     >
-      <ModalHeader toggle={props.toggle_modal}>{props.title}</ModalHeader>
       <ModalBody>{props.children}</ModalBody>
-      <ModalFooter>
-        <Button color={props.btn_color} onClick={props.toggle_modal}>
-          OK
-        </Button>{" "}
-      </ModalFooter>
     </Modal>
   );
 };
@@ -199,13 +192,12 @@ class Troisieme_section extends React.Component {
             ></CardDashed>
             <ModaL
               title={this.state.modal_title}
-              footer="The footer."
               toggle_modal={this.toggleModal}
               modal_state={this.state.modal}
-              btn_color="primary"
             >
               {this.state.modal_file_type === "image" ? (
-                <img src={this.state.modal_file} alt="test" />
+                <img style={{width:"100%"}} src={this.state.modal_file} alt="test" />  
+                
               ) : (
                 <h1>Le PDF</h1>
               )}

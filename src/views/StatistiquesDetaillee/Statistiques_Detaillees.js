@@ -406,7 +406,7 @@ class stats extends React.Component {
   }
 
   render() {
-    // window.setInterval(this.updateState, 10000);
+    window.setInterval(this.updateState, 10000);
     return (
       <div>
         <Row>
