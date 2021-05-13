@@ -68,15 +68,6 @@ class Commandes_partenaire extends React.Component {
         minWidth: "180px",
         cell: (row) => (
           <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-            <div className="user-img ml-xl-0 ml-2">
-              <img
-                className="img-fluid rounded-circle"
-                height="30"
-                width="30"
-                src={row.image}
-                alt={row.name}
-              />
-            </div>
             <div className="user-info text-truncate ml-xl-50 ml-0">
               <span
                 title={row.name}

@@ -6,7 +6,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import Switch from "react-switch";
 import Select from "react-select";
 
-import { EditorState } from "draft-js";
+import { EditorState, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../../assets/scss/plugins/extensions/editor.scss";
@@ -23,10 +23,10 @@ class ComposeEmail extends React.Component {
     editorState1: EditorState.createEmpty(),
     commentaire: "",
     listeTournes: "",
-    email_title: "",
-    email_text: "",
-    sms_text: "",
-    push_text: "",
+    email_title: "[Commande 1-NU-45] Votre commande a \u00e9t\u00e9 valid\u00e9e",
+    email_text: "Bonjour,\n\nVotre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You",
+    sms_text: "Votre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e.",
+    push_text: "Votre commande a \u00e9t\u00e9 valid\u00e9e.",
     checked: false,
   };
   onEditorStateChange = (editorState) => {
@@ -112,7 +112,7 @@ class ComposeEmail extends React.Component {
           tournées: sortedData,
         });
       })
-      .catch((err) => alert(err));
+      .catch((err) => alert("Erreur lors de la récuperation des tournées disponible \n vérifier votre connexion et recharger la page"));
     await axios
       .get(
         `/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`
@@ -152,6 +152,12 @@ class ComposeEmail extends React.Component {
             }H:${end.toISOString().split("T")[1].split(":")[1]}`,
           };
         });
+        const text = `Email : ${
+          response.data.default_message.email_title + "\n" +
+          response.data.default_message.email_text
+        } \n SMS: ${response.data.default_message.sms_text} \n Notification: ${
+          response.data.default_message.push_text
+        }`;
         this.setState({
           defaultTours: data,
           selectedTournée: data,
@@ -159,9 +165,12 @@ class ComposeEmail extends React.Component {
           email_text: response.data.default_message.email_text,
           sms_text: response.data.default_message.sms_text,
           push_text: response.data.default_message.push_text,
+          editorState: EditorState.createWithContent(
+            ContentState.createFromText(text)
+          ),
         });
       })
-      .catch((err) => alert(err));
+      .catch((err) => alert("Erreur lors de la récuperation des tournées pour cette commande \n vérifier votre connexion et recharger la page"));
   }
 
   handleSelect = (e) => {
@@ -171,7 +180,7 @@ class ComposeEmail extends React.Component {
     });
     if (!e || e.length === 0) {
       this.setState({
-        toursSelectedMemory:[],
+        toursSelectedMemory: [],
         selectedTournée: this.state.defaultTours,
       });
     }
@@ -191,12 +200,10 @@ class ComposeEmail extends React.Component {
       {
         tournees: tournees,
         default_message: {
-          email_title:
-            "[Commande 1-NU-45] Votre commande a \u00e9t\u00e9 valid\u00e9e",
-          email_text:
-            "Bonjour,\n\nVotre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You",
-          sms_text: "Votre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e.",
-          push_text: "Votre commande a \u00e9t\u00e9 valid\u00e9e.",
+          email_title: this.state.email_title,
+          email_text: this.state.email_text,
+          sms_text: this.state.sms_text,
+          push_text: this.state.push_text,
         },
       }
     );
@@ -294,6 +301,7 @@ class ComposeEmail extends React.Component {
                   // editorClassName="demo-editor"
                   onEditorStateChange={this.onEditorStateChange}
                   onChange={(e) => this.setState({ emailBody: e.blocks })}
+                  value={this.state.editorMessage}
                   toolbar={{
                     options: ["inline", "fontSize", "textAlign"],
                     inline: {
@@ -332,9 +340,8 @@ class ComposeEmail extends React.Component {
               <Button.Ripple
                 color="primary"
                 className="mr-1"
-                disabled={ tours === ""}
+                disabled={tours === ""}
                 onClick={this.ValiderTournée}
-                
               >
                 Valider
               </Button.Ripple>
