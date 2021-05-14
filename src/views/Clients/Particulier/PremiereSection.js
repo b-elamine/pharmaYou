@@ -35,7 +35,7 @@ const CommentaireBlock = (props) => {
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        <div className="user-img ml-xl-0 ml-3">
+        {/* <div className="user-img ml-xl-0 ml-3">
           <img
             className="img-fluid rounded-circle"
             height="32"
@@ -43,7 +43,7 @@ const CommentaireBlock = (props) => {
             src={props.image_path}
             alt="icon"
           />
-        </div>
+        </div> */}
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
@@ -196,7 +196,7 @@ class PremiereSection extends React.Component {
                         icon_color={icon_color}
                         block_type={comment.type}
                         block_note={comment.commentaire}
-                        image_path={comment.image}
+                        // image_path={comment.image}
                         name={comment.nom}
                       />
                     );

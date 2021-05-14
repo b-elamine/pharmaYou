@@ -346,7 +346,6 @@ class stats extends React.Component {
         },
       ],
     };
-
     this.setState(  (prev_state, props) => {
       return {
       //setting Last 2 horizontal charts values
@@ -403,10 +402,10 @@ class stats extends React.Component {
 
   componentDidMount() {
     this.fetching_data();
+    window.setInterval(this.fetching_data, 60000);
   }
 
   render() {
-    window.setInterval(this.updateState, 10000);
     return (
       <div>
         <Row>

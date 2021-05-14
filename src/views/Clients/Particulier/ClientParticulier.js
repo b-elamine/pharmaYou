@@ -17,28 +17,24 @@ const commentaires_notes = [
     id: 2,
     type: "Commentaire interne",
     commentaire: "Un client deyer ki tfou",
-    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
     nom: "Benssnan zakzouk",
   },
   {
     id: 3,
     type: "Note envoyé au client",
     commentaire: "4 dose de brygabaline",
-    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
     nom: "Nadjet Boudouara",
   },
   {
     id: 4,
     type: "Note envoyé au client",
     commentaire: "4 dose de brygabaline",
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
     nom: "Nadjet Boudouara",
   },
   {
     id: 5,
     type: "Commentaire interne",
     commentaire: "Client ki soukour",
-    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
     nom: "Djaluidji Boufon",
   },
 ];
@@ -58,7 +54,6 @@ class Client_particulier extends React.Component {
 
       const custom_client = {
         id: client.user_id,
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
         name: `${client.nom} ${client.prenom}`,
         email: client.email,
         ville: client.ville_livraison,

@@ -14,7 +14,6 @@ import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 const data = [
   {
     id: 1,
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
     name: "Alyss Lillecrop",
     email: "alillecrop0@twitpic.com",
     date: "May 13, 2018",
@@ -39,7 +38,6 @@ const data = [
   },
   {
     id: 2,
-    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
     name: "Shep Pentlow",
     email: "spentlow1@home.pl",
     date: "June 5, 2019",
@@ -64,7 +62,6 @@ const data = [
   },
   {
     id: 3,
-    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
     name: "Gasper Morley",
     email: "gmorley2@chronoengine.com",
     date: "December 24, 2019",
@@ -88,7 +85,6 @@ const data = [
     CMU: true,
   },
   {
-    image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
     name: "Phaedra Jerrard",
     email: "pjerrard3@blogs.com",
     date: "November 30, 2018",
@@ -108,7 +104,6 @@ const data = [
     CMU: true,
   },
   {
-    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
     name: "Conn Plose",
     email: "cplose4@geocities.com",
     date: "April 8, 2017",
@@ -124,7 +119,6 @@ const data = [
     },
   },
   {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
     name: "Tootsie Brandsma",
     email: "tbrandsma5@theatlantic.com",
     date: "August 12, 2019",
@@ -133,7 +127,6 @@ const data = [
     ratings: "bad",
   },
   {
-    image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
     name: "Sibley Bum",
     email: "sbum6@sourceforge.net",
     date: "October 1, 2017",
@@ -142,7 +135,6 @@ const data = [
     ratings: "good",
   },
   {
-    image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
     name: "Kristoffer Thew",
     email: "kthew7@amazon.com",
     date: "February 28, 2018",
@@ -418,15 +410,6 @@ const columns = [
     minWidth: "200px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-        <div className="user-img ml-xl-0 ml-2">
-          <img
-            className="img-fluid rounded-circle"
-            height="36"
-            width="36"
-            src={row.image}
-            alt={row.name}
-          />
-        </div>
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span
             title={row.name}
@@ -443,6 +426,7 @@ const columns = [
     name: "Type",
     selector: "type",
     sortable: true,
+    minWidth: "120px",
     cell: (row) =>
       row.type === "particulier" ? (
         <Badge
