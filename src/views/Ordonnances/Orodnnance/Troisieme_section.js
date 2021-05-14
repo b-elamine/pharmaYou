@@ -77,7 +77,7 @@ const CardDashed = (props) => {
             Voir le fichier
           </Button>
           {props.file_loader ? (
-            <Spinner className="ml-2" color="info" size="lg" />
+            <Spinner className="ml-2" color={props.spinner_color} size="lg" />
           ) : null}
         </Col>
       </Row>
@@ -90,8 +90,8 @@ const ModaL = (props) => {
     <Modal
       isOpen={props.modal_state}
       toggle={props.toggle_modal}
-      keyboard = {true}
-      centered = {true}
+      keyboard={true}
+      centered={true}
     >
       <ModalBody>{props.children}</ModalBody>
     </Modal>
@@ -108,6 +108,9 @@ class Troisieme_section extends React.Component {
     modal_file: "",
     modal_title: "",
     modal_file_type: null,
+    file_ordonnance_loader: false,
+    file_mutuelle_loader: false,
+    file_carte_loader: false,
   };
   myFormat = (num) => {
     return `${num} jours`;
@@ -116,14 +119,16 @@ class Troisieme_section extends React.Component {
     this.setState({ checked });
   };
 
-  get_ordonnance_file = async (path) => {
+  get_ordonnance_file = async (file_type, path) => {
     try {
       this.setState({
         // file_ordonnance_loader pour le spinner qui se trouve en bas du button
-        file_ordonnance_loader: true,
+        file_ordonnance_loader: file_type === "ordonnances" ? true : false,
+        file_carte_loader: file_type === "vitales" ? true : false,
+        file_mutuelle_loader: file_type === "mutuelles" ? true : false,
       });
       const response = await axios.get(
-        `/ordonnances/${path}/original?access_token=a`
+        `/${file_type}/${path}/original?access_token=a`
       );
       // juste pour savoir le type du fichier
       let modal_file;
@@ -131,7 +136,7 @@ class Troisieme_section extends React.Component {
         this.setState({
           modal_file_type: "image",
         });
-        modal_file = `https://ordo.pharmayou.fr:3003/ordonnances/${path}/original?access_token=a`;
+        modal_file = `https://ordo.pharmayou.fr:3003/${file_type}/${path}/original?access_token=a`;
       } else {
         this.setState({
           modal_file_type: "pdf",
@@ -142,12 +147,20 @@ class Troisieme_section extends React.Component {
         modal: !prevState.modal,
         modal_file: modal_file,
         file_ordonnance_loader: false,
+        file_carte_loader: false,
+        file_mutuelle_loader: false,
       }));
     } catch (err) {
       this.setState({
         file_ordonnance_loader: false,
+        file_carte_loader: false,
+        file_mutuelle_loader: false,
       });
-      console.log(err.message);
+      if (err.message.includes("404")) {
+        alert("fichier introuvable.");
+      } else {
+        console.log(err.message);
+      }
     }
   };
   toggleModal = () => {
@@ -183,10 +196,14 @@ class Troisieme_section extends React.Component {
                 this.setState({
                   modal_title: "Ordonnace",
                 });
-                this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
+                this.get_ordonnance_file(
+                  "ordonnances",
+                  this.props.ordonnance.ordonnance.path
+                );
               }}
               bg_color="#3397da"
               label="Ordonnance"
+              spinner_color="info"
               ordonnance={this.props.ordonnance}
               toggle_modal={this.toggleModal}
             ></CardDashed>
@@ -196,8 +213,11 @@ class Troisieme_section extends React.Component {
               modal_state={this.state.modal}
             >
               {this.state.modal_file_type === "image" ? (
-                <img style={{width:"100%"}} src={this.state.modal_file} alt="test" />  
-                
+                <img
+                  style={{ width: "100%" }}
+                  src={this.state.modal_file}
+                  alt="test"
+                />
               ) : (
                 <h1>Le PDF</h1>
               )}
@@ -254,13 +274,19 @@ class Troisieme_section extends React.Component {
           </Col>
           <Col>
             <CardDashed
+              file_loader={this.state.file_carte_loader}
               bg_color="#1aac1a"
               label="Carte Vital"
+              spinner_color="warning"
               get_file={() => {
                 this.setState({
-                  modal_title: "Carte vitalle",
+                  modal_title: "vitales",
                 });
-                this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
+                console.log(this.props.ordonnance.vitale.path);
+                this.get_ordonnance_file(
+                  "vitales",
+                  this.props.ordonnance.vitale.path
+                );
               }}
               ordonnance={this.props.ordonnance}
             ></CardDashed>
@@ -281,14 +307,20 @@ class Troisieme_section extends React.Component {
           </Col>
           <Col>
             <CardDashed
+              file_loader={this.state.file_mutuelle_loader}
               bg_color="#d01b47"
               label="Mutuelle"
               get_file={() => {
                 this.setState({
-                  modal_title: "Mutuelle",
+                  modal_title: "mutuelles",
                 });
-                this.get_ordonnance_file(this.props.ordonnance.ordonnance.path);
+                console.log(this.props.ordonnance.mutuelle.path);
+                this.get_ordonnance_file(
+                  "mutuelles",
+                  this.props.ordonnance.mutuelle.path
+                );
               }}
+              spinner_color="danger"
               ordonnance={this.props.ordonnance}
             ></CardDashed>
             <div style={{ width: "90%", marginTop: "-20px" }}>

@@ -51,7 +51,6 @@ class ComposeEmail extends React.Component {
       const response = await externalAxios.get(
         `/commandes/${commande_id}/invalider_form?access_token=a`
       );
-      console.log(response.data.default_message.email_text);
       const message = response.data.default_message.email_text
         ? response.data.default_message.email_text
         : null;

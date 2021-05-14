@@ -100,7 +100,7 @@ class SecondSection extends React.Component {
                 </p>
                 <p>CMU : {this.props.ordonnance.CMU ? "Oui" : "Non"} </p>
                 <p>
-                  Mutuelle: {this.props.ordonnance.mutuelle ? "Oui" : "Non"}{" "}
+                  Mutuelle: {this.props.ordonnance.mutuelle_ok ? "Oui" : "Non"}{" "}
                 </p>
               </div>
             </CardBody>

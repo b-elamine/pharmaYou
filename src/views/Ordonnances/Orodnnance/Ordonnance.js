@@ -84,6 +84,7 @@ class Ordonnance extends Component {
         `/commandes/${id_commande}?access_token=a`
       );
       const commande = response.data;
+      console.log(commande)
       const custom_commande = {
         ...commande,
         id: commande.commande_id,
@@ -130,7 +131,7 @@ class Ordonnance extends Component {
         },
         historique: commande.historique,
         CMU: commande.cmu,
-        mutuelle: commande.mutuelle_ok,
+        mutuelle: commande.mutuelle,
         vital: commande.vitale_ok,
       };
       this.setState({
