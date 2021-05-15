@@ -294,6 +294,7 @@ class stats extends React.Component {
     const statistiques2 = await axios.get("/statistiques?access_token=a");
     const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
     const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels;
+    console.log(statistiques2.data)
 
     const new_horizontal_chart_1 = {
       options: {

@@ -20,319 +20,7 @@ import axios from "../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 const dt = 333; //test à supprimer
-// const data = [
-//   {
-//     id: "589547",
-//     image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-//     name: "Alyss Lillecrop",
-//     email: "alillecrop0@twitpic.com",
-//     date: "May 13, 2018",
-//     status: "Annuler",
-//     montant: "$32,000",
-//     ratings: "good",
-//     type: "particulier",
-//     code: 12345,
-//     origine: "Partenaire App",
-//   },
-//   {
-//     id: "349810",
-//     image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-//     name: "Shep Pentlow",
-//     email: "spentlow1@home.pl",
-//     date: "June 5, 2019",
-//     status: "active",
-//     montant: "$50,000",
-//     ratings: "good",
-//     type: "particulier",
-//     code: 56789,
-//     origine: "Partenaire infermier",
-//   },
-//   {
-//     id: "689527",
-//     image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-//     name: "Gasper Morley",
-//     email: "gmorley2@chronoengine.com",
-//     date: "December 20, 2019",
-//     status: "En livraison",
-//     montant: "$78,000",
-//     ratings: "average",
-//     type: "professionnel",
-//     code: 1205,
-//     origine: "Partenaire MEDADOM",
-//   },
-//   {
-//     id: "981536",
-//     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-//     name: "Phaedra Jerrard",
-//     email: "pjerrard3@blogs.com",
-//     date: "November 30, 2018",
-//     status: "Non-traité",
-//     montant: "$10,000",
-//     ratings: "bad",
-//   },
-//   {
-//     id: "401536",
-//     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-//     name: "Conn Plose",
-//     email: "cplose4@geocities.com",
-//     date: "April 8, 2017",
-//     status: "active",
-//     montant: "$22,000",
-//     ratings: "average",
-//   },
-//   {
-//     id: "281516",
-//     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-//     name: "Tootsie Brandsma",
-//     email: "tbrandsma5@theatlantic.com",
-//     date: "August 12, 2019",
-//     status: "inactive",
-//     montant: "$49,000",
-//     ratings: "bad",
-//   },
-//   {
-//     id: "731530",
-//     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-//     name: "Sibley Bum",
-//     email: "sbum6@sourceforge.net",
-//     date: "October 1, 2017",
-//     status: "active",
-//     montant: "$56,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "081431",
-//     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-//     name: "Kristoffer Thew",
-//     email: "kthew7@amazon.com",
-//     date: "February 28, 2018",
-//     status: "inactive",
-//     montant: "$83,000",
-//     ratings: "bad",
-//   },
-//   {
-//     id: "111536",
-//     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-//     name: "Fay Hasard",
-//     email: "fhasard8@java.com",
-//     date: "January 29, 2018",
-//     status: "active",
-//     montant: "$26,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "536222",
-//     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-//     name: "Tabby Abercrombie",
-//     email: "tabercrombie9@statcounter.com",
-//     date: "April 1, 2019",
-//     status: "active",
-//     montant: "$60,000",
-//     ratings: "average",
-//   },
-//   {
-//     id: "313516",
-//     image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
-//     name: "	Stella Indruch",
-//     email: "sindruch1@mayoclinic.com",
-//     date: "Dec 4, 2019",
-//     status: "active",
-//     montant: "$21,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "451716",
-//     image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
-//     name: "	Aron McNirlin",
-//     email: "amcnirlin2@samsung.com",
-//     date: "Jan 4, 2018",
-//     status: "inactive",
-//     montant: "$30,000",
-//     ratings: "bad",
-//   },
-//   {
-//     id: "121536",
-//     image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-//     name: "Ange Trenholm",
-//     email: "atrenholm4@slideshare.net	",
-//     date: "February 23, 2019",
-//     status: "active",
-//     montant: "$12,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "451712",
-//     image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
-//     name: "Caterina Starkie",
-//     email: "cstarkie5@feedburner.com",
-//     date: "September 8, 2018",
-//     status: "active",
-//     montant: "$40,000",
-//     ratings: "average",
-//   },
-//   {
-//     id: "881716",
-//     image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
-//     name: "Hugibert McGeagh",
-//     email: "hmcgeaghf@smh.com.au",
-//     date: "August 20, 2017",
-//     status: "active",
-//     montant: "$90,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "651726",
-//     image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
-//     name: "Jaime Maher",
-//     email: "jmaher1@msu.edu",
-//     date: "April 7, 2019",
-//     status: "active",
-//     montant: "$38,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "151716",
-//     image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-//     name: "Amalle Pladen",
-//     email: "jmaher1@msu.edu",
-//     date: "March 30, 2018",
-//     status: "active",
-//     montant: "$18,000",
-//     ratings: "average",
-//   },
-//   {
-//     id: "221716",
-//     image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
-//     name: "Dorris Ferries",
-//     email: "dferries7@ucoz.com",
-//     date: "August 25, 2017",
-//     status: "active",
-//     montant: "$69,000",
-//     ratings: "bad",
-//   },
-//   {
-//     id: "459916",
-//     image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
-//     name: "Andy Fettes",
-//     email: "afettesh@upenn.edu",
-//     date: "September 30, 2017",
-//     status: "inactive",
-//     montant: "$35,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "991716",
-//     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-//     name: "Allene Hughf",
-//     email: "ahughf0@dropbox.com",
-//     date: "June 21, 2018",
-//     status: "active",
-//     montant: "$35,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "541716",
-//     image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-//     name: "Petra Rheubottom",
-//     email: "prheubottom0@globo.com",
-//     date: "July 4, 2018",
-//     status: "active",
-//     montant: "$72,000",
-//     ratings: "good",
-//   },
-//   {
-//     id: "001716",
-//     image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-//     name: "Ambrosius Olyfant",
-//     email: "aolyfant1@timesonline.co.uk",
-//     date: "May 5, 2019",
-//     status: "inactive",
-//     montant: "$13,000",
-//     ratings: "bad",
-//   },
-//   {
-//     id: "561716",
-//     image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-//     name: "Letti Trineman",
-//     email: "ltrineman2@cnbc.com",
-//     date: "February 15, 2017",
-//     status: "active",
-//     montant: "$84,000",
-//     ratings: "average",
-//   },
-//   {
-//     id: "101716",
-//     image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-//     name: "Sayer Rodger",
-//     email: "srodgerb@rakuten.co.jp",
-//     date: "January 30, 2018",
-//     status: "inactive",
-//     montant: "$15,000",
-//     ratings: "bad",
-//   },
-//   {
-//     image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-//     name: "Skyler Scotcher",
-//     email: "sscotcher3@soup.io",
-//     date: "November 3, 2018",
-//     status: "active",
-//     montant: "$26,000",
-//     ratings: "average",
-//   },
-//   {
-//     image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-//     name: "Florette Shotbolt",
-//     email: "fshotbolt7@wiley.com",
-//     date: "March 12, 2017",
-//     status: "active",
-//     montant: "$69,000",
-//     ratings: "good",
-//   },
-//   {
-//     image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-//     name: "Janis Bakhrushkin",
-//     email: "jbakhrushkina@epa.gov",
-//     date: "July 10, 2017",
-//     status: "active",
-//     montant: "$65,000",
-//     ratings: "good",
-//   },
-//   {
-//     image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-//     name: "Alric Peinton",
-//     email: "apeinton0@google.cn",
-//     date: "February 6, 2017",
-//     status: "inactive",
-//     montant: "$38,000",
-//     ratings: "bad",
-//   },
-//   {
-//     image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-//     name: "Rubie Pitkethly",
-//     email: "rpitkethlyf@51.la",
-//     date: "February 20, 2018",
-//     status: "active",
-//     montant: "$62,000",
-//     ratings: "average",
-//   },
-//   {
-//     image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-//     name: "Hortensia Soaper",
-//     email: "hsoaperh@mapy.cz",
-//     date: "June 1, 2017",
-//     status: "active",
-//     montant: "$60,000",
-//     ratings: "good",
-//   },
-// ];
-// const ordonnances = {
-//   non_traité: 10,
-//   en_attente: 2,
-//   en_cours_livraison: 20,
-//   livrée: 30,
-//   assigner_tournée: 14,
-//   dossier_incomplet: 4,
-// };
+
 const columns = [
   {
     name: "#",
@@ -564,6 +252,7 @@ const columns = [
     ),
   },
 ];
+
 class General_View extends React.Component {
   state = {
     errorAlert: false,
@@ -572,26 +261,24 @@ class General_View extends React.Component {
     pro_chart_bar: {
       series: [
         {
-          data: [15, 21, 22, 10, 28],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
           height: "3.5rem",
           type: "bar",
-          events: {
-            click: function (chart, w, e) {
-              // console.log(chart, w, e)
-            },
-          },
         },
         colors: ["#FF5614"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -617,40 +304,29 @@ class General_View extends React.Component {
         grid: {
           show: false,
         },
-        // title : {
-        //     text : "Commande / Semaine",
-        //     align : "left",
-        //     style : {
-        //         fontSize : "12px",
-        //         fontWeight : "regular",
-        //         color : "black"
-        //     }
-        // }
       },
     },
     pro_chart_line: {
       series: [
         {
-          data: [13, 17, 20, 14, 16],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
           height: "3.5rem",
           type: "bar",
-          events: {
-            click: function (chart, w, e) {
-              // console.log(chart, w, e)
-            },
-          },
         },
         colors: ["#28C76F"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -662,7 +338,7 @@ class General_View extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [["John"], ["Joe"], ["Jake"], ["Peter"]],
+          categories: [],
           labels: {
             show: false,
           },
@@ -673,40 +349,29 @@ class General_View extends React.Component {
         grid: {
           show: false,
         },
-        // title : {
-        //     text : "Chiffre d'aiffaire",
-        //     align : "left",
-        //     style : {
-        //         fontSize : "12px",
-        //         fontWeight : "regular",
-        //         color : "black"
-        //     }
-        // }
       },
     },
-    particular_char_bar: {
+    particular_chart_bar: {
       series: [
         {
-          data: [18, 22, 10, 28, 33],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
           height: "3.5rem",
           type: "bar",
-          events: {
-            click: function (chart, w, e) {
-              // console.log(chart, w, e)
-            },
-          },
         },
         colors: ["#FC8F04"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -718,7 +383,6 @@ class General_View extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [["John"], ["Joe"], ["Jake"], ["Peter"], ["Peter"]],
           labels: {
             show: false,
           },
@@ -729,40 +393,29 @@ class General_View extends React.Component {
         grid: {
           show: false,
         },
-        // title : {
-        //     text : "Ordonnances reçues",
-        //     align : "left",
-        //     style : {
-        //         fontSize : "12px",
-        //         fontWeight : "regular",
-        //         color : "black"
-        //     }
-        // }
       },
     },
-    particular_char_line: {
+    particular_chart_line: {
       series: [
         {
-          data: [21, 22, 10, 28, 33],
+          data: [],
         },
       ],
       options: {
         chart: {
+          zoom: {
+            enable: false,
+          },
           toolbar: {
             show: false,
           },
           height: "3.5rem",
           type: "bar",
-          events: {
-            click: function (chart, w, e) {
-              // console.log(chart, w, e)
-            },
-          },
         },
         colors: ["#00CFE8"],
         plotOptions: {
           bar: {
-            columnWidth: "20%",
+            columnWidth: "25px",
             distributed: true,
             borderRadius: 3,
           },
@@ -774,7 +427,6 @@ class General_View extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [["John"], ["Joe"], ["Jake"], ["Peter"]],
           labels: {
             show: false,
           },
@@ -785,34 +437,46 @@ class General_View extends React.Component {
         grid: {
           show: false,
         },
-        // title : {
-        //     text : "Chiffre d'affiare ordonnance",
-        //     align : "left",
-        //     style : {
-        //         fontSize : "12px",
-        //         fontWeight : "regular",
-        //         color : "black"
-        //     }
-        // }
       },
     },
     table: {
       columns: [],
       data: [],
-      // ordonnances: {
-      //   non_traité: 0,
-      //   en_attente: 0,
-      //   en_cours_livraison: 0,
-      //   livrée: 0,
-      //   assigner_tournée: 0,
-      //   dossier_incomplet: 0,
-      // },
     },
+    statistiques_particuliers : {
+      moy_par_commande:0,
+      n_clients : 0,
+      n_commandes : 0,
+      n_commandes_en_attente:0,
+      n_commandes_livrees:0,
+      chiffre_daffaire:0,
+    },
+    statistiques_pro: {
+      moy_par_commande:0,
+      n_clients : 0,
+      n_commandes : 0,
+      n_commandes_en_attente:0,
+      n_commandes_livrees:0,
+      chiffre_daffaire:0,
+    },
+    stats_objet : {
+      statistiques_particuliers : {
+        jour: {
+          chiffre_daffaire :0
+        }
+      },
+      statistiques_professionnels : {
+        jour: {
+          chiffre_daffaire :0
+        }
+      }
+    }
   };
 
   fetch_data = async () => {
     try {
       const commandes = await axios.get("/commandes?access_token=a");
+      const statistiques2 = await axios.get("/statistiques?access_token=a");
       // const commandes = {statusText :"OK",data : data };
 
       if (commandes.statusText === "OK") {
@@ -872,17 +536,52 @@ class General_View extends React.Component {
           table: {
             columns: columns,
             data: custom_commandes,
-            // ordonnances: {
-            //   non_traité: ordonnances.non_traité,
-            //   en_attente: ordonnances.en_attente,
-            //   en_cours_livraison: ordonnances.en_cours_livraison,
-            //   livrée: ordonnances.livrée,
-            //   assigner_tournée: ordonnances.assigner_tournée,
-            //   dossier_incomplet: ordonnances.dossier_incomplet,
-            // },
           },
         });
         this.setState({ dataFetched: true });
+        this.setState((prev_state) => {
+          return {
+          statistiques_particuliers : statistiques2.data.statistiques_particuliers.jour,
+          statistiques_pro : statistiques2.data.statistiques_professionnels.jour,
+          pro_chart_bar : {
+          ...prev_state.pro_chart_bar,
+              series : [
+              prev_state.pro_chart_bar.series,
+                {
+                  data :  statistiques2.data.statistiques_professionnels.jour.n_commandes_plot
+                }
+              ]
+          }  ,
+          pro_chart_line : {
+            ...prev_state.pro_chart_line,
+                series : [
+                prev_state.pro_chart_line.series,
+                  {
+                    data :  statistiques2.data.statistiques_professionnels.jour.chiffre_daffaire_plot
+                  }
+                ]
+            }  ,
+            particular_chart_bar : {
+              ...prev_state.particular_chart_bar,
+                  series : [
+                  prev_state.particular_chart_bar.series,
+                    {
+                      data :  statistiques2.data.statistiques_particuliers.jour.n_commandes_plot
+                    }
+                  ]
+              }  ,
+              particular_chart_line : {
+                ...prev_state.particular_chart_line,
+                    series : [
+                    prev_state.particular_chart_line.series,
+                      {
+                        data :  statistiques2.data.statistiques_particuliers.jour.chiffre_daffaire_plot
+                      }
+                    ]
+                } ,
+                stats_objet : statistiques2.data,
+              }
+        })
       } else {
         this.handleAlert(
           "errorAlert",
@@ -950,12 +649,12 @@ class General_View extends React.Component {
                             Ordonnances reçues
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>321</b>
+                            <b></b>
                           </h5>
                         </div>
                         <ReactApexChart
-                          options={this.state.pro_chart_bar.options}
-                          series={this.state.pro_chart_bar.series}
+                          options={this.state.particular_chart_bar.options}
+                          series={this.state.particular_chart_bar.series}
                           type="bar"
                           height={"60%"}
                           width={"90%"}
@@ -987,12 +686,12 @@ class General_View extends React.Component {
                             Chiffre d'affaires ordonnances
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>3 984 €</b>
+                            <b>{this.state.statistiques_particuliers.chiffre_daffaire}€</b>
                           </h5>
                         </div>
                         <ReactApexChart
-                          options={this.state.pro_chart_line.options}
-                          series={this.state.pro_chart_line.series}
+                          options={this.state.particular_chart_line.options}
+                          series={this.state.particular_chart_line.series}
                           height={"60%"}
                           width={"90%"}
                         />
@@ -1039,7 +738,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>{this.state.statistiques_particuliers.n_commandes_livrees}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1063,7 +762,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>{this.state.statistiques_particuliers.n_clients}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1086,7 +785,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>{this.state.statistiques_particuliers.n_commandes_en_attente}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1109,7 +808,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{dt}</h7>
+                    <h7>X</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1134,7 +833,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12 €</h7>
+                    <h7>{this.state.statistiques_particuliers.moy_par_commande}</h7>
 
                     <p
                       style={{
@@ -1191,7 +890,7 @@ class General_View extends React.Component {
                             Commandes professionnelles
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>467</b>
+                            <b></b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -1228,7 +927,7 @@ class General_View extends React.Component {
                             Chiffre d'affaire professionnel
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>6 294 €</b>
+                            <b>{this.state.statistiques_pro.chiffre_daffaire}€</b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -1274,7 +973,7 @@ class General_View extends React.Component {
                     bg_color="black"
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>{this.state.statistiques_pro.n_commandes_en_attente}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1298,7 +997,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>{this.state.statistiques_pro.n_commandes_livrees}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1321,7 +1020,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12</h7>
+                    <h7>{this.state.statistiques_pro.n_clients}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1344,7 +1043,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{dt}</h7>
+                    <h7>X</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1369,7 +1068,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>12 €</h7>
+                    <h7>{this.state.statistiques_pro.moy_par_commande}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1392,7 +1091,6 @@ class General_View extends React.Component {
               <h1>Dernières commandes reçus</h1>
               <DataTableGeneral_View
                 className="dataTable-custom"
-                columns={columns}
                 noHeader
                 pagination
                 subHeader
