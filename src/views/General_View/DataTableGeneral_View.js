@@ -41,14 +41,6 @@ class DataTableCustom extends React.Component {
     data_fetched: false,
   };
 
-  // componentDidUpdate() {
-  //   if (this.state.data.length === 0) {
-  //     this.setState({
-  //       data: this.props.data,
-  //     });
-  //   }
-  // }
-
   componentDidMount() {
     this.setState({
       data: this.props.data,
@@ -99,12 +91,6 @@ class DataTableCustom extends React.Component {
     return (
       <Card className="mt-5">
         <CardBody className="rdt_Wrapper pt-75">
-          {/* <select>
-            <option>hey</option>
-            <option>hey</option>
-            <option>hey</option>
-            <option>hey</option>
-          </select> */}
           <DataTable
             className="dataTable-custom"
             data={value.length ? filteredData : this.props.data}
