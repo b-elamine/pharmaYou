@@ -113,6 +113,9 @@ class ComposeEmail extends React.Component {
         });
       })
       .catch((err) => alert("Erreur lors de la récuperation des tournées disponible \n vérifier votre connexion et recharger la page"));
+      if (!this.props.ordonnance.id){
+        return alert("l'identifiant de la commande n'est pas valide.")
+      }
     await axios
       .get(
         `/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`

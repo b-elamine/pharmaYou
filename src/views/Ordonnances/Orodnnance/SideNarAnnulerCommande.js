@@ -1,5 +1,5 @@
 import React from "react";
-import {  Card, CardHeader, CardBody, Button } from "reactstrap";
+import { Card, CardHeader, CardBody, Button } from "reactstrap";
 import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
 // import Switch from "react-switch";
@@ -45,16 +45,17 @@ class ComposeEmail extends React.Component {
     this.setState({ checked });
   };
 
-
   fetch_email_text = async (commande_id) => {
     try {
+      if (!commande_id) {
+        return alert("l'identifiant de la commande est invalide.");
+      }
       const response = await externalAxios.get(
         `/commandes/${commande_id}/annuler_form?access_token=a`
       );
       const message = response.data.default_message.email_text
         ? response.data.default_message.email_text
         : null;
-      
 
       const email_text = message ? message : "Pas de message pour l'instant";
       const newEditorState = EditorState.createWithContent(
@@ -65,12 +66,14 @@ class ComposeEmail extends React.Component {
         email_text: email_text,
       });
     } catch (err) {
-      alert(err.message);
+      if (err.message.includes("Network")) {
+        alert("Verifiez votre connexion !");
+      } else {
+        alert(err.message);
+      }
     }
   };
 
-
-  
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
     this.setState({
@@ -112,7 +115,7 @@ class ComposeEmail extends React.Component {
     //     });
     //   })
     //   .catch((err) => console.log(err));
-    this.fetch_email_text(this.props.ordonnance.id)
+    this.fetch_email_text(this.props.ordonnance.id);
   }
 
   render() {
@@ -201,7 +204,9 @@ class ComposeEmail extends React.Component {
                   this.setState({
                     editorState: EditorState.createWithContent(
                       ContentState.createFromText(
-                        this.state.editorState.getCurrentContent().getPlainText()
+                        this.state.editorState
+                          .getCurrentContent()
+                          .getPlainText()
                       )
                     ),
                   });

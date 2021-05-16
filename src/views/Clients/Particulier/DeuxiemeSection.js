@@ -9,14 +9,31 @@ import {
   InputGroupAddon,
   Label,
   CardTitle,
+  Spinner,
+  ModalBody,
+  Modal,
 } from "reactstrap";
 import { PlusCircle, Send } from "react-feather";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 
+import axios from "../../../axios";
 
 
+
+const ModaL = (props) => {
+  return (
+    <Modal
+      isOpen={props.modal_state}
+      toggle={props.toggle_modal}
+      keyboard={true}
+      centered={true}
+    >
+      <ModalBody>{props.children}</ModalBody>
+    </Modal>
+  );
+};
 
 const CardDashed = (props) => {
   return (
@@ -63,10 +80,14 @@ const CardDashed = (props) => {
               marginTop: "200px",
               fontSize: "6px",
             }}
+            onClick={props.get_file}
           >
             <PlusCircle className="align-middle ml-0 mr-25" size={14} />
             Voir le fichier
           </Button>
+          {props.file_loader ? (
+            <Spinner className="ml-2" color={props.spinner_color} size="lg" />
+          ) : null}
         </Col>
       </Row>
     </Card>
@@ -76,7 +97,65 @@ const CardDashed = (props) => {
 class SecondSection extends React.Component {
   state = {
     Date: new Date(),
+    file_carte_loader: false,
+    file_mutuelle_loader: false,
+    modal_file_type: null,
+    modal: false,
   };
+  get_file = async (file_type, path) => {
+    try {
+      this.setState({
+        // file_ordonnance_loader pour le spinner qui se trouve en bas du button
+        file_carte_loader: file_type === "vitales" ? true : false,
+        file_mutuelle_loader: file_type === "mutuelles" ? true : false,
+      });
+      if (path === null) {
+        this.setState({
+          file_mutuelle_loader: false,
+          file_carte_loader: false,
+        });
+        return alert("Pas de document.");
+      }
+      const response = await axios.get(
+        `/${file_type}/${path}/original?access_token=a`
+      );
+      // juste pour savoir le type du fichier
+      let modal_file;
+      if (response.headers["content-type"].includes("image")) {
+        this.setState({
+          modal_file_type: "image",
+        });
+        modal_file = `https://ordo.pharmayou.fr:3003/${file_type}/${path}/original?access_token=a`;
+      } else {
+        this.setState({
+          modal_file_type: "pdf",
+        });
+        // dealing with the pdf
+      }
+      this.setState((prevState) => ({
+        modal: !prevState.modal,
+        modal_file: modal_file,
+        file_carte_loader: false,
+        file_mutuelle_loader: false,
+      }));
+    } catch (err) {
+      this.setState({
+        file_carte_loader: false,
+        file_mutuelle_loader: false,
+      });
+      if (err.message.includes("404")) {
+        alert("fichier introuvable.");
+      } else {
+        console.log(err.message);
+      }
+    }
+  };
+  toggleModal = () => {
+    this.setState((prevState) => ({
+      modal: !prevState.modal,
+    }));
+  };
+
   render() {
     return (
       <Card>
@@ -85,7 +164,37 @@ class SecondSection extends React.Component {
         </CardTitle>
         <Row>
           <Col>
-            <CardDashed bg_color="#1aac1a" label="Carte Vital"></CardDashed>
+            <CardDashed
+              bg_color="#1aac1a"
+              label="Carte Vital"
+              file_loader={this.state.file_carte_loader}
+              get_file={() => {
+                this.get_file(
+                  "vitales",
+                  this.props.client.client
+                    ? this.props.client.client.path
+                    : null
+                );
+              }}
+              toggle_modal={this.toggleModal}
+              spinner_color="warning"
+            ></CardDashed>
+
+            <ModaL
+              title={this.state.modal_title}
+              toggle_modal={this.toggleModal}
+              modal_state={this.state.modal}
+            >
+              {this.state.modal_file_type === "image" ? (
+                <img
+                  style={{ width: "100%" }}
+                  src={this.state.modal_file}
+                  alt="test"
+                />
+              ) : (
+                <h1>Le PDF</h1>
+              )}
+            </ModaL>
             <div style={{ width: "90%" }}>
               <InputGroup>
                 <Input
@@ -102,7 +211,20 @@ class SecondSection extends React.Component {
             </div>
           </Col>
           <Col>
-            <CardDashed bg_color="#d01b47" label="Mutuelle"></CardDashed>
+            <CardDashed
+              bg_color="#d01b47"
+              label="Mutuelle"
+              get_file={() => {
+                this.get_file(
+                  "mutuelles",
+                  this.props.client.client
+                    ? this.props.client.client.path
+                    : null
+                );
+              }}
+              spinner_color="danger"
+              ordonnance={this.props.ordonnance}
+            ></CardDashed>
 
             <div style={{ width: "90%", marginTop: "-20px" }}>
               <Label>Date d'expiration</Label>
