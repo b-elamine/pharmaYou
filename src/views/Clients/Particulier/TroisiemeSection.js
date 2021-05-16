@@ -529,8 +529,8 @@ class ThirdSection extends React.Component {
           Commande du patient
         </CardTitle>
         <DataTableCustom
-          add_new
-          add_new_value="Ajouter une ordonnance"
+          // add_new
+          // add_new_value="Ajouter une ordonnance"
           columns={this.state.columns}
           data={this.state.data}
         />
