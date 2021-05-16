@@ -21,6 +21,7 @@ import {
   Plus,
   FileText,
   ListUl,
+  RecordCircleFill,
   // RecordCircleFill,
 } from "react-bootstrap-icons";
 import Select from "react-select";
@@ -29,25 +30,25 @@ const CommentaireBlock = (props) => {
   return (
     <CardBody>
       <div className="user-info text-truncate ml-xl-50 ml-0 mb-50">
-        {/* <RecordCircleFill
+        <RecordCircleFill
           size={16}
           style={{
             color: props.icon_color,
             marginLeft: "0px",
           }}
-        /> */}
+        />
         <span
           title={props.block_note}
           className="ml-2 font-weight-bold font-medium-2"
         >
-          {props.block_note}
+          {props.block_title}
         </span>
       </div>
-      {/* <small className="ml-3 font-small-2"> {props.block_note} </small> */}
+      <small className="ml-3 font-small-2"> {props.block_note} </small>
 
       {/* <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
         <div className="user-info text-truncate ml-xl-50 ml-0">
-          <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
+          <span className=" font-weight-bold d-block text-truncate mb-0 font-medium-1">
             {props.name}
           </span>
         </div>
@@ -481,28 +482,20 @@ class QuatriemeSection extends React.Component {
                   wheelPropagation: false,
                 }}
               >
-                <CommentaireBlock block_note={this.state.commentaire_interne} />
 
-                {/* {this.props.ordonnnance.note_admin ?  } */}
-                {/* {this.state.commentaires_notes.length === 0 ? (
-                  <strong>Pas de commentaire pour l'instant</strong>
-                ) : (
-                  this.state.commentaires_notes.map((comment) => {
-                    const icon_color =
-                      comment.type === "Commentaire interne"
-                        ? "#fa680c"
-                        : "#28c76f";
+                 {this.props.commentaires_notes.length === 0 ? null : (
+                  this.props.commentaires_notes.map((comment) => {
                     return (
                       <CommentaireBlock
                         key={comment.id}
-                        icon_color={icon_color}
-                        block_type={comment.type}
-                        block_note={comment.commentaire}
-                        name={comment.nom}
+                        icon_color={comment.color}
+                        block_title={comment.title}
+                        block_note={comment.text}
+                        name="admin name"
                       />
                     );
                   })
-                )} */}
+                )}
               </PerfectScrollbar>
             </div>
           </Card>

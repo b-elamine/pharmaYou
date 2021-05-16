@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "../../../axios";
-import { Card, CardHeader, CardBody, Button } from "reactstrap";
+import { Card, CardHeader, CardBody, Button, Input } from "reactstrap";
 import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Select from "react-select";
@@ -14,33 +14,22 @@ import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
 import externalAxios from "../../../axios";
 
-const Response = {
-  message: {
-    email_title: "[Commande 1-PE-17] Votre commande a été mise en attente",
-    email_text: "",
-    sms_text: "Votre commande 1-PE-17 a été mise en attente.",
-    push_text: "Votre commande a été mise en attente.",
-  },
-};
 class ComposeEmail extends React.Component {
   state = {
     selectedTournée: {},
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
     editorState: EditorState.createEmpty(),
-    commentaire: "",
+    // commentaire: "",
     listeTournes: "",
-    emailBody: "",
-    email_text: "",
+    email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a été mise en attente`,
+    email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a été mise en attente.\n\nPharma You`,
+    sms_text: `Votre commande ${this.props.ordonnance.id} a été mise en attente.`,
+    push_text: "Votre commande a été mise en attente.",
     checked: false,
   };
-  onEditorStateChange = (editorState) => {
-    this.setState({
-      editorState,
-    });
-  };
-  // onEditorStateChange1 = (editorState1) => {
+  // onEditorStateChange = (editorState) => {
   //   this.setState({
-  //     editorState1,
+  //     editorState,
   //   });
   // };
 
@@ -55,31 +44,33 @@ class ComposeEmail extends React.Component {
       // editorState1: EditorState.createEmpty(),
       commentaire: "",
       listeTournes: "",
-      emailBody: "",
+
       checked: false,
     });
   };
 
   fetch_email_text = async (commande_id) => {
     try {
-      if (!commande_id) {
-        return alert("l'identifiant de la commande est invalide.");
-      }
+      // if (!commande_id) {
+      //   return alert("l'identifiant de la commande est invalide.");
+      // }
       const response = await externalAxios.get(
         `/commandes/${commande_id}/mettre_en_attente_form?access_token=a`
       );
-      // console.log(response.data.default_message.email_text);
-      const message = response.data.default_message.email_text
-        ? response.data.default_message.email_text
+      const message = response.data.default_message
+        ? response.data.default_message
         : null;
-      const email_text = message ? message : "Pas de message pour l'instant";
-      const newEditorState = EditorState.createWithContent(
-        ContentState.createFromText(email_text)
-      );
-      this.setState({
-        editorState: newEditorState,
-        email_text: email_text,
-      });
+      // const newEditorState = EditorState.createWithContent(
+      //   ContentState.createFromText(email_text)
+      // );
+      if (message !== null) {
+        this.setState({
+          email_title: message.email_title,
+          email_text: message.email_text,
+          sms_text: message.sms_text,
+          push_text: message.push_text,
+        });
+      }
     } catch (err) {
       if (err.message.includes("Network")) {
         alert("Verifiez votre connexion !");
@@ -146,9 +137,8 @@ class ComposeEmail extends React.Component {
   }
 
   render() {
-    const { editorState } = this.state;
+    // const { editorState } = this.state;
 
-    // console.log(this.state.editorState.getCurrentContent().getFirstBlock().getText())
     return (
       <Card
         className={`compose-email shadow-none ${
@@ -176,7 +166,7 @@ class ComposeEmail extends React.Component {
           }}
         >
           <CardBody className="compose-mail-body p-1">
-            <div className="form-label-group mt-5">
+            <div className="form-label-group mb-3" style={{ zIndex: "10" }}>
               <span style={{ fontSize: "15px" }}>
                 Déplacer dans une autre tournée
               </span>
@@ -192,12 +182,65 @@ class ComposeEmail extends React.Component {
                 }}
               />
             </div>
-            <div id="email-notif" style={{ marginTop: "50px" }}>
               <span style={{ fontSize: "15px" }}>
                 <Users className="mr-75" size="20" color="#378af9" />
                 Notification client sms et email
               </span>
-              <Editor
+            <div id="email-notif" style={{ marginTop: "15px" }}>
+              <label style={{ fontSize: "13px" }}>Titre de l'email</label>
+              <Input
+                id="email_title"
+                type="textarea"
+                value={this.state.email_title}
+                onChange={(e) => {
+                  this.setState({
+                    email_title: e.target.value,
+                  });
+                }}
+              ></Input>
+              <label style={{ fontSize: "13px", marginTop: "15px" }}>
+                Text de l'email
+              </label>
+              <Input
+                id="email_text"
+                type="textarea"
+                rows="6"
+                value={this.state.email_text}
+                onChange={(e) => {
+                  this.setState({
+                    email_text: e.target.value,
+                  });
+                }}
+              ></Input>
+              <label style={{ fontSize: "13px", marginTop: "15px" }}>
+                Sms text
+              </label>
+              <Input
+                id="sms_text"
+                type="textarea"
+                rows="2"
+                value={this.state.sms_text}
+                onChange={(e) => {
+                  this.setState({
+                    sms_text: e.target.value,
+                  });
+                }}
+              ></Input>
+              <label style={{ fontSize: "13px", marginTop: "15px" }}>
+                Notification text
+              </label>
+              <Input
+                id="notification_text"
+                type="textarea"
+                rows="1"
+                value={this.state.push_text}
+                onChange={(e) => {
+                  this.setState({
+                    push_text: e.target.value,
+                  });
+                }}
+              ></Input>
+              {/* <Editor
                 editorState={editorState}
                 wrapperClassName="demo-wrapper"
                 // editorClassName="demo-editor"
@@ -213,7 +256,7 @@ class ComposeEmail extends React.Component {
                     underline: { className: "bordered-option-classname" },
                   },
                 }}
-              />
+              /> */}
             </div>
 
             <div className="action-btns d-flex justify-content-start mt-5">

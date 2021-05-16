@@ -224,6 +224,7 @@ class Ordonnance extends Component {
               <ThirdSection ordonnance={this.state.ordonnance} />
             </Card>
             <hr />
+            {console.log(this.state.ordonnance.historique)}
 
             <ForthSection
               note_admin={
@@ -232,7 +233,7 @@ class Ordonnance extends Component {
                   : "pas de note."
               }
               ordonnance={this.state.ordonnance}
-              commentaires_notes={this.state.ordonnance.patient.note}
+              commentaires_notes={this.state.ordonnance.historique}
             />
             {/* {this.state.ordonnance.note_admin ? (
             <ForthSection

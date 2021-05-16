@@ -55,14 +55,14 @@ export const addEvent = (event) => {
 };
 
 export const updateEvent = (event) => {
-  // axios.put("/tournees?access_token=a", {
-  //   date: `${event.start.toISOString().split("T")[0]}`,
-  //   plage_debut: event.start.getHours(),
-  //   plage_fin: event.end.getHours(),
-  //   remuneration_base: event.renumeration,
-  //   remuneration_par_point: event.facturation
-  // });
   return (dispatch) => {
+    // axios.put("/tournees?access_token=a", {
+    //   date: `${event.start.toISOString().split("T")[0]}`,
+    //   plage_debut: event.start.getHours(),
+    //   plage_fin: event.end.getHours(),
+    //   remuneration_base: event.renumeration,
+    //   remuneration_par_point: event.facturation
+    // });
     dispatch({ type: "UPDATE_EVENT", event });
   };
 };

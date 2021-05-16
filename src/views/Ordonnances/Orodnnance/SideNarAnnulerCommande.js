@@ -47,9 +47,9 @@ class ComposeEmail extends React.Component {
 
   fetch_email_text = async (commande_id) => {
     try {
-      if (!commande_id) {
-        return alert("l'identifiant de la commande est invalide.");
-      }
+      // if (!commande_id) {
+      //   return alert("l'identifiant de la commande est invalide.");
+      // }
       const response = await externalAxios.get(
         `/commandes/${commande_id}/annuler_form?access_token=a`
       );

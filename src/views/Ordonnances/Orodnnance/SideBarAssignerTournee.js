@@ -6,11 +6,11 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import Switch from "react-switch";
 import Select from "react-select";
 
-import { EditorState, ContentState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../../assets/scss/plugins/extensions/editor.scss";
-import "../../../assets/scss/pages/app-email.scss";
+// import { EditorState, ContentState } from "draft-js";
+// import { Editor } from "react-draft-wysiwyg";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import "../../../assets/scss/plugins/extensions/editor.scss";
+// import "../../../assets/scss/pages/app-email.scss";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
 class ComposeEmail extends React.Component {
@@ -19,26 +19,26 @@ class ComposeEmail extends React.Component {
     defaultTours: [],
     selectedTournée: [],
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-    editorState: EditorState.createEmpty(),
-    editorState1: EditorState.createEmpty(),
-    commentaire: "",
+    // editorState: EditorState.createEmpty(),
+    // editorState1: EditorState.createEmpty(),
+    // commentaire: "",
     listeTournes: "",
-    email_title: "[Commande 1-NU-45] Votre commande a \u00e9t\u00e9 valid\u00e9e",
-    email_text: "Bonjour,\n\nVotre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You",
-    sms_text: "Votre commande 1-NU-45 a \u00e9t\u00e9 valid\u00e9e.",
+    email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 valid\u00e9e`,
+    email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You`,
+    sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e.`,
     push_text: "Votre commande a \u00e9t\u00e9 valid\u00e9e.",
     checked: false,
   };
-  onEditorStateChange = (editorState) => {
-    this.setState({
-      editorState,
-    });
-  };
-  onEditorStateChange1 = (editorState1) => {
-    this.setState({
-      editorState1,
-    });
-  };
+  // onEditorStateChange = (editorState) => {
+  //   this.setState({
+  //     editorState,
+  //   });
+  // };
+  // onEditorStateChange1 = (editorState1) => {
+  //   this.setState({
+  //     editorState1,
+  //   });
+  // };
 
   handleChange = (checked) => {
     this.setState({ checked });
@@ -55,9 +55,9 @@ class ComposeEmail extends React.Component {
       toursSelectedMemory: [],
       defaultTours: [],
       selectedTournée: [],
-      editorState: EditorState.createEmpty(),
-      editorState1: EditorState.createEmpty(),
-      commentaire: "",
+      // editorState: EditorState.createEmpty(),
+      // editorState1: EditorState.createEmpty(),
+      // commentaire: "",
       listeTournes: "",
       email_title: "",
       email_text: "",
@@ -112,10 +112,14 @@ class ComposeEmail extends React.Component {
           tournées: sortedData,
         });
       })
-      .catch((err) => alert("Erreur lors de la récuperation des tournées disponible \n vérifier votre connexion et recharger la page"));
-      if (!this.props.ordonnance.id){
-        return alert("l'identifiant de la commande n'est pas valide.")
-      }
+      .catch((err) =>
+        alert(
+          "Erreur lors de la récuperation des tournées disponible \n vérifier votre connexion et recharger la page"
+        )
+      );
+    // if (!this.props.ordonnance.id) {
+    //   return alert("l'identifiant de la commande n'est pas valide.");
+    // }
     await axios
       .get(
         `/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`
@@ -155,12 +159,13 @@ class ComposeEmail extends React.Component {
             }H:${end.toISOString().split("T")[1].split(":")[1]}`,
           };
         });
-        const text = `Email : ${
-          response.data.default_message.email_title + "\n" +
-          response.data.default_message.email_text
-        } \n SMS: ${response.data.default_message.sms_text} \n Notification: ${
-          response.data.default_message.push_text
-        }`;
+        // const text = `Email : ${
+        //   response.data.default_message.email_title +
+        //   "\n" +
+        //   response.data.default_message.email_text
+        // } \n SMS: ${response.data.default_message.sms_text} \n Notification: ${
+        //   response.data.default_message.push_text
+        // }`;
         this.setState({
           defaultTours: data,
           selectedTournée: data,
@@ -168,12 +173,16 @@ class ComposeEmail extends React.Component {
           email_text: response.data.default_message.email_text,
           sms_text: response.data.default_message.sms_text,
           push_text: response.data.default_message.push_text,
-          editorState: EditorState.createWithContent(
-            ContentState.createFromText(text)
-          ),
+          // editorState: EditorState.createWithContent(
+          //   ContentState.createFromText(text)
+          // ),
         });
       })
-      .catch((err) => alert("Erreur lors de la récuperation des tournées pour cette commande \n vérifier votre connexion et recharger la page"));
+      .catch((err) =>
+        alert(
+          "Erreur lors de la récuperation des tournées pour cette commande \n vérifier votre connexion et recharger la page"
+        )
+      );
   }
 
   handleSelect = (e) => {
@@ -214,7 +223,7 @@ class ComposeEmail extends React.Component {
   };
 
   render() {
-    const { editorState, editorState1 } = this.state;
+    // const { editorState, editorState1 } = this.state;
     let tours = "";
     for (let index = 0; index < this.state.selectedTournée.length; index++) {
       tours = tours + `${this.state.selectedTournée[index].value} ${"\n"} `;
@@ -275,7 +284,7 @@ class ComposeEmail extends React.Component {
                 </span>
               </div>
             </div>
-            <div className="form-label-group">
+            <div className="form-label-group" style={{ zIndex: "10" }}>
               <span style={{ fontSize: "15px" }}>
                 Sélectionner une autre tournée
               </span>
@@ -292,31 +301,66 @@ class ComposeEmail extends React.Component {
               />
             </div>
             <div style={{ marginBottom: "50px" }}>
+              <span style={{ fontSize: "15px" }}>
+                <Users className="mr-75" size="20" color="#ff9f43" />
+                Notification client sms et email
+              </span>
               <div id="email-notif" style={{ marginTop: "20px" }}>
-                <span style={{ fontSize: "15px" }}>
-                  <Users className="mr-75" size="20" color="#ff9f43" />
-                  Notification client sms et email
-                </span>
-
-                <Editor
-                  editorState={editorState}
-                  wrapperClassName="demo-wrapper"
-                  // editorClassName="demo-editor"
-                  onEditorStateChange={this.onEditorStateChange}
-                  onChange={(e) => this.setState({ emailBody: e.blocks })}
-                  value={this.state.editorMessage}
-                  toolbar={{
-                    options: ["inline", "fontSize", "textAlign"],
-                    inline: {
-                      options: ["bold", "italic", "underline"],
-                      bold: { className: "bordered-option-classname" },
-                      italic: { className: "bordered-option-classname" },
-                      underline: { className: "bordered-option-classname" },
-                    },
+                <label style={{ fontSize: "13px" }}>Titre de l'email</label>
+                <Input
+                  id="email_title"
+                  type="textarea"
+                  value={this.state.email_title}
+                  onChange={(e) => {
+                    this.setState({
+                      email_title: e.target.value,
+                    });
                   }}
-                />
+                ></Input>
+                <label style={{ fontSize: "13px", marginTop: "15px" }}>
+                  Text de l'email
+                </label>
+                <Input
+                  id="email_text"
+                  type="textarea"
+                  rows="6"
+                  value={this.state.email_text}
+                  onChange={(e) => {
+                    this.setState({
+                      email_text: e.target.value,
+                    });
+                  }}
+                ></Input>
+                <label style={{ fontSize: "13px", marginTop: "15px" }}>
+                  Sms text
+                </label>
+                <Input
+                  id="sms_text"
+                  type="textarea"
+                  rows="1"
+                  value={this.state.sms_text}
+                  onChange={(e) => {
+                    this.setState({
+                      sms_text: e.target.value,
+                    });
+                  }}
+                ></Input>
+                <label style={{ fontSize: "13px", marginTop: "15px" }}>
+                  Notification text
+                </label>
+                <Input
+                  id="notification_text"
+                  type="textarea"
+                  rows="1"
+                  value={this.state.push_text}
+                  onChange={(e) => {
+                    this.setState({
+                      push_text: e.target.value,
+                    });
+                  }}
+                ></Input>
               </div>
-              <div id="commonataire" className="mt-3">
+              {/* <div id="commonataire" className="mt-3">
                 <span style={{ fontSize: "15px" }}>
                   <Truck className="mr-75" size="20" color="#ff9f43" />
                   Commentaire pour le livreur
@@ -337,7 +381,7 @@ class ComposeEmail extends React.Component {
                     },
                   }}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="action-btns d-flex justify-content-start mt-1">
               <Button.Ripple
