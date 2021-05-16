@@ -20,13 +20,6 @@ class ComposeEmail extends React.Component {
       label: "",
     },
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-<<<<<<< HEAD
-=======
-    // editorState: EditorState.createEmpty(),
-    // editorState1: EditorState.createEmpty(),
-    // commentaire: "",
-    listeTournes: "",
->>>>>>> 98f7910fba3fc891b55adeba42f12f7c03385f8a
     email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 valid\u00e9e`,
     email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You`,
     sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e.`,
@@ -167,7 +160,6 @@ class ComposeEmail extends React.Component {
   };
 
   ValiderTournée = async () => {
-<<<<<<< HEAD
     const tournees = {
       tournee_id: this.state.selectedTournée.id,
       date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
@@ -176,18 +168,6 @@ class ComposeEmail extends React.Component {
     };
     const response = await axios.post(
       `commandes/${this.props.ordonnance.id}/assigner_tournee?access_token=a`,
-=======
-    const tournees = this.state.selectedTournée.map((item) => {
-      return {
-        tournee_id: item.id,
-        date: `${item.start.toISOString().split("T")[0]}`,
-        plage_debut: item.start.getHours(),
-        plage_fin: item.end.getHours(),
-      };
-    });
-    const response = await axios.post(
-      `commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`,
->>>>>>> 98f7910fba3fc891b55adeba42f12f7c03385f8a
       {
         tournees: tournees,
         default_message: {
