@@ -26,6 +26,9 @@ import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 import axios from "../../../axios";
 import pdf_test from "./10.1.1.695.7550.pdf";
 
+import { Document, Page, pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 const CardDashed = (props) => {
   return (
     <Card>
@@ -111,6 +114,7 @@ class Troisieme_section extends React.Component {
     file_ordonnance_loader: false,
     file_mutuelle_loader: false,
     file_carte_loader: false,
+    pageNumber: 1,
   };
   myFormat = (num) => {
     return `${num} jours`;
@@ -119,6 +123,7 @@ class Troisieme_section extends React.Component {
     this.setState({ checked });
   };
 
+ 
   get_ordonnance_file = async (file_type, path) => {
     try {
       this.setState({
@@ -127,6 +132,14 @@ class Troisieme_section extends React.Component {
         file_carte_loader: file_type === "vitales" ? true : false,
         file_mutuelle_loader: file_type === "mutuelles" ? true : false,
       });
+      if (path === null) {
+        this.setState({
+          file_ordonnance_loader: false,
+          file_mutuelle_loader: false,
+          file_carte_loader: false,
+        });
+        return alert("Pas de document.");
+      }
       const response = await axios.get(
         `/${file_type}/${path}/original?access_token=a`
       );
@@ -163,28 +176,36 @@ class Troisieme_section extends React.Component {
       }
     }
   };
+
+  onDocumentLoadSuccess = ({ pageNumber }) => {
+    this.setState({
+      pageNumber: pageNumber,
+    });
+  };
+
   toggleModal = () => {
     this.setState((prevState) => ({
       modal: !prevState.modal,
     }));
   };
 
-  // convertBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsDataURL(file);
+  convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
 
-  //     fileReader.onload = () => {
-  //       resolve(fileReader.result);
-  //     };
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
 
-  //     fileReader.onerror = (error) => {
-  //       reject(error);
-  //     };
-  //   });
-  // };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
   render() {
+    console.log("modal file is : ", this.state.modal_file);
     return (
       <Card className="m-0">
         <CardTitle className="ml-2">Documents du client</CardTitle>
@@ -198,7 +219,9 @@ class Troisieme_section extends React.Component {
                 });
                 this.get_ordonnance_file(
                   "ordonnances",
-                  this.props.ordonnance.ordonnance.path
+                  this.props.ordonnance.ordonnance
+                    ? this.props.ordonnance.ordonnance.path
+                    : null
                 );
               }}
               bg_color="#3397da"
@@ -282,10 +305,11 @@ class Troisieme_section extends React.Component {
                 this.setState({
                   modal_title: "vitales",
                 });
-                console.log(this.props.ordonnance.vitale.path);
                 this.get_ordonnance_file(
                   "vitales",
-                  this.props.ordonnance.vitale.path
+                  this.props.ordonnance.vitale
+                    ? this.props.ordonnance.vitale.path
+                    : null
                 );
               }}
               ordonnance={this.props.ordonnance}
@@ -314,10 +338,11 @@ class Troisieme_section extends React.Component {
                 this.setState({
                   modal_title: "mutuelles",
                 });
-                console.log(this.props.ordonnance.mutuelle.path);
                 this.get_ordonnance_file(
                   "mutuelles",
-                  this.props.ordonnance.mutuelle.path
+                  this.props.ordonnance.mutuelle
+                    ? this.props.ordonnance.mutuelle.path
+                    : null
                 );
               }}
               spinner_color="danger"

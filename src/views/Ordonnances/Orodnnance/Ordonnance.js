@@ -62,7 +62,7 @@ class Ordonnance extends Component {
     statusAssignerTourneSideBar: false,
     statusDocumentManquantSideBar: false,
     statusAttenteApproSideBar: false,
-    statusAnnulerCommandeSideBar : false,
+    statusAnnulerCommandeSideBar: false,
     ordonnance: {
       patient: {
         note: "",
@@ -84,7 +84,7 @@ class Ordonnance extends Component {
         `/commandes/${id_commande}?access_token=a`
       );
       const commande = response.data;
-      console.log(commande)
+      console.log(commande);
       const custom_commande = {
         ...commande,
         id: commande.commande_id,
@@ -138,7 +138,11 @@ class Ordonnance extends Component {
         ordonnance: custom_commande,
       });
     } catch (err) {
-      alert(err.message);
+      if (err.message.includes("Network")) {
+        alert("Verifiez votre connexion !");
+      } else {
+        alert(err.message);
+      }
     }
   };
 
@@ -220,6 +224,7 @@ class Ordonnance extends Component {
               <ThirdSection ordonnance={this.state.ordonnance} />
             </Card>
             <hr />
+            {console.log(this.state.ordonnance.historique)}
 
             <ForthSection
               note_admin={
@@ -228,7 +233,7 @@ class Ordonnance extends Component {
                   : "pas de note."
               }
               ordonnance={this.state.ordonnance}
-              commentaires_notes={this.state.ordonnance.patient.note}
+              commentaires_notes={this.state.ordonnance.historique}
             />
             {/* {this.state.ordonnance.note_admin ? (
             <ForthSection

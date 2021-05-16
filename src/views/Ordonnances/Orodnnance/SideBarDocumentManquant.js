@@ -1,5 +1,9 @@
 import React from "react";
+<<<<<<< HEAD
 import { Card, CardHeader, CardBody, Button, Input } from "reactstrap";
+=======
+import { Card, CardHeader, CardBody, Button } from "reactstrap";
+>>>>>>> 98f7910fba3fc891b55adeba42f12f7c03385f8a
 import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Select from "react-select";
@@ -18,9 +22,29 @@ class ComposeEmail extends React.Component {
     ],
     document_manquant_value: "",
   };
+<<<<<<< HEAD
+=======
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+    });
+  };
+  onEditorStateChange1 = (editorState1) => {
+    this.setState({
+      editorState1,
+    });
+  };
+
+  handleChange = (checked) => {
+    this.setState({ checked });
+  };
+>>>>>>> 98f7910fba3fc891b55adeba42f12f7c03385f8a
 
   fetch_email_text = async (commande_id) => {
     try {
+      // if (!commande_id) {
+      //   return alert("l'identifiant de la commande est invalide.");
+      // }
       const response = await externalAxios.get(
         `/commandes/${commande_id}/invalider_form?access_token=a`
       );
@@ -36,7 +60,11 @@ class ComposeEmail extends React.Component {
         });
       }
     } catch (err) {
-      alert(err.message);
+      if (err.message.includes("Network")) {
+        alert("Verifiez votre connexion !");
+      } else {
+        alert(err.message);
+      }
     }
   };
 

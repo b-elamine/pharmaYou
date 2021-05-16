@@ -47,8 +47,20 @@ class Client_particulier extends React.Component {
   componentDidMount() {
     this.fetcher_client(this.props.match.params.id_client);
   }
+  toggleModal = () => {
+    this.setState((prevState) => ({
+      modal: !prevState.modal,
+    }));
+  };
+
+
+ 
   fetcher_client = async (id_client) => {
     try {
+      if (!id_client){
+        return alert("l'identifiant du client n'est pas valide")
+      }
+
       const response = await axios.get(`/users/${id_client}?access_token=a`);
       const client = response.data;
 
@@ -84,16 +96,16 @@ class Client_particulier extends React.Component {
             <Row>
               <Col>
                 <FirstSection
-                  client={this.props.location.state}
+                  client={this.state.client}
                   commentaires_notes={commentaires_notes}
                 />
               </Col>
               <Col>
-                <SecondSection client={this.props.location.state} />
+                <SecondSection client={this.state.client} />
               </Col>
             </Row>
 
-            <ThirdSection client={this.props.location.state} />
+            <ThirdSection client={this.state.client} />
           </React.Fragment>
         ) : (
           <div className="text-center">

@@ -34,6 +34,9 @@ class ComposeEmail extends React.Component {
 
   fetch_email_text = async (commande_id) => {
     try {
+      // if (!commande_id) {
+      //   return alert("l'identifiant de la commande est invalide.");
+      // }
       const response = await externalAxios.get(
         `/commandes/${commande_id}/mettre_en_attente_form?access_token=a`
       );
@@ -49,7 +52,11 @@ class ComposeEmail extends React.Component {
         });
       }
     } catch (err) {
-      alert(err.message);
+      if (err.message.includes("Network")) {
+        alert("Verifiez votre connexion !");
+      } else {
+        alert(err.message);
+      }
     }
   };
 
