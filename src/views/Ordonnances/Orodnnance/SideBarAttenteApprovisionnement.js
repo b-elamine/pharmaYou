@@ -40,11 +40,46 @@ class ComposeEmail extends React.Component {
       const response = await externalAxios.get(
         `/commandes/${commande_id}/mettre_en_attente_form?access_token=a`
       );
+      const data = response.data.default_message.tournees.map((item) => {
+        const date = item.date.split("-");
+        const start = new Date(
+          date[0],
+          date[1] - 1,
+          date[2],
+          item.plage_debut + 1,
+          0,
+          0
+        );
+        const end = new Date(
+          date[0],
+          date[1] - 1,
+          date[2],
+          item.plage_fin + 1,
+          0,
+          0
+        );
+        return {
+          id: item.tournee_id,
+          start: start,
+          end: end,
+          value: `${start.toISOString().split("T")[0]}  ${
+            start.toISOString().split("T")[1].split(":")[0]
+          }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+            end.toISOString().split("T")[1].split(":")[0]
+          }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+          label: `${start.toISOString().split("T")[0]}  ${
+            start.toISOString().split("T")[1].split(":")[0]
+          }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+            end.toISOString().split("T")[1].split(":")[0]
+          }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+        };
+      });
       const message = response.data.default_message
         ? response.data.default_message
         : null;
       if (message !== null) {
         this.setState({
+          tournées: data,
           email_title: message.email_title,
           email_text: message.email_text,
           sms_text: message.sms_text,
@@ -61,58 +96,6 @@ class ComposeEmail extends React.Component {
   };
 
   async componentDidMount() {
-    await axios
-      .get("/tournees?access_token=a")
-      .then((response) => {
-        const data = response.data
-          .map((item) => {
-            const date = item.date.split("-");
-            const start = new Date(
-              date[0],
-              date[1] - 1,
-              date[2],
-              item.plage_debut,
-              0,
-              0
-            );
-            const end = new Date(
-              date[0],
-              date[1] - 1,
-              date[2],
-              item.plage_fin,
-              0,
-              0
-            );
-            return {
-              id: item.tournee_id,
-              start: start,
-              end: end,
-              value: `${start.toISOString().split("T")[0]}  ${
-                start.toISOString().split("T")[1].split(":")[0]
-              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-                end.toISOString().split("T")[1].split(":")[0]
-              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-              label: `${start.toISOString().split("T")[0]}  ${
-                start.toISOString().split("T")[1].split(":")[0]
-              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-                end.toISOString().split("T")[1].split(":")[0]
-              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-            };
-          })
-          .filter((item) => item.start >= new Date());
-        const sortedData = data.sort((a, b) => a.start - b.start);
-        const tourneeParDefaut = this.props.ordonnance.tournee_id
-          ? sortedData.filter(
-              (item) => item.id === this.props.ordonnance.tournee_id
-            )[0]
-          : sortedData[0];
-        this.setState({
-          tournées: sortedData,
-          selectedTournée: [tourneeParDefaut],
-        });
-      })
-      .catch((err) => console.log(err.message));
-
     this.fetch_email_text(this.props.ordonnance.id);
   }
 

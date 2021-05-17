@@ -29,7 +29,7 @@ class ComposeEmail extends React.Component {
         });
       }
     } catch (err) {
-      alert(err.message);
+      console.log(err.message);
     }
   };
 

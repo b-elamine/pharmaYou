@@ -18,7 +18,8 @@ import { history } from "../../history";
 import { FaCar, FaMotorcycle, FaEdit, FaEye } from "react-icons/fa";
 
 import DataTable from "react-data-table-component";
-import { Search } from "react-feather";
+import { Search, Edit, Eye } from "react-feather";
+import axios from "../../axios";
 
 const CustomHeader = (props) => {
   return (
@@ -62,15 +63,6 @@ class Livreurs extends React.Component {
         minWidth: "180px",
         cell: (row) => (
           <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-            <div className="user-img ml-xl-0 ml-2">
-              <img
-                className="img-fluid rounded-circle"
-                height="30"
-                width="30"
-                src={row.image}
-                alt={row.name}
-              />
-            </div>
             <div className="user-info text-truncate ml-xl-50 ml-0">
               <span
                 style={{ color: "#f0ad4e" }}
@@ -87,8 +79,12 @@ class Livreurs extends React.Component {
         name: "Email",
         selector: "EMAIL",
         sortable: true,
-        minWidth:"240px",
-        cell: (row) => <p className="text-wrap" title={row.email}>{row.email}</p>,
+        minWidth: "240px",
+        cell: (row) => (
+          <p className="text-wrap" title={row.email}>
+            {row.email}
+          </p>
+        ),
       },
       {
         name: "VEHICULE",
@@ -97,12 +93,12 @@ class Livreurs extends React.Component {
         cell: (row) => (
           //   <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
           <Badge style={{ padding: "8" }} color="warning" pill>
-            {row.vihecule === "voiture" ? (
+            {row.vehicule === "voiture" ? (
               <FaCar size="14" style={{ marginRight: "5px" }} />
             ) : (
               <FaMotorcycle size="14" style={{ marginRight: "5px" }} />
             )}
-            {row.vihecule}
+            {row.vehicule}
           </Badge>
           //   </div>
         ),
@@ -120,18 +116,21 @@ class Livreurs extends React.Component {
         selector: "statut",
         sortable: true,
         cell: (row) => (
+          row.status ?
           <Badge
             className="text-truncate"
-            color={
-              row.status === "Desactivé"
-                ? "light-danger"
-                : row.status === "Actif"
-                ? "light-success"
-                : "light-primary"
-            }
+            color= "light-danger"
             pill
           >
-            {row.status}
+            Désactivé
+          </Badge>
+          :
+          <Badge
+            className="text-truncate"
+            color= "light-success"
+            pill
+          >
+            Actif
           </Badge>
         ),
       },
@@ -153,336 +152,70 @@ class Livreurs extends React.Component {
       },
       {
         name: "BALANCE PAIEMENT",
-        selector: "revenue",
+        selector: "BALANCE PAIEMENT",
         sortable: true,
         cell: (row) => <p className="text-bold-500 mb-0">{row.balance}</p>,
       },
       {
         name: "CHIFRE D'AFFAIRE",
-        selector: "revenue",
+        selector: "CHIFRE D'AFFAIRE",
         sortable: true,
         cell: (row) => <p className="text-bold-500 mb-0">{row.revenue}€</p>,
       },
       {
-        name: "",
-        selector: "",
+        name: "ACTIONS",
+        selector: "actions",
         sortable: true,
-        cell: (row) => {
-          return (
-            <div className="d-flex flex-row align-items-center">
-              <FaEye style={{ color: "grey", marginRight: "15" }} size="20" />
-              <FaEdit style={{ color: "grey" }} size="20" />
-            </div>
-          );
-        },
+        cell: (row) => (
+          <div className="data-list-action">
+            <Eye
+              className="cursor-pointer mr-1"
+              size={20}
+              onClick={() => {
+                history.push(`/livreurs/${row.id}`);
+              }}
+            />
+            <Edit
+              className="cursor-pointer"
+              size={20}
+              // onClick={() => {
+              //   history.push("/partenaires/modifier_partenaire", row);
+              // }}
+            />
+          </div>
+        ),
       },
     ],
-    data: [
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-        name: "Alyss Lillecrop",
-        email: "alillecrop0@twitpic.com",
-        vihecule: "moto",
-        code_postale: "236542",
-        date: "09 fev 2021",
-        status: "Actif",
-        commandes_livrés: "120",
-        revenue: "25,000",
-        balance: "220€",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-        name: "Shep Pentlow",
-        email: "spentlow1@home.pl",
-        vihecule: "moto",
-        code_postale: "236542",
-        date: "05 mars 2020",
-        status: "Desactivé",
-        commandes_livrés: "15",
-        balance: "220€",
-
-        revenue: "50,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-        name: "Gasper Morley",
-        email: "gmorley2@chronoengine.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-        date: "24 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "1231",
-        balance: "220€",
-
-        revenue: "78,000",
-        ratings: "average",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-4.jpg"),
-        name: "Phaedra Jerrard",
-        email: "pjerrard3@blogs.com",
-        vihecule: "moto",
-        code_postale: "236542",
-        date: "01 janvier 2019",
-        status: "Acitf",
-        commandes_livrés: "56",
-        balance: "220€",
-
-        revenue: "10,000",
-        ratings: "bad",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-        name: "Conn Plose",
-        email: "cplose4@geocities.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-        date: "12 decembre 2020",
-        status: "Desactivé",
-        commandes_livrés: "198",
-        balance: "220€",
-
-        revenue: "22,000",
-        ratings: "average",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-        name: "Tootsie Brandsma",
-        email: "tbrandsma5@theatlantic.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "49,000",
-        ratings: "bad",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-8.jpg"),
-        name: "Sibley Bum",
-        email: "sbum6@sourceforge.net",
-        vihecule: "voiture",
-        code_postale: "236542",
-        date: "12 decembre 2020",
-        status: "Actif",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "56,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-7.jpg"),
-        name: "Kristoffer Thew",
-        email: "kthew7@amazon.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-        date: "12 decembre 2020",
-        status: "Desactivé",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "83,000",
-        ratings: "bad",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-26.jpg"),
-        name: "Fay Hasard",
-        email: "fhasard8@java.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "26,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-12.jpg"),
-        name: "Tabby Abercrombie",
-        email: "tabercrombie9@statcounter.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "60,000",
-        ratings: "average",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-10.jpg"),
-        name: "	Stella Indruch",
-        email: "sindruch1@mayoclinic.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "21,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-17.jpg"),
-        name: "	Aron McNirlin",
-        email: "amcnirlin2@samsung.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-        balance: "220€",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-
-        revenue: "30,000",
-        ratings: "bad",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-20.jpg"),
-        name: "Ange Trenholm",
-        email: "atrenholm4@slideshare.net	",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "12,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-14.jpg"),
-        name: "Caterina Starkie",
-        email: "cstarkie5@feedburner.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "40,000",
-        ratings: "average",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-25.jpg"),
-        name: "Hugibert McGeagh",
-        email: "hmcgeaghf@smh.com.au",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "90,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-9.jpg"),
-        name: "Jaime Maher",
-        email: "jmaher1@msu.edu",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "38,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-24.jpg"),
-        name: "Amalle Pladen",
-        email: "jmaher1@msu.edu",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "18,000",
-        ratings: "average",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-18.jpg"),
-        name: "Dorris Ferries",
-        email: "dferries7@ucoz.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "69,000",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-23.jpg"),
-        name: "Andy Fettes",
-        email: "afettesh@upenn.edu",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "35,000",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-6.jpg"),
-        name: "Allene Hughf",
-        email: "ahughf0@dropbox.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-
-        revenue: "35,000",
-        ratings: "good",
-      },
-      {
-        image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-        name: "Petra Rheubottom",
-        email: "prheubottom0@globo.com",
-        vihecule: "voiture",
-        code_postale: "236542",
-
-        date: "12 decembre 2020",
-        status: "En attente de validation",
-        commandes_livrés: "120",
-        balance: "220€",
-        revenue: "72,000",
-      },
-    ],
+    data: [],
     filteredData: [],
     value: "",
   };
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get("/livreurs?access_token=a");
+      const data = response.data.map((item) => {
+        return {
+          id : item.livreur_id,
+          name: item.nom_complet,
+          email: item.email,
+          vehicule: item.vehicule,
+          code_postale: item.code_postal ? item.code_postal : "pas définie",
+          date: item.created_at,
+          status: item.is_blocked,
+          commandes_livrés: item.n_commandes,
+          balance: item.balance_paiement,
+          revenue: item.chiffre_affaire,
+        };
+      });
+
+      this.setState({
+        data,
+      });
+    } catch (err) {
+      alert(err.message);
+    }
+  }
 
   handleFilter = (e) => {
     let value = e.target.value;
@@ -612,10 +345,10 @@ class Livreurs extends React.Component {
               columns={columns}
               noHeader
               pagination
-              subHeader 
+              subHeader
               highlightOnHover
               onRowClicked={(row) => {
-                history.push("/livreurs/info",row);
+                history.push("/livreurs/info", row);
               }}
               paginationRowsPerPageOptions={element}
               subHeaderComponent={

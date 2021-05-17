@@ -11,9 +11,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { history } from "../../../history";
 
 import {
-  // CursorFill,
-  EyeFill,
-  // ThreeDotsVertical,
+
   Truck,
   ExclamationTriangleFill,
   HourglassSplit,
@@ -23,10 +21,10 @@ import {
   Check2,
   Exclamation,
   Hourglass,
-  // DoorClosed,
-  // FolderX,
   FolderMinus,
 } from "react-bootstrap-icons";
+import { Eye } from "react-feather";
+
 import Select from "react-select";
 import moment from "moment-timezone";
 import "moment/locale/fr";
@@ -436,7 +434,7 @@ const columns = [
     selector: "actions",
     cell: (row) => (
       <div className="data-list-action">
-        <EyeFill
+        <Eye
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {

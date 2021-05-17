@@ -21,10 +21,11 @@ import {
   ListUl,
   RecordCircleFill,
   Telephone,
-  ArrowLeftCircleFill
+  ArrowLeftCircleFill,
 } from "react-bootstrap-icons";
 import { FaRoad, FaUniversity, FaCar, FaMotorcycle } from "react-icons/fa";
-import {history} from "../../history"
+import { history } from "../../history";
+import axios from "../../axios";
 
 const CommentaireBlock = (props) => {
   return (
@@ -47,7 +48,7 @@ const CommentaireBlock = (props) => {
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        <div className="user-img ml-xl-0 ml-3">
+        {/* <div className="user-img ml-xl-0 ml-3">
           <img
             className="img-fluid rounded-circle"
             height="32"
@@ -55,7 +56,7 @@ const CommentaireBlock = (props) => {
             src={props.image_path}
             alt="icon"
           />
-        </div>
+        </div> */}
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
@@ -106,13 +107,22 @@ const commentaires_notes = [
 
 class LivreursMap extends React.Component {
   state = {
-    row: this.props.location.state,
+    row: [],
     commentaires_notes: [],
   };
-  componentDidMount() {
-    this.setState({
-      commentaires_notes: commentaires_notes,
-    });
+  async componentDidMount() {
+    const id_livreur = this.props.match.params.id_livreur;
+    try {
+      const response = await axios.get(
+        `/livreurs/${id_livreur}?access_token=a`
+      );
+      this.setState({
+        row : response.data,
+        commentaires_notes: commentaires_notes,
+      });
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
   render() {
@@ -138,19 +148,19 @@ class LivreursMap extends React.Component {
             <Col lg="5">
               <Media>
                 <Media className="mr-1" left href="#">
-                  <Media
+                  {/* <Media
                     style={{ borderRadius: "10px" }}
                     object
                     src={this.state.row.image}
                     alt="User"
                     height="100"
                     width="100"
-                  />
+                  /> */}
                 </Media>
                 <Media body>
-                  <h4>{this.state.row.name}</h4>
+                  <h4>{this.state.row.nom}</h4>
                   <p style={{ marginTop: "-10px" }}>
-                    <small>{this.state.row.email}</small>
+                    <small>{this.state.row.prenom}</small>
                   </p>
                   <div className="d-flex flex-sm-row flex-column justify-content-start px-0">
                     <Button.Ripple
@@ -161,7 +171,7 @@ class LivreursMap extends React.Component {
                       Modifier
                       {/* <Input type="file" name="file" id="uploadImg" hidden /> */}
                     </Button.Ripple>
-                    {this.state.row.status === "Actif" ? (
+                    {!this.state.row.is_blocked ? (
                       <Button.Ripple outline color="danger">
                         Desactiver
                       </Button.Ripple>
@@ -185,21 +195,20 @@ class LivreursMap extends React.Component {
                     iconBg="warning"
                     icon={
                       <div
-                      style={{
-                        marginRight:"auto",
-                        marginLeft:"auto",
-                        padding:"10px",
-                        backgroundColor:"#EAE8FD",
-                        borderRadius:"50%",
-                        height:"50px",
-                        width:"50px",
-                      }}
+                        style={{
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          padding: "10px",
+                          backgroundColor: "#EAE8FD",
+                          borderRadius: "50%",
+                          height: "50px",
+                          width: "50px",
+                        }}
                       >
-                      <Truck
-                      className="warning"
-                      size={30} />
-                      </div> }
-                    stat={this.state.row.commandes_livrés}
+                        <Truck className="warning" size={30} />
+                      </div>
+                    }
+                    stat={this.state.row.n_commandes}
                     statTitle="Commandes livres"
                   />
                 </Col>
@@ -211,21 +220,20 @@ class LivreursMap extends React.Component {
                     iconBg="success"
                     icon={
                       <div
-                      style={{
-                        marginRight:"auto",
-                        marginLeft:"auto",
-                        padding:"10px",
-                        backgroundColor:"#DFF7EA",
-                        borderRadius:"50%",
-                        height:"50px",
-                        width:"50px",
-                      }}
+                        style={{
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          padding: "10px",
+                          backgroundColor: "#DFF7EA",
+                          borderRadius: "50%",
+                          height: "50px",
+                          width: "50px",
+                        }}
                       >
-                      <DollarSign 
-                      className="success"
-                      size={30} />
-                      </div> }
-                    stat={`${this.state.row.revenue}`}
+                        <DollarSign className="success" size={30} />
+                      </div>
+                    }
+                    stat={`${this.state.row.chiffre_affaire}`}
                     statTitle="Chiffre d'affaire"
                   />
                 </Col>
@@ -237,20 +245,19 @@ class LivreursMap extends React.Component {
                     iconBg="primary"
                     icon={
                       <div
-                      style={{
-                        marginRight:"auto",
-                        marginLeft:"auto",
-                        padding:"10px",
-                        backgroundColor:"#FFF1E3",
-                        borderRadius:"50%",
-                        height:"50px",
-                        width:"50px",
-                      }}
+                        style={{
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          padding: "10px",
+                          backgroundColor: "#FFF1E3",
+                          borderRadius: "50%",
+                          height: "50px",
+                          width: "50px",
+                        }}
                       >
-                      <Calendar 
-                      className="primary"
-                      size={30} />
-                      </div> }
+                        <Calendar className="primary" size={30} />
+                      </div>
+                    }
                     stat="90"
                     statTitle="Tournées effectués"
                   />
@@ -292,20 +299,25 @@ class LivreursMap extends React.Component {
                 }
                 pill
               > */}
-                <p>{this.state.row.status}</p>
+              {this.state.row.is_blocked ? <p>Désactivé</p> : <p>Actif</p>}
               {/* </Badge> */}
 
-              <Badge className='mb-1' style={{ padding: "8" }} color="warning" pill>
-                {this.state.row.vihecule === "voiture" ? (
+              <Badge
+                className="mb-1"
+                style={{ padding: "8" }}
+                color="warning"
+                pill
+              >
+                {this.state.row.vehicule === "voiture" ? (
                   <FaCar size="14" style={{ marginRight: "5px" }} />
                 ) : (
                   <FaMotorcycle size="14" style={{ marginRight: "5px" }} />
                 )}
-                {this.state.row.vihecule}
+                {this.state.row.vehicule}
               </Badge>
-              <p className="">5666766768</p>
-              <p className="">(+33)456-3456</p>
-              <p className="">FR 465372 83636 9983</p>
+              <p className="">{this.state.row.telephone}</p>
+              <p className="">{this.state.row.siret}</p>
+              <p className="">{this.state.row.iban}</p>
             </Col>
             <Col lg="3">
               <CardTitle className="font-small-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
@@ -327,7 +339,6 @@ class LivreursMap extends React.Component {
                         icon_color={icon_color}
                         block_type={comment.type}
                         block_note={comment.commentaire}
-                        image_path={comment.image}
                         name={comment.nom}
                       />
                     );
