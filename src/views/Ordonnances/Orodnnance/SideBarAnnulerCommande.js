@@ -2,30 +2,20 @@ import React from "react";
 import { Card, CardHeader, CardBody, Button, Input } from "reactstrap";
 import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import Select from "react-select";
 import externalAxios from "../../../axios";
 
 class ComposeEmail extends React.Component {
   state = {
-    email_title: `[Commande ${this.props.ordonnance.id}] Votre commande est incompl\u00e8te`,
-    email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} est incompl\u00e8te. Veuillez la corriger ici : https:\/\/www.pharmayou.fr\/commandes\/1-CA-39 .\n\nPharma You`,
-    sms_text: `Votre commande ${this.props.ordonnance.id} est incompl\u00e8te.`,
-    push_text: "Votre commande est incompl\u00e8te.",
-    options: [
-      { value: "attestation_mutuelle", label: "Attestation Mututelle" },
-      { value: "probleme_ordonnance", label: "Probleme ordonnance" },
-      { value: "probleme_carte_vital", label: "Probleme carte vital" },
-    ],
-    document_manquant_value: "",
+    email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 annul\u00e9e`,
+    email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 annul\u00e9e.\n\nPharma You`,
+    sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 annul\u00e9e.`,
+    push_text: "Votre commande a \u00e9t\u00e9 annul\u00e9e.",
   };
 
   fetch_email_text = async (commande_id) => {
     try {
-      // if (!commande_id) {
-      //   return alert("l'identifiant de la commande est invalide.");
-      // }
       const response = await externalAxios.get(
-        `/commandes/${commande_id}/invalider_form?access_token=a`
+        `/commandes/${commande_id}/annuler_form?access_token=a`
       );
       const message = response.data.default_message
         ? response.data.default_message
@@ -39,22 +29,17 @@ class ComposeEmail extends React.Component {
         });
       }
     } catch (err) {
-      if (err.message.includes("Network")) {
-        alert("Verifiez votre connexion !");
-      } else {
-        alert(err.message);
-      }
+      alert(err.message);
     }
   };
 
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
     this.setState({
-      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande est incompl\u00e8te`,
-      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} est incompl\u00e8te. Veuillez la corriger ici : https:\/\/www.pharmayou.fr\/commandes\/1-CA-39 .\n\nPharma You`,
-      sms_text: `Votre commande ${this.props.ordonnance.id} est incompl\u00e8te.`,
-      push_text: "Votre commande est incompl\u00e8te.",
-      document_manquant_value: "",
+      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 annul\u00e9e`,
+      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 annul\u00e9e.\n\nPharma You`,
+      sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 annul\u00e9e.`,
+      push_text: "Votre commande a \u00e9t\u00e9 annul\u00e9e.",
     });
   };
 
@@ -64,7 +49,7 @@ class ComposeEmail extends React.Component {
 
   Valider = async () => {
     const response = await externalAxios.post(
-      `commandes/${this.props.ordonnance.id}/invalider?access_token=a`,
+      `commandes/${this.props.ordonnance.id}/annuler?access_token=a`,
       {
         document_manquant: this.state.document_manquant_value,
         default_message: {
@@ -79,17 +64,15 @@ class ComposeEmail extends React.Component {
   };
 
   render() {
-    const { options } = this.state;
-
     return (
       <Card
-        className={`compose-email shadow-none ${
+        className={`compose-email shadow ${
           this.props.currentStatus ? "open" : ""
         }`}
       >
         <CardHeader className="compose-mail-header align-items-center">
           <div className="compose-mail-title">
-            <h3 className="text-bold-600 card-title">Document Manquant</h3>
+            <h3 className="text-bold-600 card-title">Annuler commande</h3>
           </div>
           <div
             className="close-compose-mail"
@@ -106,20 +89,6 @@ class ComposeEmail extends React.Component {
           }}
         >
           <CardBody className="compose-mail-body p-1">
-            <div className="form-label-group mb-3">
-              <span style={{ fontSize: "15px" }}>Document Manquant</span>
-              <Select
-                className="React"
-                classNamePrefix="select"
-                defaultValue={options[0]}
-                name="Role"
-                placeholder="Attestation Mutuelle"
-                options={this.state.options}
-                onChange={(e) => {
-                  this.setState({ document_manquant_value: e.value });
-                }}
-              />
-            </div>
             <span style={{ fontSize: "15px" }}>
               <Users className="mr-75" size="20" color="red" />
               Notification client sms et Email
@@ -142,7 +111,7 @@ class ComposeEmail extends React.Component {
               <Input
                 id="email_text"
                 type="textarea"
-                rows="8"
+                rows="5"
                 value={this.state.email_text}
                 onChange={(e) => {
                   this.setState({
@@ -186,6 +155,11 @@ class ComposeEmail extends React.Component {
                   backgroundColor: "#fbdddd",
                 }}
                 className=" font-weight-bold text-danger mr-1"
+                // disabled={
+                //   this.state.emailTo.length && this.state.emailBody.length > 0
+                //     ? false
+                //     : true
+                // }
                 onClick={this.Valider}
               >
                 Envoyer

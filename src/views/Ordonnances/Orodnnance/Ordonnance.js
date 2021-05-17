@@ -14,7 +14,7 @@ import "../../../assets/scss/pages/app-email.scss";
 import SidebarAssignerTournee from "./SideBarAssignerTournee";
 import SideBarAttenteApprovisionnement from "./SideBarAttenteApprovisionnement";
 import SideBarDocumentManquant from "./SideBarDocumentManquant";
-import SideBarAnnulerCommande from "./SideNarAnnulerCommande";
+import SideBarAnnulerCommande from "./SideBarAnnulerCommande";
 
 import axios from "../../../axios";
 
@@ -268,11 +268,14 @@ class Ordonnance extends Component {
             />
           </Card>
         </Col>
-        <SidebarAssignerTournee
+        
+        {this.state.ordonnance.id ? (
+          <SidebarAssignerTournee
           ordonnance={this.state.ordonnance}
           handleComposeSidebar={this.handleAssignerTourneSideBar}
           currentStatus={this.state.statusAssignerTourneSideBar}
         />
+        ) : null}
         {this.state.ordonnance.id ? (
           <SideBarDocumentManquant
             ordonnance={this.state.ordonnance}

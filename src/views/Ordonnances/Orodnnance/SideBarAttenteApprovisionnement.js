@@ -4,12 +4,7 @@ import { Card, CardHeader, CardBody, Button, Input } from "reactstrap";
 import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Select from "react-select";
-
-import { ContentState, EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../../assets/scss/plugins/extensions/editor.scss";
-import "../../../assets/scss/pages/app-email.scss";
+// import "../../../assets/scss/pages/app-email.scss";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
 import externalAxios from "../../../axios";
@@ -18,34 +13,22 @@ class ComposeEmail extends React.Component {
   state = {
     selectedTournée: {},
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-    editorState: EditorState.createEmpty(),
-    // commentaire: "",
-    listeTournes: "",
     email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a été mise en attente`,
     email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a été mise en attente.\n\nPharma You`,
     sms_text: `Votre commande ${this.props.ordonnance.id} a été mise en attente.`,
     push_text: "Votre commande a été mise en attente.",
-    checked: false,
-  };
-  // onEditorStateChange = (editorState) => {
-  //   this.setState({
-  //     editorState,
-  //   });
-  // };
-
-  handleChange = (checked) => {
-    this.setState({ checked });
   };
 
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
     this.setState({
-      editorState: EditorState.createEmpty(),
-      // editorState1: EditorState.createEmpty(),
-      commentaire: "",
+      selectedTournée: {},
+      tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
       listeTournes: "",
-
-      checked: false,
+      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a été mise en attente`,
+      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a été mise en attente.\n\nPharma You`,
+      sms_text: `Votre commande ${this.props.ordonnance.id} a été mise en attente.`,
+      push_text: "Votre commande a été mise en attente.",
     });
   };
 
@@ -60,9 +43,6 @@ class ComposeEmail extends React.Component {
       const message = response.data.default_message
         ? response.data.default_message
         : null;
-      // const newEditorState = EditorState.createWithContent(
-      //   ContentState.createFromText(email_text)
-      // );
       if (message !== null) {
         this.setState({
           email_title: message.email_title,
@@ -131,13 +111,34 @@ class ComposeEmail extends React.Component {
           selectedTournée: [tourneeParDefaut],
         });
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => console.log(err.message));
 
     this.fetch_email_text(this.props.ordonnance.id);
   }
 
+  Valider = async () => {
+    const tournees = {
+      tournee_id: this.state.selectedTournée.id,
+      date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
+      plage_debut: this.state.selectedTournée.start.getHours(),
+      plage_fin: this.state.selectedTournée.end.getHours(),
+    };
+    const response = await axios.post(
+      `commandes/${this.props.ordonnance.id}/mettre_en_attente?access_token=a`,
+      {
+        tournees: tournees,
+        default_message: {
+          email_title: this.state.email_title,
+          email_text: this.state.email_text,
+          sms_text: this.state.sms_text,
+          push_text: this.state.push_text,
+        },
+      }
+    );
+    this.handleSidebarClose();
+  };
+
   render() {
-    // const { editorState } = this.state;
 
     return (
       <Card
@@ -171,7 +172,6 @@ class ComposeEmail extends React.Component {
                 Déplacer dans une autre tournée
               </span>
               <Select
-                // isDisabled={!this.state.checked}
                 className="React"
                 classNamePrefix="select"
                 name="Role"
@@ -182,10 +182,10 @@ class ComposeEmail extends React.Component {
                 }}
               />
             </div>
-              <span style={{ fontSize: "15px" }}>
-                <Users className="mr-75" size="20" color="#378af9" />
-                Notification client sms et email
-              </span>
+            <span style={{ fontSize: "15px" }}>
+              <Users className="mr-75" size="20" color="#378af9" />
+              Notification client sms et email
+            </span>
             <div id="email-notif" style={{ marginTop: "15px" }}>
               <label style={{ fontSize: "13px" }}>Titre de l'email</label>
               <Input
@@ -240,23 +240,6 @@ class ComposeEmail extends React.Component {
                   });
                 }}
               ></Input>
-              {/* <Editor
-                editorState={editorState}
-                wrapperClassName="demo-wrapper"
-                // editorClassName="demo-editor"
-                onEditorStateChange={this.onEditorStateChange}
-                onChange={(e) => this.setState({ emailBody: e.blocks })}
-                value={this.state.editorMessage}
-                toolbar={{
-                  options: ["inline", "fontSize", "textAlign"],
-                  inline: {
-                    options: ["bold", "italic", "underline"],
-                    bold: { className: "bordered-option-classname" },
-                    italic: { className: "bordered-option-classname" },
-                    underline: { className: "bordered-option-classname" },
-                  },
-                }}
-              /> */}
             </div>
 
             <div className="action-btns d-flex justify-content-start mt-5">
@@ -266,18 +249,7 @@ class ComposeEmail extends React.Component {
                   backgroundColor: "#e8fbfd",
                 }}
                 className=" text-info mr-1"
-                onClick={() => {
-                  this.handleSidebarClose();
-                  alert(
-                    this.state.editorState.getCurrentContent().getPlainText()
-                  );
-                  const newEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(this.state.email_text)
-                  );
-                  this.setState({
-                    editorState: newEditorState,
-                  });
-                }}
+                onClick={this.Valider}
               >
                 Valider
               </Button>

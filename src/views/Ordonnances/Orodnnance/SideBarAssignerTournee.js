@@ -1,44 +1,31 @@
 import React from "react";
 import axios from "../../../axios";
 import { Input, Card, CardHeader, CardBody, Button } from "reactstrap";
-import { X, Users, Truck } from "react-feather";
+import { X, Users } from "react-feather";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Switch from "react-switch";
 import Select from "react-select";
 
-// import { EditorState, ContentState } from "draft-js";
-// import { Editor } from "react-draft-wysiwyg";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-// import "../../../assets/scss/plugins/extensions/editor.scss";
 // import "../../../assets/scss/pages/app-email.scss";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
 class ComposeEmail extends React.Component {
   state = {
-    toursSelectedMemory: [],
-    defaultTours: [],
-    selectedTournée: [],
+    toursSelectedMemory: {},
+    defaultTours: {},
+    selectedTournée: {
+      start: new Date(),
+      end: new Date(),
+      value: "",
+      label: "",
+    },
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-    // editorState: EditorState.createEmpty(),
-    // editorState1: EditorState.createEmpty(),
-    // commentaire: "",
-    listeTournes: "",
     email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 valid\u00e9e`,
     email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You`,
     sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e.`,
     push_text: "Votre commande a \u00e9t\u00e9 valid\u00e9e.",
     checked: false,
   };
-  // onEditorStateChange = (editorState) => {
-  //   this.setState({
-  //     editorState,
-  //   });
-  // };
-  // onEditorStateChange1 = (editorState1) => {
-  //   this.setState({
-  //     editorState1,
-  //   });
-  // };
 
   handleChange = (checked) => {
     this.setState({ checked });
@@ -52,79 +39,60 @@ class ComposeEmail extends React.Component {
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
     this.setState({
-      toursSelectedMemory: [],
-      defaultTours: [],
-      selectedTournée: [],
-      // editorState: EditorState.createEmpty(),
-      // editorState1: EditorState.createEmpty(),
-      // commentaire: "",
+      toursSelectedMemory: {},
+      defaultTours: {},
+      selectedTournée: {
+        start: new Date(),
+        end: new Date(),
+        value: "",
+        label: "",
+      },
+      tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
       listeTournes: "",
-      email_title: "",
-      email_text: "",
-      sms_text: "",
-      push_text: "",
+      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 valid\u00e9e`,
+      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You`,
+      sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e.`,
+      push_text: "Votre commande a \u00e9t\u00e9 valid\u00e9e.",
       checked: false,
     });
   };
 
   async componentDidMount() {
     await axios
-      .get("/tournees?access_token=a")
+      .get(`/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`)
       .then((response) => {
-        const data = response.data
-          .map((item) => {
-            const date = item.date.split("-");
-            const start = new Date(
-              date[0],
-              date[1] - 1,
-              date[2],
-              item.plage_debut + 1,
-              0,
-              0
-            );
-            const end = new Date(
-              date[0],
-              date[1] - 1,
-              date[2],
-              item.plage_fin + 1,
-              0,
-              0
-            );
-            return {
-              id: item.tournee_id,
-              start: start,
-              end: end,
-              value: `${start.toISOString().split("T")[0]}  ${
-                start.toISOString().split("T")[1].split(":")[0]
-              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-                end.toISOString().split("T")[1].split(":")[0]
-              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-              label: `${start.toISOString().split("T")[0]}  ${
-                start.toISOString().split("T")[1].split(":")[0]
-              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-                end.toISOString().split("T")[1].split(":")[0]
-              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-            };
-          })
-          .filter((item) => item.start >= new Date());
-        const sortedData = data.sort((a, b) => a.start - b.start);
-        this.setState({
-          tournées: sortedData,
-        });
-      })
-      .catch((err) =>
-        alert(
-          "Erreur lors de la récuperation des tournées disponible \n vérifier votre connexion et recharger la page"
-        )
-      );
-    // if (!this.props.ordonnance.id) {
-    //   return alert("l'identifiant de la commande n'est pas valide.");
-    // }
-    await axios
-      .get(
-        `/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`
-      )
-      .then((response) => {
+        const date = response.data.tournee_par_defaut.date.split("-");
+        const start = new Date(
+          date[0],
+          date[1] - 1,
+          date[2],
+          response.data.tournee_par_defaut.plage_debut + 1,
+          0,
+          0
+        );
+        const end = new Date(
+          date[0],
+          date[1] - 1,
+          date[2],
+          response.data.tournee_par_defaut.plage_fin + 1,
+          0,
+          0
+        );
+        const defaultData = {
+          id: response.data.tournee_par_defaut.tournee_id,
+          start: start,
+          end: end,
+          value: `${start.toISOString().split("T")[0]}  ${
+            start.toISOString().split("T")[1].split(":")[0]
+          }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+            end.toISOString().split("T")[1].split(":")[0]
+          }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+          label: `${start.toISOString().split("T")[0]}  ${
+            start.toISOString().split("T")[1].split(":")[0]
+          }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+            end.toISOString().split("T")[1].split(":")[0]
+          }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+        };
         const data = response.data.tournees.map((item) => {
           const date = item.date.split("-");
           const start = new Date(
@@ -159,29 +127,22 @@ class ComposeEmail extends React.Component {
             }H:${end.toISOString().split("T")[1].split(":")[1]}`,
           };
         });
-        // const text = `Email : ${
-        //   response.data.default_message.email_title +
-        //   "\n" +
-        //   response.data.default_message.email_text
-        // } \n SMS: ${response.data.default_message.sms_text} \n Notification: ${
-        //   response.data.default_message.push_text
-        // }`;
         this.setState({
-          defaultTours: data,
-          selectedTournée: data,
+          defaultTours: defaultData,
+          selectedTournée: defaultData,
+          tournées: data,
           email_title: response.data.default_message.email_title,
           email_text: response.data.default_message.email_text,
           sms_text: response.data.default_message.sms_text,
           push_text: response.data.default_message.push_text,
-          // editorState: EditorState.createWithContent(
-          //   ContentState.createFromText(text)
-          // ),
         });
       })
-      .catch((err) =>
-        alert(
-          "Erreur lors de la récuperation des tournées pour cette commande \n vérifier votre connexion et recharger la page"
-        )
+      .catch(
+        (err) =>
+          // alert(
+          //   "Erreur lors de la récuperation des tournées pour cette commande \n vérifier votre connexion et recharger la page"
+          // )
+        console.log(err.message)
       );
   }
 
@@ -192,23 +153,21 @@ class ComposeEmail extends React.Component {
     });
     if (!e || e.length === 0) {
       this.setState({
-        toursSelectedMemory: [],
+        toursSelectedMemory: {},
         selectedTournée: this.state.defaultTours,
       });
     }
   };
 
   ValiderTournée = async () => {
-    const tournees = this.state.selectedTournée.map((item) => {
-      return {
-        tournee_id: item.id,
-        date: `${item.start.toISOString().split("T")[0]}`,
-        plage_debut: item.start.getHours(),
-        plage_fin: item.end.getHours(),
-      };
-    });
+    const tournees = {
+      tournee_id: this.state.selectedTournée.id,
+      date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
+      plage_debut: this.state.selectedTournée.start.getHours(),
+      plage_fin: this.state.selectedTournée.end.getHours(),
+    };
     const response = await axios.post(
-      `commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`,
+      `commandes/${this.props.ordonnance.id}/assigner_tournee?access_token=a`,
       {
         tournees: tournees,
         default_message: {
@@ -223,12 +182,6 @@ class ComposeEmail extends React.Component {
   };
 
   render() {
-    // const { editorState, editorState1 } = this.state;
-    let tours = "";
-    for (let index = 0; index < this.state.selectedTournée.length; index++) {
-      tours = tours + `${this.state.selectedTournée[index].value} ${"\n"} `;
-      //   // console.log(this.props.ordonnance)
-    }
     return (
       <Card
         className={`compose-email shadow-none ${
@@ -261,10 +214,10 @@ class ComposeEmail extends React.Component {
                 Prochaine tournée par defaut
               </span>
               <Input
-                type="textarea"
+                type="text"
                 readOnly
                 id="prochaine_tournée"
-                value={tours}
+                value={this.state.selectedTournée.value}
               />
             </div>
             <div className="form-label-group">
@@ -289,11 +242,9 @@ class ComposeEmail extends React.Component {
                 Sélectionner une autre tournée
               </span>
               <Select
-                isMulti
                 isDisabled={!this.state.checked}
                 className="React"
                 classNamePrefix="select"
-                // defaultValue={colourOptions[0]}
                 name="Role"
                 placeholder="Liste des prochaines tournées"
                 options={this.state.tournées}
@@ -360,34 +311,12 @@ class ComposeEmail extends React.Component {
                   }}
                 ></Input>
               </div>
-              {/* <div id="commonataire" className="mt-3">
-                <span style={{ fontSize: "15px" }}>
-                  <Truck className="mr-75" size="20" color="#ff9f43" />
-                  Commentaire pour le livreur
-                </span>
-                <Editor
-                  editorState={editorState1}
-                  wrapperClassName="demo-wrapper"
-                  // editorClassName="demo-editor"
-                  onEditorStateChange={this.onEditorStateChange1}
-                  onChange={(e) => this.setState({ commentaire: e.blocks })}
-                  toolbar={{
-                    options: ["inline", "fontSize", "textAlign"],
-                    inline: {
-                      options: ["bold", "italic", "underline"],
-                      bold: { className: "bordered-option-classname" },
-                      italic: { className: "bordered-option-classname" },
-                      underline: { className: "bordered-option-classname" },
-                    },
-                  }}
-                />
-              </div> */}
             </div>
             <div className="action-btns d-flex justify-content-start mt-1">
               <Button.Ripple
                 color="primary"
                 className="mr-1"
-                disabled={tours === ""}
+                disabled={!this.state.checked}
                 onClick={this.ValiderTournée}
               >
                 Valider
