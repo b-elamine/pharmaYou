@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, Input, Button } from "reactstrap";
 import DataTable from "react-data-table-component";
-import { history } from "../../history";
+import { history } from "../../../history";
 import { withRouter } from "react-router-dom";
 
 import {
@@ -32,7 +32,7 @@ const CustomHeader = (props) => {
   );
 };
 
-class DataTableCustom extends React.Component {
+class ClientDataTable extends React.Component {
   state = {
     columns: [],
     data: [],
@@ -129,8 +129,8 @@ class DataTableCustom extends React.Component {
 
   render() {
     let { value, filteredData } = this.state;
-    const ordonnance = (row) => {
-      const url = `/ordonnance/${row.id}`;
+    const client = (row) => {
+      const url = `/client/particuliers/${row.id}`;
       console.log(row);
       history.push(url, row);
     };
@@ -150,18 +150,18 @@ class DataTableCustom extends React.Component {
             paginationIconNext={<ChevronRight size={15} />}
             subHeader
             highlightOnHover
-            // onRowClicked={
-            //   this.props.match.url === "/ordonnance/recues"
-            //     ? ordonnance
-            //     : () => {}
-            // }
+            onRowClicked={
+              this.props.match.url === "/client/particuliers"
+                ? client
+                : () => {}
+            }
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
                 add_new_value={this.props.add_new_value}
                 value={value}
                 handleFilter={
-                  this.props.match.url === "/ordonnance/recues"
+                  this.props.match.url === "/client/particuliers"
                     ? this.handleFilterOrdo
                     : this.handleFilterClient
                 }
@@ -174,4 +174,4 @@ class DataTableCustom extends React.Component {
   }
 }
 
-export default withRouter(DataTableCustom);
+export default withRouter(ClientDataTable);
