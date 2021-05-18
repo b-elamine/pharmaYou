@@ -26,6 +26,8 @@ import {
 import { FaRoad, FaUniversity, FaCar, FaMotorcycle } from "react-icons/fa";
 import { history } from "../../history";
 import axios from "../../axios";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 const CommentaireBlock = (props) => {
   return (
@@ -48,15 +50,6 @@ const CommentaireBlock = (props) => {
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        {/* <div className="user-img ml-xl-0 ml-3">
-          <img
-            className="img-fluid rounded-circle"
-            height="32"
-            width="32"
-            src={props.image_path}
-            alt="icon"
-          />
-        </div> */}
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
@@ -68,48 +61,55 @@ const CommentaireBlock = (props) => {
 };
 
 const commentaires_notes = [
-  {
-    id: 1,
-    type: "Commentaire interne",
-    commentaire: "Bon client",
-    image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-    nom: "Zongo meryouli",
-  },
-  {
-    id: 2,
-    type: "Commentaire interne",
-    commentaire: "Un client deyer ki tfou",
-    image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-    nom: "Benssnan zakzouk",
-  },
-  {
-    id: 3,
-    type: "Note envoyé au client",
-    commentaire: "4 dose de brygabaline",
-    image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-    nom: "Nadjet Boudouara",
-  },
-  {
-    id: 4,
-    type: "Note envoyé au client",
-    commentaire: "4 dose de brygabaline",
-    image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-    nom: "Nadjet Boudouara",
-  },
-  {
-    id: 5,
-    type: "Commentaire interne",
-    commentaire: "Client ki soukour",
-    image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-    nom: "Djaluidji Boufon",
-  },
+  // {
+  //   id: 1,
+  //   type: "Commentaire interne",
+  //   commentaire: "Bon client",
+  //   image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
+  //   nom: "Zongo meryouli",
+  // },
+  // {
+  //   id: 2,
+  //   type: "Commentaire interne",
+  //   commentaire: "Un client deyer ki tfou",
+  //   image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
+  //   nom: "Benssnan zakzouk",
+  // },
+  // {
+  //   id: 3,
+  //   type: "Note envoyé au client",
+  //   commentaire: "4 dose de brygabaline",
+  //   image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
+  //   nom: "Nadjet Boudouara",
+  // },
+  // {
+  //   id: 4,
+  //   type: "Note envoyé au client",
+  //   commentaire: "4 dose de brygabaline",
+  //   image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
+  //   nom: "Nadjet Boudouara",
+  // },
+  // {
+  //   id: 5,
+  //   type: "Commentaire interne",
+  //   commentaire: "Client ki soukour",
+  //   image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
+  //   nom: "Djaluidji Boufon",
+  // },
 ];
 
 class LivreursMap extends React.Component {
   state = {
     row: [],
     commentaires_notes: [],
+    errorAlert: false,
+    errorText: "Vérifier votre cnnexion",
   };
+
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
+  };
+
   async componentDidMount() {
     const id_livreur = this.props.match.params.id_livreur;
     try {
@@ -117,11 +117,15 @@ class LivreursMap extends React.Component {
         `/livreurs/${id_livreur}?access_token=a`
       );
       this.setState({
-        row : response.data,
+        row: response.data,
         commentaires_notes: commentaires_notes,
       });
     } catch (err) {
-      alert(err.message);
+      const error_message =
+        err.message === "Network Error"
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
+      this.handleAlert("errorAlert", true, error_message);
     }
   }
 
@@ -158,9 +162,9 @@ class LivreursMap extends React.Component {
                   /> */}
                 </Media>
                 <Media body>
-                  <h4>{this.state.row.nom}</h4>
+                  <h4>{this.state.row.nom_complet}</h4>
                   <p style={{ marginTop: "-10px" }}>
-                    <small>{this.state.row.prenom}</small>
+                    <small>{this.state.row.email}</small>
                   </p>
                   <div className="d-flex flex-sm-row flex-column justify-content-start px-0">
                     <Button.Ripple
@@ -315,8 +319,8 @@ class LivreursMap extends React.Component {
                 )}
                 {this.state.row.vehicule}
               </Badge>
-              <p className="">{this.state.row.telephone}</p>
               <p className="">{this.state.row.siret}</p>
+              <p className="">{this.state.row.telephone}</p>
               <p className="">{this.state.row.iban}</p>
             </Col>
             <Col lg="3">
@@ -324,30 +328,43 @@ class LivreursMap extends React.Component {
                 <ListUl className="mr-1" size={17} />
                 Historique commentaire et note du patient
               </CardTitle>
-              <div style={{ overflowY: "scroll", height: "400px" }}>
-                {this.state.commentaires_notes.length === 0 ? (
-                  <strong>Pas de commentaire pour l'instant</strong>
-                ) : (
-                  this.state.commentaires_notes.map((comment) => {
-                    const icon_color =
-                      comment.type === "Commentaire interne"
-                        ? "#fa680c"
-                        : "#28c76f";
-                    return (
-                      <CommentaireBlock
-                        key={comment.id}
-                        icon_color={icon_color}
-                        block_type={comment.type}
-                        block_note={comment.commentaire}
-                        name={comment.nom}
-                      />
-                    );
-                  })
-                )}
-              </div>
+              <PerfectScrollbar
+                options={{
+                  wheelPropagation: false,
+                }}
+              >
+                <div style={{ height: "300px" }}>
+                  {this.state.commentaires_notes.length === 0 ? (
+                    <strong>Pas de commentaire pour l'instant</strong>
+                  ) : (
+                    this.state.commentaires_notes.map((comment) => {
+                      const icon_color =
+                        comment.type === "Commentaire interne"
+                          ? "#fa680c"
+                          : "#28c76f";
+                      return (
+                        <CommentaireBlock
+                          key={comment.id}
+                          icon_color={icon_color}
+                          block_type={comment.type}
+                          block_note={comment.commentaire}
+                          name={comment.nom}
+                        />
+                      );
+                    })
+                  )}
+                </div>
+              </PerfectScrollbar>
             </Col>
           </Row>
-
+          <SweetAlert
+            error
+            title="Erreur"
+            show={this.state.errorAlert}
+            onConfirm={() => this.handleAlert("errorAlert", false)}
+          >
+            <p className="sweet-alert-text">{this.state.errorText}</p>
+          </SweetAlert>
           <HistoriquePeiment />
           <CommandesLivres />
         </CardBody>

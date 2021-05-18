@@ -14,7 +14,7 @@ import {
 import Select from "react-select";
 
 import DataTable from "react-data-table-component";
-import { Send, Eye, MoreVertical } from "react-feather";
+import { Eye } from "react-feather";
 const Statut = [
     { value: "Tous", label: "Tous" },
   { value: "Livré", label: "Livré" },
@@ -65,18 +65,9 @@ class CommandesLivres extends React.Component {
         name: "NOM CLIENT",
         selector: "NOM CLIENT",
         sortable: true,
-        minWidth: "180px",
+        minWidth: "200px",
         cell: (row) => (
           <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-            <div className="user-img ml-xl-0 ml-2">
-              <img
-                className="img-fluid rounded-circle"
-                height="30"
-                width="30"
-                src={row.image}
-                alt={row.name}
-              />
-            </div>
             <div className="user-info text-truncate ml-xl-50 ml-0">
               <span
                 title={row.name}
@@ -146,10 +137,8 @@ class CommandesLivres extends React.Component {
         sortable: true,
         cell: (row) => {
           return (
-            <div className="d-flex flex-row align-items-center">
-              <Send style={{ color: "grey", marginRight: "15" }} size="20" />
-              <Eye style={{ color: "grey" }} size="20" />
-              <MoreVertical style={{ color: "grey" }} size="20" />
+            <div className="d-flex flex-row align-items-end">
+              <Eye size="20" />
             </div>
           );
         },

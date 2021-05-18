@@ -1,7 +1,9 @@
 import React from "react";
-import { Card, CardHeader, CardTitle, CardBody} from "reactstrap";
+import { Card, CardHeader, CardTitle, CardBody } from "reactstrap";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "../../assets/scss/plugins/extensions/maps.scss";
+import axios from "../../axios";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 const MyPopupMarker = ({ position, content }) => (
   <Marker position={position}>
@@ -18,12 +20,42 @@ const MyMarkersList = ({ markers }) => {
 
 class LivreursMap extends React.Component {
   state = {
-    markers: [
-      { key: "marker1", position: [51.52, -0.1], content: "akram ouardas" },
-      { key: "marker2", position: [51.51, -0.1], content: "El mogherbi faycal" },
-      { key: "marker3", position: [51.49, -0.1], content: "je sais pas" },
-    ],
+    markers: [{ key: "", position: [51.52, -0.1], content: "" }],
+    errorAlert: false,
+    errorText: "Vérifier votre cnnexion",
   };
+
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
+  };
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get("/livreurs?access_token=a");
+      const data = response.data.map((item) => {
+        if (item.tracking !== null) {
+          return {
+            key: item.livreur_id,
+            content: item.nom_complet,
+            position: [item.tracking.lat, item.tracking.lon],
+          };
+        }
+      });
+      const filtredData = data.filter((i) => i !== undefined);
+
+      this.setState({
+        markers: filtredData,
+        center: filtredData[0].position,
+      });
+    } catch (err) {
+      const error_message =
+        err.message === "Network Error"
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
+      this.handleAlert("errorAlert", true, error_message);
+    }
+  }
+
   render() {
     return (
       <Card>
@@ -31,13 +63,21 @@ class LivreursMap extends React.Component {
           <CardTitle>Carte des livreurs actifs</CardTitle>
         </CardHeader>
         <CardBody>
-          <Map center={[51.505, -0.09]} zoom={13}>
+          <Map center={this.state.center} zoom={13}>
             <TileLayer
               attribution='&ampcopy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MyMarkersList markers={this.state.markers} />
           </Map>
+          <SweetAlert
+            error
+            title="Erreur"
+            show={this.state.errorAlert}
+            onConfirm={() => this.handleAlert("errorAlert", false)}
+          >
+            <p className="sweet-alert-text">{this.state.errorText}</p>
+          </SweetAlert>
         </CardBody>
       </Card>
     );

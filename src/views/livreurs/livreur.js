@@ -15,7 +15,8 @@ import {
 } from "reactstrap";
 import Select from "react-select";
 import { history } from "../../history";
-import { FaCar, FaMotorcycle, FaEdit, FaEye } from "react-icons/fa";
+import { FaCar, FaMotorcycle } from "react-icons/fa";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 import DataTable from "react-data-table-component";
 import { Search, Edit, Eye } from "react-feather";
@@ -115,24 +116,16 @@ class Livreurs extends React.Component {
         name: "STATUT",
         selector: "statut",
         sortable: true,
-        cell: (row) => (
-          row.status ?
-          <Badge
-            className="text-truncate"
-            color= "light-danger"
-            pill
-          >
-            Désactivé
-          </Badge>
-          :
-          <Badge
-            className="text-truncate"
-            color= "light-success"
-            pill
-          >
-            Actif
-          </Badge>
-        ),
+        cell: (row) =>
+          row.status ? (
+            <Badge className="text-truncate" color="light-danger" pill>
+              Désactivé
+            </Badge>
+          ) : (
+            <Badge className="text-truncate" color="light-success" pill>
+              Actif
+            </Badge>
+          ),
       },
       {
         name: "LIVREUR DEPUIS",
@@ -189,6 +182,12 @@ class Livreurs extends React.Component {
     data: [],
     filteredData: [],
     value: "",
+    errorAlert: false,
+    errorText: "Vérifier votre cnnexion",
+  };
+
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
   };
 
   async componentDidMount() {
@@ -196,7 +195,7 @@ class Livreurs extends React.Component {
       const response = await axios.get("/livreurs?access_token=a");
       const data = response.data.map((item) => {
         return {
-          id : item.livreur_id,
+          id: item.livreur_id,
           name: item.nom_complet,
           email: item.email,
           vehicule: item.vehicule,
@@ -213,7 +212,11 @@ class Livreurs extends React.Component {
         data,
       });
     } catch (err) {
-      alert(err.message);
+      const error_message =
+        err.message === "Network Error"
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
+      this.handleAlert("errorAlert", true, error_message);
     }
   }
 
@@ -355,6 +358,14 @@ class Livreurs extends React.Component {
                 <CustomHeader value={value} handleFilter={this.handleFilter} />
               }
             />
+            <SweetAlert
+              error
+              title="Erreur"
+              show={this.state.errorAlert}
+              onConfirm={() => this.handleAlert("errorAlert", false)}
+            >
+              <p className="sweet-alert-text">{this.state.errorText}</p>
+            </SweetAlert>
           </CardBody>
         </Card>
       </div>
