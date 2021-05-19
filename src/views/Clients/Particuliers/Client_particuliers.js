@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Badge, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-import DataTableCustom from "../../DataTableCustom/DataTableCustom";
+import DataTableCustom from "./ClientDataTable";
 import { Check,  AlertTriangle, Eye } from "react-feather";
 
 import CustomSelects from "./CustomSelects";
@@ -360,6 +360,9 @@ class Client_particuliers extends React.Component {
     }
   };
   // adding handle filter role
+  add_new = () => {
+    history.push("/client/particuliers/nouveau_client");
+  };
 
   render() {
     const { value, filteredData } = this.state;
@@ -380,10 +383,12 @@ class Client_particuliers extends React.Component {
           <Col sm="12">
             {this.state.data.length !== 0 ? (
               <DataTableCustom
-                add_new
-                add_new_value="Ajouter un client"
+                add_new={this.add_new}
                 columns={columns}
                 data={value.length ? filteredData : this.state.data}
+                onRowClicked={(row)=> {
+                  history.push(`/ordonnance/${row.id}` ,row);
+                }}
               />
             ) : (
               <div className="text-center mt-4">

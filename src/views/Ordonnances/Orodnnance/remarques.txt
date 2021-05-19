@@ -1,0 +1,58 @@
+1) pour les statistique detaillés ajouter la variable ordonnances en livraison
+=> FAIT
+ 
+ 
+  ** detail ordonance **
+2) ajouter la tournée par defaut pour le end point `commandes/${ordonnance.id}/assigner_tournee_form?access_token=a`
+=> FAIT
+ 
+3) ajouter les tournées disponible pour le end point commandes/1-GF-93/mettre_en_attente_form?access_token=a
+=> FAIT
+ 
+4) ajouter le end point pour annuler une commande
+=> FAIT : POST /commandes/:id/annuler
+ 
+5) ajouter les donnees (Ordonnance renouvelable? ,numero de scurite sociale, date d'expiration) 
+6) ajouter des end point post pour les NOTES AU PATIENT et Informations internes
+=> FAIT : POST /commandes/:id
+Paramètres possibles : renouvelable, renouvellement_nombre, renouvellement_intervalle, nirpp, mutuelle_expiration_date, complement, note_patient, contenu, note_admin .
+Le paramètre renouvelable doit être 0 ou 1.
+Le paramètre contenu doit être envoyé en JSON selon le format suivant : [{"nom":string,"quantite":int,"montant_unitaire":float}, ...]
+ 
+ 
+  ** clients particuliers et partenaires **
+1) ajouter un endpoint pour crée, modifier et supprimer un client(les champs: "Nom et prénom,Numéro,Profession,E-mail")
+=> On ne veut que pouvoir modifier le numéro de sécurité sociale et la date d'expiration de la mutuelle. Je dois faire des endpoints pour ça.
+ 
+2) ajouter un end point que renvoi tous les commandes d'un client selon son id
+=> FAIT : GET /clients/:id/commandes
+ 
+3) ajouter un end point post pour ajouter une ordonance pour un client
+=> Nous ne voulons finalement pas cette fonctionnalité dans le dashboard
+ 
+4) ajouter la valeur de Historique commentaire et note du patient pour le patient
+=> FAIT
+ 
+ 
+  **Calendrier des tournés**
+1) ajouter une logique pour ajouter une tournée dans les 7 jours suivant  (voir le switch dans le side bar pour ajouter tournée)
+=> A FAIRE
+ 
+ 
+  **livreurs**
+1) Ajouter un end point pour fetcher tous les livreurs
+=> FAIT : GET /livreurs (faycal fait)
+ 
+2) Ajouter un end point pour fetcher un livreur avec son id (que contient ses info historique des notes du patient et la liste de ses factures)
+=> FAIT : GET /livreurs/:id(faycal fait)
+ 
+3) Ajouter un end point post pour Rajouter une facture a un livreur 
+=> Les factures s'ajoutent automatiquement tous les 14 jours, l'admin ne fait qu'appuyer sur un bouton pour marquer le paiement effectué. Je dois faire un endpoint pour ça.
+ 
+4) Ajouter un end point pour créer,Activer/desactiver et modifier livreur
+=> A FAIRE
+ 
+ 
+  ** carte livreur**
+1) ajouter un end point pour fetcher les coordonnés (lon,lat) de chaque livreur
+=> FAIT : GET /livreurs/:id

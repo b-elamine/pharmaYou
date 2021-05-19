@@ -3,42 +3,36 @@ import {
   Card,
   CardBody,
   Badge,
-  //   Input,
-  Button,
   CardHeader,
   CardTitle,
-  //   Row,
-  //   Col,
-  //   FormGroup,
-  //   Form,
-  //   Label,
+
 } from "reactstrap";
 
 import DataTable from "react-data-table-component";
-import { CheckSquare, Plus, Square } from "react-bootstrap-icons";
+import { CheckSquare, Square } from "react-bootstrap-icons";
 // import { Plus, CheckSquare } from "react-feather";
 
-const CustomHeader = (props) => {
-  return (
-    <div className="d-flex flex-wrap justify-content-end">
-      {/* <div className="position-relative has-icon-left mb-1">
-          <Input
-            placeholder="Chercher"
-            value={props.value}
-            onChange={(e) => props.handleFilter(e)}
-          />
-          <div className="form-control-position">
-            <Search size="15" />
-          </div>
-        </div> */}
-      <div style={{ marginLeft: "20px" }} className="add-new">
-        <Button.Ripple color="primary">
-          <Plus size="15" /> Rajouter une facture
-        </Button.Ripple>
-      </div>
-    </div>
-  );
-};
+// const CustomHeader = (props) => {
+//   return (
+//     <div className="d-flex flex-wrap justify-content-end">
+//       {/* <div className="position-relative has-icon-left mb-1">
+//           <Input
+//             placeholder="Chercher"
+//             value={props.value}
+//             onChange={(e) => props.handleFilter(e)}
+//           />
+//           <div className="form-control-position">
+//             <Search size="15" />
+//           </div>
+//         </div> */}
+//       <div style={{ marginLeft: "20px" }} className="add-new">
+//         <Button.Ripple color="primary">
+//           <Plus size="15" /> Rajouter une facture
+//         </Button.Ripple>
+//       </div>
+//     </div>
+//   );
+// };
 
 class HistoriquePeiment extends React.Component {
   state = {
@@ -170,7 +164,7 @@ class HistoriquePeiment extends React.Component {
               subHeader
               highlightOnHover
               paginationRowsPerPageOptions={element}
-              subHeaderComponent={<CustomHeader value={value} />}
+              // subHeaderComponent={<CustomHeader value={value} />}
             />
           </CardBody>
         </Card>

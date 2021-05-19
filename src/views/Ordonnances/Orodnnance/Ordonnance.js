@@ -268,13 +268,13 @@ class Ordonnance extends Component {
             />
           </Card>
         </Col>
-        
+
         {this.state.ordonnance.id ? (
           <SidebarAssignerTournee
-          ordonnance={this.state.ordonnance}
-          handleComposeSidebar={this.handleAssignerTourneSideBar}
-          currentStatus={this.state.statusAssignerTourneSideBar}
-        />
+            ordonnance={this.state.ordonnance}
+            handleComposeSidebar={this.handleAssignerTourneSideBar}
+            currentStatus={this.state.statusAssignerTourneSideBar}
+          />
         ) : null}
         {this.state.ordonnance.id ? (
           <SideBarDocumentManquant
@@ -290,11 +290,13 @@ class Ordonnance extends Component {
             currentStatus={this.state.statusAnnulerCommandeSideBar}
           />
         ) : null}
-        <SideBarAttenteApprovisionnement
-          ordonnance={this.state.ordonnance}
-          handleComposeSidebar={this.handleAttenteApproSideBar}
-          currentStatus={this.state.statusAttenteApproSideBar}
-        />
+        {this.state.ordonnance.id ? (
+          <SideBarAttenteApprovisionnement
+            ordonnance={this.state.ordonnance}
+            handleComposeSidebar={this.handleAttenteApproSideBar}
+            currentStatus={this.state.statusAttenteApproSideBar}
+          />
+        ) : null}
       </Row>
     );
   }
