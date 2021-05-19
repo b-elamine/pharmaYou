@@ -98,7 +98,7 @@ const commentaires_notes = [
   // },
 ];
 
-class LivreursMap extends React.Component {
+class LivreurInfo extends React.Component {
   state = {
     row: [],
     commentaires_notes: [],
@@ -188,7 +188,7 @@ class LivreursMap extends React.Component {
                 </Media>
               </Media>
               <div
-                style={{ marginTop: "20px", marginLeft: "40px" }}
+                style={{ marginTop: "10px", marginLeft: "40px" }}
                 className="d-flex flex-sm-row flex-column justify-content-start px-0"
               >
                 <Col lg="4" sm="2">
@@ -267,9 +267,13 @@ class LivreursMap extends React.Component {
                   />
                 </Col>
               </div>
+              <div>
+                <h3>Adresse</h3>
+                <p>{this.state.row.adresse}</p>
+              </div>
             </Col>
 
-            <Col xl="2">
+            <Col xl="2" style={{ marginTop: "30px" }}>
               <div className="d-flex">
                 <Check2 className="mr-1" size={14} />
                 <p className="font-weight-bold ">Status</p>
@@ -291,7 +295,7 @@ class LivreursMap extends React.Component {
                 <p className="font-weight-bold ">Iban</p>
               </div>
             </Col>
-            <Col xl="2">
+            <Col xl="2" style={{ marginTop: "30px" }}>
               {/* <Badge
                 className="text-truncate mb-1"
                 color={
@@ -319,9 +323,17 @@ class LivreursMap extends React.Component {
                 )}
                 {this.state.row.vehicule}
               </Badge>
-              <p className="">{this.state.row.siret}</p>
-              <p className="">{this.state.row.telephone}</p>
-              <p className="">{this.state.row.iban}</p>
+              <p className="">
+                {this.state.row.siret ? this.state.row.siret : "Indéfinie"}
+              </p>
+              <p className="">
+                {this.state.row.telephone
+                  ? this.state.row.telephone
+                  : "Indéfinie"}
+              </p>
+              <p className="">
+                {this.state.row.iban ? this.state.row.iban : "Indéfinie"}
+              </p>
             </Col>
             <Col lg="3">
               <CardTitle className="font-small-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
@@ -372,4 +384,4 @@ class LivreursMap extends React.Component {
     );
   }
 }
-export default LivreursMap;
+export default LivreurInfo;
