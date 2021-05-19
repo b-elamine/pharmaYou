@@ -17,8 +17,8 @@ const CustomHeader = (props) => {
     <div className="d-flex flex-row-reverse">
       <div className="add-new">
         {props.add_new ? (
-          <Button.Ripple color="primary ml-75 text-bold-500">
-            {props.add_new_value}
+          <Button.Ripple onClick={props.add_new} color="primary ml-75 text-bold-500">
+            Ajouter Client
           </Button.Ripple>
         ) : null}
       </div>
@@ -158,7 +158,6 @@ class ClientDataTable extends React.Component {
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
-                add_new_value={this.props.add_new_value}
                 value={value}
                 handleFilter={
                   this.props.match.url === "/client/particuliers"

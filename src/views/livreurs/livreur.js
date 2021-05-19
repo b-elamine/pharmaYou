@@ -37,7 +37,9 @@ const CustomHeader = (props) => {
           </div>
         </div>
         <div style={{ marginLeft: "20px" }} className="add-new">
-          <Button.Ripple color="primary">Ajouter un partenaire</Button.Ripple>
+          <Button.Ripple onClick={ ()=> {
+            history.push("/livreurs/nouveau_livreur");
+          } } color="primary">Ajouter un livreur</Button.Ripple>
         </div>
       </div>
     </div>
@@ -351,7 +353,7 @@ class Livreurs extends React.Component {
               subHeader
               highlightOnHover
               onRowClicked={(row) => {
-                history.push("/livreurs/info", row);
+                history.push(`/livreurs/${row.id}`, row);
               }}
               paginationRowsPerPageOptions={element}
               subHeaderComponent={

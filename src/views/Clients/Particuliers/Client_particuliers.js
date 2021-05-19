@@ -360,6 +360,9 @@ class Client_particuliers extends React.Component {
     }
   };
   // adding handle filter role
+  add_new = () => {
+    history.push("/client/particuliers/nouveau_client");
+  };
 
   render() {
     const { value, filteredData } = this.state;
@@ -380,8 +383,7 @@ class Client_particuliers extends React.Component {
           <Col sm="12">
             {this.state.data.length !== 0 ? (
               <DataTableCustom
-                add_new
-                add_new_value="Ajouter un client"
+                add_new={this.add_new}
                 columns={columns}
                 data={value.length ? filteredData : this.state.data}
                 onRowClicked={(row)=> {

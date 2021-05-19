@@ -10,7 +10,6 @@ import {
 } from "reactstrap";
 import { TrendingUp, DollarSign, User } from "react-feather";
 import StatisticsCard from "../../../../components/@vuexy/statisticsCard/StatisticsCard";
-// import CommandesPartenaire from "./commandes_partenaire_table";
 import { history } from "../../../../history";
 import {
   Check2,
