@@ -171,9 +171,11 @@ class LivreurInfo extends React.Component {
                       tag="label"
                       className="mr-50 cursor-pointer"
                       color="primary"
+                      onClick = {()=>{
+                        history.push("/livreur/nouveau_livreur");
+                      } }
                     >
                       Modifier
-                      {/* <Input type="file" name="file" id="uploadImg" hidden /> */}
                     </Button.Ripple>
                     {!this.state.row.is_blocked ? (
                       <Button.Ripple outline color="danger">

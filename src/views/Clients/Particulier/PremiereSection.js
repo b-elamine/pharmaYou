@@ -25,25 +25,21 @@ const CommentaireBlock = (props) => {
           }}
         />
         <span
-          title={props.block_note}
+          title={props.block_type}
           className="ml-2 font-weight-bold font-medium-2"
         >
-          {props.block_title}
+          {props.block_type}
         </span>
       </div>
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
-<<<<<<< HEAD
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-=======
-      {/* <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
->>>>>>> 8a69341863d1e5cb285639d3c058f43434b060c3
         <div className="user-info text-truncate ml-xl-50 ml-0">
-          <span className=" font-weight-bold d-block text-truncate mb-0 font-medium-1">
+          <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
           </span>
         </div>
-      </div> */}
+      </div>
     </CardBody>
   );
 };
@@ -53,12 +49,12 @@ class PremiereSection extends React.Component {
     commentaires_notes: [],
     client: {},
   };
-  // componentDidMount() {
-  //   this.setState({
-  //     commentaires_notes: this.props.commentaires_notes,
-  //     client: this.props.client,
-  //   });
-  // }
+  componentDidMount() {
+    this.setState({
+      commentaires_notes: this.props.commentaires_notes,
+      client: this.props.client,
+    });
+  }
   render() {
     return (
       <Card className="ml-1">
@@ -71,7 +67,7 @@ class PremiereSection extends React.Component {
               <h3 style={{ fontWeight: "900", marginBottom: "0px" }}>
                 {this.state.client.name}
               </h3>
-              <small className="mt-25 ml-0">{this.props.client.email}</small>
+              <small className="mt-25 ml-0">{this.state.client.email}</small>
             </div>
             <div className="d-flex flex-sm-row flex-column align-items-center justify-content-start px-0">
               <Button
@@ -118,10 +114,9 @@ class PremiereSection extends React.Component {
             <p className=" font-small-3">
               {this.state.client.adresse_livraison}{" "}
             </p>
-            {console.log(this.props.client.code)}
-            <p className="">{this.props.client.code}</p>
-            <p className="">{this.props.client.ville}</p>
-            <p className="">{this.props.client.telephone}</p>
+            <p className="">{this.state.client.code}</p>
+            <p className="">{this.state.client.ville}</p>
+            <p className="">{this.state.client.telephone}</p>
           </Col>
         </Row>
         <Row className="mt-4 mb-4">
@@ -143,7 +138,7 @@ class PremiereSection extends React.Component {
               </Badge>
               <div>
                 <p className="font-medium-2 mb-0 font-weight-bold">
-                  {this.props.client.chiffre_affaire}€
+                  {this.state.client.chiffre_affaire}€
                 </p>
                 <small className="mt-0">Chiffre d'affaire</small>
               </div>
@@ -172,16 +167,22 @@ class PremiereSection extends React.Component {
                   wheelPropagation: false,
                 }}
               >
-                
-                {this.props.commentaires_notes.length === 0 ? null : (
-                  this.props.commentaires_notes.map((comment) => {
+                {this.state.commentaires_notes.length === 0 ? (
+                  <strong>Pas de commentaire pour l'instant</strong>
+                ) : (
+                  this.state.commentaires_notes.map((comment) => {
+                    const icon_color =
+                      comment.type === "Commentaire interne"
+                        ? "#fa680c"
+                        : "#28c76f";
                     return (
                       <CommentaireBlock
                         key={comment.id}
-                        icon_color={comment.color}
-                        block_title={comment.title}
-                        block_note={comment.text}
-                        name="admin name"
+                        icon_color={icon_color}
+                        block_type={comment.type}
+                        block_note={comment.commentaire}
+                        // image_path={comment.image}
+                        name={comment.nom}
                       />
                     );
                   })
