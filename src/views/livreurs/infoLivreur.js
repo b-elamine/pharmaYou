@@ -172,7 +172,7 @@ class LivreurInfo extends React.Component {
                       className="mr-50 cursor-pointer"
                       color="primary"
                       onClick = {()=>{
-                        history.push("/livreur/nouveau_livreur");
+                        history.push("/livreur/modifier_livreur");
                       } }
                     >
                       Modifier

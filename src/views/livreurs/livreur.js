@@ -40,7 +40,7 @@ const CustomHeader = (props) => {
         <div style={{ marginLeft: "20px" }} className="add-new">
           <Button.Ripple
             onClick={() => {
-              history.push("/livreur/nouveau_livreur");
+              history.push("/livreur/modifier_livreur");
             }}
             color="primary"
           >
@@ -171,9 +171,9 @@ class Livreurs extends React.Component {
             <Edit
               className="cursor-pointer"
               size={20}
-              // onClick={() => {
-              //   history.push("/partenaires/modifier_partenaire", row);
-              // }}
+              onClick={() => {
+                history.push("/livreur/modifier_livreur", row);
+              }}
             />
           </div>
         ),
