@@ -198,7 +198,6 @@ const Client_particuliers = lazy(()=> import('./views/Clients/Particuliers/Clien
 const Partenaire = lazy(()=> import("./views/Partenaire/Partenaire"))
 const Ordonnance = lazy(()=> import("./views/Ordonnances/Orodnnance/Ordonnance"));
 const Partenaire_Info = lazy(()=> import("./views/Partenaire/info_partenaire/Information_Partenaire"))
-const Nv_Partenaire = lazy(()=> import("./views/Partenaire/Nouveau_Partenair"))
 const Nv_client = lazy (()=> import("./views/Clients/Particuliers/Modifier_client"))
 const ClientParticulier = lazy(()=> import("./views/Clients/Particulier/ClientParticulier"))
 const modifier_Partenaire = lazy(()=> import("./views/Partenaire/modifier_Partenaire"))
@@ -275,7 +274,7 @@ class AppRouter extends React.Component {
           <AppRoute exact path="/livreur/modifier_livreur" component = {Nv_livreur} />
           <AppRoute exact path="/users" component= {() => <h1> USERS </h1>} />
           <AppRoute exact path="/partenaire/:id_partenaire" component= {Partenaire_Info} />
-          <AppRoute exact path="/partenaires/nouveau_partenaire" component= {Nv_Partenaire} />
+          <AppRoute exact path="/partenaires/nouveau_partenaire" component= {modifier_Partenaire} />
           <AppRoute exact path="/client/particuliers/nouveau_client" component= {Nv_client} />
           <AppRoute exact path="/client/particuliers/modifier_client/" component= {Nv_client} />
           <AppRoute exact path="/partenaires/modifier_Partenaire" component= {modifier_Partenaire} />

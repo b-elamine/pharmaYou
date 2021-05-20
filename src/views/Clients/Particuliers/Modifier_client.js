@@ -122,12 +122,13 @@ class Modifier_client extends React.Component {
                                 style={{
                                     width:"21rem"
                                 }}
-                                placeholder="Le nom et prénom"
+                                placeholder="NSS"
                                 />
                                 </div>
                                 <div>
                                 <small>Date d'expiration</small> 
                                 <Flatpickr
+                                    enableTime = {true}
                                     id="Date"
                                     className="form-control"
                                     value={this.state.startDate}
@@ -149,18 +150,6 @@ class Modifier_client extends React.Component {
                             >
                             Enregistrer
                             </Button>
-                        </div>
-                        <div
-                        style={{
-                            marginTop:"5rem"
-                        }}
-                        >
-                            <Input
-                            style={{
-                                height:"18rem",
-                            }}
-                            type="textarea"
-                            />
                         </div>
 
                 </CardBody>
