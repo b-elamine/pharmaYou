@@ -8,10 +8,9 @@ import {
   ListUl,
 } from "react-bootstrap-icons";
 import PerfectScrollbar from "react-perfect-scrollbar";
-
+import { history } from "../../../history";
 import { DollarSign, User } from "react-feather";
 import { Badge, Button, Card, CardBody, CardTitle, Col, Row } from "reactstrap";
-
 import * as Icon from "react-feather";
 
 const CommentaireBlock = (props) => {
@@ -35,15 +34,6 @@ const CommentaireBlock = (props) => {
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        {/* <div className="user-img ml-xl-0 ml-3">
-          <img
-            className="img-fluid rounded-circle"
-            height="32"
-            width="32"
-            src={props.image_path}
-            alt="icon"
-          />
-        </div> */}
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
             {props.name}
@@ -83,25 +73,20 @@ class PremiereSection extends React.Component {
               <Button
                 color="primary"
                 className="mt-2 text-white  font-weight-bold mr-2 p-50  mb-2"
+                onClick={(row) => {
+                  history.push("/client/particuliers/modifier_client");
+                }}
               >
                 Modifier
               </Button>
               <Button
                 color=""
                 style={{
-                  //     borderColor: "red",
-                  //     float: "right",
                   color: "red",
                   width: "80px",
                   height: "40px",
-                  //     fontSize: "8px",
-                  //     border: "1px solid red",
-                  //     marginRight:"20px",
-                  //     marginBottom:"0px"
                 }}
                 className=" mt-2 text-danger font-small-3  p-50  mb-2 border border-danger"
-
-                //   className="mt-2 text-white float-right font-weight-bold mr-2 p-50  mb-2"
               >
                 Supprimé
               </Button>

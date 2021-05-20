@@ -150,11 +150,9 @@ class ClientDataTable extends React.Component {
             paginationIconNext={<ChevronRight size={15} />}
             subHeader
             highlightOnHover
-            onRowClicked={
-              this.props.match.url === "/client/particuliers"
-                ? client
-                : () => {}
-            }
+            onRowClicked={(row) => {
+              history.push(`/client/particulier/${row.id}`, row);
+            }}
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}

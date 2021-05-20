@@ -386,9 +386,9 @@ class Client_particuliers extends React.Component {
                 add_new={this.add_new}
                 columns={columns}
                 data={value.length ? filteredData : this.state.data}
-                onRowClicked={(row)=> {
-                  history.push(`/ordonnance/${row.id}` ,row);
-                }}
+                onRowClicked={(row) => {
+            history.push(`/client/particulier/${row.id}`, row);
+          }}
               />
             ) : (
               <div className="text-center mt-4">
