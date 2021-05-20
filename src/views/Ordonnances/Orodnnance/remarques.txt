@@ -31,7 +31,7 @@ Le paramètre contenu doit être envoyé en JSON selon le format suivant : [{"no
 => Nous ne voulons finalement pas cette fonctionnalité dans le dashboard
  
 4) ajouter la valeur de Historique commentaire et note du patient pour le patient
-=> FAIT
+=> FAIT             =====DONE=====
  
  
   **Calendrier des tournés**

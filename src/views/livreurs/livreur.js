@@ -20,6 +20,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 
 import DataTable from "react-data-table-component";
 import { Search, Edit, Eye } from "react-feather";
+import LivreurProcedureSignup from "./signup_procedures_livreurs";
 import axios from "../../axios";
 
 const CustomHeader = (props) => {
@@ -37,9 +38,14 @@ const CustomHeader = (props) => {
           </div>
         </div>
         <div style={{ marginLeft: "20px" }} className="add-new">
-          <Button.Ripple onClick={ ()=> {
-            history.push("/livreurs/nouveau_livreur");
-          } } color="primary">Ajouter un livreur</Button.Ripple>
+          <Button.Ripple
+            onClick={() => {
+              history.push("/livreur/nouveau_livreur");
+            }}
+            color="primary"
+          >
+            Ajouter un livreur
+          </Button.Ripple>
         </div>
       </div>
     </div>
@@ -49,7 +55,6 @@ const CustomHeader = (props) => {
 const Statut = [
   { value: "Actif", label: "Actif" },
   { value: "Desactivé", label: "Désactivé" },
-  { value: "En attente de validation", label: "En attente de validation" },
 ];
 const TypeVéhicule = [
   { value: "Voiture", label: "Voiture" },
@@ -107,27 +112,20 @@ class Livreurs extends React.Component {
         ),
       },
       {
-        name: "CODE POSTALE",
-        selector: "Code postale",
-        sortable: true,
-        cell: (row) => (
-          <p className="text-bold-500  mb-0">{row.code_postale}</p>
-        ),
-      },
-      {
         name: "STATUT",
         selector: "statut",
         sortable: true,
-        cell: (row) =>
-          row.status ? (
-            <Badge className="text-truncate" color="light-danger" pill>
-              Désactivé
-            </Badge>
-          ) : (
-            <Badge className="text-truncate" color="light-success" pill>
-              Actif
-            </Badge>
-          ),
+        cell: (row) => (
+          <Badge
+            className="text-truncate"
+            color={
+              row.status === "Desactivé" ? "light-danger" : "light-success"
+            }
+            pill
+          >
+            {row.status}
+          </Badge>
+        ),
       },
       {
         name: "LIVREUR DEPUIS",
@@ -201,9 +199,8 @@ class Livreurs extends React.Component {
           name: item.nom_complet,
           email: item.email,
           vehicule: item.vehicule,
-          code_postale: item.code_postal ? item.code_postal : "pas définie",
           date: item.created_at,
-          status: item.is_blocked,
+          status: item.is_blocked ? "Desactivé" : "Actif",
           commandes_livrés: item.n_commandes,
           balance: item.balance_paiement,
           revenue: item.chiffre_affaire,
@@ -222,41 +219,69 @@ class Livreurs extends React.Component {
     }
   }
 
-  handleFilter = (e) => {
+  handleFilter = (e, type) => {
     let value = e.target.value;
     let data = this.state.data;
     let filteredData = this.state.filteredData;
     this.setState({ value });
 
-    if (value.length) {
-      filteredData = data.filter((item) => {
-        let startsWithCondition =
-          item.name.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.date.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.email.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.revenue.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.status.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.vihecule.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.code_postale.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.commandes_livrés.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.balance.toLowerCase().startsWith(value.toLowerCase());
-        let includesCondition =
-          item.name.toLowerCase().includes(value.toLowerCase()) ||
-          item.date.toLowerCase().includes(value.toLowerCase()) ||
-          item.email.toLowerCase().includes(value.toLowerCase()) ||
-          item.revenue.toLowerCase().includes(value.toLowerCase()) ||
-          item.status.toLowerCase().includes(value.toLowerCase()) ||
-          item.vihecule.toLowerCase().includes(value.toLowerCase()) ||
-          item.code_postale.toLowerCase().includes(value.toLowerCase()) ||
-          item.commandes_livrés.toLowerCase().includes(value.toLowerCase()) ||
-          item.balance.toLowerCase().includes(value.toLowerCase());
-        if (startsWithCondition) {
-          return startsWithCondition;
-        } else if (!startsWithCondition && includesCondition) {
-          return includesCondition;
-        } else return null;
-      });
-      this.setState({ filteredData });
+    if (type === "all") {
+      if (value.length) {
+        filteredData = data.filter((item) => {
+          let startsWithCondition =
+            item.name.toLowerCase().startsWith(value.toLowerCase()) ||
+            item.email.toLowerCase().startsWith(value.toLowerCase()) ||
+            item.commandes_livrés
+              .toString()
+              .toLowerCase()
+              .startsWith(value.toLowerCase()) ||
+            item.revenue
+              .toString()
+              .toLowerCase()
+              .startsWith(value.toLowerCase()) ||
+            item.balance
+              .toString()
+              .toLowerCase()
+              .startsWith(value.toLowerCase());
+          let includesCondition =
+            item.name.toLowerCase().includes(value.toLowerCase()) ||
+            item.email.toLowerCase().includes(value.toLowerCase()) ||
+            item.commandes_livrés
+              .toString()
+              .toLowerCase()
+              .includes(value.toLowerCase()) ||
+            item.revenue
+              .toString()
+              .toLowerCase()
+              .includes(value.toLowerCase()) ||
+            item.balance.toString().toLowerCase().includes(value.toLowerCase());
+          if (startsWithCondition) {
+            return startsWithCondition;
+          } else if (!startsWithCondition && includesCondition) {
+            return includesCondition;
+          } else return null;
+        });
+        this.setState({ filteredData });
+      }
+    } else {
+      if (value.length) {
+        filteredData = data.filter((item) => {
+          let startsWithCondition = item.balance
+            .toString()
+            .toLowerCase()
+            .startsWith(value.toLowerCase());
+          let includesCondition = item.balance
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase());
+          if (startsWithCondition) {
+            return startsWithCondition;
+          } else if (!startsWithCondition && includesCondition) {
+            return includesCondition;
+          } else return null;
+        });
+        this.setState({ filteredData });
+      }
     }
   };
   handleFilterSelect = (e) => {
@@ -266,14 +291,15 @@ class Livreurs extends React.Component {
     this.setState({ value });
 
     if (value.length) {
+      console.log(data);
       filteredData = data.filter((item) => {
         let startsWithCondition =
           item.status.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.vihecule.toLowerCase().startsWith(value.toLowerCase());
+          item.vehicule.toLowerCase().startsWith(value.toLowerCase());
 
         let includesCondition =
           item.status.toLowerCase().includes(value.toLowerCase()) ||
-          item.vihecule.toLowerCase().includes(value.toLowerCase());
+          item.vehicule.toLowerCase().includes(value.toLowerCase());
         if (startsWithCondition) {
           return startsWithCondition;
         } else if (!startsWithCondition && includesCondition) {
@@ -321,7 +347,7 @@ class Livreurs extends React.Component {
                       name="lastname"
                       id="lastNameMulti"
                       placeholder="Balance paiement"
-                      onChange={this.handleFilter}
+                      onChange={(e) => this.handleFilter(e, "balance")}
                     />
                     <Label for="lastNameMulti">Balance paiement</Label>
                   </FormGroup>
@@ -357,7 +383,10 @@ class Livreurs extends React.Component {
               }}
               paginationRowsPerPageOptions={element}
               subHeaderComponent={
-                <CustomHeader value={value} handleFilter={this.handleFilter} />
+                <CustomHeader
+                  value={value}
+                  handleFilter={(e) => this.handleFilter(e, "all")}
+                />
               }
             />
             <SweetAlert
@@ -368,6 +397,14 @@ class Livreurs extends React.Component {
             >
               <p className="sweet-alert-text">{this.state.errorText}</p>
             </SweetAlert>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardHeader>
+              <h3>demandes d'inscription de livreurs</h3>
+          </CardHeader>
+          <CardBody>
+          <LivreurProcedureSignup/>
           </CardBody>
         </Card>
       </div>

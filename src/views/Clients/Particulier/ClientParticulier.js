@@ -41,7 +41,9 @@ const commentaires_notes = [
 
 class Client_particulier extends React.Component {
   state = {
-    client: null,
+    client: {
+      historique : [], 
+    }, 
   };
 
   componentDidMount() {
@@ -53,17 +55,15 @@ class Client_particulier extends React.Component {
     }));
   };
 
-
- 
   fetcher_client = async (id_client) => {
     try {
-      if (!id_client){
-        return alert("l'identifiant du client n'est pas valide")
+      if (!id_client) {
+        return alert("l'identifiant du client n'est pas valide");
       }
 
       const response = await axios.get(`/users/${id_client}?access_token=a`);
       const client = response.data;
-
+      console.log(client);
       const custom_client = {
         id: client.user_id,
         name: `${client.nom} ${client.prenom}`,
@@ -80,12 +80,17 @@ class Client_particulier extends React.Component {
         geocoords_livraison: client.geocoords_livraison,
         telephone: client.telephone,
         type: client.type,
+        historique : client.historique
       };
       this.setState({
         client: custom_client,
       });
     } catch (err) {
-      alert(err.message);
+      if (err.message.includes("40")) {
+        alert("Client pas trouver");
+      } else {
+        alert(err.message);
+      }
     }
   };
   render() {
@@ -95,9 +100,9 @@ class Client_particulier extends React.Component {
           <React.Fragment>
             <Row>
               <Col>
-                <FirstSection
+                <FirstSection                
                   client={this.state.client}
-                  commentaires_notes={commentaires_notes}
+                  commentaires_notes={this.state.client.historique}
                 />
               </Col>
               <Col>
