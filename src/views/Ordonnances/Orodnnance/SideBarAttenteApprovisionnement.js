@@ -100,29 +100,32 @@ class ComposeEmail extends React.Component {
   }
 
   Valider = async () => {
-    const tournees = {
-      tournee_id: this.state.selectedTournée.id,
-      date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
-      plage_debut: this.state.selectedTournée.start.getHours(),
-      plage_fin: this.state.selectedTournée.end.getHours(),
-    };
-    const response = await axios.post(
-      `commandes/${this.props.ordonnance.id}/mettre_en_attente?access_token=a`,
-      {
-        tournees: tournees,
-        default_message: {
-          email_title: this.state.email_title,
-          email_text: this.state.email_text,
-          sms_text: this.state.sms_text,
-          push_text: this.state.push_text,
-        },
-      }
-    );
+    try {
+      const tournees = {
+        tournee_id: this.state.selectedTournée.id,
+        date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
+        plage_debut: this.state.selectedTournée.start.getHours(),
+        plage_fin: this.state.selectedTournée.end.getHours(),
+      };
+      const response = await axios.post(
+        `commandes/${this.props.ordonnance.id}/mettre_en_attente?access_token=a`,
+        {
+          tournees: tournees,
+          default_message: {
+            email_title: this.state.email_title,
+            email_text: this.state.email_text,
+            sms_text: this.state.sms_text,
+            push_text: this.state.push_text,
+          },
+        }
+      );
+    } catch (err) {
+      alert(err);
+    }
     this.handleSidebarClose();
   };
 
   render() {
-
     return (
       <Card
         className={`compose-email shadow-none ${

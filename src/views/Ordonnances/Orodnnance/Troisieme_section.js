@@ -96,8 +96,9 @@ const ModaL = (props) => {
       toggle={props.toggle_modal}
       keyboard={true}
       centered={true}
+      size="lg"
     >
-      <ModalBody style={{ width: "550px", height: "400px" }}>
+      <ModalBody>
         {props.children}
       </ModalBody>
     </Modal>
@@ -237,7 +238,7 @@ class Troisieme_section extends React.Component {
               >
                 {this.state.modal_file_type === "image" ? (
                   <img
-                    style={{ width: "90%" }}
+                    style={{ width: "100%" }}
                     src={this.state.modal_file_path}
                     alt="test"
                   />
@@ -245,8 +246,8 @@ class Troisieme_section extends React.Component {
                   <iframe
                     title="test"
                     src={this.state.modal_file_path}
-                    width="90%"
-                    height="100%"
+                    width="100%"
+                    height="700px"
                   ></iframe>
                 )}
               </PerfectScrollbar>

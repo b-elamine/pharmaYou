@@ -59,7 +59,9 @@ class ComposeEmail extends React.Component {
 
   async componentDidMount() {
     await axios
-      .get(`/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`)
+      .get(
+        `/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`
+      )
       .then((response) => {
         const date = response.data.tournee_par_defaut.date.split("-");
         const start = new Date(
@@ -137,11 +139,10 @@ class ComposeEmail extends React.Component {
           push_text: response.data.default_message.push_text,
         });
       })
-      .catch(
-        (err) =>
-          // alert(
-          //   "Erreur lors de la récuperation des tournées pour cette commande \n vérifier votre connexion et recharger la page"
-          // )
+      .catch((err) =>
+        // alert(
+        //   "Erreur lors de la récuperation des tournées pour cette commande \n vérifier votre connexion et recharger la page"
+        // )
         console.log(err.message)
       );
   }
@@ -160,24 +161,28 @@ class ComposeEmail extends React.Component {
   };
 
   ValiderTournée = async () => {
-    const tournees = {
-      tournee_id: this.state.selectedTournée.id,
-      date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
-      plage_debut: this.state.selectedTournée.start.getHours(),
-      plage_fin: this.state.selectedTournée.end.getHours(),
-    };
-    const response = await axios.post(
-      `commandes/${this.props.ordonnance.id}/assigner_tournee?access_token=a`,
-      {
-        tournees: tournees,
-        default_message: {
-          email_title: this.state.email_title,
-          email_text: this.state.email_text,
-          sms_text: this.state.sms_text,
-          push_text: this.state.push_text,
-        },
-      }
-    );
+    try{
+      const tournees = {
+        tournee_id: this.state.selectedTournée.id,
+        date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
+        plage_debut: this.state.selectedTournée.start.getHours(),
+        plage_fin: this.state.selectedTournée.end.getHours(),
+      };
+      const response = await axios.post(
+        `commandes/${this.props.ordonnance.id}/assigner_tournee?access_token=a`,
+        {
+          tournee_id: tournees,
+          default_message: {
+            email_title: this.state.email_title,
+            email_text: this.state.email_text,
+            sms_text: this.state.sms_text,
+            push_text: this.state.push_text,
+          },
+        }
+      );
+    }catch(err){
+      alert(err.message)
+    }
     this.handleSidebarClose();
   };
 
@@ -211,7 +216,7 @@ class ComposeEmail extends React.Component {
           <CardBody className="compose-mail-body p-1">
             <div className="form-label-group pt-1">
               <span style={{ fontSize: "15px" }}>
-                Prochaine tournée par defaut
+                Créneau sélectionné par le client
               </span>
               <Input
                 type="text"

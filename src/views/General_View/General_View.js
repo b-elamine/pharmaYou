@@ -9,11 +9,10 @@ import {
   Check2All,
   Exclamation,
   ExclamationTriangleFill,
-  EyeFill,
   Hourglass,
   HourglassSplit,
 } from "react-bootstrap-icons";
-import { Truck, User, FileText, DollarSign } from "react-feather";
+import { Truck, User, FileText, DollarSign,Eye } from "react-feather";
 import { history } from "../../history";
 import DataTableGeneral_View from "./DataTableGeneral_View";
 import axios from "../../axios";
@@ -241,7 +240,7 @@ const columns = [
     maxWidth: "120px",
     cell: (row) => (
       <div className="data-list-action">
-        <EyeFill
+        <Eye
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import { ListUl, RecordCircleFill } from "react-bootstrap-icons";
-// import Image from "../../../assets/img/portrait/small/avatar-s-2.jpg";
 
 const CommandeBlock = (props) => {
   return (
@@ -24,7 +23,7 @@ const CommandeBlock = (props) => {
       <small className="ml-3 font-small-1"> {props.block_note} </small>
 
       <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        <div className="user-img ml-xl-0 ml-3">
+        {/* <div className="user-img ml-xl-0 ml-3">
           <img
             className="img-fluid rounded-circle"
             height="32"
@@ -32,7 +31,7 @@ const CommandeBlock = (props) => {
             src={props.image_path}
             alt="hey"
           />
-        </div>
+        </div> */}
         <div className="user-info text-truncate ml-xl-50 ml-0">
           <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-small-2">
             {props.name}
@@ -63,7 +62,6 @@ class PartieDroite_2 extends React.Component {
                 icon_color={icon_color}
                 commande_type={comment.type}
                 block_note={comment.commentaire}
-                image_path={comment.image}
                 name={comment.nom}
               />
             );

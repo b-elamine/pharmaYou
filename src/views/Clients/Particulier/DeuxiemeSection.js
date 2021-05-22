@@ -28,6 +28,7 @@ const ModaL = (props) => {
       toggle={props.toggle_modal}
       keyboard={true}
       centered={true}
+      size="lg"
     >
       <ModalBody>{props.children}</ModalBody>
     </Modal>
@@ -199,8 +200,8 @@ class SecondSection extends React.Component {
                   <iframe
                     title="test"
                     src={this.state.modal_file}
-                    width="90%"
-                    height="100%"
+                    width="100%"
+                    height="700px"
                   ></iframe>
                 )}
               </PerfectScrollbar>
