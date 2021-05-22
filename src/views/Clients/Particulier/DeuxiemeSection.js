@@ -17,10 +17,9 @@ import { PlusCircle, Send } from "react-feather";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 import axios from "../../../axios";
-
-
 
 const ModaL = (props) => {
   return (
@@ -185,15 +184,26 @@ class SecondSection extends React.Component {
               toggle_modal={this.toggleModal}
               modal_state={this.state.modal}
             >
-              {this.state.modal_file_type === "image" ? (
-                <img
-                  style={{ width: "100%" }}
-                  src={this.state.modal_file}
-                  alt="test"
-                />
-              ) : (
-                <h1>Le PDF</h1>
-              )}
+              <PerfectScrollbar
+                options={{
+                  wheelPropagation: false,
+                }}
+              >
+                {this.state.modal_file_type === "image" ? (
+                  <img
+                    style={{ width: "100%" }}
+                    src={this.state.modal_file}
+                    alt="test"
+                  />
+                ) : (
+                  <iframe
+                    title="test"
+                    src={this.state.modal_file}
+                    width="90%"
+                    height="100%"
+                  ></iframe>
+                )}
+              </PerfectScrollbar>
             </ModaL>
             <div style={{ width: "90%" }}>
               <InputGroup>

@@ -42,10 +42,20 @@ export const handleSidebar = (bool) => {
 };
 
 export const addEvent = (event) => {
-  console.log("add event")
+  console.log( {
+    date: `${event.start.toISOString().split("T")[0]}`,
+    plage_debut: event.start.getHours(),
+    plage_fin: event.end.getHours(),
+    remuneration_base: event.renumeration,
+    remuneration_par_point: event.facturation,
+  });
   return async (dispatch) => {
     try {
-      await axios.post("/tournees?access_token=a", {
+      // const headers = {
+      //   'Content-Type': 'application/json',
+      //   "Access-Control-Allow-Origin": "*",
+      // }
+      await axios.post("https://ordo.pharmayou.fr:3003/tournees?access_token=a", {
         date: `${event.start.toISOString().split("T")[0]}`,
         plage_debut: event.start.getHours(),
         plage_fin: event.end.getHours(),
@@ -60,7 +70,7 @@ export const addEvent = (event) => {
 };
 
 export const updateEvent = (event) => {
-  console.log("update event")
+  console.log("update event");
   return async (dispatch) => {
     try {
       await axios.patch(`/tournees/${event.id}?access_token=a`, {
@@ -69,7 +79,7 @@ export const updateEvent = (event) => {
         plage_fin: event.end.getHours(),
         remuneration_base: event.renumeration,
         remuneration_par_point: event.facturation,
-      });
+      }, { "Content-Type": "application/json" });
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +88,7 @@ export const updateEvent = (event) => {
 };
 
 export const updateDrag = (event) => {
-  console.log("update drag event")
+  console.log("update drag event");
 
   return async (dispatch) => {
     try {
@@ -88,7 +98,7 @@ export const updateDrag = (event) => {
         plage_fin: event.end.getHours(),
         remuneration_base: event.renumeration,
         remuneration_par_point: event.facturation,
-      });
+      }, { "Content-Type": "application/json" });
     } catch (err) {
       console.log(err);
     }
@@ -97,16 +107,23 @@ export const updateDrag = (event) => {
 };
 
 export const updateResize = (event) => {
-  console.log("update resize event")
+  console.log("update resize event");
   return async (dispatch) => {
     try {
-      await axios.patch(`/tournees/${event.id}?access_token=a`, {
-        date: `${event.start.toISOString().split("T")[0]}`,
-        plage_debut: event.start.getHours(),
-        plage_fin: event.end.getHours(),
-        remuneration_base: event.renumeration,
-        remuneration_par_point: event.facturation,
-      });
+      const headers = {
+        'Content-Type': 'application/json',
+      }
+      await axios.patch(
+        `/tournees/${event.id}?access_token=a`,
+        {
+          date: `${event.start.toISOString().split("T")[0]}`,
+          plage_debut: event.start.getHours(),
+          plage_fin: event.end.getHours(),
+          remuneration_base: event.renumeration,
+          remuneration_par_point: event.facturation,
+        },
+        { headers }
+      );
     } catch (err) {
       console.log(err);
     }

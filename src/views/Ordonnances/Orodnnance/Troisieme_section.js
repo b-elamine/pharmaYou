@@ -12,9 +12,9 @@ import {
   Label,
   Spinner,
   Modal,
-  ModalHeader,
+  // ModalHeader,
   ModalBody,
-  ModalFooter,
+  // ModalFooter,
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { PlusCircle, Send } from "react-feather";
@@ -25,9 +25,9 @@ import Switch from "react-switch";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 import axios from "../../../axios";
-import pdf_test from "./10.1.1.695.7550.pdf";
+// import pdf_test from "./10.1.1.695.7550.pdf";
 
-import { Document, Page, pdfjs } from "react-pdf";
+import {pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const CardDashed = (props) => {
@@ -230,26 +230,26 @@ class Troisieme_section extends React.Component {
               toggle_modal={this.toggleModal}
               modal_state={this.state.modal}
             >
-              {this.state.modal_file_type === "image" ? (
-                <img
-                  style={{ width: "90%" }}
-                  src={this.state.modal_file_path}
-                  alt="test"
-                />
-              ) : (
-                <PerfectScrollbar
-                  options={{
-                    wheelPropagation: false,
-                  }}
-                >
+              <PerfectScrollbar
+                options={{
+                  wheelPropagation: false,
+                }}
+              >
+                {this.state.modal_file_type === "image" ? (
+                  <img
+                    style={{ width: "90%" }}
+                    src={this.state.modal_file_path}
+                    alt="test"
+                  />
+                ) : (
                   <iframe
                     title="test"
                     src={this.state.modal_file_path}
                     width="90%"
                     height="100%"
                   ></iframe>
-                </PerfectScrollbar>
-              )}
+                )}
+              </PerfectScrollbar>
             </ModaL>
             <div
               style={{ width: "90%" }}

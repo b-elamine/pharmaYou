@@ -4,12 +4,17 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "../../assets/scss/plugins/extensions/maps.scss";
 import axios from "../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
+// import io from "socket.io-client";
 
 const MyPopupMarker = ({ position, content }) => (
   <Marker position={position}>
     <Popup>{content}</Popup>
   </Marker>
 );
+
+// const socket = io("https://ordo.pharmayou.fr:3003/livreursMap", {
+//   transports: ["websocket", "polling"],
+// });
 
 const MyMarkersList = ({ markers }) => {
   const items = markers.map(({ key, ...props }) => (
@@ -54,6 +59,9 @@ class LivreursMap extends React.Component {
           : "Vérifiez votre connexion !";
       this.handleAlert("errorAlert", true, error_message);
     }
+    // socket.on("movelivreur", (currentresponse) => {
+    //   update localisation
+    // });
   }
 
   render() {

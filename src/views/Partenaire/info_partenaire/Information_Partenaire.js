@@ -30,6 +30,7 @@ class Partenaire_Info extends React.Component {
       const res = await axios.get(
         `users/${id_partenaire}?access_token=a&type=infirmier`
       );
+      console.log(res.data)
       const partenaire = {
         name: `${res.data.nom} ${res.data.prenom}`,
         email: res.data.email,
@@ -39,6 +40,7 @@ class Partenaire_Info extends React.Component {
         status: res.data.is_active ? "active" : "inactive",
         type: res.data.type,
         nbr_ordo : res.data.n_commandes,
+        commandes : res.data.commandes,
       };
       this.setState({
         row: partenaire,
@@ -52,7 +54,7 @@ class Partenaire_Info extends React.Component {
     this.fetcher_data(id_partenaire)
   }
   render() {
-    console.log(this.state.row);
+    console.log(this.state.row.commandes)
     return (
       <Card>
         <a
@@ -206,7 +208,7 @@ class Partenaire_Info extends React.Component {
               </div>
             </div>
           </div>
-          <CommandesPartenaire />
+          <CommandesPartenaire commandes={this.state.row.commandes} />
         </CardBody>
       </Card>
     );
