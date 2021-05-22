@@ -25,21 +25,21 @@ const CommentaireBlock = (props) => {
           }}
         />
         <span
-          title={props.block_type}
+          title={props.block_note}
           className="ml-2 font-weight-bold font-medium-2"
         >
-          {props.block_type}
+          {props.block_title}
         </span>
       </div>
       <small className="ml-3 font-small-2"> {props.block_note} </small>
 
-      <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
+      {/* <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
         <div className="user-info text-truncate ml-xl-50 ml-0">
-          <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
+          <span className=" font-weight-bold d-block text-truncate mb-0 font-medium-1">
             {props.name}
           </span>
         </div>
-      </div>
+      </div> */}
     </CardBody>
   );
 };
@@ -65,9 +65,9 @@ class PremiereSection extends React.Component {
           <Col xl="5">
             <div className="ml-0">
               <h3 style={{ fontWeight: "900", marginBottom: "0px" }}>
-                {this.state.client.name}
+                {this.props.client.name}
               </h3>
-              <small className="mt-25 ml-0">{this.state.client.email}</small>
+              <small className="mt-25 ml-0">{this.props.client.email}</small>
             </div>
             <div className="d-flex flex-sm-row flex-column align-items-center justify-content-start px-0">
               <Button
@@ -112,11 +112,11 @@ class PremiereSection extends React.Component {
           </Col>
           <Col xl="4">
             <p className=" font-small-3">
-              {this.state.client.adresse_livraison}{" "}
+              {this.props.client.adresse_livraison}{" "}
             </p>
-            <p className="">{this.state.client.code}</p>
-            <p className="">{this.state.client.ville}</p>
-            <p className="">{this.state.client.telephone}</p>
+            <p className="">{this.props.client.code}</p>
+            <p className="">{this.props.client.ville}</p>
+            <p className="">{this.props.client.telephone}</p>
           </Col>
         </Row>
         <Row className="mt-4 mb-4">
@@ -126,7 +126,9 @@ class PremiereSection extends React.Component {
                 <Icon.TrendingUp className="mr-4 fonticon-wrap" size={32} />
               </Badge>
               <div>
-                <p className="font-medium-2 mb-0 font-weight-bold">12</p>
+                <p className="font-medium-2 mb-0 font-weight-bold">
+                  {this.props.client.ordonnances}{" "}
+                </p>
                 <small className="mt-0">Ordonnance du client</small>
               </div>
             </div>
@@ -138,7 +140,7 @@ class PremiereSection extends React.Component {
               </Badge>
               <div>
                 <p className="font-medium-2 mb-0 font-weight-bold">
-                  {this.state.client.chiffre_affaire}€
+                  {this.props.client.chiffre_affaire}€
                 </p>
                 <small className="mt-0">Chiffre d'affaire</small>
               </div>
@@ -161,28 +163,23 @@ class PremiereSection extends React.Component {
               <ListUl className="mr-1" size={17} />
               Historique commentaire et note du patient
             </CardTitle>
-            <div style={{ height: "350px"}}>
+            <div style={{ height: "350px" }}>
               <PerfectScrollbar
                 options={{
                   wheelPropagation: false,
                 }}
               >
-                {this.state.commentaires_notes.length === 0 ? (
+                {this.props.commentaires_notes.length === 0 ? (
                   <strong>Pas de commentaire pour l'instant</strong>
                 ) : (
-                  this.state.commentaires_notes.map((comment) => {
-                    const icon_color =
-                      comment.type === "Commentaire interne"
-                        ? "#fa680c"
-                        : "#28c76f";
+                  this.props.commentaires_notes.map((comment) => {
                     return (
                       <CommentaireBlock
                         key={comment.id}
-                        icon_color={icon_color}
-                        block_type={comment.type}
-                        block_note={comment.commentaire}
-                        // image_path={comment.image}
-                        name={comment.nom}
+                        icon_color={comment.color}
+                        block_title={comment.title}
+                        block_note={comment.text}
+                        name="admin name"
                       />
                     );
                   })

@@ -479,7 +479,6 @@ class General_View extends React.Component {
     try {
       const commandes = await axios.get("/commandes?access_token=a");
       const statistiques2 = await axios.get("/statistiques?access_token=a");
-      console.log(statistiques2.data)
 
       if (commandes.statusText === "OK") {
         const commandes_ordo = commandes.data;

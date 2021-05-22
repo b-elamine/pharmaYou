@@ -6,365 +6,52 @@ import {
   EyeFill,
   HourglassSplit,
   Truck,
-  FileEarmarkText,
+  Exclamation,
+  Check2,
+  Hourglass,
 } from "react-bootstrap-icons";
 import { Badge, Card, CardTitle } from "reactstrap";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
+import { history } from "../../../history";
 
-const data = [
-  {
-    id: 1,
-    name: "Alyss Lillecrop",
-    email: "alillecrop0@twitpic.com",
-    date: "May 13, 2018",
-    status: "livré",
-    montant: "$32,000",
-    ratings: "good",
-    type: "particulier",
-    code: 12345,
-    origine: "Partenaire App",
-    patient: {
-      nom: "Ouardas",
-      prenom: "Akram",
-      address: "19 rue merabet ahmed, Saida , Algerie",
-      num_tel: "0559863111",
-      email: "a.ouardas@esi-sba.dz",
-      appeler: true,
-      note:
-        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
-    },
-    mutulle: true,
-    CMU: false,
-  },
-  {
-    id: 2,
-    name: "Shep Pentlow",
-    email: "spentlow1@home.pl",
-    date: "June 5, 2019",
-    status: "livré",
-    montant: "$50,000",
-    ratings: "good",
-    type: "particulier",
-    code: 56789,
-    origine: "Partenaire infermier",
-    patient: {
-      nom: "Ouardas",
-      prenom: "Akram",
-      address: "19 rue merabet ahmed, Saida , Algerie",
-      num_tel: "0559863111",
-      email: "a.ouardas@esi-sba.dz",
-      appeler: false,
-      note:
-        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
-    },
-    mutulle: false,
-    CMU: false,
-  },
-  {
-    id: 3,
-    name: "Gasper Morley",
-    email: "gmorley2@chronoengine.com",
-    date: "December 24, 2019",
-    status: "livré",
-    montant: "$78,000",
-    ratings: "average",
-    type: "professionnel",
-    code: 1245,
-    origine: "Partenaire MEDADOM",
-    patient: {
-      nom: "Elmogherbi",
-      prenom: "faycal",
-      address: "19 rue merabet ahmed, Oran , Algerie",
-      num_tel: "0552368514",
-      email: "m.elmogherbi@esi-sba.dz",
-      appeler: false,
-      note:
-        "le travaille est bon mais j'ai pas recue les produit au temps, donc il faut faire vite la prochaine fois ",
-    },
-    mutulle: false,
-    CMU: true,
-  },
-  {
-    name: "Phaedra Jerrard",
-    email: "pjerrard3@blogs.com",
-    date: "November 30, 2018",
-    status: "livré",
-    montant: "$10,000",
-    ratings: "bad",
-    patient: {
-      nom: "Ouardas",
-      prenom: "Akram",
-      address: "19 rue merabet ahmed, Saida , Algerie",
-      num_tel: "0559863111",
-      email: "a.ouardas@esi-sba.dz",
-      appeler: true,
-      note: "",
-    },
-    mutulle: true,
-    CMU: true,
-  },
-  {
-    name: "Conn Plose",
-    email: "cplose4@geocities.com",
-    date: "April 8, 2017",
-    status: "livré",
-    montant: "$22,000",
-    ratings: "average",
-    patient: {
-      nom: "Elmogherbi",
-      prenom: "faycal",
-      address: "19 rue merabet ahmed, Oran , Algerie",
-      num_tel: "0552368514",
-      email: "m.elmogherbi@esi-sba.dz",
-    },
-  },
-  {
-    name: "Tootsie Brandsma",
-    email: "tbrandsma5@theatlantic.com",
-    date: "August 12, 2019",
-    status: "en_attente",
-    montant: "$49,000",
-    ratings: "bad",
-  },
-  {
-    name: "Sibley Bum",
-    email: "sbum6@sourceforge.net",
-    date: "October 1, 2017",
-    status: "livré",
-    montant: "$56,000",
-    ratings: "good",
-  },
-  {
-    name: "Kristoffer Thew",
-    email: "kthew7@amazon.com",
-    date: "February 28, 2018",
-    status: "tournée_assigné",
-    montant: "$83,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Fay Hasard",
-    email: "fhasard8@java.com",
-    date: "January 29, 2018",
-    status: "livré",
-    montant: "$26,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Tabby Abercrombie",
-    email: "tabercrombie9@statcounter.com",
-    date: "April 1, 2019",
-    status: "active",
-    montant: "$60,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-10.jpg"),
-    name: "	Stella Indruch",
-    email: "sindruch1@mayoclinic.com",
-    date: "Dec 4, 2019",
-    status: "active",
-    montant: "$21,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-17.jpg"),
-    name: "	Aron McNirlin",
-    email: "amcnirlin2@samsung.com",
-    date: "Jan 4, 2018",
-    status: "inactive",
-    montant: "$30,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-20.jpg"),
-    name: "Ange Trenholm",
-    email: "atrenholm4@slideshare.net	",
-    date: "February 23, 2019",
-    status: "active",
-    montant: "$12,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-14.jpg"),
-    name: "Caterina Starkie",
-    email: "cstarkie5@feedburner.com",
-    date: "September 8, 2018",
-    status: "active",
-    montant: "$40,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-25.jpg"),
-    name: "Hugibert McGeagh",
-    email: "hmcgeaghf@smh.com.au",
-    date: "August 20, 2017",
-    status: "active",
-    montant: "$90,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-9.jpg"),
-    name: "Jaime Maher",
-    email: "jmaher1@msu.edu",
-    date: "April 7, 2019",
-    status: "active",
-    montant: "$38,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-24.jpg"),
-    name: "Amalle Pladen",
-    email: "jmaher1@msu.edu",
-    date: "March 30, 2018",
-    status: "active",
-    montant: "$18,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-18.jpg"),
-    name: "Dorris Ferries",
-    email: "dferries7@ucoz.com",
-    date: "August 25, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-23.jpg"),
-    name: "Andy Fettes",
-    email: "afettesh@upenn.edu",
-    date: "September 30, 2017",
-    status: "inactive",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Allene Hughf",
-    email: "ahughf0@dropbox.com",
-    date: "June 21, 2018",
-    status: "active",
-    montant: "$35,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-    name: "Petra Rheubottom",
-    email: "prheubottom0@globo.com",
-    date: "July 4, 2018",
-    status: "active",
-    montant: "$72,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-    name: "Ambrosius Olyfant",
-    email: "aolyfant1@timesonline.co.uk",
-    date: "May 5, 2019",
-    status: "inactive",
-    montant: "$13,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-3.jpg"),
-    name: "Letti Trineman",
-    email: "ltrineman2@cnbc.com",
-    date: "February 15, 2017",
-    status: "active",
-    montant: "$84,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-4.jpg"),
-    name: "Sayer Rodger",
-    email: "srodgerb@rakuten.co.jp",
-    date: "January 30, 2018",
-    status: "inactive",
-    montant: "$15,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-5.jpg"),
-    name: "Skyler Scotcher",
-    email: "sscotcher3@soup.io",
-    date: "November 3, 2018",
-    status: "active",
-    montant: "$26,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-6.jpg"),
-    name: "Florette Shotbolt",
-    email: "fshotbolt7@wiley.com",
-    date: "March 12, 2017",
-    status: "active",
-    montant: "$69,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-8.jpg"),
-    name: "Janis Bakhrushkin",
-    email: "jbakhrushkina@epa.gov",
-    date: "July 10, 2017",
-    status: "active",
-    montant: "$65,000",
-    ratings: "good",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-7.jpg"),
-    name: "Alric Peinton",
-    email: "apeinton0@google.cn",
-    date: "February 6, 2017",
-    status: "inactive",
-    montant: "$38,000",
-    ratings: "bad",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-26.jpg"),
-    name: "Rubie Pitkethly",
-    email: "rpitkethlyf@51.la",
-    date: "February 20, 2018",
-    status: "active",
-    montant: "$62,000",
-    ratings: "average",
-  },
-  {
-    image: require("../../../assets/img/portrait/small/avatar-s-12.jpg"),
-    name: "Hortensia Soaper",
-    email: "hsoaperh@mapy.cz",
-    date: "June 1, 2017",
-    status: "active",
-    montant: "$60,000",
-    ratings: "good",
-  },
-];
+
+
 const columns = [
   {
     name: "#",
     selector: "id",
     sortable: true,
-    minWidth: "10px",
-    cell: (row) => <p className="text-bold-500 mb-0">{row.id}</p>,
+    maxWidth: "100px",
+    cell: (row) => (
+      <p
+        style={{ cursor: "pointer" }}
+        className="text-bold-500 mb-0"
+        onClick={() => {
+          const url = `/ordonnance/${row.id}`;
+          history.push(url, row);
+        }}
+      >
+        {row.id}
+      </p>
+    ),
   },
   {
-    name: "Statut",
+    name: "STATUT",
     selector: "status",
-    minWidth: "150px",
+    minWidth: "100px",
+    maxWidth: "150px",
+    center: true,
     cell: (row) =>
       row.status === "en_attente" ? (
         <Badge
           pill
-          // style={{ backgroundColor: "#f8e7b6", color: "#ff7535" }}
           color="light-primary"
           className="text-primary pl-50 pr-50 font-small-1 text-wrap text-bold-500"
         >
           <HourglassSplit className="primary mr-50" size={20} />
           En attente
         </Badge>
-      ) : row.status === "non_traité" ? (
+      ) : row.status === "non-traité" ? (
         <Badge color="light-danger pl-50 pr-50 " pill>
           <ExclamationTriangleFill className="danger mr-50" size={20} />
           Non-traité
@@ -383,7 +70,7 @@ const columns = [
           <Truck className="mr-50" size={20} />
           En livraison
         </Badge>
-      ) : row.status === "livré" ? (
+      ) : row.status === "livrée" ? (
         <Badge color="light-success pl-50 pr-50 " pill>
           <Check2All className="success mr-50" size={20} />
           Livré
@@ -401,13 +88,28 @@ const columns = [
           <Calendar2Week className="primary mr-50" size={20} />
           Tournée assigné
         </Badge>
+      ) : row.status === "annulée" ? (
+        <Badge color="light-danger pl-50 pr-50 " pill>
+          <Exclamation className="danger mr-0" size={20} />
+          Annulée
+        </Badge>
+      ) : row.status === "validée" ? (
+        <Badge color="light-success pl-50 pr-50 " pill>
+          <Check2 className="success mr-50" size={20} />
+          Validée
+        </Badge>
+      ) : row.status === "incomplet" ? (
+        <Badge color="light-primary pl-50 pr-50 " pill>
+          <Hourglass className="primary mr-50" size={20} />
+          Incomplet
+        </Badge>
       ) : null,
   },
   {
-    name: "Nom Client",
+    name: "NOM CLIENT",
     selector: "nom_client",
     sortable: true,
-    minWidth: "200px",
+    minWidth: "210px",
     cell: (row) => (
       <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
         <div className="user-info text-truncate ml-xl-50 ml-0">
@@ -423,12 +125,13 @@ const columns = [
     ),
   },
   {
-    name: "Type",
+    name: "TYPE",
     selector: "type",
+    // center: true,
     sortable: true,
-    minWidth: "120px",
+    maxWidth: "130px",
     cell: (row) =>
-      row.type === "particulier" ? (
+      row.type === "Particulier" ? (
         <Badge
           // color="light-primary"
           style={{
@@ -447,82 +150,168 @@ const columns = [
       ),
   },
   {
-    name: "Montant",
+    name: "MONTANT",
     selector: "montant",
+    center: true,
     sortable: true,
-    cell: (row) => <p className="text-bold-500 mb-0">{row.montant}</p>,
+    maxWidth: "100px",
+    cell: (row) =>
+      row.montant !== null ? (
+        <p className="text-bold-500 mb-0">{row.montant} €</p>
+      ) : (
+        <p className="text-bold-500 mb-0">En calcul</p>
+      ),
   },
   {
-    name: "Date",
+    name: "DATE",
     selector: "date",
     sortable: true,
-    minWidth:"150px",
+    minWidth: "200px",
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
     ),
   },
   {
-    name: "Code postal",
+    name: "CODE POSTAL",
     selector: "code_postal",
+    maxWidth: "120px",
     sortable: true,
     cell: (row) => (
       <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
     ),
   },
   {
-    name: "Origine",
+    name: "ORIGINE",
     selector: "origine",
+    maxWidth: "190px",
+    // center: true,
     sortable: true,
-    minWidth: "150px",
-    cell: (row) => (
-      <Badge
-        color="light-success text-wrap text-bold-500 mb-0"
-        style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
-        pill
-      >
-        {row.origine}
-      </Badge>
-    ),
+    cell: (row) =>
+      row.origine === "infirmier" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Infirmier
+        </Badge>
+      ) : row.origine === "medadom" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          MEDADOM
+        </Badge>
+      ) : row.origine === "web" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          WEB
+        </Badge>
+      ) : row.origine === "app" ? (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Appli
+        </Badge>
+      ) : (
+        <Badge
+          color="light-success text-wrap text-bold-500 mb-0"
+          style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+          pill
+        >
+          Pro
+        </Badge>
+      ),
   },
   {
-    name: "Actions",
+    name: "ACTIONS",
     selector: "actions",
-    minWidth: "100px",
+    center: true,
+    maxWidth: "120px",
     cell: (row) => (
       <div className="data-list-action">
         <EyeFill
           className="cursor-pointer mr-1"
           size={20}
           onClick={() => {
-            alert("view the ordonnace " + row.id);
-          }}
-        />
-        <FileEarmarkText
-          color="danger"
-          className="cursor-pointer"
-          size={20}
-          onClick={() => {
-            alert("go to file of the ordonnance : #" + row.id);
+            history.push(`/ordonnance/${row.id}`);
           }}
         />
       </div>
     ),
   },
 ];
-
 class ThirdSection extends React.Component {
   state = {
-    columns: [],
     data: [],
   };
-  componentDidMount() {
-    // fetching the data from the database and passing it to the state
-    this.setState({
-      columns: columns,
-      data: data,
-    });
-  }
+  // componentDidMount() {
+  //   // fetching the data from the database and passing it to the state
+  //   this.setState({
+  //     data: data,
+  //   });
+  // }
   render() {
+    let  commandes = []
+    if (this.props.commandes){
+      commandes = this.props.commandes.map((item) => {
+        return {
+          ...item,
+          id: item.commande_id,
+          status:
+            item.status_commande === -2
+              ? "annulée"
+              : item.status_commande === -1
+              ? "incomplet"
+              : item.status_commande === 0
+              ? "non-traité"
+              : item.status_commande === 1
+              ? "attente_approvisionnement"
+              : item.status_commande === 2
+              ? "validée"
+              : item.status_commande === 3
+              ? "livrée"
+              : null,
+          // status :"incomplet",
+          name: item.nom_patient + " " + item.prenom_patient,
+          // name: 'Akram Ouardas',
+          type: item.type === "ordo" ? "Particulier" : "Professionnel",
+          montant: item.montant_total,
+          date: new Date(item.updated_at * 1000).toLocaleDateString("fr-FR", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          code: item.code_postal_livraison,
+          origine: item.origine,
+          email: item.email,
+          ville: item.ville_livraison,
+          paiment: item.status_paiement,
+          patient: {
+            nom: item.nom_patient,
+            prenom: item.prenom_patient,
+            address: `${item.adresse_livraison} , ${item.code_postal_livraison} , ${item.ville_livraison}`,
+            num_tel: item.telephone,
+            appeler: true,
+            email: item.email,
+            note: item.note_admin
+              ? item.note_admin
+              : "Pas de note pour l'instant.",
+          },
+          CMU: true,
+          mutuelle: item.mutuelle_ok,
+        };
+      });
+    }
     return (
       <Card className="ml-1">
         <CardTitle className=" font-large-1 mt-50">
@@ -531,8 +320,8 @@ class ThirdSection extends React.Component {
         <DataTableCustom
           // add_new
           // add_new_value="Ajouter une ordonnance"
-          columns={this.state.columns}
-          data={this.state.data}
+          columns={columns}
+          data={commandes}
         />
       </Card>
     );

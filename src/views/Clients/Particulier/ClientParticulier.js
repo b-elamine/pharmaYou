@@ -42,8 +42,8 @@ const commentaires_notes = [
 class Client_particulier extends React.Component {
   state = {
     client: {
-      historique : [], 
-    }, 
+      historique: [],
+    },
   };
 
   componentDidMount() {
@@ -63,7 +63,6 @@ class Client_particulier extends React.Component {
 
       const response = await axios.get(`/users/${id_client}?access_token=a`);
       const client = response.data;
-      console.log(client);
       const custom_client = {
         id: client.user_id,
         name: `${client.nom} ${client.prenom}`,
@@ -71,7 +70,14 @@ class Client_particulier extends React.Component {
         ville: client.ville_livraison,
         code: client.code_postal_livraison,
         origine: client.origine,
-        date: "29 Janvier 2019",
+        date: new Date(client.created_at * 1000).toLocaleDateString("fr-FR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
         ordonnances: client.n_commandes,
         carte_vital: client.vitale_ok,
         mutuelle: client.mutuelle_ok,
@@ -80,8 +86,10 @@ class Client_particulier extends React.Component {
         geocoords_livraison: client.geocoords_livraison,
         telephone: client.telephone,
         type: client.type,
-        historique : client.historique
+        historique: client.historique,
+        commandes: client.commandes,
       };
+
       this.setState({
         client: custom_client,
       });
@@ -100,7 +108,7 @@ class Client_particulier extends React.Component {
           <React.Fragment>
             <Row>
               <Col>
-                <FirstSection                
+                <FirstSection
                   client={this.state.client}
                   commentaires_notes={this.state.client.historique}
                 />
@@ -110,7 +118,16 @@ class Client_particulier extends React.Component {
               </Col>
             </Row>
 
-            <ThirdSection client={this.state.client} />
+            {this.state.client.commandes ? (
+              <ThirdSection commandes={this.state.client.commandes} />
+            ) : (
+              <div className="text-center">
+                <Spinner
+                  color="warning"
+                  style={{ width: "5rem", height: "5rem" }}
+                />
+              </div>
+            )}
           </React.Fragment>
         ) : (
           <div className="text-center">
