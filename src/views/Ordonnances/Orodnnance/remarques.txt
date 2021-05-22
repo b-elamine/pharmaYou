@@ -25,7 +25,7 @@ Le paramètre contenu doit être envoyé en JSON selon le format suivant : [{"no
 => On ne veut que pouvoir modifier le numéro de sécurité sociale et la date d'expiration de la mutuelle. Je dois faire des endpoints pour ça.
  
 2) ajouter un end point que renvoi tous les commandes d'un client selon son id
-=> FAIT : GET /clients/:id/commandes
+=> FAIT : GET /uses/:id/commandes
  
 3) ajouter un end point post pour ajouter une ordonance pour un client
 => Nous ne voulons finalement pas cette fonctionnalité dans le dashboard
