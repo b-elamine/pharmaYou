@@ -327,7 +327,7 @@ class Partenaire extends React.Component {
   };
 
   add_new = () => {
-    history.push("/partenaires/nouveau_partenaire");
+    history.push("/partenaires/modifier_partenaire");
   };
   handle_filter_profession = (e) => {
     let value = e.value;

@@ -450,6 +450,7 @@ class General_View extends React.Component {
       n_commandes_en_attente:0,
       n_commandes_livrees:0,
       chiffre_daffaire:0,
+      n_commandes_en_livraison:0,
     },
     statistiques_pro: {
       moy_par_commande:0,
@@ -458,6 +459,7 @@ class General_View extends React.Component {
       n_commandes_en_attente:0,
       n_commandes_livrees:0,
       chiffre_daffaire:0,
+      n_commandes_en_livraison:0,
     },
     stats_objet : {
       statistiques_particuliers : {
@@ -477,7 +479,7 @@ class General_View extends React.Component {
     try {
       const commandes = await axios.get("/commandes?access_token=a");
       const statistiques2 = await axios.get("/statistiques?access_token=a");
-      // const commandes = {statusText :"OK",data : data };
+      console.log(statistiques2.data)
 
       if (commandes.statusText === "OK") {
         const commandes_ordo = commandes.data;
@@ -808,7 +810,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>X</h7>
+                    <h7>{this.state.statistiques_particuliers.n_commandes_en_livraison}</h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1043,7 +1045,7 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>X</h7>
+                    <h7>{this.state.statistiques_pro.n_commandes_en_livraison}</h7>
                     <p
                       style={{
                         fontSize: "12px",

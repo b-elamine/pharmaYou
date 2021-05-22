@@ -6,6 +6,7 @@ import { ButtonGroup } from "reactstrap";
 import { BellFill, HourglassSplit } from "react-bootstrap-icons";
 import { User, FileText, DollarSign } from "react-feather";
 import axios from "../../axios";
+import { date } from "yup";
 
 class stats extends React.Component {
   state = {
@@ -286,7 +287,8 @@ class stats extends React.Component {
           chiffre_daffaire :0
         }
       }
-    }
+    },
+    date : ""
   }
 
   fetching_data = async () => {
@@ -294,7 +296,8 @@ class stats extends React.Component {
     const statistiques2 = await axios.get("/statistiques?access_token=a");
     const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
     const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels;
-    console.log(statistiques2.data)
+    let today = new Date();       
+    let date=today.getDate() + "-"+ parseInt(today.getMonth()+1) +"-"+today.getFullYear();
 
     const new_horizontal_chart_1 = {
       options: {
@@ -396,6 +399,7 @@ class stats extends React.Component {
                 ]
             }  ,
       stats_objet : statistiques2.data,
+      date : date,
     }
     })
     
@@ -954,7 +958,7 @@ class stats extends React.Component {
                 color="#0981f6"
                 size={"20"}
               />
-              22/03/2021
+              {this.state.date}
             </Col>
           </Row>
           <ReactApexChart
@@ -985,7 +989,7 @@ class stats extends React.Component {
                 color="#0981f6"
                 size={"20"}
               />
-              22/03/2021
+              {this.state.date}
             </Col>
           </Row>
           <ReactApexChart

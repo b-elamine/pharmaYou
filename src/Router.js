@@ -192,13 +192,12 @@ const LivreursMap = lazy(()=> import("./views/livreurs/LivreurMap"))
 const Livreurs = lazy(()=> import("./views/livreurs/livreur"))
 const Commandes_recues = lazy(()=> import("./views/Commandes/Reçue/Commandes_reçues"))
 const InfoLivreurs = lazy(()=> import("./views/livreurs/infoLivreur"))
+const SignUPLIvreurProcedureDetails = lazy(()=> import("./views/livreurs/signup_procedure_detail"))
 const Nv_livreur = lazy(()=> import("./views/livreurs/Modifier_livreur"))
 const Client_particuliers = lazy(()=> import('./views/Clients/Particuliers/Client_particuliers'))
 const Partenaire = lazy(()=> import("./views/Partenaire/Partenaire"))
 const Ordonnance = lazy(()=> import("./views/Ordonnances/Orodnnance/Ordonnance"));
 const Partenaire_Info = lazy(()=> import("./views/Partenaire/info_partenaire/Information_Partenaire"))
-const Client_Info = lazy(()=> import("./views/Clients/Particuliers/info_client/Information_client"))
-const Nv_Partenaire = lazy(()=> import("./views/Partenaire/Nouveau_Partenair"))
 const Nv_client = lazy (()=> import("./views/Clients/Particuliers/Modifier_client"))
 const ClientParticulier = lazy(()=> import("./views/Clients/Particulier/ClientParticulier"))
 const modifier_Partenaire = lazy(()=> import("./views/Partenaire/modifier_Partenaire"))
@@ -271,21 +270,15 @@ class AppRouter extends React.Component {
           <AppRoute exact path="/livreurs" component= {Livreurs} />
           <AppRoute exact path="/livreurs/carte" component= {LivreursMap} />
           <AppRoute exact path="/livreurs/:id_livreur" component= {InfoLivreurs} />
-          <AppRoute exact path="/livreurs/nouveau_livreur" component = {Nv_livreur} />
+          <AppRoute exact path="/livreurs/accepter/:id_livreur" component= {SignUPLIvreurProcedureDetails} />
+          <AppRoute exact path="/livreur/modifier_livreur" component = {Nv_livreur} />
           <AppRoute exact path="/users" component= {() => <h1> USERS </h1>} />
           <AppRoute exact path="/partenaire/:id_partenaire" component= {Partenaire_Info} />
-          <AppRoute exact path="/client/particuliers/:id_client" component= {Client_Info} />
-          <AppRoute exact path="/partenaires/nouveau_partenaire" component= {Nv_Partenaire} />
+          <AppRoute exact path="/partenaires/nouveau_partenaire" component= {modifier_Partenaire} />
           <AppRoute exact path="/client/particuliers/nouveau_client" component= {Nv_client} />
-          <AppRoute exact path="/client/particuliers/modifier_Client" component= {Nv_client} />
+          <AppRoute exact path="/client/particuliers/modifier_client/" component= {Nv_client} />
           <AppRoute exact path="/partenaires/modifier_Partenaire" component= {modifier_Partenaire} />
           <AppRoute exact path="/pages/login" component={N_Login} fullLayout />
-
-
-
-
-
-
           <AppRoute
             path="/email"
             exact

@@ -8,13 +8,36 @@ import {
   Input,
 }
 from "reactstrap";
+import Flatpickr from "react-flatpickr";
 import { history } from "../../../history";
 import { ArrowLeftCircleFill } from "react-bootstrap-icons";
 
 
 // const img = require("../../assets/img/portrait/small/avatar-s-2.jpg") //fake profile pic 
 
+
+
+
 class Modifier_client extends React.Component {
+
+    state = {
+        startDate: new Date(),
+      };
+
+      handleDateChange = (date) => {
+        let dateN = new Date(date);
+        this.setState({
+          startDate: new Date(
+            dateN.getFullYear(),
+            dateN.getMonth(),
+            dateN.getDate(),
+            this.state.startDate.getHours(),
+            this.state.startDate.getMinutes(),
+            this.state.startDate.getSeconds()
+          )
+        });
+      };
+    
     render(){
     return (
         <div>
@@ -50,20 +73,7 @@ class Modifier_client extends React.Component {
                     </Button>
                 <CardBody>
                     <div className="d-flex flex-sm-row ">
-                        {/* <div>
-                        <Media>
-                            <Media className="mr-1" left href="#">
-                            <Media
-                                style={{ borderRadius: "10px" }}
-                                object
-                                src={img}
-                                alt="User"
-                                height="90"
-                                width="90"
-                            />
-                            </Media>
-                            </Media>
-                        </div> */}
+                        
                         <div>
                             <h7 style={{color:"#3A3B3C"}} ><b>Le Nom et Prenom</b></h7>
                             <div>
@@ -99,7 +109,6 @@ class Modifier_client extends React.Component {
                             </div>
                         </div>
                     </div>
-                    {/* test */}
                         <div
                         style={{
                             width:"100%",
@@ -108,47 +117,24 @@ class Modifier_client extends React.Component {
                         }}>
                               <div className="d-flex flex-sm-row">
                                 <div style={{marginRight:"20%", marginBottom:"1rem"}} >
-                                <small>Nom et prénom</small>                               
+                                <small>Num securité social</small>                               
                                 <Input
                                 style={{
                                     width:"21rem"
                                 }}
-                                placeholder="Le nom et prénom"
+                                placeholder="NSS"
                                 />
                                 </div>
                                 <div>
-                                <small>Numéro</small> 
-                                <Input
-                                style={{
-                                    width:"21rem"
-                                }}
-                                placeholder="Num"
-                                />  
-                                </div>                             
-                            </div>
-                            <div className="d-flex flex-sm-row">
-                                <div style={{marginRight:"20%"}} >
-                                <small>Profession</small>                               
-                                <Input
-                                type="select"
-                                style={{
-                                    width:"21rem"
-                                }}
-                                
-                                >
-                                <option>infermier</option>
-                                <option>docteur</option>
-                                <option>app externe</option>
-                                </Input>
-                                </div>
-                                <div>
-                                <small>E-mail</small> 
-                                <Input
-                                style={{
-                                    width:"21rem"
-                                }}
-                                placeholder="E-mail"
-                                />  
+                                <small>Date d'expiration</small> 
+                                <Flatpickr
+                                    enableTime = {true}
+                                    id="Date"
+                                    className="form-control"
+                                    value={this.state.startDate}
+                                    onChange={(date) => this.handleDateChange(date)}
+                                    options={{ minDate: "today" }}
+                                /> 
                                 </div>                             
                             </div>
                             <Button
@@ -164,18 +150,6 @@ class Modifier_client extends React.Component {
                             >
                             Enregistrer
                             </Button>
-                        </div>
-                        <div
-                        style={{
-                            marginTop:"5rem"
-                        }}
-                        >
-                            <Input
-                            style={{
-                                height:"18rem",
-                            }}
-                            type="textarea"
-                            />
                         </div>
 
                 </CardBody>

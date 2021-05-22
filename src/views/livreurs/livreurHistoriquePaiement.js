@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardBody,
-  Badge,
-  CardHeader,
-  CardTitle,
-
-} from "reactstrap";
+import { Card, CardBody, Badge, CardHeader, CardTitle } from "reactstrap";
 
 import DataTable from "react-data-table-component";
 import { CheckSquare, Square } from "react-bootstrap-icons";
@@ -61,7 +54,7 @@ class HistoriquePeiment extends React.Component {
         name: "SOMME DU",
         selector: "SOMME DU",
         sortable: true,
-        cell: (row) => <p className="text-bold-500  mb-0">{row.Somme} £</p>,
+        cell: (row) => <p className="text-bold-500  mb-0">{row.Somme} €</p>,
       },
       {
         name: "STATUT",
@@ -81,7 +74,7 @@ class HistoriquePeiment extends React.Component {
         name: "ACTIONS",
         selector: "ACTIONS",
         sortable: true,
-        maxWidth : "60px",
+        maxWidth: "60px",
         cell: (row) =>
           row.status === "Reglé" ? (
             <CheckSquare size="15" color="#28C76F" />
@@ -134,13 +127,10 @@ class HistoriquePeiment extends React.Component {
         status: "En attente",
       },
     ],
-   
   };
 
- 
-
   render() {
-    let { data, columns, value } = this.state;
+    let { data, columns} = this.state;
     let element = [];
     for (let index = 0; index < data.length; index++) {
       if (index % 5 === 0 && index > 9) {

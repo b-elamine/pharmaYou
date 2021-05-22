@@ -42,39 +42,74 @@ export const handleSidebar = (bool) => {
 };
 
 export const addEvent = (event) => {
+  console.log("add event")
   return async (dispatch) => {
-    await axios.post("/tournees?access_token=a", {
-      date: `${event.start.toISOString().split("T")[0]}`,
-      plage_debut: event.start.getHours(),
-      plage_fin: event.end.getHours(),
-      remuneration_base: event.renumeration,
-      remuneration_par_point: event.facturation
-    });
+    try {
+      await axios.post("/tournees?access_token=a", {
+        date: `${event.start.toISOString().split("T")[0]}`,
+        plage_debut: event.start.getHours(),
+        plage_fin: event.end.getHours(),
+        remuneration_base: event.renumeration,
+        remuneration_par_point: event.facturation,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     dispatch({ type: "ADD_EVENT", event });
   };
 };
 
 export const updateEvent = (event) => {
-  return (dispatch) => {
-    // axios.put("/tournees?access_token=a", {
-    //   date: `${event.start.toISOString().split("T")[0]}`,
-    //   plage_debut: event.start.getHours(),
-    //   plage_fin: event.end.getHours(),
-    //   remuneration_base: event.renumeration,
-    //   remuneration_par_point: event.facturation
-    // });
+  console.log("update event")
+  return async (dispatch) => {
+    try {
+      await axios.patch(`/tournees/${event.id}?access_token=a`, {
+        date: `${event.start.toISOString().split("T")[0]}`,
+        plage_debut: event.start.getHours(),
+        plage_fin: event.end.getHours(),
+        remuneration_base: event.renumeration,
+        remuneration_par_point: event.facturation,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     dispatch({ type: "UPDATE_EVENT", event });
   };
 };
 
 export const updateDrag = (event) => {
-  return (dispatch) => {
+  console.log("update drag event")
+
+  return async (dispatch) => {
+    try {
+      await axios.patch(`/tournees/${event.id}?access_token=a`, {
+        date: `${event.start.toISOString().split("T")[0]}`,
+        plage_debut: event.start.getHours(),
+        plage_fin: event.end.getHours(),
+        remuneration_base: event.renumeration,
+        remuneration_par_point: event.facturation,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     dispatch({ type: "UPDATE_DRAG", event });
   };
 };
 
 export const updateResize = (event) => {
-  return (dispatch) => {
+  console.log("update resize event")
+  return async (dispatch) => {
+    try {
+      await axios.patch(`/tournees/${event.id}?access_token=a`, {
+        date: `${event.start.toISOString().split("T")[0]}`,
+        plage_debut: event.start.getHours(),
+        plage_fin: event.end.getHours(),
+        remuneration_base: event.renumeration,
+        remuneration_par_point: event.facturation,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     dispatch({ type: "EVENT_RESIZE", event });
   };
 };
