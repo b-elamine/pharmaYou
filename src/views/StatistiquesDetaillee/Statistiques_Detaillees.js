@@ -7,6 +7,7 @@ import { BellFill, HourglassSplit } from "react-bootstrap-icons";
 import { User, FileText, DollarSign } from "react-feather";
 import axios from "../../axios";
 import { date } from "yup";
+import { type } from "jquery";
 
 class stats extends React.Component {
   state = {
@@ -291,136 +292,136 @@ class stats extends React.Component {
     date: "",
   };
 
-  fetching_data = async () => {
-    const statistiques = await axios.get("/statistiques_ca?access_token=a");
-    const statistiques2 = await axios.get("/statistiques?access_token=a");
-    const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
-    const statistiques_ca_professionnels =
-      statistiques.data.statistiques_ca_professionnels;
-    let today = new Date();
-    let date =
-      today.getDate() +
-      "-" +
-      parseInt(today.getMonth() + 1) +
-      "-" +
-      today.getFullYear();
+  // fetching_data = async () => {
+  //   const statistiques = await axios.get("/statistiques_ca?access_token=a");
+  //   const statistiques2 = await axios.get("/statistiques?access_token=a");
+  //   const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
+  //   const statistiques_ca_professionnels =
+  //   statistiques.data.statistiques_ca_professionnels;
+  //   let today = new Date();
+  //   let date =
+  //     today.getDate() +
+  //     "-" +
+  //     parseInt(today.getMonth() + 1) +
+  //     "-" +
+  //     today.getFullYear();
 
-    const new_horizontal_chart_1 = {
-      options: {
-        chart: {
-          ...this.state.horizontal_Chart1.options.chart,
-        },
-        colors: this.state.horizontal_Chart1.options.colors,
-        plotOptions: {
-          ...this.state.horizontal_Chart1.options.plotOptions,
-        },
-        dataLabels: {
-          ...this.state.horizontal_Chart1.options.dataLabels,
-        },
-        legend: {
-          ...this.state.horizontal_Chart1.options.legend,
-        },
-        xaxis: {
-          categories: Object.keys(statistiques_ca_par),
-        },
-      },
-      series: [
-        {
-          data: Object.values(statistiques_ca_par),
-        },
-      ],
-    };
+  //   const new_horizontal_chart_1 = {
+  //     options: {
+  //       chart: {
+  //         ...this.state.horizontal_Chart1.options.chart,
+  //       },
+  //       colors: this.state.horizontal_Chart1.options.colors,
+  //       plotOptions: {
+  //         ...this.state.horizontal_Chart1.options.plotOptions,
+  //       },
+  //       dataLabels: {
+  //         ...this.state.horizontal_Chart1.options.dataLabels,
+  //       },
+  //       legend: {
+  //         ...this.state.horizontal_Chart1.options.legend,
+  //       },
+  //       xaxis: {
+  //         categories: Object.keys(statistiques_ca_par),
+  //       },
+  //     },
+  //     series: [
+  //       {
+  //         data: Object.values(statistiques_ca_par),
+  //       },
+  //     ],
+  //   };
 
-    const new_horizontal_chart_2 = {
-      options: {
-        chart: {
-          ...this.state.horizontal_Chart2.options.chart,
-        },
-        colors: this.state.horizontal_Chart2.options.colors,
-        plotOptions: {
-          ...this.state.horizontal_Chart2.options.plotOptions,
-        },
-        dataLabels: {
-          ...this.state.horizontal_Chart2.options.dataLabels,
-        },
-        legend: {
-          ...this.state.horizontal_Chart2.options.legend,
-        },
-        xaxis: {
-          categories: Object.keys(statistiques_ca_professionnels),
-        },
-      },
-      series: [
-        {
-          data: Object.values(statistiques_ca_professionnels),
-        },
-      ],
-    };
-    this.setState((prev_state, props) => {
-      return {
-        //setting Last 2 horizontal charts values
+  //   const new_horizontal_chart_2 = {
+  //     options: {
+  //       chart: {
+  //         ...this.state.horizontal_Chart2.options.chart,
+  //       },
+  //       colors: this.state.horizontal_Chart2.options.colors,
+  //       plotOptions: {
+  //         ...this.state.horizontal_Chart2.options.plotOptions,
+  //       },
+  //       dataLabels: {
+  //         ...this.state.horizontal_Chart2.options.dataLabels,
+  //       },
+  //       legend: {
+  //         ...this.state.horizontal_Chart2.options.legend,
+  //       },
+  //       xaxis: {
+  //         categories: Object.keys(statistiques_ca_professionnels),
+  //       },
+  //     },
+  //     series: [
+  //       {
+  //         data: Object.values(statistiques_ca_professionnels),
+  //       },
+  //     ],
+  //   };
+  //   this.setState((prev_state, props) => {
+  //     return {
+  //       //setting Last 2 horizontal charts values
 
-        horizontal_Chart1: new_horizontal_chart_1,
-        horizontal_Chart2: new_horizontal_chart_2,
+  //       horizontal_Chart1: new_horizontal_chart_1,
+  //       horizontal_Chart2: new_horizontal_chart_2,
 
-        //setting first card statistics
+  //       //setting first card statistics
 
-        statistiques_particuliers:
-          statistiques2.data.statistiques_particuliers.jour,
-        statistiques_pro: statistiques2.data.statistiques_professionnels.jour,
-        pro_chart_bar: {
-          ...prev_state.pro_chart_bar,
-          series: [
-            prev_state.pro_chart_bar.series,
-            {
-              data: statistiques2.data.statistiques_professionnels.jour
-                .n_commandes_plot,
-            },
-          ],
-        },
-        pro_chart_line: {
-          ...prev_state.pro_chart_line,
-          series: [
-            prev_state.pro_chart_line.series,
-            {
-              data: statistiques2.data.statistiques_professionnels.jour
-                .chiffre_daffaire_plot,
-            },
-          ],
-        },
-        particular_chart_bar: {
-          ...prev_state.particular_chart_bar,
-          series: [
-            prev_state.particular_chart_bar.series,
-            {
-              data: statistiques2.data.statistiques_particuliers.jour
-                .n_commandes_plot,
-            },
-          ],
-        },
-        particular_chart_line: {
-          ...prev_state.particular_chart_line,
-          series: [
-            prev_state.particular_chart_line.series,
-            {
-              data: statistiques2.data.statistiques_particuliers.jour
-                .chiffre_daffaire_plot,
-            },
-          ],
-        },
-        stats_objet: statistiques2.data,
-        date: date,
-      };
-    });
-  };
+  //       statistiques_particuliers:
+  //         statistiques2.data.statistiques_particuliers.jour,
+  //       statistiques_pro: statistiques2.data.statistiques_professionnels.jour,
+  //       pro_chart_bar: {
+  //         ...prev_state.pro_chart_bar,
+  //         series: [
+  //           prev_state.pro_chart_bar.series,
+  //           {
+  //             data: statistiques2.data.statistiques_professionnels.jour
+  //               .n_commandes_plot,
+  //           },
+  //         ],
+  //       },
+  //       pro_chart_line: {
+  //         ...prev_state.pro_chart_line,
+  //         series: [
+  //           prev_state.pro_chart_line.series,
+  //           {
+  //             data: statistiques2.data.statistiques_professionnels.jour
+  //               .chiffre_daffaire_plot,
+  //           },
+  //         ],
+  //       },
+  //       particular_chart_bar: {
+  //         ...prev_state.particular_chart_bar,
+  //         series: [
+  //           prev_state.particular_chart_bar.series,
+  //           {
+  //             data: statistiques2.data.statistiques_particuliers.jour
+  //               .n_commandes_plot,
+  //           },
+  //         ],
+  //       },
+  //       particular_chart_line: {
+  //         ...prev_state.particular_chart_line,
+  //         series: [
+  //           prev_state.particular_chart_line.series,
+  //           {
+  //             data: statistiques2.data.statistiques_particuliers.jour
+  //               .chiffre_daffaire_plot,
+  //           },
+  //         ],
+  //       },
+  //       stats_objet: statistiques2.data,
+  //       date: date,
+  //     };
+  //   });
+  // };
 
   modifierState = async (e) => {
     const type = e;
     const statistiques = await axios.get("/statistiques_ca?access_token=a");
     const statistiques2 = await axios.get("/statistiques?access_token=a");
     const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
-    const statistiques_ca_professionnels =
-      statistiques.data.statistiques_ca_professionnels;
+    const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels;
+    console.log(statistiques2.data)
     let today = new Date();
     let date =
       today.getDate() +
@@ -519,8 +520,8 @@ class stats extends React.Component {
             prev_state.particular_chart_bar.series,
             {
               data: statistiques2.data.statistiques_particuliers[`${type}`]
-                .n_commandes_plot,
-            },
+                .n_commandes_plot
+            }
           ],
         },
         particular_chart_line: {
@@ -536,15 +537,18 @@ class stats extends React.Component {
         stats_objet: statistiques2.data,
         date: date,
       };
+      
     });
+    console.log(type)
   };
 
   componentDidMount() {
-    this.fetching_data();
+    this.modifierState("jour");
     window.setInterval(this.fetching_data, 60000);
   }
 
   render() {
+    
     return (
       <div>
         <Row>
