@@ -150,17 +150,29 @@ const columns = [
     ),
   },
   {
-    name: "Type",
+    name: "TYPE",
     selector: "type",
+    // center: true,
     sortable: true,
-    cell: (row) => (
-      <Badge
-        color={row.type === "Particulier" ? "light-primary" : "light-success"}
-        pill
-      >
-        {row.type}
-      </Badge>
-    ),
+    maxWidth: "130px",
+    cell: (row) =>
+      row.type === "Particulier" ? (
+        <Badge
+          style={{
+            backgroundColor: "#ff9f43",
+            color: "white",
+            fontWeight: "bold",
+          }}
+          pill
+        >
+
+         {row.type}
+        </Badge>
+      ) : (
+        <Badge color="light-success" pill>
+          {row.type}
+        </Badge>
+      ),
   },
   {
     name: "Montant",

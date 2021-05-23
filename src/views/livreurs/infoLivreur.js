@@ -337,7 +337,7 @@ class LivreurInfo extends React.Component {
                 {this.state.row.iban ? this.state.row.iban : "Indéfinie"}
               </p>
             </Col>
-            <Col lg="3">
+            {/* <Col lg="3">
               <CardTitle className="font-small-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
                 <ListUl className="mr-1" size={17} />
                 Historique commentaire et note du patient
@@ -369,7 +369,7 @@ class LivreurInfo extends React.Component {
                   )}
                 </div>
               </PerfectScrollbar>
-            </Col>
+            </Col> */}
           </Row>
           <SweetAlert
             error

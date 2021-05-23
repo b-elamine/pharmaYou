@@ -214,7 +214,6 @@ class Troisieme_section extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Card className="m-0">
         <CardTitle className="ml-2">Documents du client</CardTitle>
@@ -322,7 +321,7 @@ class Troisieme_section extends React.Component {
             <CardDashed
               file_loader={this.state.file_carte_loader}
               bg_color="#1aac1a"
-              label="Carte Vital"
+              label="Carte Vitale"
               spinner_color="warning"
               get_file={() => {
                 this.setState({
@@ -343,6 +342,11 @@ class Troisieme_section extends React.Component {
                   size="sm"
                   className="block-example border border-right-0 border-success"
                   placeholder="Numéro de sécurité sociale"
+                  value = {this.props.nirpp}
+                  onChange={(e)=> {
+                    this.props.change_nirpp(e.target.value)
+                  }}
+                  type='number'
                 />
                 <InputGroupAddon addonType="append">
                   <Button.Ripple outline color="success" size="sm">

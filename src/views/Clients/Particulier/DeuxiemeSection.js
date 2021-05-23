@@ -21,15 +21,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 
 import axios from "../../../axios";
 
-<<<<<<< HEAD
-
-import PerfectScrollbar from "react-perfect-scrollbar";
-
-
-
-
-=======
->>>>>>> 07f16df7f0526b930cb1c068c446db51f4240dce
 const ModaL = (props) => {
   return (
     <Modal
@@ -191,28 +182,6 @@ class SecondSection extends React.Component {
               toggle_modal={this.toggleModal}
               modal_state={this.state.modal}
             >
-<<<<<<< HEAD
-               {this.state.modal_file_type === "image" ? (
-                <img
-                  style={{ width: "90%" }}
-                  src={this.state.modal_file_path}
-                  alt="test"
-                />
-              ) : (
-                <PerfectScrollbar
-                  options={{
-                    wheelPropagation: false,
-                  }}
-                >
-                  <iframe
-                    title="test"
-                    src={this.state.modal_file_path}
-                    width="90%"
-                    height="100%"
-                  ></iframe>
-                </PerfectScrollbar>
-              )}
-=======
               <PerfectScrollbar
                 options={{
                   wheelPropagation: false,
@@ -233,7 +202,6 @@ class SecondSection extends React.Component {
                   ></iframe>
                 )}
               </PerfectScrollbar>
->>>>>>> 07f16df7f0526b930cb1c068c446db51f4240dce
             </ModaL>
             <div style={{ width: "90%" }}>
               <InputGroup>

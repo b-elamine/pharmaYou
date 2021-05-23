@@ -53,7 +53,7 @@ const columns = [
     cell: (row) => (
       <Badge
         color={`light-${
-          row.status === "active" ? "success" : "danger"
+          row.status === "actif" ? "success" : "danger"
         } text-wrap text-bold-500 mb-0`}
         style={{ width: "7rem", fontSize: "74%", lineHeight: "1.1" }}
         pill
@@ -263,7 +263,7 @@ class Partenaire extends React.Component {
               hour: "2-digit",
               minute: "2-digit",
             }),
-            status :item.is_active? "active" : "inactive",
+            status :item.is_active? "actif" : "inactif",
             nbr_ordonnances: item.n_commandes,
             carte_vital: item.vitale_ok,
             mutuelle: item.mutuelle_ok,

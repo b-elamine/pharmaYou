@@ -43,28 +43,21 @@ class Ordonnance extends Component {
   }
 
   change_renouvlable(checked) {
-    // this.setState((prev_state, props) => {
-    //   return {
-    //     ordonnance: {
-    //       ...prev_state.ordonnance,
-    //       renouvelable: checked,
-    //     },
-    //   };
-    // });
-    console.log(this)
-    this.setState({
-      ordonnance : {
-        ...this.ordonnance,
-        renouvelable : checked
-      }
-    })
+    this.setState((prev_state, props) => {
+      return {
+        ordonnance: {
+          ...prev_state.ordonnance,
+          renouvelable: checked,
+        },
+      };
+    });
   }
 
   change_nbr_rounouv(e) {
     this.setState((prev_state, props) => {
       return {
         ordonnance: {
-          ...prev_state,
+          ...prev_state.ordonnance,
           renouvellement_nombre: e,
         },
       };
@@ -74,7 +67,7 @@ class Ordonnance extends Component {
     this.setState((prev_state, props) => {
       return {
         ordonnance: {
-          ...prev_state,
+          ...prev_state.ordonnance,
           renouvellement_intervalle: e,
         },
       };
@@ -83,7 +76,19 @@ class Ordonnance extends Component {
   change_date_exp(e) {
     this.setState((prev_state, props) => {
       return {
+        ...prev_state,
         Date_exp: e,
+      };
+    });
+  }
+  change_nirpp(e) {
+    console.log(e);
+    this.setState((prev_state, props) => {
+      return {
+        ordonnance: {
+          ...prev_state.ordonnance,
+          nirpp: e,
+        },
       };
     });
   }
@@ -94,7 +99,6 @@ class Ordonnance extends Component {
         `/commandes/${id_commande}?access_token=a`
       );
       const commande = response.data;
-      console.log(commande);
       const custom_commande = {
         ...commande,
         id: commande.commande_id,
@@ -205,6 +209,7 @@ class Ordonnance extends Component {
   };
 
   render() {
+    console.log(this.state.ordonnance);
     return (
       <Row className="email-application position-relative">
         <div
@@ -234,25 +239,39 @@ class Ordonnance extends Component {
             <Card>
               <ThirdSection
                 ordonnance={this.state.ordonnance}
-                change_date_exp={this.change_date_exp}
+                change_date_exp={(e) => {
+                  this.change_date_exp(e);
+                }}
                 Date_exp={this.state.Date_exp}
-                change_nbr_renouv={this.change_nbr_rounouv}
+                change_nbr_renouv={(e) => {
+                  this.change_nbr_rounouv(e);
+                }}
                 nbr_renouv={
                   this.state.ordonnance.renouvellement_nombre
                     ? this.state.ordonnance.renouvellement_nombre
                     : 1
                 }
-                change_intervall={this.change_renouv_intervalle}
+                change_intervall={(e) => {
+                  this.change_renouv_intervalle(e);
+                }}
                 renouvellement_intervalle={
                   this.state.ordonnance.renouvellement_intervalle
                     ? this.state.ordonnance.renouvellement_intervalle
                     : 1
                 }
-                change_renouv={this.change_renouvlable}
+                change_renouv={(e) => {
+                  this.change_renouvlable(e);
+                }}
                 renouvelable={
                   this.state.ordonnance.renouvelable
                     ? this.state.ordonnance.renouvelable
                     : null
+                }
+                change_nirpp={(e) => {
+                  this.change_nirpp(e);
+                }}
+                nirpp={
+                  this.state.ordonnance.nirpp ? this.state.ordonnance.nirpp : ""
                 }
               />
             </Card>
