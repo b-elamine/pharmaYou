@@ -48,18 +48,22 @@ class ComposeEmail extends React.Component {
   }
 
   Valider = async () => {
-    const response = await externalAxios.post(
-      `commandes/${this.props.ordonnance.id}/annuler?access_token=a`,
-      {
-        document_manquant: this.state.document_manquant_value,
-        default_message: {
-          email_title: this.state.email_title,
-          email_text: this.state.email_text,
-          sms_text: this.state.sms_text,
-          push_text: this.state.push_text,
-        },
-      }
-    );
+    try {
+      const response = await externalAxios.post(
+        `commandes/${this.props.ordonnance.id}/annuler?access_token=a`,
+        {
+          document_manquant: this.state.document_manquant_value,
+          default_message: {
+            email_title: this.state.email_title,
+            email_text: this.state.email_text,
+            sms_text: this.state.sms_text,
+            push_text: this.state.push_text,
+          },
+        }
+      );
+    } catch (err) {
+      alert(err.message)
+    }
     this.handleSidebarClose();
   };
 

@@ -198,7 +198,7 @@ class stats extends React.Component {
             enable: false,
           },
           toolbar: {
-            show:false
+            show: false,
           },
           height: "15rem",
         },
@@ -231,7 +231,7 @@ class stats extends React.Component {
       options: {
         chart: {
           toolbar: {
-            show  : false
+            show: false,
           },
           height: "15rem",
         },
@@ -251,7 +251,7 @@ class stats extends React.Component {
           show: false,
         },
         xaxis: {
-          categories: [ ],
+          categories: [],
         },
       },
       series: [
@@ -260,44 +260,50 @@ class stats extends React.Component {
         },
       ],
     },
-    statistiques_particuliers : {
-      moy_par_commande:0,
-      n_clients : 0,
-      n_commandes : 0,
-      n_commandes_en_attente:0,
-      n_commandes_livrees:0,
-      chiffre_daffaire:0,
+    statistiques_particuliers: {
+      moy_par_commande: 0,
+      n_clients: 0,
+      n_commandes: 0,
+      n_commandes_en_attente: 0,
+      n_commandes_livrees: 0,
+      chiffre_daffaire: 0,
     },
     statistiques_pro: {
-      moy_par_commande:0,
-      n_clients : 0,
-      n_commandes : 0,
-      n_commandes_en_attente:0,
-      n_commandes_livrees:0,
-      chiffre_daffaire:0,
+      moy_par_commande: 0,
+      n_clients: 0,
+      n_commandes: 0,
+      n_commandes_en_attente: 0,
+      n_commandes_livrees: 0,
+      chiffre_daffaire: 0,
     },
-    stats_objet : {
-      statistiques_particuliers : {
+    stats_objet: {
+      statistiques_particuliers: {
         jour: {
-          chiffre_daffaire :0
-        }
+          chiffre_daffaire: 0,
+        },
       },
-      statistiques_professionnels : {
+      statistiques_professionnels: {
         jour: {
-          chiffre_daffaire :0
-        }
-      }
+          chiffre_daffaire: 0,
+        },
+      },
     },
-    date : ""
-  }
+    date: "",
+  };
 
   fetching_data = async () => {
     const statistiques = await axios.get("/statistiques_ca?access_token=a");
     const statistiques2 = await axios.get("/statistiques?access_token=a");
     const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
-    const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels;
-    let today = new Date();       
-    let date=today.getDate() + "-"+ parseInt(today.getMonth()+1) +"-"+today.getFullYear();
+    const statistiques_ca_professionnels =
+      statistiques.data.statistiques_ca_professionnels;
+    let today = new Date();
+    let date =
+      today.getDate() +
+      "-" +
+      parseInt(today.getMonth() + 1) +
+      "-" +
+      today.getFullYear();
 
     const new_horizontal_chart_1 = {
       options: {
@@ -350,59 +356,187 @@ class stats extends React.Component {
         },
       ],
     };
-    this.setState(  (prev_state, props) => {
+    this.setState((prev_state, props) => {
       return {
-      //setting Last 2 horizontal charts values
+        //setting Last 2 horizontal charts values
 
-      horizontal_Chart1: new_horizontal_chart_1,
-      horizontal_Chart2: new_horizontal_chart_2,
+        horizontal_Chart1: new_horizontal_chart_1,
+        horizontal_Chart2: new_horizontal_chart_2,
 
-      //setting first card statistics
+        //setting first card statistics
 
-      
-      statistiques_particuliers : statistiques2.data.statistiques_particuliers.jour,
-      statistiques_pro : statistiques2.data.statistiques_professionnels.jour,
-      pro_chart_bar : {
-      ...prev_state.pro_chart_bar,
-          series : [
-          prev_state.pro_chart_bar.series,
+        statistiques_particuliers:
+          statistiques2.data.statistiques_particuliers.jour,
+        statistiques_pro: statistiques2.data.statistiques_professionnels.jour,
+        pro_chart_bar: {
+          ...prev_state.pro_chart_bar,
+          series: [
+            prev_state.pro_chart_bar.series,
             {
-              data :  statistiques2.data.statistiques_professionnels.jour.n_commandes_plot
-            }
-          ]
-      }  ,
-      pro_chart_line : {
-        ...prev_state.pro_chart_line,
-            series : [
+              data: statistiques2.data.statistiques_professionnels.jour
+                .n_commandes_plot,
+            },
+          ],
+        },
+        pro_chart_line: {
+          ...prev_state.pro_chart_line,
+          series: [
             prev_state.pro_chart_line.series,
-              {
-                data :  statistiques2.data.statistiques_professionnels.jour.chiffre_daffaire_plot
-              }
-            ]
-        }  ,
-        particular_chart_bar : {
+            {
+              data: statistiques2.data.statistiques_professionnels.jour
+                .chiffre_daffaire_plot,
+            },
+          ],
+        },
+        particular_chart_bar: {
           ...prev_state.particular_chart_bar,
-              series : [
-              prev_state.particular_chart_bar.series,
-                {
-                  data :  statistiques2.data.statistiques_particuliers.jour.n_commandes_plot
-                }
-              ]
-          }  ,
-          particular_chart_line : {
-            ...prev_state.particular_chart_line,
-                series : [
-                prev_state.particular_chart_line.series,
-                  {
-                    data :  statistiques2.data.statistiques_particuliers.jour.chiffre_daffaire_plot
-                  }
-                ]
-            }  ,
-      stats_objet : statistiques2.data,
-      date : date,
-    }
-    })
-    
+          series: [
+            prev_state.particular_chart_bar.series,
+            {
+              data: statistiques2.data.statistiques_particuliers.jour
+                .n_commandes_plot,
+            },
+          ],
+        },
+        particular_chart_line: {
+          ...prev_state.particular_chart_line,
+          series: [
+            prev_state.particular_chart_line.series,
+            {
+              data: statistiques2.data.statistiques_particuliers.jour
+                .chiffre_daffaire_plot,
+            },
+          ],
+        },
+        stats_objet: statistiques2.data,
+        date: date,
+      };
+    });
+  };
+
+  modifierState = async (e) => {
+    const type = e;
+    const statistiques = await axios.get("/statistiques_ca?access_token=a");
+    const statistiques2 = await axios.get("/statistiques?access_token=a");
+    const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
+    const statistiques_ca_professionnels =
+      statistiques.data.statistiques_ca_professionnels;
+    let today = new Date();
+    let date =
+      today.getDate() +
+      "-" +
+      parseInt(today.getMonth() + 1) +
+      "-" +
+      today.getFullYear();
+
+    const new_horizontal_chart_1 = {
+      options: {
+        chart: {
+          ...this.state.horizontal_Chart1.options.chart,
+        },
+        colors: this.state.horizontal_Chart1.options.colors,
+        plotOptions: {
+          ...this.state.horizontal_Chart1.options.plotOptions,
+        },
+        dataLabels: {
+          ...this.state.horizontal_Chart1.options.dataLabels,
+        },
+        legend: {
+          ...this.state.horizontal_Chart1.options.legend,
+        },
+        xaxis: {
+          categories: Object.keys(statistiques_ca_par),
+        },
+      },
+      series: [
+        {
+          data: Object.values(statistiques_ca_par),
+        },
+      ],
+    };
+
+    const new_horizontal_chart_2 = {
+      options: {
+        chart: {
+          ...this.state.horizontal_Chart2.options.chart,
+        },
+        colors: this.state.horizontal_Chart2.options.colors,
+        plotOptions: {
+          ...this.state.horizontal_Chart2.options.plotOptions,
+        },
+        dataLabels: {
+          ...this.state.horizontal_Chart2.options.dataLabels,
+        },
+        legend: {
+          ...this.state.horizontal_Chart2.options.legend,
+        },
+        xaxis: {
+          categories: Object.keys(statistiques_ca_professionnels),
+        },
+      },
+      series: [
+        {
+          data: Object.values(statistiques_ca_professionnels),
+        },
+      ],
+    };
+    this.setState((prev_state, props) => {
+      return {
+        //setting Last 2 horizontal charts values
+
+        horizontal_Chart1: new_horizontal_chart_1,
+        horizontal_Chart2: new_horizontal_chart_2,
+
+        //setting first card statistics
+
+        statistiques_particuliers:
+          statistiques2.data.statistiques_particuliers[`${type}`],
+        statistiques_pro:
+          statistiques2.data.statistiques_professionnels[`${type}`],
+        pro_chart_bar: {
+          ...prev_state.pro_chart_bar,
+          series: [
+            prev_state.pro_chart_bar.series,
+            {
+              data: statistiques2.data.statistiques_professionnels[`${type}`]
+                .n_commandes_plot,
+            },
+          ],
+        },
+        pro_chart_line: {
+          ...prev_state.pro_chart_line,
+          series: [
+            prev_state.pro_chart_line.series,
+            {
+              data: statistiques2.data.statistiques_professionnels[`${type}`]
+                .chiffre_daffaire_plot,
+            },
+          ],
+        },
+        particular_chart_bar: {
+          ...prev_state.particular_chart_bar,
+          series: [
+            prev_state.particular_chart_bar.series,
+            {
+              data: statistiques2.data.statistiques_particuliers[`${type}`]
+                .n_commandes_plot,
+            },
+          ],
+        },
+        particular_chart_line: {
+          ...prev_state.particular_chart_line,
+          series: [
+            prev_state.particular_chart_line.series,
+            {
+              data: statistiques2.data.statistiques_particuliers[`${type}`]
+                .chiffre_daffaire_plot,
+            },
+          ],
+        },
+        stats_objet: statistiques2.data,
+        date: date,
+      };
+    });
   };
 
   componentDidMount() {
@@ -433,8 +567,7 @@ class stats extends React.Component {
                         : "btn-outline-primary text-white"
                     }`}
                     onClick={() => {
-                      this.setState({
-                      })
+                      this.modifierState("mois");
                     }}
                   >
                     Mois
@@ -447,9 +580,7 @@ class stats extends React.Component {
                         : "btn-outline-primary text-white"
                     }`}
                     onClick={() => {
-                      this.setState({
-                        
-                      })
+                      this.modifierState("semaine");
                     }}
                   >
                     Semaine
@@ -462,8 +593,7 @@ class stats extends React.Component {
                         : "btn-outline-primary text-white"
                     }`}
                     onClick={() => {
-                      this.setState({
-                      })
+                      this.modifierState("jour");
                     }}
                   >
                     Jour
@@ -546,7 +676,13 @@ class stats extends React.Component {
                             Chiffre d'affaire ordonnance
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>{this.state.statistiques_particuliers.chiffre_daffaire}€</b>
+                            <b>
+                              {
+                                this.state.statistiques_particuliers
+                                  .chiffre_daffaire
+                              }
+                              €
+                            </b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -591,7 +727,12 @@ class stats extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_particuliers.n_commandes_en_attente}</h7>
+                    <h7>
+                      {
+                        this.state.statistiques_particuliers
+                          .n_commandes_en_attente
+                      }
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -615,7 +756,9 @@ class stats extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_particuliers.n_commandes_livrees}</h7>
+                    <h7>
+                      {this.state.statistiques_particuliers.n_commandes_livrees}
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -645,7 +788,7 @@ class stats extends React.Component {
                       }}
                     >
                       client <br />
-                       <br />
+                      <br />
                     </p>
                   </div>
                 </div>
@@ -662,7 +805,9 @@ class stats extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_particuliers.moy_par_commande}</h7>
+                    <h7>
+                      {this.state.statistiques_particuliers.moy_par_commande}
+                    </h7>
 
                     <p
                       style={{
@@ -699,8 +844,7 @@ class stats extends React.Component {
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
-                    onClick={() => {
-                    }}
+                    onClick={() => {}}
                   >
                     Mois
                   </button>
@@ -711,8 +855,7 @@ class stats extends React.Component {
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
-                    onClick={() => {
-                    }}
+                    onClick={() => {}}
                   >
                     Semaine
                   </button>
@@ -723,8 +866,7 @@ class stats extends React.Component {
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
-                    onClick={() => {
-                    }}
+                    onClick={() => {}}
                   >
                     Jour
                   </button>
@@ -806,7 +948,9 @@ class stats extends React.Component {
                             Chiffre d'affaire professionnel
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>{this.state.statistiques_pro.chiffre_daffaire}€</b>
+                            <b>
+                              {this.state.statistiques_pro.chiffre_daffaire}€
+                            </b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -852,7 +996,9 @@ class stats extends React.Component {
                     bg_color="black"
                   />
                   <div>
-                    <h7>{this.state.statistiques_pro.n_commandes_en_attente}</h7>
+                    <h7>
+                      {this.state.statistiques_pro.n_commandes_en_attente}
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -948,7 +1094,14 @@ class stats extends React.Component {
           <Row>
             <Col>
               <h6>Chiffre d'affiares ordonnances par jour</h6>
-              <h5> {this.state.stats_objet.statistiques_particuliers.jour.chiffre_daffaire} €</h5>
+              <h5>
+                {" "}
+                {
+                  this.state.stats_objet.statistiques_particuliers.jour
+                    .chiffre_daffaire
+                }{" "}
+                €
+              </h5>
             </Col>
             <Col>
               <BellFill
@@ -979,7 +1132,14 @@ class stats extends React.Component {
           <Row>
             <Col>
               <h6>Chiffre d'affiares professionnel</h6>
-              <h5> {this.state.stats_objet.statistiques_professionnels.jour.chiffre_daffaire} €</h5>
+              <h5>
+                {" "}
+                {
+                  this.state.stats_objet.statistiques_professionnels.jour
+                    .chiffre_daffaire
+                }{" "}
+                €
+              </h5>
             </Col>
             <Col>
               <BellFill

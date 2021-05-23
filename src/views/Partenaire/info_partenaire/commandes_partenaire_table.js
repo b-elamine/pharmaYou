@@ -1,71 +1,125 @@
 import React from "react";
 import {
   Card,
-  CardBody,
+  // CardBody,
   Badge,
   //   Input,
-  CardHeader,
+  // CardHeader,
   CardTitle,
-  Col,
   //   FormGroup,
   //   Form,
   //   Label,
 } from "reactstrap";
-import Select from "react-select";
-
-import DataTable from "react-data-table-component";
-import { Send, Eye, MoreVertical } from "react-feather";
-const Statut = [
-    { value: "Tous", label: "Tous" },
-  { value: "Livré", label: "Livré" },
-  { value: "En attente", label: "En attente" },
-];
-const CustomHeader = (props) => {
-  return (
-    <div className="d-flex flex-wrap justify-content-end">
-      <Col md="4" sm="12">
-        <Select
-          className="React"
-          classNamePrefix="select"
-          placeholder="status commande"
-          name="Statut"
-          options={Statut}
-          onChange={props.handleFilterSelect}
-        />
-      </Col>
-    </div>
-  );
-};
+import {
+  Calendar2Week,
+  Check2All,
+  ExclamationTriangleFill,
+  HourglassSplit,
+  Truck,
+  Exclamation,
+  Check2,
+  Hourglass,
+} from "react-bootstrap-icons";
+import DataTableCustom from "../../DataTableCustom/DataTableCustom";
+import { history } from "../../../history";
+import {  Eye } from "react-feather";
 
 class Commandes_partenaire extends React.Component {
   state = {
     columns: [
       {
         name: "#",
-        selector: "#",
+        selector: "id",
         sortable: true,
-        cell: (row) => <p className="text-bold-500  mb-0"># {row.id}</p>,
+        maxWidth: "100px",
+        cell: (row) => (
+          <p
+            style={{ cursor: "pointer" }}
+            className="text-bold-500 mb-0"
+            onClick={() => {
+              const url = `/ordonnance/${row.id}`;
+              history.push(url, row);
+            }}
+          >
+            {row.id}
+          </p>
+        ),
       },
       {
         name: "STATUT",
-        selector: "statut",
-        sortable: true,
-        cell: (row) => (
-          <Badge
-            className="text-truncate"
-            color={row.status === "Livré" ? "light-success" : "light-primary"}
-            pill
-          >
-            {row.status}
-          </Badge>
-        ),
+        selector: "status",
+        minWidth: "100px",
+        maxWidth: "150px",
+        center: true,
+        cell: (row) =>
+          row.status === "en_attente" ? (
+            <Badge
+              pill
+              color="light-primary"
+              className="text-primary pl-50 pr-50 font-small-1 text-wrap text-bold-500"
+            >
+              <HourglassSplit className="primary mr-50" size={20} />
+              En attente
+            </Badge>
+          ) : row.status === "non-traité" ? (
+            <Badge color="light-danger pl-50 pr-50 " pill>
+              <ExclamationTriangleFill className="danger mr-50" size={20} />
+              Non-traité
+            </Badge>
+          ) : row.status === "en_livraison" ? (
+            <Badge
+              style={{
+                color: "#180852",
+                backgroundColor: "#e9e8ee",
+                fontWeight: "bold",
+              }}
+              color="pl-50 pr-50"
+              // className="text-warning"
+              pill
+            >
+              <Truck className="mr-50" size={20} />
+              En livraison
+            </Badge>
+          ) : row.status === "livrée" ? (
+            <Badge color="light-success pl-50 pr-50 " pill>
+              <Check2All className="success mr-50" size={20} />
+              Livré
+            </Badge>
+          ) : row.status === "tournée_assigné" ? (
+            <Badge
+              style={{
+                backgroundImage: "linear-gradient(#ffd5c0, #fee6bf)",
+                color: "#fe5f29",
+                fontWeight: "bold",
+              }}
+              className="pl-50 pr-50 "
+              pill
+            >
+              <Calendar2Week className="primary mr-50" size={20} />
+              Tournée assigné
+            </Badge>
+          ) : row.status === "annulée" ? (
+            <Badge color="light-danger pl-50 pr-50 " pill>
+              <Exclamation className="danger mr-0" size={20} />
+              Annulée
+            </Badge>
+          ) : row.status === "validée" ? (
+            <Badge color="light-success pl-50 pr-50 " pill>
+              <Check2 className="success mr-50" size={20} />
+              Validée
+            </Badge>
+          ) : row.status === "incomplet" ? (
+            <Badge color="light-primary pl-50 pr-50 " pill>
+              <Hourglass className="primary mr-50" size={20} />
+              Incomplet
+            </Badge>
+          ) : null,
       },
-
       {
         name: "NOM CLIENT",
-        selector: "NOM CLIENT",
+        selector: "nom_client",
         sortable: true,
-        minWidth: "180px",
+        minWidth: "210px",
         cell: (row) => (
           <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
             <div className="user-info text-truncate ml-xl-50 ml-0">
@@ -82,240 +136,210 @@ class Commandes_partenaire extends React.Component {
       },
       {
         name: "TYPE",
-        selector: "TYPE",
-        sortable: false,
-        cell: (row) => (
-          <Badge
-            style={{ padding: "8" }}
-            color={row.Type === "professionnel" ? "warning" : "primary"}
-            pill
-          >
-            {row.Type}
-          </Badge>
-        ),
+        selector: "type",
+        // center: true,
+        sortable: true,
+        maxWidth: "130px",
+        cell: (row) =>
+          row.type === "Particulier" ? (
+            <Badge
+              // color="light-primary"
+              style={{
+                backgroundColor: "#ff9f43",
+                color: "white",
+                fontWeight: "bold",
+              }}
+              pill
+            >
+              {row.type}
+            </Badge>
+          ) : (
+            <Badge color="light-success" pill>
+              {row.type}
+            </Badge>
+          ),
       },
       {
         name: "MONTANT",
-        selector: "MONTANT",
+        selector: "montant",
+        center: true,
         sortable: true,
-        cell: (row) => <p className="text-bold-500 mb-0">{row.balance}</p>,
+        maxWidth: "100px",
+        cell: (row) =>
+          row.montant !== null ? (
+            <p className="text-bold-500 mb-0">{row.montant} €</p>
+          ) : (
+            <p className="text-bold-500 mb-0">En calcul</p>
+          ),
       },
-
       {
         name: "DATE",
-        selector: "DATE",
+        selector: "date",
         sortable: true,
-        minWidth: "130px",
-        cell: (row) => <p className="text-bold-500  mb-0">{row.date}</p>,
-      },
-      {
-        name: "CODE POSTALE",
-        selector: "CODE POSTALE",
-        sortable: true,
-        cell: (row) => <p className="text-bold-500 mb-0">{row.codePostale}</p>,
-      },
-
-      {
-        name: "ORIGINE",
-        selector: "ORIGINE",
-        sortable: true,
-        minWidth: "130px",
+        minWidth: "200px",
         cell: (row) => (
-          <Badge
-            className="text-wrap"
-            style={{ padding: "8" }}
-            color="light-success"
-            pill
-          >
-            {row.origine}
-          </Badge>
+          <p className="text-bold-500 text-truncate mb-0">{row.date}</p>
         ),
       },
       {
-        name: "ACTIONS",
-        selector: "ACTIONS",
+        name: "CODE POSTAL",
+        selector: "code_postal",
+        maxWidth: "120px",
         sortable: true,
-        cell: (row) => {
-          return (
-            <div className="d-flex flex-row align-items-center">
-              <Send style={{ color: "grey", marginRight: "15" }} size="20" />
-              <Eye style={{ color: "grey" }} size="20" />
-              <MoreVertical style={{ color: "grey" }} size="20" />
-            </div>
-          );
-        },
+        cell: (row) => (
+          <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
+        ),
+      },
+      {
+        name: "ORIGINE",
+        selector: "origine",
+        maxWidth: "190px",
+        // center: true,
+        sortable: true,
+        cell: (row) =>
+          row.origine === "infirmier" ? (
+            <Badge
+              color="light-success text-wrap text-bold-500 mb-0"
+              style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+              pill
+            >
+              Infirmier
+            </Badge>
+          ) : row.origine === "medadom" ? (
+            <Badge
+              color="light-success text-wrap text-bold-500 mb-0"
+              style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+              pill
+            >
+              MEDADOM
+            </Badge>
+          ) : row.origine === "web" ? (
+            <Badge
+              color="light-success text-wrap text-bold-500 mb-0"
+              style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+              pill
+            >
+              WEB
+            </Badge>
+          ) : row.origine === "app" ? (
+            <Badge
+              color="light-success text-wrap text-bold-500 mb-0"
+              style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+              pill
+            >
+              Appli
+            </Badge>
+          ) : (
+            <Badge
+              color="light-success text-wrap text-bold-500 mb-0"
+              style={{ width: "7rem", fontSize: "74%", lineHeight: "1.2" }}
+              pill
+            >
+              Pro
+            </Badge>
+          ),
+      },
+      {
+        name: "ACTIONS",
+        selector: "actions",
+        center: true,
+        maxWidth: "120px",
+        cell: (row) => (
+          <div className="data-list-action">
+            <Eye
+              className="cursor-pointer mr-1"
+              size={20}
+              onClick={() => {
+                history.push(`/ordonnance/${row.id}`);
+              }}
+            />
+          </div>
+        ),
       },
     ],
     data: [
-      {
-        id: "7635",
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-        name: "Alyss Lillecrop",
-        email: "alillecrop0@twitpic.com",
-        Type: "particulier",
-        codePostale: "236542",
-        date: "09 fev 2021",
-        status: "Livré",
-        balance: "220€",
-
-        origine: "Partenaire infermier",
-      },
-      {
-        id: "7635",
-
-        image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-        name: "Shep Pentlow",
-        email: "spentlow1@home.pl",
-        Type: "professionnel",
-        codePostale: "236542",
-        date: "05 mars 2020",
-        status: "En attente",
-        balance: "220€",
-        origine: "Partenaire infermier",
-      },
-      {
-        id: "7635",
-
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-        name: "Alyss Lillecrop",
-        email: "alillecrop0@twitpic.com",
-        Type: "particulier",
-        codePostale: "236542",
-        date: "09 fev 2021",
-        status: "Livré",
-        balance: "220€",
-
-        origine: "Partenaire infermier",
-      },
-      {
-        id: "7635",
-
-        image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-        name: "Shep Pentlow",
-        email: "spentlow1@home.pl",
-        Type: "professionnel",
-        codePostale: "236542",
-        date: "05 mars 2020",
-        status: "En attente",
-        balance: "220€",
-        origine: "Partenaire infermier",
-      },
-      {
-        id: "7635",
-
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-        name: "Alyss Lillecrop",
-        email: "alillecrop0@twitpic.com",
-        Type: "particulier",
-        codePostale: "236542",
-        date: "09 fev 2021",
-        status: "Livré",
-        balance: "220€",
-
-        origine: "Partenaire infermier",
-      },
-      {
-        id: "7635",
-
-        image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-        name: "Shep Pentlow",
-        email: "spentlow1@home.pl",
-        Type: "professionnel",
-        codePostale: "236542",
-        date: "05 mars 2020",
-        status: "En attente",
-        balance: "220€",
-        origine: "Partenaire infermier",
-      },
-      {
-        id: "7635",
-
-        image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
-        name: "Alyss Lillecrop",
-        email: "alillecrop0@twitpic.com",
-        Type: "particulier",
-        codePostale: "236542",
-        date: "09 fev 2021",
-        status: "Livré",
-        balance: "220€",
-
-        origine: "Partenaire infermier",
-      },
-      {
-        id: "7635",
-
-        image: require("../../../assets/img/portrait/small/avatar-s-1.jpg"),
-        name: "Shep Pentlow",
-        email: "spentlow1@home.pl",
-        Type: "professionnel",
-        codePostale: "236542",
-        date: "05 mars 2020",
-        status: "En attente",
-        balance: "220€",
-        origine: "Partenaire infermier",
-      },
+      // {
+      //   id: "7635",
+      //   image: require("../../../assets/img/portrait/small/avatar-s-2.jpg"),
+      //   name: "Alyss Lillecrop",
+      //   email: "alillecrop0@twitpic.com",
+      //   Type: "particulier",
+      //   codePostale: "236542",
+      //   date: "09 fev 2021",
+      //   status: "Livré",
+      //   balance: "220€",
+      //   origine: "Partenaire infermier",
+      // },
     ],
-    filteredData: [],
-    value: "",
   };
 
-  handleFilterSelect = (e) => {
-    let value = e.value;
-    let data = this.state.data;
-    let filteredData = this.state.filteredData;
-    this.setState({ value });
-    if (value === "Tous"){
-        this.setState({ value : "" });
-    }
-
-    if (value.length) {
-      filteredData = data.filter((item) => {
-        let startsWithCondition = item.status
-          .toLowerCase()
-          .startsWith(value.toLowerCase());
-
-        let includesCondition = item.status
-          .toLowerCase()
-          .includes(value.toLowerCase());
-        if (startsWithCondition) {
-          return startsWithCondition;
-        } else if (!startsWithCondition && includesCondition) {
-          return includesCondition;
-        } else return null;
-      });
-      this.setState({ filteredData });
-    }
-  };
   render() {
-    let { data, columns, value, filteredData } = this.state;
-    let element = [];
-    for (let index = 0; index < data.length; index++) {
-      if (index % 5 === 0 && index > 9) {
-        element.push(index);
-      }
+    let commandes = [];
+    if (this.props.commandes) {
+      commandes = this.props.commandes.map((item) => {
+        return {
+          ...item,
+          id: item.commande_id,
+          status:
+            item.status_commande === -2
+              ? "annulée"
+              : item.status_commande === -1
+              ? "incomplet"
+              : item.status_commande === 0
+              ? "non-traité"
+              : item.status_commande === 1
+              ? "attente_approvisionnement"
+              : item.status_commande === 2
+              ? "validée"
+              : item.status_commande === 3
+              ? "livrée"
+              : null,
+          // status :"incomplet",
+          name: item.nom_patient + " " + item.prenom_patient,
+          // name: 'Akram Ouardas',
+          type: item.type === "ordo" ? "Particulier" : "Professionnel",
+          montant: item.montant_total,
+          date: new Date(item.updated_at * 1000).toLocaleDateString("fr-FR", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          code: item.code_postal_livraison,
+          origine: item.origine,
+          email: item.email,
+          ville: item.ville_livraison,
+          paiment: item.status_paiement,
+          patient: {
+            nom: item.nom_patient,
+            prenom: item.prenom_patient,
+            address: `${item.adresse_livraison} , ${item.code_postal_livraison} , ${item.ville_livraison}`,
+            num_tel: item.telephone,
+            appeler: true,
+            email: item.email,
+            note: item.note_admin
+              ? item.note_admin
+              : "Pas de note pour l'instant.",
+          },
+          CMU: true,
+          mutuelle: item.mutuelle_ok,
+        };
+      });
     }
-    element.push(data.length);
     return (
-      <div>
-        <Card>
-          <CardHeader>
-            <CardTitle>Commandes des patients du partenaire</CardTitle>
-          </CardHeader>
-          <CardBody className="rdt_Wrapper">
-            <DataTable
-              className="dataTable-custom"
-              data={value.length ? filteredData : data}
-              columns={columns}
-              noHeader
-              pagination
-              subHeader
-              highlightOnHover
-              paginationRowsPerPageOptions={element}
-              subHeaderComponent={<CustomHeader value={value} handleFilterSelect={this.handleFilterSelect} />}
-            />
-          </CardBody>
-        </Card>
-      </div>
+      <Card className="ml-1">
+        <CardTitle className=" font-large-1 mt-50">
+          Commande du patient
+        </CardTitle>
+        <DataTableCustom
+          // add_new
+          // add_new_value="Ajouter une ordonnance"
+          columns={this.state.columns}
+          data={commandes}
+        />
+      </Card>
     );
   }
 }

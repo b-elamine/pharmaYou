@@ -55,6 +55,7 @@ class PremiereSection extends React.Component {
       client: this.props.client,
     });
   }
+
   render() {
     return (
       <Card className="ml-1">
@@ -112,11 +113,11 @@ class PremiereSection extends React.Component {
           </Col>
           <Col xl="4">
             <p className=" font-small-3">
-              {this.props.client.adresse_livraison}{" "}
+              {this.props.client.adresse_livraison ? this.props.client.adresse_livraison : "indéfinie"}
             </p>
-            <p className="">{this.props.client.code}</p>
-            <p className="">{this.props.client.ville}</p>
-            <p className="">{this.props.client.telephone}</p>
+            <p className="">{this.props.client.code ? this.props.client.code : "indéfinie"}</p>
+            <p className="">{this.props.client.ville ? this.props.client.ville : "indéfinie"}</p>
+            <p className="">{this.props.client.telephone ? this.props.client.telephone : "indéfinie"}</p>
           </Col>
         </Row>
         <Row className="mt-4 mb-4">

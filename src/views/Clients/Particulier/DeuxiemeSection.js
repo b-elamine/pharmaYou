@@ -17,15 +17,19 @@ import { PlusCircle, Send } from "react-feather";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 import axios from "../../../axios";
 
+<<<<<<< HEAD
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 
 
 
+=======
+>>>>>>> 07f16df7f0526b930cb1c068c446db51f4240dce
 const ModaL = (props) => {
   return (
     <Modal
@@ -33,6 +37,7 @@ const ModaL = (props) => {
       toggle={props.toggle_modal}
       keyboard={true}
       centered={true}
+      size="lg"
     >
       <ModalBody>{props.children}</ModalBody>
     </Modal>
@@ -186,6 +191,7 @@ class SecondSection extends React.Component {
               toggle_modal={this.toggleModal}
               modal_state={this.state.modal}
             >
+<<<<<<< HEAD
                {this.state.modal_file_type === "image" ? (
                 <img
                   style={{ width: "90%" }}
@@ -206,6 +212,28 @@ class SecondSection extends React.Component {
                   ></iframe>
                 </PerfectScrollbar>
               )}
+=======
+              <PerfectScrollbar
+                options={{
+                  wheelPropagation: false,
+                }}
+              >
+                {this.state.modal_file_type === "image" ? (
+                  <img
+                    style={{ width: "100%" }}
+                    src={this.state.modal_file}
+                    alt="test"
+                  />
+                ) : (
+                  <iframe
+                    title="test"
+                    src={this.state.modal_file}
+                    width="100%"
+                    height="700px"
+                  ></iframe>
+                )}
+              </PerfectScrollbar>
+>>>>>>> 07f16df7f0526b930cb1c068c446db51f4240dce
             </ModaL>
             <div style={{ width: "90%" }}>
               <InputGroup>

@@ -50,7 +50,6 @@ class ClientDataTable extends React.Component {
   // }
 
   componentDidMount() {
-    console.log(this.props.data)
     this.setState({
       data: this.props.data,
     });
@@ -64,24 +63,15 @@ class ClientDataTable extends React.Component {
     if (value.length) {
       filteredData = data.filter((item) => {
         let startsWithCondition =
-          `${item.patient.nom} ${item.patient.prenom}`
-            .toLowerCase()
-            .startsWith(value.toLowerCase()) ||
-          item.date.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.name.toLowerCase().startsWith(value.toLowerCase()) ||
           item.type.toLowerCase().startsWith(value.toLowerCase()) ||
-          // l'email est a null
-          // item.email.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.montant === value ||
-          item.origine.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.status.toLowerCase().startsWith(value.toLowerCase());
+          item.email.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.origine.toLowerCase().startsWith(value.toLowerCase()) ;
         let includesCondition =
-          `${item.patient.nom} ${item.patient.prenom}`
-            .toLowerCase()
-            .includes(value.toLowerCase()) ||
-          // item.email.toLowerCase().includes(value.toLowerCase()) ||
+          item.name.toLowerCase().includes(value.toLowerCase()) ||
+          item.email.toLowerCase().includes(value.toLowerCase()) ||
           item.origine.toLowerCase().includes(value.toLowerCase()) ||
-          item.type.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.status.toLowerCase().includes(value.toLowerCase());
+          item.type.toLowerCase().startsWith(value.toLowerCase()) ;
 
         if (startsWithCondition) {
           return startsWithCondition;
