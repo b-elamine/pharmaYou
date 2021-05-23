@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Card, Row, Col } from "reactstrap";
+import { Card, Row, Col, Spinner } from "reactstrap";
 
 import FirstSection from "./Premiere_section";
 import SecondSection from "./Deuxieme_section";
@@ -18,7 +18,6 @@ import SideBarAnnulerCommande from "./SideBarAnnulerCommande";
 
 import axios from "../../../axios";
 
-
 class Ordonnance extends Component {
   state = {
     composeMailStatus: false,
@@ -35,10 +34,58 @@ class Ordonnance extends Component {
       },
       historique: [],
     },
+    data_fetched: false,
+    Date_exp: new Date(),
   };
   componentDidMount() {
     const id_commande = this.props.match.params.id_commande;
     this.fetcher_commande(id_commande);
+  }
+
+  change_renouvlable(checked) {
+    // this.setState((prev_state, props) => {
+    //   return {
+    //     ordonnance: {
+    //       ...prev_state.ordonnance,
+    //       renouvelable: checked,
+    //     },
+    //   };
+    // });
+    console.log(this)
+    this.setState({
+      ordonnance : {
+        ...this.ordonnance,
+        renouvelable : checked
+      }
+    })
+  }
+
+  change_nbr_rounouv(e) {
+    this.setState((prev_state, props) => {
+      return {
+        ordonnance: {
+          ...prev_state,
+          renouvellement_nombre: e,
+        },
+      };
+    });
+  }
+  change_renouv_intervalle(e) {
+    this.setState((prev_state, props) => {
+      return {
+        ordonnance: {
+          ...prev_state,
+          renouvellement_intervalle: e,
+        },
+      };
+    });
+  }
+  change_date_exp(e) {
+    this.setState((prev_state, props) => {
+      return {
+        Date_exp: e,
+      };
+    });
   }
 
   fetcher_commande = async (id_commande) => {
@@ -47,6 +94,7 @@ class Ordonnance extends Component {
         `/commandes/${id_commande}?access_token=a`
       );
       const commande = response.data;
+      console.log(commande);
       const custom_commande = {
         ...commande,
         id: commande.commande_id,
@@ -98,6 +146,7 @@ class Ordonnance extends Component {
       };
       this.setState({
         ordonnance: custom_commande,
+        data_fetched: true,
       });
     } catch (err) {
       if (err.message.includes("Network")) {
@@ -183,10 +232,31 @@ class Ordonnance extends Component {
             </Card>
             <hr />
             <Card>
-              <ThirdSection ordonnance={this.state.ordonnance} />
+              <ThirdSection
+                ordonnance={this.state.ordonnance}
+                change_date_exp={this.change_date_exp}
+                Date_exp={this.state.Date_exp}
+                change_nbr_renouv={this.change_nbr_rounouv}
+                nbr_renouv={
+                  this.state.ordonnance.renouvellement_nombre
+                    ? this.state.ordonnance.renouvellement_nombre
+                    : 1
+                }
+                change_intervall={this.change_renouv_intervalle}
+                renouvellement_intervalle={
+                  this.state.ordonnance.renouvellement_intervalle
+                    ? this.state.ordonnance.renouvellement_intervalle
+                    : 1
+                }
+                change_renouv={this.change_renouvlable}
+                renouvelable={
+                  this.state.ordonnance.renouvelable
+                    ? this.state.ordonnance.renouvelable
+                    : null
+                }
+              />
             </Card>
             <hr />
-            {console.log(this.state.ordonnance.historique)}
 
             <ForthSection
               note_admin={

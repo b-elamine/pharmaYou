@@ -21,6 +21,10 @@ import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 import axios from "../../../axios";
 
 
+import PerfectScrollbar from "react-perfect-scrollbar";
+
+
+
 
 const ModaL = (props) => {
   return (
@@ -100,6 +104,7 @@ class SecondSection extends React.Component {
     file_carte_loader: false,
     file_mutuelle_loader: false,
     modal_file_type: null,
+    modal_file_path:"",
     modal: false,
   };
   get_file = async (file_type, path) => {
@@ -111,6 +116,7 @@ class SecondSection extends React.Component {
       });
       if (path === null) {
         this.setState({
+          file_ordonnance_loader: false,
           file_mutuelle_loader: false,
           file_carte_loader: false,
         });
@@ -119,24 +125,19 @@ class SecondSection extends React.Component {
       const response = await axios.get(
         `/${file_type}/${path}/original?access_token=a`
       );
-      // juste pour savoir le type du fichier
-      let modal_file;
+      let modal_file_type;
       if (response.headers["content-type"].includes("image")) {
-        this.setState({
-          modal_file_type: "image",
-        });
-        modal_file = `https://ordo.pharmayou.fr:3003/${file_type}/${path}/original?access_token=a`;
+        modal_file_type = "image";
       } else {
-        this.setState({
-          modal_file_type: "pdf",
-        });
-        // dealing with the pdf
+        modal_file_type = "pdf";
       }
       this.setState((prevState) => ({
         modal: !prevState.modal,
-        modal_file: modal_file,
+        modal_file_path: `https://ordo.pharmayou.fr:3003/${file_type}/${path}/original?access_token=a`,
+        file_ordonnance_loader: false,
         file_carte_loader: false,
         file_mutuelle_loader: false,
+        modal_file_type: modal_file_type,
       }));
     } catch (err) {
       this.setState({
@@ -146,7 +147,7 @@ class SecondSection extends React.Component {
       if (err.message.includes("404")) {
         alert("fichier introuvable.");
       } else {
-        console.log(err.message);
+        alert(err.message);
       }
     }
   };
@@ -185,14 +186,25 @@ class SecondSection extends React.Component {
               toggle_modal={this.toggleModal}
               modal_state={this.state.modal}
             >
-              {this.state.modal_file_type === "image" ? (
+               {this.state.modal_file_type === "image" ? (
                 <img
-                  style={{ width: "100%" }}
-                  src={this.state.modal_file}
+                  style={{ width: "90%" }}
+                  src={this.state.modal_file_path}
                   alt="test"
                 />
               ) : (
-                <h1>Le PDF</h1>
+                <PerfectScrollbar
+                  options={{
+                    wheelPropagation: false,
+                  }}
+                >
+                  <iframe
+                    title="test"
+                    src={this.state.modal_file_path}
+                    width="90%"
+                    height="100%"
+                  ></iframe>
+                </PerfectScrollbar>
               )}
             </ModaL>
             <div style={{ width: "90%" }}>

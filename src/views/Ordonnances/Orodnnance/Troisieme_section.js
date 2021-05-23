@@ -12,9 +12,7 @@ import {
   Label,
   Spinner,
   Modal,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { PlusCircle, Send } from "react-feather";
@@ -25,10 +23,6 @@ import Switch from "react-switch";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 import axios from "../../../axios";
-import pdf_test from "./10.1.1.695.7550.pdf";
-
-import { Document, Page, pdfjs } from "react-pdf";
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const CardDashed = (props) => {
   return (
@@ -109,7 +103,7 @@ class Troisieme_section extends React.Component {
     checked: false,
     nbrFois: 1,
     tousLes: 1,
-    Date: new Date(),
+    Date_exp: new Date(),
     modal: false,
     modal_file_path: "",
     modal_title: "",
@@ -123,7 +117,14 @@ class Troisieme_section extends React.Component {
     return `${num} jours`;
   };
   handleChange = (checked) => {
-    this.setState({ checked });
+    this.setState((prev_state, props) => {
+      return {
+        ordonnance: {
+          ...prev_state.ordonnance,
+          renouvelable: checked,
+        },
+      };
+    });
   };
 
   get_ordonnance_file = async (file_type, path) => {
@@ -199,8 +200,16 @@ class Troisieme_section extends React.Component {
       };
     });
   };
+  componentDidUpdate() {
+    if (!this.state.ordonnance) {
+      this.setState({
+        ordonnance: this.props.ordonnance,
+      });
+    }
+  }
 
   render() {
+    console.log(this.state);
     return (
       <Card className="m-0">
         <CardTitle className="ml-2">Documents du client</CardTitle>
@@ -257,14 +266,17 @@ class Troisieme_section extends React.Component {
             >
               <span className="mr-50 text-wrap">Ordonnance renouvelable ?</span>
               <Switch
-                onChange={this.handleChange}
-                checked={this.state.checked}
+                onChange={(e)=> {
+                  this.props.change_renouv(e)
+                }}
+                checked={this.props.renouvelable}
                 offColor="#82868B"
                 onColor="#3397da"
                 uncheckedIcon={false}
                 checkedIcon={false}
                 height={20}
                 width={40}
+                value={true}
               />
             </div>
             <div
@@ -276,11 +288,11 @@ class Troisieme_section extends React.Component {
               </span>
               <NumericInput
                 min={1}
-                value={this.state.nbrFois}
+                value={this.props.nbr_renouv}
                 mobile
                 style={mobileStyle2}
-                onChange={(e) => {
-                  this.setState({ nbrFois: e });
+                onChange={(e)=> {
+                  this.props.change_nbr_renouv(e)
                 }}
               />
             </div>
@@ -291,11 +303,11 @@ class Troisieme_section extends React.Component {
               <span className="font-small-2 text-wrap mr-50">Tous les</span>
               <NumericInput
                 min={1}
-                value={this.state.tousLes}
+                value={this.props.renouvellement_intervalle}
                 mobile
                 style={mobileStyle2}
-                onChange={(e) => {
-                  this.setState({ tousLes: e });
+                onChange={(e)=> {
+                  this.props.change_intervall(e)
                 }}
                 format={this.myFormat}
               />
@@ -359,9 +371,9 @@ class Troisieme_section extends React.Component {
               <Flatpickr
                 id="Date"
                 className="form-control"
-                value={this.state.Date}
-                onChange={(date) => {
-                  this.setState({ Date: date });
+                value={this.props.Date_exp}
+                onChange={(e)=> {
+                  this.props.change_date_exp(e)
                 }}
                 options={{ minDate: "today" }}
               />
