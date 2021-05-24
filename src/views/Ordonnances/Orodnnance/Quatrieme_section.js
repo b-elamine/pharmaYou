@@ -307,12 +307,12 @@ class QuatriemeSection extends React.Component {
                     name="Professions"
                     options={options}
                   />
-                  {this.state.inputs.map((item) => {
+                  {this.props.inputs.map((item) => {
                     return (
                       <AutoComplete
                         key={item.id}
                         id="produits"
-                        suggestions={this.state.suggestions}
+                        suggestions={this.props.suggestions}
                         className="form-control mb-2"
                         filterKey="title"
                         suggestionLimit={20}
@@ -324,7 +324,7 @@ class QuatriemeSection extends React.Component {
                         // }}
                         item={item.id}
                         setitemchosen={(value, id) =>
-                          this.produit_input_change_handler(value, id)
+                          this.props.produit_input_change_handler(value, id)
                         }
                         onSuggestionClick={(e) => {
                           this.produit_input_change_handler(
@@ -333,7 +333,7 @@ class QuatriemeSection extends React.Component {
                           );
                         }}
                         onChange={(e) => {
-                          this.produit_input_change_handler(
+                          this.props.produit_input_change_handler(
                             e.target.value,
                             item.id
                           );
@@ -350,31 +350,14 @@ class QuatriemeSection extends React.Component {
                       marginLeft: "0px",
                       float: "left",
                     }}
-                    onClick={() => {
-                      this.setState((prev_state, props) => {
-                        const new_item_id =
-                          prev_state.inputs.slice(-1)[0].id + 1;
-                        const new_num_input = [
-                          ...prev_state.inputs,
-                          {
-                            id: new_item_id,
-                            produit: "",
-                            quantité: 1,
-                            prix: 0,
-                          },
-                        ];
-                        return {
-                          inputs: new_num_input,
-                        };
-                      });
-                    }}
+                    onClick={this.props.add_ligne}
                   >
                     <Plus className="ml-0 mr-1" size={17} />
                     Rajouter une ligne
                   </Button>
                 </Col>
                 <Col>
-                  {this.state.inputs.map((item) => {
+                  {this.props.inputs.map((item) => {
                     return (
                       <Row className="ml-4">
                         <Col>
@@ -396,7 +379,7 @@ class QuatriemeSection extends React.Component {
                                 item.id === 1 ? "4" : "1"
                               } text-center`}
                               onChange={(e) => {
-                                this.quantité_input_change_handler(
+                                this.props.quantité_input_change_handler(
                                   e.target.value,
                                   item.id
                                 );
@@ -422,7 +405,7 @@ class QuatriemeSection extends React.Component {
                                 item.id === 1 ? "4" : "1"
                               } text-center`}
                               onChange={(e) => {
-                                this.prix_input_change_handler(
+                                this.props.prix_input_change_handler(
                                   e.target.value,
                                   item.id
                                 );
@@ -436,7 +419,7 @@ class QuatriemeSection extends React.Component {
                   <hr className="w-75"></hr>
                   <p className=" text-dark ">
                     Total : {"\u00A0"} {"\u00A0"}{" "}
-                    <strong className="">{total} €</strong>
+                    <strong className="">{this.props.total} €</strong>
                   </p>
                 </Col>
               </Row>
@@ -453,16 +436,16 @@ class QuatriemeSection extends React.Component {
             placeholder="RAS"
             className="ml-2"
             style={{ width: "95%", marginTop: "20px" }}
-            value={this.state.commentaire_interne_edited}
+            value={this.props.commentaire_interne}
             onChange={(e) => {
-              this.commentaire_interne_input_handle_change(e.target.value);
+              this.props.commentaire_interne_input_handle_change(e.target.value);
             }}
           />
           <Button
             color="primary"
             className="mt-2 text-white float-right font-weight-bold mr-2 p-75  mb-2"
             onClick={() => {
-              this.add_commentaire_handler();
+              this.props.add_commentaire_handler();
             }}
           >
             Sauvgarder
