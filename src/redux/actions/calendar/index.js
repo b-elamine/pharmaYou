@@ -55,7 +55,7 @@ export const addEvent = (event) => {
       //   'Content-Type': 'application/json',
       //   "Access-Control-Allow-Origin": "*",
       // }
-      await axios.post("https://ordo.pharmayou.fr:3003/tournees?access_token=a", {
+      await axios.post("/tournees?access_token=a", {
         date: `${event.start.toISOString().split("T")[0]}`,
         plage_debut: event.start.getHours(),
         plage_fin: event.end.getHours(),

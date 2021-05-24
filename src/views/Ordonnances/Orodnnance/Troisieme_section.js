@@ -12,9 +12,7 @@ import {
   Label,
   Spinner,
   Modal,
-  // ModalHeader,
-  ModalBody,
-  // ModalFooter,
+  ModalBody
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { PlusCircle, Send } from "react-feather";
@@ -110,7 +108,7 @@ class Troisieme_section extends React.Component {
     checked: false,
     nbrFois: 1,
     tousLes: 1,
-    Date: new Date(),
+    Date_exp: new Date(),
     modal: false,
     modal_file_path: "",
     modal_title: "",
@@ -124,7 +122,14 @@ class Troisieme_section extends React.Component {
     return `${num} jours`;
   };
   handleChange = (checked) => {
-    this.setState({ checked });
+    this.setState((prev_state, props) => {
+      return {
+        ordonnance: {
+          ...prev_state.ordonnance,
+          renouvelable: checked,
+        },
+      };
+    });
   };
 
   get_ordonnance_file = async (file_type, path) => {
@@ -200,6 +205,13 @@ class Troisieme_section extends React.Component {
       };
     });
   };
+  componentDidUpdate() {
+    if (!this.state.ordonnance) {
+      this.setState({
+        ordonnance: this.props.ordonnance,
+      });
+    }
+  }
 
   render() {
     return (
@@ -258,14 +270,17 @@ class Troisieme_section extends React.Component {
             >
               <span className="mr-50 text-wrap">Ordonnance renouvelable ?</span>
               <Switch
-                onChange={this.handleChange}
-                checked={this.state.checked}
+                onChange={(e)=> {
+                  this.props.change_renouv(e)
+                }}
+                checked={this.props.renouvelable}
                 offColor="#82868B"
                 onColor="#3397da"
                 uncheckedIcon={false}
                 checkedIcon={false}
                 height={20}
                 width={40}
+                value={true}
               />
             </div>
             <div
@@ -277,11 +292,11 @@ class Troisieme_section extends React.Component {
               </span>
               <NumericInput
                 min={1}
-                value={this.state.nbrFois}
+                value={this.props.nbr_renouv}
                 mobile
                 style={mobileStyle2}
-                onChange={(e) => {
-                  this.setState({ nbrFois: e });
+                onChange={(e)=> {
+                  this.props.change_nbr_renouv(e)
                 }}
               />
             </div>
@@ -292,11 +307,11 @@ class Troisieme_section extends React.Component {
               <span className="font-small-2 text-wrap mr-50">Tous les</span>
               <NumericInput
                 min={1}
-                value={this.state.tousLes}
+                value={this.props.renouvellement_intervalle}
                 mobile
                 style={mobileStyle2}
-                onChange={(e) => {
-                  this.setState({ tousLes: e });
+                onChange={(e)=> {
+                  this.props.change_intervall(e)
                 }}
                 format={this.myFormat}
               />
@@ -306,7 +321,7 @@ class Troisieme_section extends React.Component {
             <CardDashed
               file_loader={this.state.file_carte_loader}
               bg_color="#1aac1a"
-              label="Carte Vital"
+              label="Carte Vitale"
               spinner_color="warning"
               get_file={() => {
                 this.setState({
@@ -327,6 +342,11 @@ class Troisieme_section extends React.Component {
                   size="sm"
                   className="block-example border border-right-0 border-success"
                   placeholder="Numéro de sécurité sociale"
+                  value = {this.props.nirpp}
+                  onChange={(e)=> {
+                    this.props.change_nirpp(e.target.value)
+                  }}
+                  type='number'
                 />
                 <InputGroupAddon addonType="append">
                   <Button.Ripple outline color="success" size="sm">
@@ -360,9 +380,9 @@ class Troisieme_section extends React.Component {
               <Flatpickr
                 id="Date"
                 className="form-control"
-                value={this.state.Date}
-                onChange={(date) => {
-                  this.setState({ Date: date });
+                value={this.props.Date_exp}
+                onChange={(e)=> {
+                  this.props.change_date_exp(e)
                 }}
                 options={{ minDate: "today" }}
               />

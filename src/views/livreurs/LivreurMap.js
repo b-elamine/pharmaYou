@@ -4,7 +4,7 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "../../assets/scss/plugins/extensions/maps.scss";
 import axios from "../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
 const MyPopupMarker = ({ position, content }) => (
   <Marker position={position}>

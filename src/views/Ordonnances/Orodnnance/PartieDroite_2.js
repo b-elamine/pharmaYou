@@ -5,7 +5,7 @@ import { ListUl, RecordCircleFill } from "react-bootstrap-icons";
 const CommandeBlock = (props) => {
   return (
     <CardBody>
-      <div className="user-info text-wrap ml-0 mb-50">
+      <div className="user-info text-truncate ml-xl-50 ml-0 mb-50">
         <RecordCircleFill
           size={16}
           style={{
@@ -14,30 +14,21 @@ const CommandeBlock = (props) => {
           }}
         />
         <span
-          title={props.commande_type}
-          className="ml-1 font-weight-bold font-small-2 text-wrap"
+          title={props.block_note}
+          className="ml-2 font-weight-bold font-medium-2"
         >
-          {props.commande_type}
+          {props.block_title}
         </span>
       </div>
-      <small className="ml-3 font-small-1"> {props.block_note} </small>
+      <small className="ml-3 font-small-2"> {props.block_note} </small>
 
-      <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        {/* <div className="user-img ml-xl-0 ml-3">
-          <img
-            className="img-fluid rounded-circle"
-            height="32"
-            width="32"
-            src={props.image_path}
-            alt="hey"
-          />
-        </div> */}
+      {/* <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
         <div className="user-info text-truncate ml-xl-50 ml-0">
-          <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-small-2">
+          <span className=" font-weight-bold d-block text-truncate mb-0 font-medium-1">
             {props.name}
           </span>
         </div>
-      </div>
+      </div> */}
     </CardBody>
   );
 };
@@ -54,15 +45,13 @@ class PartieDroite_2 extends React.Component {
           <strong className="ml-2">Pas de commentaire pour l'instant</strong>
         ) : (
           this.props.historique_commande.map((comment) => {
-            const icon_color =
-              comment.type === "Commentaire interne" ? "#fa680c" : "#28c76f";
             return (
               <CommandeBlock
                 key={comment.id}
-                icon_color={icon_color}
-                commande_type={comment.type}
-                block_note={comment.commentaire}
-                name={comment.nom}
+                icon_color={comment.color}
+                block_title={comment.title}
+                block_note={comment.text}
+                name="admin name"
               />
             );
           })

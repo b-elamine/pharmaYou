@@ -100,6 +100,7 @@ class SecondSection extends React.Component {
     file_carte_loader: false,
     file_mutuelle_loader: false,
     modal_file_type: null,
+    modal_file_path:"",
     modal: false,
   };
   get_file = async (file_type, path) => {
@@ -111,6 +112,7 @@ class SecondSection extends React.Component {
       });
       if (path === null) {
         this.setState({
+          file_ordonnance_loader: false,
           file_mutuelle_loader: false,
           file_carte_loader: false,
         });
@@ -119,24 +121,19 @@ class SecondSection extends React.Component {
       const response = await axios.get(
         `/${file_type}/${path}/original?access_token=a`
       );
-      // juste pour savoir le type du fichier
-      let modal_file;
+      let modal_file_type;
       if (response.headers["content-type"].includes("image")) {
-        this.setState({
-          modal_file_type: "image",
-        });
-        modal_file = `https://ordo.pharmayou.fr:3003/${file_type}/${path}/original?access_token=a`;
+        modal_file_type = "image";
       } else {
-        this.setState({
-          modal_file_type: "pdf",
-        });
-        // dealing with the pdf
+        modal_file_type = "pdf";
       }
       this.setState((prevState) => ({
         modal: !prevState.modal,
-        modal_file: modal_file,
+        modal_file_path: `https://ordo.pharmayou.fr:3003/${file_type}/${path}/original?access_token=a`,
+        file_ordonnance_loader: false,
         file_carte_loader: false,
         file_mutuelle_loader: false,
+        modal_file_type: modal_file_type,
       }));
     } catch (err) {
       this.setState({
@@ -146,7 +143,7 @@ class SecondSection extends React.Component {
       if (err.message.includes("404")) {
         alert("fichier introuvable.");
       } else {
-        console.log(err.message);
+        alert(err.message);
       }
     }
   };
