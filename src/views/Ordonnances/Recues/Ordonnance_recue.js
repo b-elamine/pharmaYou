@@ -3,7 +3,6 @@ import { Row, Col, Spinner } from "reactstrap";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import DataTableCustom from "../../DataTableCustom/DataTableCustom";
 import StatisticsCard from "../../../components/@vuexy/statisticsCard/StatisticsCard";
-// import Icon from "./ICON.png";
 import { Badge } from "reactstrap";
 import axios from "../../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -454,7 +453,7 @@ class Ordonnances_recue extends React.Component {
       status: [],
     },
     errorAlert: false,
-    errorText: "Vérifier votre cnnexion",
+    errorText: "Vérifier votre connexion",
     columns: [],
     data: [],
     ordonnances: {

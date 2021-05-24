@@ -42,20 +42,13 @@ class ComposeEmail extends React.Component {
       if (err.message.includes("Network")) {
         alert("Verifiez votre connexion !");
       } else {
-        alert(err.message);
+        console.log(err.message);
       }
     }
   };
 
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
-    this.setState({
-      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande est incompl\u00e8te`,
-      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} est incompl\u00e8te. Veuillez la corriger ici : https:\/\/www.pharmayou.fr\/commandes\/1-CA-39 .\n\nPharma You`,
-      sms_text: `Votre commande ${this.props.ordonnance.id} est incompl\u00e8te.`,
-      push_text: "Votre commande est incompl\u00e8te.",
-      document_manquant_value: "",
-    });
   };
 
   async componentDidMount() {
@@ -76,8 +69,23 @@ class ComposeEmail extends React.Component {
           },
         }
       );
+      this.props.handleAlert(
+        "errorAlert",
+        true,
+        "Client notifié des documents manquants",
+        true
+      );
     } catch (err) {
-      alert(err.message);
+      if (err.message.includes("Network")) {
+        this.props.handleAlert(
+          "errorAlert",
+          true,
+          "Verifiez votre connexion !",
+          false
+        );
+      } else {
+        this.props.handleAlert("errorAlert", true, err.message, false);
+      }
     }
     this.handleSidebarClose();
   };

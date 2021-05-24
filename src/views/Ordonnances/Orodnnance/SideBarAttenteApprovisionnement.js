@@ -21,15 +21,6 @@ class ComposeEmail extends React.Component {
 
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
-    this.setState({
-      selectedTournée: {},
-      tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-      listeTournes: "",
-      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a été mise en attente`,
-      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a été mise en attente.\n\nPharma You`,
-      sms_text: `Votre commande ${this.props.ordonnance.id} a été mise en attente.`,
-      push_text: "Votre commande a été mise en attente.",
-    });
   };
 
   fetch_email_text = async (commande_id) => {
@@ -88,9 +79,14 @@ class ComposeEmail extends React.Component {
       }
     } catch (err) {
       if (err.message.includes("Network")) {
-        alert("Verifiez votre connexion !");
+        this.props.handleAlert(
+          "errorAlert",
+          true,
+          "Verifiez votre connexion !",
+          false
+        );
       } else {
-        alert(err.message);
+        this.props.handleAlert("errorAlert", true, err.message, false);
       }
     }
   };
@@ -119,8 +115,24 @@ class ComposeEmail extends React.Component {
           },
         }
       );
+      this.props.handleAlert(
+        "errorAlert",
+        true,
+        "Commannde mise en approvisionnement",
+        true
+      );
     } catch (err) {
-      alert(err);
+      if (err.message.includes("Network")) {
+        alert("Verifiez votre connexion !");
+        this.props.handleAlert(
+          "errorAlert",
+          true,
+          "Verifiez votre connexion !",
+          false
+        );
+      } else {
+        this.props.handleAlert("errorAlert", true, err.message, false);
+      }
     }
     this.handleSidebarClose();
   };

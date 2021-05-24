@@ -15,9 +15,8 @@ import SidebarAssignerTournee from "./SideBarAssignerTournee";
 import SideBarAttenteApprovisionnement from "./SideBarAttenteApprovisionnement";
 import SideBarDocumentManquant from "./SideBarDocumentManquant";
 import SideBarAnnulerCommande from "./SideBarAnnulerCommande";
-
+import SweetAlert from "react-bootstrap-sweetalert";
 import axios from "../../../axios";
-
 
 class Ordonnance extends Component {
   state = {
@@ -26,6 +25,9 @@ class Ordonnance extends Component {
     statusDocumentManquantSideBar: false,
     statusAttenteApproSideBar: false,
     statusAnnulerCommandeSideBar: false,
+    errorAlert: false,
+    errorText: "Vérifier votre connexion",
+    scuccesAlert: true,
     ordonnance: {
       patient: {
         note: "",
@@ -40,6 +42,10 @@ class Ordonnance extends Component {
     const id_commande = this.props.match.params.id_commande;
     this.fetcher_commande(id_commande);
   }
+
+  handleAlert = (state, value, text, type) => {
+    this.setState({ [state]: value, errorText: text, scuccesAlert: type });
+  };
 
   fetcher_commande = async (id_commande) => {
     try {
@@ -101,9 +107,14 @@ class Ordonnance extends Component {
       });
     } catch (err) {
       if (err.message.includes("Network")) {
-        alert("Verifiez votre connexion !");
+        this.handleAlert(
+          "errorAlert",
+          true,
+          "Verifiez votre connexion !",
+          false
+        );
       } else {
-        alert(err.message);
+        this.handleAlert("errorAlert", true, err.message, false);
       }
     }
   };
@@ -233,6 +244,9 @@ class Ordonnance extends Component {
 
         {this.state.ordonnance.id ? (
           <SidebarAssignerTournee
+            handleAlert={(state, value, text, type) =>
+              this.handleAlert(state, value, text, type)
+            }
             ordonnance={this.state.ordonnance}
             handleComposeSidebar={this.handleAssignerTourneSideBar}
             currentStatus={this.state.statusAssignerTourneSideBar}
@@ -240,6 +254,9 @@ class Ordonnance extends Component {
         ) : null}
         {this.state.ordonnance.id ? (
           <SideBarDocumentManquant
+            handleAlert={(state, value, text, type) =>
+              this.handleAlert(state, value, text, type)
+            }
             ordonnance={this.state.ordonnance}
             handleComposeSidebar={this.handleDocumentManquantSideBar}
             currentStatus={this.state.statusDocumentManquantSideBar}
@@ -247,6 +264,9 @@ class Ordonnance extends Component {
         ) : null}
         {this.state.ordonnance.id ? (
           <SideBarAnnulerCommande
+            handleAlert={(state, value, text, type) =>
+              this.handleAlert(state, value, text, type)
+            }
             ordonnance={this.state.ordonnance}
             handleComposeSidebar={this.handleAnnulerCommandeSideBar}
             currentStatus={this.state.statusAnnulerCommandeSideBar}
@@ -254,11 +274,23 @@ class Ordonnance extends Component {
         ) : null}
         {this.state.ordonnance.id ? (
           <SideBarAttenteApprovisionnement
+            handleAlert={(state, value, text, type) =>
+              this.handleAlert(state, value, text, type)
+            }
             ordonnance={this.state.ordonnance}
             handleComposeSidebar={this.handleAttenteApproSideBar}
             currentStatus={this.state.statusAttenteApproSideBar}
           />
         ) : null}
+        <SweetAlert
+          error={!this.state.scuccesAlert}
+          success={this.state.scuccesAlert}
+          title={this.state.scuccesAlert ? "succes" : "Erreur"}
+          show={this.state.errorAlert}
+          onConfirm={() => this.handleAlert("errorAlert", false)}
+        >
+          <p className="sweet-alert-text">{this.state.errorText}</p>
+        </SweetAlert>
       </Row>
     );
   }

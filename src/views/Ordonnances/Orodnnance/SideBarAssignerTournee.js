@@ -19,6 +19,7 @@ class ComposeEmail extends React.Component {
       value: "",
       label: "",
     },
+
     tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
     email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 valid\u00e9e`,
     email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You`,
@@ -38,23 +39,6 @@ class ComposeEmail extends React.Component {
 
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
-    this.setState({
-      toursSelectedMemory: {},
-      defaultTours: {},
-      selectedTournée: {
-        start: new Date(),
-        end: new Date(),
-        value: "",
-        label: "",
-      },
-      tournées: [{ start: new Date(), end: new Date(), value: "", label: "" }],
-      listeTournes: "",
-      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 valid\u00e9e`,
-      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e et sera envoy\u00e9e d'ici peu.\n\nPharma You`,
-      sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 valid\u00e9e.`,
-      push_text: "Votre commande a \u00e9t\u00e9 valid\u00e9e.",
-      checked: false,
-    });
   };
 
   async componentDidMount() {
@@ -161,7 +145,7 @@ class ComposeEmail extends React.Component {
   };
 
   ValiderTournée = async () => {
-    try{
+    try {
       const tournees = {
         tournee_id: this.state.selectedTournée.id,
         date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
@@ -180,8 +164,23 @@ class ComposeEmail extends React.Component {
           },
         }
       );
-    }catch(err){
-      alert(err.message)
+      this.props.handleAlert(
+        "errorAlert",
+        true,
+        "Tournée assigner avec succes",
+        true
+      );
+    } catch (err) {
+      if (err.message.includes("Network")) {
+        this.props.handleAlert(
+          "errorAlert",
+          true,
+          "Verifiez votre connexion !",
+          false
+        );
+      } else {
+        this.props.handleAlert("errorAlert", true, err.message, false);
+      }
     }
     this.handleSidebarClose();
   };

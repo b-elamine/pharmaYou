@@ -35,12 +35,6 @@ class ComposeEmail extends React.Component {
 
   handleSidebarClose = () => {
     this.props.handleComposeSidebar("close");
-    this.setState({
-      email_title: `[Commande ${this.props.ordonnance.id}] Votre commande a \u00e9t\u00e9 annul\u00e9e`,
-      email_text: `Bonjour,\n\nVotre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 annul\u00e9e.\n\nPharma You`,
-      sms_text: `Votre commande ${this.props.ordonnance.id} a \u00e9t\u00e9 annul\u00e9e.`,
-      push_text: "Votre commande a \u00e9t\u00e9 annul\u00e9e.",
-    });
   };
 
   async componentDidMount() {
@@ -61,8 +55,23 @@ class ComposeEmail extends React.Component {
           },
         }
       );
+      this.props.handleAlert(
+        "errorAlert",
+        true,
+        "Commande annuler avec succes",
+        true
+      );
     } catch (err) {
-      alert(err.message)
+      if (err.message.includes("Network")) {
+        this.props.handleAlert(
+          "errorAlert",
+          true,
+          "Verifiez votre connexion !",
+          false
+        );
+      } else {
+        this.props.handleAlert("errorAlert", true, err.message, false);
+      }
     }
     this.handleSidebarClose();
   };

@@ -6,10 +6,13 @@ import { ButtonGroup } from "reactstrap";
 import { BellFill, HourglassSplit } from "react-bootstrap-icons";
 import { User, FileText, DollarSign } from "react-feather";
 import axios from "../../axios";
-import { date } from "yup";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 class stats extends React.Component {
   state = {
+    errorAlert: false,
+    errorText: "Vérifier votre connexion",
+    view : "jour",
     pro_chart_bar: {
       series: [
         {
@@ -415,134 +418,147 @@ class stats extends React.Component {
   };
 
   modifierState = async (e) => {
-    const type = e;
-    const statistiques = await axios.get("/statistiques_ca?access_token=a");
-    const statistiques2 = await axios.get("/statistiques?access_token=a");
-    const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
-    const statistiques_ca_professionnels =
-      statistiques.data.statistiques_ca_professionnels;
-    let today = new Date();
-    let date =
-      today.getDate() +
-      "-" +
-      parseInt(today.getMonth() + 1) +
-      "-" +
-      today.getFullYear();
+    try {
+      const type = e;
+      const statistiques = await axios.get("/statistiques_ca?access_token=a");
+      const statistiques2 = await axios.get("/statistiques?access_token=a");
+      const statistiques_ca_par =
+        statistiques.data.statistiques_ca_particuliers;
+      const statistiques_ca_professionnels =
+        statistiques.data.statistiques_ca_professionnels;
+      let today = new Date();
+      let date =
+        today.getDate() +
+        "-" +
+        parseInt(today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
 
-    const new_horizontal_chart_1 = {
-      options: {
-        chart: {
-          ...this.state.horizontal_Chart1.options.chart,
+      const new_horizontal_chart_1 = {
+        options: {
+          chart: {
+            ...this.state.horizontal_Chart1.options.chart,
+          },
+          colors: this.state.horizontal_Chart1.options.colors,
+          plotOptions: {
+            ...this.state.horizontal_Chart1.options.plotOptions,
+          },
+          dataLabels: {
+            ...this.state.horizontal_Chart1.options.dataLabels,
+          },
+          legend: {
+            ...this.state.horizontal_Chart1.options.legend,
+          },
+          xaxis: {
+            categories: Object.keys(statistiques_ca_par),
+          },
         },
-        colors: this.state.horizontal_Chart1.options.colors,
-        plotOptions: {
-          ...this.state.horizontal_Chart1.options.plotOptions,
-        },
-        dataLabels: {
-          ...this.state.horizontal_Chart1.options.dataLabels,
-        },
-        legend: {
-          ...this.state.horizontal_Chart1.options.legend,
-        },
-        xaxis: {
-          categories: Object.keys(statistiques_ca_par),
-        },
-      },
-      series: [
-        {
-          data: Object.values(statistiques_ca_par),
-        },
-      ],
-    };
-
-    const new_horizontal_chart_2 = {
-      options: {
-        chart: {
-          ...this.state.horizontal_Chart2.options.chart,
-        },
-        colors: this.state.horizontal_Chart2.options.colors,
-        plotOptions: {
-          ...this.state.horizontal_Chart2.options.plotOptions,
-        },
-        dataLabels: {
-          ...this.state.horizontal_Chart2.options.dataLabels,
-        },
-        legend: {
-          ...this.state.horizontal_Chart2.options.legend,
-        },
-        xaxis: {
-          categories: Object.keys(statistiques_ca_professionnels),
-        },
-      },
-      series: [
-        {
-          data: Object.values(statistiques_ca_professionnels),
-        },
-      ],
-    };
-    this.setState((prev_state, props) => {
-      return {
-        //setting Last 2 horizontal charts values
-
-        horizontal_Chart1: new_horizontal_chart_1,
-        horizontal_Chart2: new_horizontal_chart_2,
-
-        //setting first card statistics
-
-        statistiques_particuliers:
-          statistiques2.data.statistiques_particuliers[`${type}`],
-        statistiques_pro:
-          statistiques2.data.statistiques_professionnels[`${type}`],
-        pro_chart_bar: {
-          ...prev_state.pro_chart_bar,
-          series: [
-            prev_state.pro_chart_bar.series,
-            {
-              data: statistiques2.data.statistiques_professionnels[`${type}`]
-                .n_commandes_plot,
-            },
-          ],
-        },
-        pro_chart_line: {
-          ...prev_state.pro_chart_line,
-          series: [
-            prev_state.pro_chart_line.series,
-            {
-              data: statistiques2.data.statistiques_professionnels[`${type}`]
-                .chiffre_daffaire_plot,
-            },
-          ],
-        },
-        particular_chart_bar: {
-          ...prev_state.particular_chart_bar,
-          series: [
-            prev_state.particular_chart_bar.series,
-            {
-              data: statistiques2.data.statistiques_particuliers[`${type}`]
-                .n_commandes_plot,
-            },
-          ],
-        },
-        particular_chart_line: {
-          ...prev_state.particular_chart_line,
-          series: [
-            prev_state.particular_chart_line.series,
-            {
-              data: statistiques2.data.statistiques_particuliers[`${type}`]
-                .chiffre_daffaire_plot,
-            },
-          ],
-        },
-        stats_objet: statistiques2.data,
-        date: date,
+        series: [
+          {
+            data: Object.values(statistiques_ca_par),
+          },
+        ],
       };
-    });
+
+      const new_horizontal_chart_2 = {
+        options: {
+          chart: {
+            ...this.state.horizontal_Chart2.options.chart,
+          },
+          colors: this.state.horizontal_Chart2.options.colors,
+          plotOptions: {
+            ...this.state.horizontal_Chart2.options.plotOptions,
+          },
+          dataLabels: {
+            ...this.state.horizontal_Chart2.options.dataLabels,
+          },
+          legend: {
+            ...this.state.horizontal_Chart2.options.legend,
+          },
+          xaxis: {
+            categories: Object.keys(statistiques_ca_professionnels),
+          },
+        },
+        series: [
+          {
+            data: Object.values(statistiques_ca_professionnels),
+          },
+        ],
+      };
+      this.setState((prev_state, props) => {
+        return {
+          //setting Last 2 horizontal charts values
+          view : type,
+          horizontal_Chart1: new_horizontal_chart_1,
+          horizontal_Chart2: new_horizontal_chart_2,
+
+          //setting first card statistics
+
+          statistiques_particuliers:
+            statistiques2.data.statistiques_particuliers[`${type}`],
+          statistiques_pro:
+            statistiques2.data.statistiques_professionnels[`${type}`],
+          pro_chart_bar: {
+            ...prev_state.pro_chart_bar,
+            series: [
+              prev_state.pro_chart_bar.series,
+              {
+                data: statistiques2.data.statistiques_professionnels[`${type}`]
+                  .n_commandes_plot,
+              },
+            ],
+          },
+          pro_chart_line: {
+            ...prev_state.pro_chart_line,
+            series: [
+              prev_state.pro_chart_line.series,
+              {
+                data: statistiques2.data.statistiques_professionnels[`${type}`]
+                  .chiffre_daffaire_plot,
+              },
+            ],
+          },
+          particular_chart_bar: {
+            ...prev_state.particular_chart_bar,
+            series: [
+              prev_state.particular_chart_bar.series,
+              {
+                data: statistiques2.data.statistiques_particuliers[`${type}`]
+                  .n_commandes_plot,
+              },
+            ],
+          },
+          particular_chart_line: {
+            ...prev_state.particular_chart_line,
+            series: [
+              prev_state.particular_chart_line.series,
+              {
+                data: statistiques2.data.statistiques_particuliers[`${type}`]
+                  .chiffre_daffaire_plot,
+              },
+            ],
+          },
+          stats_objet: statistiques2.data,
+          date: date,
+        };
+      });
+    } catch (err) {
+      const error_message =
+        err.message === "Network Error"
+          ? "Une erreur s'est produite lors de la récupération des données."
+          : "Vérifiez votre connexion !";
+      this.handleAlert("errorAlert", true, error_message);
+    }
   };
 
   componentDidMount() {
     this.fetching_data();
     window.setInterval(this.fetching_data, 60000);
   }
+
+  handleAlert = (state, value, text) => {
+    this.setState({ [state]: value, errorText: text });
+  };
 
   render() {
     return (
@@ -562,7 +578,7 @@ class stats extends React.Component {
                   <button
                     style={{ backgroundColor: "#ffc4ad" }}
                     className={`btn ${
-                      this.props.view === "month"
+                      this.state.view === "mois"
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
@@ -575,7 +591,7 @@ class stats extends React.Component {
                   <button
                     style={{ backgroundColor: "#ffc4ad" }}
                     className={`btn ${
-                      this.props.view === "week"
+                      this.state.view === "semaine"
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
@@ -588,7 +604,7 @@ class stats extends React.Component {
                   <button
                     style={{ backgroundColor: "#ffc4ad" }}
                     className={`btn ${
-                      this.props.view === "day"
+                      this.state.view === "jour"
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
@@ -1085,7 +1101,14 @@ class stats extends React.Component {
             </div>
           </div>
         </Row>
-
+        <SweetAlert
+          error
+          title="Erreur"
+          show={this.state.errorAlert}
+          onConfirm={() => this.handleAlert("errorAlert", false)}
+        >
+          <p className="sweet-alert-text">{this.state.errorText}</p>
+        </SweetAlert>
         <div
           style={{
             height: "100%",

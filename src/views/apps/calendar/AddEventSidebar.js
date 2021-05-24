@@ -22,7 +22,6 @@ import "../../../assets/scss/plugins/extensions/editor.scss";
 import Switch from "react-switch";
 import "flatpickr/dist/themes/light.css";
 import "../../../assets/scss/plugins/forms/flatpickr/flatpickr.scss";
-import axios from "../../../axios";
 
 const eventColors = {
   // business: "chip-success",
@@ -184,20 +183,6 @@ class AddEvent extends React.Component {
           ? EditorState.createEmpty()
           : nextProps.eventInfo.editorState,
     });
-  }
-
-  valider = async () =>{
-    try{
-      const response = await axios.patch("/tournees/92?access_token=a",{
-        "date": "2021-05-25",
-        "plage_debut": 23,
-        "plage_fin": 23,
-        "remuneration_base": 1,
-        "remuneration_par_point": 1
-      })
-    }catch(err){
-      console.log(err.message)
-    }
   }
 
   render() {
@@ -431,8 +416,7 @@ class AddEvent extends React.Component {
                     this.props.eventInfo === null ||
                     this.props.eventInfo.title.length <= 0
                   )
-                    // this.handleAddEvent(newEventId);
-                    this.valider()
+                    this.handleAddEvent(newEventId);
                   else
                     this.props.updateEvent({
                       id: this.props.eventInfo.id,
