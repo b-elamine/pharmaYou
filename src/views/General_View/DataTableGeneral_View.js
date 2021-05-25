@@ -10,9 +10,8 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  
 } from "react-feather";
-
+import { InfoCircleFill } from "react-bootstrap-icons";
 const CustomHeader = (props) => {
   return (
     <div className="d-flex flex-row-reverse">
@@ -54,7 +53,6 @@ class DataTableCustom extends React.Component {
     this.setState({ value });
     if (value.length) {
       filteredData = data.filter((item) => {
-        console.log(item)
         let startsWithCondition =
           `${item.patient.nom} ${item.patient.prenom}`
             .toLowerCase()
@@ -86,6 +84,9 @@ class DataTableCustom extends React.Component {
       this.setState({ filteredData });
     }
   };
+  handle_change_page(state) {
+    console.log("change rows ", state.selectedCount);
+  }
 
   render() {
     let { value, filteredData } = this.state;
@@ -93,25 +94,37 @@ class DataTableCustom extends React.Component {
       <Card className="mt-5">
         <CardBody className="rdt_Wrapper pt-75">
           <DataTable
+            onChangePage={(current_page,last_page) => {
+              if (current_page>3 && this.props.rows===10){
+                this.props.fetch_data(this.props.page+1)
+              }
+              // this.props.fetch_data(this.props.rows,current_page)
+            }}
+            onChangeRowsPerPage={(nbr_rows, num_page) => {
+              this.props.set_rows_page(nbr_rows,num_page)
+            }}
+            paginationTotalRows={this.props.total_rows}
             className="dataTable-custom"
             data={value.length ? filteredData : this.props.data}
             columns={this.props.columns}
             noHeader
             clearSelectedRows
             pagination
+            paginationResetDefaultPage	
+            onSelectedRowsChange={this.handle_change_page}
             paginationIconFirstPage={<ChevronsLeft size={20} />}
             paginationIconLastPage={<ChevronsRight size={20} />}
             paginationIconPrevious={<ChevronLeft size={15} />}
             paginationIconNext={<ChevronRight size={15} />}
             subHeader
             highlightOnHover
-            onRowClicked={(row)=> {
-              history.push(`/ordonnance/${row.id}` ,row);
+            onRowClicked={(row) => {
+              history.push(`/ordonnance/${row.id}`, row);
             }}
             subHeaderComponent={
               <CustomHeader
                 add_new={this.props.add_new}
-                add_new_value = {this.props.add_new_value}
+                add_new_value={this.props.add_new_value}
                 value={value}
                 handleFilter={this.handleFilterOrdo}
               />

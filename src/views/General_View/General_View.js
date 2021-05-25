@@ -12,9 +12,9 @@ import {
   Hourglass,
   HourglassSplit,
 } from "react-bootstrap-icons";
-import { Truck, User, FileText, DollarSign,Eye } from "react-feather";
+import { Truck, User, FileText, DollarSign, Eye } from "react-feather";
 import { history } from "../../history";
-import DataTableGeneral_View from "./DataTableGeneral_View";
+import DataTableGeneralView from "./DataTableGeneral_View";
 import axios from "../../axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
@@ -255,6 +255,9 @@ const columns = [
 class General_View extends React.Component {
   state = {
     errorAlert: false,
+    page: 1,
+    page_table: 1,
+    rows: 10,
     errorText: "Vérifiez votre connexion",
     dataFetched: false,
     pro_chart_bar: {
@@ -442,45 +445,47 @@ class General_View extends React.Component {
       columns: [],
       data: [],
     },
-    statistiques_particuliers : {
-      moy_par_commande:0,
-      n_clients : 0,
-      n_commandes : 0,
-      n_commandes_en_attente:0,
-      n_commandes_livrees:0,
-      chiffre_daffaire:0,
-      n_commandes_en_livraison:0,
+    statistiques_particuliers: {
+      moy_par_commande: 0,
+      n_clients: 0,
+      n_commandes: 0,
+      n_commandes_en_attente: 0,
+      n_commandes_livrees: 0,
+      chiffre_daffaire: 0,
+      n_commandes_en_livraison: 0,
     },
     statistiques_pro: {
-      moy_par_commande:0,
-      n_clients : 0,
-      n_commandes : 0,
-      n_commandes_en_attente:0,
-      n_commandes_livrees:0,
-      chiffre_daffaire:0,
-      n_commandes_en_livraison:0,
+      moy_par_commande: 0,
+      n_clients: 0,
+      n_commandes: 0,
+      n_commandes_en_attente: 0,
+      n_commandes_livrees: 0,
+      chiffre_daffaire: 0,
+      n_commandes_en_livraison: 0,
     },
-    stats_objet : {
-      statistiques_particuliers : {
+    stats_objet: {
+      statistiques_particuliers: {
         jour: {
-          chiffre_daffaire :0
-        }
+          chiffre_daffaire: 0,
+        },
       },
-      statistiques_professionnels : {
+      statistiques_professionnels: {
         jour: {
-          chiffre_daffaire :0
-        }
-      }
-    }
+          chiffre_daffaire: 0,
+        },
+      },
+    },
   };
 
-  fetch_data = async () => {
+  fetch_data = async (page) => {
     try {
-      const commandes = await axios.get("/commandes?access_token=a");
+      const commandes = await axios.get(
+        `/commandes?access_token=a&page=${page}`
+      );
       const statistiques2 = await axios.get("/statistiques?access_token=a");
 
       if (commandes.statusText === "OK") {
-        const commandes_ordo = commandes.data;
+        const commandes_ordo = commandes.data.commandes;
         const custom_commandes = commandes_ordo.map((item) => {
           return {
             ...item,
@@ -532,56 +537,64 @@ class General_View extends React.Component {
             mutuelle: item.mutuelle_ok,
           };
         });
+        custom_commandes.push({...custom_commandes[0]})
         this.setState({
           table: {
             columns: columns,
             data: custom_commandes,
+            total_rows: commandes.data.nbr_total_commandes,
           },
         });
         this.setState({ dataFetched: true });
         this.setState((prev_state) => {
           return {
-          statistiques_particuliers : statistiques2.data.statistiques_particuliers.jour,
-          statistiques_pro : statistiques2.data.statistiques_professionnels.jour,
-          pro_chart_bar : {
-          ...prev_state.pro_chart_bar,
-              series : [
-              prev_state.pro_chart_bar.series,
+            statistiques_particuliers:
+              statistiques2.data.statistiques_particuliers.jour,
+            statistiques_pro:
+              statistiques2.data.statistiques_professionnels.jour,
+            pro_chart_bar: {
+              ...prev_state.pro_chart_bar,
+              series: [
+                prev_state.pro_chart_bar.series,
                 {
-                  data :  statistiques2.data.statistiques_professionnels.jour.n_commandes_plot
-                }
-              ]
-          }  ,
-          pro_chart_line : {
-            ...prev_state.pro_chart_line,
-                series : [
+                  data: statistiques2.data.statistiques_professionnels.jour
+                    .n_commandes_plot,
+                },
+              ],
+            },
+            pro_chart_line: {
+              ...prev_state.pro_chart_line,
+              series: [
                 prev_state.pro_chart_line.series,
-                  {
-                    data :  statistiques2.data.statistiques_professionnels.jour.chiffre_daffaire_plot
-                  }
-                ]
-            }  ,
-            particular_chart_bar : {
+                {
+                  data: statistiques2.data.statistiques_professionnels.jour
+                    .chiffre_daffaire_plot,
+                },
+              ],
+            },
+            particular_chart_bar: {
               ...prev_state.particular_chart_bar,
-                  series : [
-                  prev_state.particular_chart_bar.series,
-                    {
-                      data :  statistiques2.data.statistiques_particuliers.jour.n_commandes_plot
-                    }
-                  ]
-              }  ,
-              particular_chart_line : {
-                ...prev_state.particular_chart_line,
-                    series : [
-                    prev_state.particular_chart_line.series,
-                      {
-                        data :  statistiques2.data.statistiques_particuliers.jour.chiffre_daffaire_plot
-                      }
-                    ]
-                } ,
-                stats_objet : statistiques2.data,
-              }
-        })
+              series: [
+                prev_state.particular_chart_bar.series,
+                {
+                  data: statistiques2.data.statistiques_particuliers.jour
+                    .n_commandes_plot,
+                },
+              ],
+            },
+            particular_chart_line: {
+              ...prev_state.particular_chart_line,
+              series: [
+                prev_state.particular_chart_line.series,
+                {
+                  data: statistiques2.data.statistiques_particuliers.jour
+                    .chiffre_daffaire_plot,
+                },
+              ],
+            },
+            stats_objet: statistiques2.data,
+          };
+        });
       } else {
         this.handleAlert(
           "errorAlert",
@@ -590,6 +603,7 @@ class General_View extends React.Component {
         );
       }
     } catch (err) {
+      console.log(err);
       const error_message =
         err.message === "Network Error"
           ? "Une erreur s'est produite lors de la récupération des données."
@@ -604,7 +618,7 @@ class General_View extends React.Component {
 
   componentDidMount() {
     // fetching the data from the database and passing it to the state
-    this.fetch_data();
+    this.fetch_data(1);
   }
 
   render() {
@@ -686,7 +700,13 @@ class General_View extends React.Component {
                             Chiffre d'affaires ordonnances
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>{this.state.statistiques_particuliers.chiffre_daffaire}€</b>
+                            <b>
+                              {
+                                this.state.statistiques_particuliers
+                                  .chiffre_daffaire
+                              }
+                              €
+                            </b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -738,7 +758,9 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_particuliers.n_commandes_livrees}</h7>
+                    <h7>
+                      {this.state.statistiques_particuliers.n_commandes_livrees}
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -785,13 +807,19 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_particuliers.n_commandes_en_attente}</h7>
+                    <h7>
+                      {
+                        this.state.statistiques_particuliers
+                          .n_commandes_en_attente
+                      }
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
                       }}
                     >
-                      ordonnances<br />
+                      ordonnances
+                      <br />
                       en attente <br />
                     </p>
                   </div>
@@ -808,7 +836,12 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_particuliers.n_commandes_en_livraison}</h7>
+                    <h7>
+                      {
+                        this.state.statistiques_particuliers
+                          .n_commandes_en_livraison
+                      }
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -833,7 +866,9 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_particuliers.moy_par_commande}</h7>
+                    <h7>
+                      {this.state.statistiques_particuliers.moy_par_commande}
+                    </h7>
 
                     <p
                       style={{
@@ -927,7 +962,9 @@ class General_View extends React.Component {
                             Chiffre d'affaire professionnel
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
-                            <b>{this.state.statistiques_pro.chiffre_daffaire}€</b>
+                            <b>
+                              {this.state.statistiques_pro.chiffre_daffaire}€
+                            </b>
                           </h5>
                         </div>
                         <ReactApexChart
@@ -973,7 +1010,9 @@ class General_View extends React.Component {
                     bg_color="black"
                   />
                   <div>
-                    <h7>{this.state.statistiques_pro.n_commandes_en_attente}</h7>
+                    <h7>
+                      {this.state.statistiques_pro.n_commandes_en_attente}
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1043,7 +1082,9 @@ class General_View extends React.Component {
                     size={35}
                   />
                   <div>
-                    <h7>{this.state.statistiques_pro.n_commandes_en_livraison}</h7>
+                    <h7>
+                      {this.state.statistiques_pro.n_commandes_en_livraison}
+                    </h7>
                     <p
                       style={{
                         fontSize: "12px",
@@ -1089,7 +1130,8 @@ class General_View extends React.Component {
           {this.state.dataFetched ? (
             <Col>
               <h1>Dernières commandes reçus</h1>
-              <DataTableGeneral_View
+              <DataTableGeneralView
+                page={this.state.page}
                 className="dataTable-custom"
                 noHeader
                 pagination
@@ -1097,6 +1139,21 @@ class General_View extends React.Component {
                 highlightOnHover
                 columns={this.state.table.columns}
                 data={this.state.table.data}
+                total_rows={this.state.table.total_rows}
+                set_rows_page={(rows, page) => {
+                  this.setState({
+                    rows: rows,
+                    // page_table: page,
+                  });
+                }}
+                rows={this.state.rows}
+                fetch_data={(page) => {
+                  this.setState({
+                    page : this.state.page +1
+                  })
+                  // console.log("fetche the page : ",page)
+                  this.fetch_data(page)
+                }}
               />
             </Col>
           ) : (
