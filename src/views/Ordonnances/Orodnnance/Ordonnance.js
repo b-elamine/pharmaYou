@@ -19,6 +19,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { readRemoteFile } from "react-papaparse";
 
 import axios from "../../../axios";
+import { PenTool } from "react-feather";
 
 class Ordonnance extends Component {
   state = {
@@ -121,32 +122,55 @@ class Ordonnance extends Component {
     });
   }
 
-  add_commentaire_handler() {
-    if (this.state.commentaire_interne.length === 0) {
-      return alert("Il faut entrer un commentaire");
-    }
-    const historique = this.state.ordonnance.historique;
-    historique.push({
-      color: "#FA480C",
-      text: this.state.commentaire_interne,
-      time: new Date(),
-      title: "titre 1",
-    });
-    this.setState((prev_state, props) => {
-      return {
-        ordonnance: {
-          ...prev_state.ordonnance,
-          historique: historique,
-        },
-        commentaire_interne: "",
+  
+
+  async save() {
+    try {
+      const contenue = this.state.inputs.map((input) => {
+        return {
+          nom: input.produit,
+          montant_unitaire: input.prix,
+          quantite: input.quantité,
+        };
+      });
+
+      const request_data = {
+        renouvelable: this.state.ordonnance.renouvelable,
+        renouvellement_intervalle:
+          this.state.ordonnance.renouvellement_intervalle,
+        renouvellement_nombre: this.state.ordonnance.renouvellement_nombre,
+        nirpp: this.state.ordonnance.nirpp,
+        // expiration_date  : this.state.ordonnance.mutuelle.expiration_date,
+        // commentaire_interne : this.state.ordonnance.commentaire_interne,
+        // complement : this.state.ordonnance.complement,
+        cntenue: contenue,
       };
-    });
+      console.log(request_data);
+      const res = await axios.patch(
+        `commandes/${this.state.ordonnance.id}?access_token=a`,
+        request_data
+      );
+      this.handleAlert(
+        "errorAlert",
+        true,
+        "Sauvgarde des informations éffectuer avec succée !",
+        true
+      );
+    } catch (err) {
+      const err_message = err.message.includes("Network")
+        ? "une erreur est produite veillez réesseyez !"
+        : err.message;
+      this.handleAlert("errorAlert", true, err_message, false);
+    }
   }
 
   commentaire_interne_input_handle_change(value) {
     this.setState((prev_state, props) => {
       return {
-        commentaire_interne: value,
+        ordonnance: {
+          ...prev_state.ordonnance,
+          commentaire_interne: value,
+        },
       };
     });
   }
@@ -200,11 +224,18 @@ class Ordonnance extends Component {
       };
     });
   }
+
   change_date_exp(e) {
+    const date = new Date(e);
     this.setState((prev_state, props) => {
       return {
-        ...prev_state,
-        Date_exp: e,
+        ordonnance: {
+          ...prev_state.ordonnance,
+          mutuelle: {
+            ...prev_state.ordonnance.mutuelle,
+            expiration_date: date.toISOString().split("T")[0],
+          },
+        },
       };
     });
   }
@@ -278,6 +309,9 @@ class Ordonnance extends Component {
         CMU: commande.cmu,
         mutuelle: commande.mutuelle,
         vital: commande.vitale_ok,
+        commentaire_interne: commande.commentaire_interne
+          ? commande.commentaire_interne
+          : "pas de commentaire",
       };
       this.setState({
         ordonnance: custom_commande,
@@ -353,7 +387,6 @@ class Ordonnance extends Component {
       total = total + item;
     });
     total = total.toFixed(2);
-    console.log(this.state);
     return (
       <Row className="email-application position-relative">
         <div
@@ -382,6 +415,9 @@ class Ordonnance extends Component {
             <hr />
             <Card>
               <ThirdSection
+                handleAlert={(state, value, text, type) =>
+                  this.handleAlert(state, value, text, type)
+                }
                 ordonnance={this.state.ordonnance}
                 change_date_exp={(e) => {
                   this.change_date_exp(e);
@@ -422,6 +458,9 @@ class Ordonnance extends Component {
             <hr />
 
             <ForthSection
+              handleAlert={(state, value, text, type) =>
+                this.handleAlert(state, value, text, type)
+              }
               note_admin={
                 this.state.ordonnance.note_admin
                   ? this.state.ordonnance.note_admin
@@ -461,10 +500,14 @@ class Ordonnance extends Component {
               commentaire_interne_input_handle_change={(e) => {
                 this.commentaire_interne_input_handle_change(e);
               }}
-              add_commentaire_handler={() => {
-                this.add_commentaire_handler();
+              save={() => {
+                this.save();
               }}
-              commentaire_interne={this.state.commentaire_interne}
+              commentaire_interne={
+                this.state.ordonnance.commentaire_interne
+                  ? this.state.ordonnance.commentaire_interne
+                  : ""
+              }
             />
             {/* {this.state.ordonnance.note_admin ? (
             <ForthSection

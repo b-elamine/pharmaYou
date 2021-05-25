@@ -12,7 +12,7 @@ import {
   Label,
   Spinner,
   Modal,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { PlusCircle, Send } from "react-feather";
@@ -25,7 +25,7 @@ import "../../../assets/scss/plugins/forms/flatpickr/flatpickr2.scss";
 import axios from "../../../axios";
 // import pdf_test from "./10.1.1.695.7550.pdf";
 
-import {pdfjs } from "react-pdf";
+import { pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const CardDashed = (props) => {
@@ -96,9 +96,7 @@ const ModaL = (props) => {
       centered={true}
       size="lg"
     >
-      <ModalBody>
-        {props.children}
-      </ModalBody>
+      <ModalBody>{props.children}</ModalBody>
     </Modal>
   );
 };
@@ -270,8 +268,8 @@ class Troisieme_section extends React.Component {
             >
               <span className="mr-50 text-wrap">Ordonnance renouvelable ?</span>
               <Switch
-                onChange={(e)=> {
-                  this.props.change_renouv(e)
+                onChange={(e) => {
+                  this.props.change_renouv(e);
                 }}
                 checked={this.props.renouvelable}
                 offColor="#82868B"
@@ -295,8 +293,8 @@ class Troisieme_section extends React.Component {
                 value={this.props.nbr_renouv}
                 mobile
                 style={mobileStyle2}
-                onChange={(e)=> {
-                  this.props.change_nbr_renouv(e)
+                onChange={(e) => {
+                  this.props.change_nbr_renouv(e);
                 }}
               />
             </div>
@@ -310,8 +308,8 @@ class Troisieme_section extends React.Component {
                 value={this.props.renouvellement_intervalle}
                 mobile
                 style={mobileStyle2}
-                onChange={(e)=> {
-                  this.props.change_intervall(e)
+                onChange={(e) => {
+                  this.props.change_intervall(e);
                 }}
                 format={this.myFormat}
               />
@@ -342,14 +340,45 @@ class Troisieme_section extends React.Component {
                   size="sm"
                   className="block-example border border-right-0 border-success"
                   placeholder="Numéro de sécurité sociale"
-                  value = {this.props.nirpp}
-                  onChange={(e)=> {
-                    this.props.change_nirpp(e.target.value)
+                  value={this.props.nirpp}
+                  onChange={(e) => {
+                    this.props.change_nirpp(e.target.value);
                   }}
-                  type='number'
+                  type="number"
                 />
                 <InputGroupAddon addonType="append">
-                  <Button.Ripple outline color="success" size="sm">
+                  <Button.Ripple
+                    outline
+                    color="success"
+                    size="sm"
+                    onClick={async () => {
+                      console.log(this.props.ordonnance.nirpp)
+                      // alert(this.props.ordonnance.id)
+                      try {
+                        const res = await axios.patch(
+                          `commandes/${this.props.ordonnance.id}?access_token=a`
+                        ,{
+                          nirpp : this.props.ordonnance.nirpp,
+                        });
+                        this.props.handleAlert(
+                          "errorAlert",
+                          true,
+                          "Numéro de sécurité sociale modifié avec succée !",
+                          true
+                        );
+                      } catch (err) {
+                        const err_message = err.message.includes("Network")
+                          ? "une erreur est produite veillez réesseyez !"
+                          : err.message;
+                          this.props.handleAlert(
+                            "errorAlert",
+                            true,
+                            err_message,
+                            false
+                          );
+                      }
+                    }}
+                  >
                     <Send size={20} />
                   </Button.Ripple>
                 </InputGroupAddon>
@@ -380,9 +409,13 @@ class Troisieme_section extends React.Component {
               <Flatpickr
                 id="Date"
                 className="form-control"
-                value={this.props.Date_exp}
-                onChange={(e)=> {
-                  this.props.change_date_exp(e)
+                value={
+                  this.props.ordonnance.mutuelle
+                    ? this.props.ordonnance.mutuelle.expiration_date
+                    : null
+                }
+                onChange={(e) => {
+                  this.props.change_date_exp(e);
                 }}
                 options={{ minDate: "today" }}
               />
@@ -392,9 +425,7 @@ class Troisieme_section extends React.Component {
         <Badge color="light-success text-left mt-3">
           <h5 className="success ml-0 font-weight-bold">Note du client </h5>
           <p className="text-wrap text-lowercase">
-            {this.props.ordonnance.patient.note
-              ? this.props.ordonnance.patient.note
-              : "Pas de note."}
+            {this.props.ordonnance.complement}
           </p>
         </Badge>
       </Card>

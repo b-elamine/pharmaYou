@@ -220,19 +220,19 @@ class QuatriemeSection extends React.Component {
     if (this.state.note_patient.length === 0) {
       return alert("Il faut entrer une note");
     }
-    const new_note_id = this.state.commentaires_notes.slice(-1)[0].id + 1;
-    const new_note_image = this.state.commentaires_notes.slice(-1)[0].image;
-    const new_note_patient = {
-      id: new_note_id,
-      commentaire: this.state.note_patient,
-      type: "Note envoyé au client",
-      image: new_note_image,
-      nom: "utilisateur connecter",
-    };
-    const new_comments_notes_array = this.state.commentaires_notes;
-    new_comments_notes_array.push(new_note_patient);
+    // const new_note_id = this.state.commentaires_notes.slice(-1)[0].id + 1;
+    // const new_note_image = this.state.commentaires_notes.slice(-1)[0].image;
+    // const new_note_patient = {
+    //   id: new_note_id,
+    //   commentaire: this.state.note_patient,
+    //   type: "Note envoyé au client",
+    //   image: new_note_image,
+    //   nom: "utilisateur connecter",
+    // };
+    // const new_comments_notes_array = this.state.commentaires_notes;
+    // new_comments_notes_array.push(new_note_patient);
     this.setState({
-      commentaires_notes: new_comments_notes_array,
+      // commentaires_notes: new_comments_notes_array,
       note_patient: "",
     });
   }
@@ -273,6 +273,7 @@ class QuatriemeSection extends React.Component {
             onChange={(e) => {
               this.note_patient_input_handle_change(e.target.value);
             }}
+            
           />
           <Row>
             <Col>
@@ -327,7 +328,7 @@ class QuatriemeSection extends React.Component {
                           this.props.produit_input_change_handler(value, id)
                         }
                         onSuggestionClick={(e) => {
-                          this.produit_input_change_handler(
+                          this.props.produit_input_change_handler(
                             e.currentTarget.innerText,
                             item.id
                           );
@@ -445,7 +446,7 @@ class QuatriemeSection extends React.Component {
             color="primary"
             className="mt-2 text-white float-right font-weight-bold mr-2 p-75  mb-2"
             onClick={() => {
-              this.props.add_commentaire_handler();
+              this.props.save();
             }}
           >
             Sauvgarder
@@ -454,7 +455,7 @@ class QuatriemeSection extends React.Component {
           <br></br>
           <br></br>
           <br></br>
-          <Card className="p-2 mt-5 text-dark text-left">
+          {/* <Card className="p-2 mt-5 text-dark text-left">
             <CardTitle className="font-medium-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
               <ListUl className="mr-1" size={17} />
               Historique commentaire et note du patient
@@ -478,10 +479,10 @@ class QuatriemeSection extends React.Component {
                       />
                     );
                   })
-                )}
+                )} 
               </PerfectScrollbar>
             </div>
-          </Card>
+          </Card> */}
         </Badge>
       </Card>
     );
