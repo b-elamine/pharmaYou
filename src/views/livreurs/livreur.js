@@ -193,19 +193,36 @@ class Livreurs extends React.Component {
   async componentDidMount() {
     try {
       const response = await axios.get("/livreurs?access_token=a");
-      const data = response.data.map((item) => {
-        return {
-          id: item.livreur_id,
-          name: item.nom_complet,
-          email: item.email,
-          vehicule: item.vehicule,
-          date: item.created_at,
-          status: item.is_blocked ? "Desactivé" : "Actif",
-          commandes_livrés: item.n_commandes,
-          balance: item.balance_paiement,
-          revenue: item.chiffre_affaire,
-        };
-      });
+      let data = []
+      if (response.data.livreurs !== undefined){
+        data = response.data.livreurs.map((item) => {
+          return {
+            id: item.livreur_id,
+            name: item.nom_complet,
+            email: item.email,
+            vehicule: item.vehicule,
+            date: item.created_at,
+            status: item.is_blocked ? "Desactivé" : "Actif",
+            commandes_livrés: item.n_commandes,
+            balance: item.balance_paiement,
+            revenue: item.chiffre_affaire,
+          };
+        });
+      }else{
+        data = response.data.map((item) => {
+          return {
+            id: item.livreur_id,
+            name: item.nom_complet,
+            email: item.email,
+            vehicule: item.vehicule,
+            date: item.created_at,
+            status: item.is_blocked ? "Desactivé" : "Actif",
+            commandes_livrés: item.n_commandes,
+            balance: item.balance_paiement,
+            revenue: item.chiffre_affaire,
+          };
+        });
+      }
 
       this.setState({
         data,

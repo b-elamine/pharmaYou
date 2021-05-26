@@ -37,15 +37,29 @@ class LivreursMap extends React.Component {
   async componentDidMount() {
     try {
       const response = await axios.get("/livreurs?access_token=a");
-      const data = response.data.map((item) => {
-        if (item.tracking !== null) {
-          return {
-            key: item.livreur_id,
-            content: item.nom_complet,
-            position: [item.tracking.lat, item.tracking.lon],
-          };
-        }
-      });
+      let data = [];
+      if (response.data.livreurs !== undefined) {
+        data = response.data.livreurs.map((item) => {
+          if (item.tracking !== null) {
+            return {
+              key: item.livreur_id,
+              content: item.nom_complet,
+              position: [item.tracking.lat, item.tracking.lon],
+            };
+          }
+        });
+      } else {
+        data = response.data.map((item) => {
+          if (item.tracking !== null) {
+            return {
+              key: item.livreur_id,
+              content: item.nom_complet,
+              position: [item.tracking.lat, item.tracking.lon],
+            };
+          }
+        });
+      }
+
       const filtredData = data.filter((i) => i !== undefined);
 
       this.setState({

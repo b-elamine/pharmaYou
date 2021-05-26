@@ -6,31 +6,61 @@ export const fetchEvents = () => {
     await axios
       .get("/tournees?access_token=a")
       .then((response) => {
-        const fetchedEvents = response.data.map((item) => {
-          const date = item.date.split("-");
-          return {
-            id: item.tournee_id,
-            title: "créneau de livraison",
-            start: new Date(
-              date[0],
-              date[1] - 1,
-              date[2],
-              item.plage_debut,
-              0,
-              0
-            ),
-            end: new Date(date[0], date[1] - 1, date[2], item.plage_fin, 0, 0),
-            label: "créneau_de_livraison",
-            allDay: false,
-            selectable:
-              new Date(date[0], date[1] - 1, date[2], item.plage_debut, 0, 0) >
-              new Date(),
-            facturation: 10,
-            renumeration: 15,
-            checked: false,
-            editorState: EditorState.createEmpty(),
-          };
-        });
+        let fetchedEvents = []
+        if (response.data.tournees !== undefined){
+          fetchedEvents = response.data.tournees.map((item) => {
+            const date = item.date.split("-");
+            return {
+              id: item.tournee_id,
+              title: "créneau de livraison",
+              start: new Date(
+                date[0],
+                date[1] - 1,
+                date[2],
+                item.plage_debut,
+                0,
+                0
+              ),
+              end: new Date(date[0], date[1] - 1, date[2], item.plage_fin, 0, 0),
+              label: "créneau_de_livraison",
+              allDay: false,
+              selectable:
+                new Date(date[0], date[1] - 1, date[2], item.plage_debut, 0, 0) >
+                new Date(),
+              facturation: 10,
+              renumeration: 15,
+              checked: false,
+              editorState: EditorState.createEmpty(),
+            };
+          });
+        }else {
+          fetchedEvents = response.data.map((item) => {
+            const date = item.date.split("-");
+            return {
+              id: item.tournee_id,
+              title: "créneau de livraison",
+              start: new Date(
+                date[0],
+                date[1] - 1,
+                date[2],
+                item.plage_debut,
+                0,
+                0
+              ),
+              end: new Date(date[0], date[1] - 1, date[2], item.plage_fin, 0, 0),
+              label: "créneau_de_livraison",
+              allDay: false,
+              selectable:
+                new Date(date[0], date[1] - 1, date[2], item.plage_debut, 0, 0) >
+                new Date(),
+              facturation: 10,
+              renumeration: 15,
+              checked: false,
+              editorState: EditorState.createEmpty(),
+            };
+          });
+        }
+       
         dispatch({ type: "FETCH_EVENTS", events: fetchedEvents });
       })
       .catch((err) => alert(err));
@@ -42,19 +72,20 @@ export const handleSidebar = (bool) => {
 };
 
 export const addEvent = (event) => {
-  console.log( {
-    date: `${event.start.toISOString().split("T")[0]}`,
-    plage_debut: event.start.getHours(),
-    plage_fin: event.end.getHours(),
-    remuneration_base: event.renumeration,
-    remuneration_par_point: event.facturation,
-  });
   return async (dispatch) => {
     try {
-      // const headers = {
-      //   'Content-Type': 'application/json',
-      //   "Access-Control-Allow-Origin": "*",
-      // }
+      // await axios({
+      //   method: "post",
+      //   url: "/tournees?access_token=a",
+      //   headers: { "Content-Type": "application/json" },
+      //   data: JSON.stringify({
+      //     date: `${event.start.toISOString().split("T")[0]}`,
+      //     plage_debut: event.start.getHours(),
+      //     plage_fin: event.end.getHours(),
+      //     remuneration_base: event.renumeration,
+      //     remuneration_par_point: event.facturation,
+      //   }),
+      // });
       await axios.post("/tournees?access_token=a", {
         date: `${event.start.toISOString().split("T")[0]}`,
         plage_debut: event.start.getHours(),
@@ -73,13 +104,17 @@ export const updateEvent = (event) => {
   console.log("update event");
   return async (dispatch) => {
     try {
-      await axios.patch(`/tournees/${event.id}?access_token=a`, {
-        date: `${event.start.toISOString().split("T")[0]}`,
-        plage_debut: event.start.getHours(),
-        plage_fin: event.end.getHours(),
-        remuneration_base: event.renumeration,
-        remuneration_par_point: event.facturation,
-      }, { "Content-Type": "application/json" });
+      await axios.patch(
+        `/tournees/${event.id}?access_token=a`,
+        {
+          date: `${event.start.toISOString().split("T")[0]}`,
+          plage_debut: event.start.getHours(),
+          plage_fin: event.end.getHours(),
+          remuneration_base: event.renumeration,
+          remuneration_par_point: event.facturation,
+        },
+        { "Content-Type": "application/json" }
+      );
     } catch (err) {
       console.log(err);
     }
@@ -92,13 +127,17 @@ export const updateDrag = (event) => {
 
   return async (dispatch) => {
     try {
-      await axios.patch(`/tournees/${event.id}?access_token=a`, {
-        date: `${event.start.toISOString().split("T")[0]}`,
-        plage_debut: event.start.getHours(),
-        plage_fin: event.end.getHours(),
-        remuneration_base: event.renumeration,
-        remuneration_par_point: event.facturation,
-      }, { "Content-Type": "application/json" });
+      await axios.patch(
+        `/tournees/${event.id}?access_token=a`,
+        {
+          date: `${event.start.toISOString().split("T")[0]}`,
+          plage_debut: event.start.getHours(),
+          plage_fin: event.end.getHours(),
+          remuneration_base: event.renumeration,
+          remuneration_par_point: event.facturation,
+        },
+        { "Content-Type": "application/json" }
+      );
     } catch (err) {
       console.log(err);
     }
@@ -111,8 +150,8 @@ export const updateResize = (event) => {
   return async (dispatch) => {
     try {
       const headers = {
-        'Content-Type': 'application/json',
-      }
+        "Content-Type": "application/json",
+      };
       await axios.patch(
         `/tournees/${event.id}?access_token=a`,
         {

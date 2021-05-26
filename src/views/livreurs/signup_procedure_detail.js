@@ -52,12 +52,21 @@ class SignUpProcedureDetails extends React.Component {
 
   handleAccept = async () => {
     try {
-      const response = await axios.post(
-        `/signup_procedures_livreurs/${this.state.row.signup_procedure_livreurs_id}/accept`,
-      );
-      console.log(response)
+      const response = await axios({
+        method: "post",
+        url: `/signup_procedures_livreurs/${this.state.row.signup_procedure_livreurs_id}/accept`,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      });
+      // const response = await axios.post(
+      //   `/signup_procedures_livreurs/${this.state.row.signup_procedure_livreurs_id}/accept`,
+      // );
+      console.log(response);
     } catch (err) {
-        const error_message =
+      const error_message =
         err.message === "Network Error"
           ? "Une erreur s'est produite lors de l'ajout du livreur."
           : "Vérifiez votre connexion !";
