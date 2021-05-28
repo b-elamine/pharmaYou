@@ -34,27 +34,27 @@ class HistoriquePeiment extends React.Component {
         name: "REF FACTURE",
         selector: "REF FACTURE",
         sortable: true,
-        cell: (row) => <p className="text-bold-500  mb-0">{row.RefFActure}</p>,
+        cell: (row) => <p className="text-bold-500  mb-0">#</p>,
       },
       {
         name: "DATE DEBUT",
         selector: "DATE DEBUT",
         sortable: true,
         cell: (row) => (
-          <p className="text-bold-500  mb-0">DU {row.DateDebut}</p>
+          <p className="text-bold-500  mb-0">DU {row.date_debut}</p>
         ),
       },
       {
         name: "DATE FIN",
         selector: "DATE FIN",
         sortable: false,
-        cell: (row) => <p className="text-bold-500  mb-0">AU {row.DateFin}</p>,
+        cell: (row) => <p className="text-bold-500  mb-0">AU {row.date_fin}</p>,
       },
       {
         name: "SOMME DU",
         selector: "SOMME DU",
         sortable: true,
-        cell: (row) => <p className="text-bold-500  mb-0">{row.Somme} €</p>,
+        cell: (row) => <p className="text-bold-500  mb-0">{row.montant} €</p>,
       },
       {
         name: "STATUT",
@@ -63,10 +63,10 @@ class HistoriquePeiment extends React.Component {
         cell: (row) => (
           <Badge
             className="text-truncate"
-            color={row.status === "Reglé" ? "light-success" : "light-primary"}
+            color={row.status_paye === 1  ? "light-success" : "light-primary"}
             pill
           >
-            {row.status}
+            {row.status_paye === 1 ? "REGLÉ" : "EN ATTENTE"}
           </Badge>
         ),
       },
@@ -76,68 +76,29 @@ class HistoriquePeiment extends React.Component {
         sortable: true,
         maxWidth: "60px",
         cell: (row) =>
-          row.status === "Reglé" ? (
+          row.status_paye === 1 ? (
             <CheckSquare size="15" color="#28C76F" />
           ) : (
             <Square size="15" color="#FC8F04" />
           ),
       },
     ],
-    data: [
-      {
-        RefFActure: "#pay-2374",
-        DateDebut: "09 fev 2021",
-        DateFin: "09 mar 2021",
-        Somme: "220",
-        status: "En attente",
-      },
-      {
-        RefFActure: "#pay-2374",
-        DateDebut: "09 fev 2021",
-        DateFin: "09 mar 2021",
-        Somme: "220",
-        status: "Reglé",
-      },
-      {
-        RefFActure: "#pay-2374",
-        DateDebut: "09 fev 2021",
-        DateFin: "09 mar 2021",
-        Somme: "220",
-        status: "Reglé",
-      },
-      {
-        RefFActure: "#pay-2374",
-        DateDebut: "09 fev 2021",
-        DateFin: "09 mar 2021",
-        Somme: "220",
-        status: "Reglé",
-      },
-      {
-        RefFActure: "#pay-2374",
-        DateDebut: "09 fev 2021",
-        DateFin: "09 mar 2021",
-        Somme: "220",
-        status: "Reglé",
-      },
-      {
-        RefFActure: "#pay-2374",
-        DateDebut: "09 fev 2021",
-        DateFin: "09 mar 2021",
-        Somme: "220",
-        status: "En attente",
-      },
-    ],
   };
+  componentDidMount (){
+    this.setState({
+      data : this.props.data
+    })
+  }
 
   render() {
-    let { data, columns} = this.state;
-    let element = [];
-    for (let index = 0; index < data.length; index++) {
-      if (index % 5 === 0 && index > 9) {
-        element.push(index);
-      }
-    }
-    element.push(data.length);
+    let { columns} = this.state;
+    // let element = [];
+    // for (let index = 0; index < this.props.data.length; index++) {
+    //   if (index % 5 === 0 && index > 9) {
+    //     element.push(index);
+    //   }
+    // }
+    // element.push(this.props.data.length);
     return (
       <div>
         <Card>
@@ -147,13 +108,13 @@ class HistoriquePeiment extends React.Component {
           <CardBody className="rdt_Wrapper">
             <DataTable
               className="dataTable-custom"
-              data={data}
+              data={this.props.data}
               columns={columns}
               noHeader
               pagination
               subHeader
               highlightOnHover
-              paginationRowsPerPageOptions={element}
+              // paginationRowsPerPageOptions={element}
               // subHeaderComponent={<CustomHeader value={value} />}
             />
           </CardBody>

@@ -477,15 +477,15 @@ class General_View extends React.Component {
     },
   };
 
-  fetch_data = async (page) => {
+  fetch_data = async () => {
     try {
       const commandes = await axios.get(
-        `/commandes?access_token=a&page=${page}`
+        `/commandes?access_token=a`
       );
       const statistiques2 = await axios.get("/statistiques?access_token=a");
 
       if (commandes.statusText === "OK") {
-        const commandes_ordo = commandes.data.commandes;
+        const commandes_ordo = commandes.data;
         const custom_commandes = commandes_ordo.map((item) => {
           return {
             ...item,

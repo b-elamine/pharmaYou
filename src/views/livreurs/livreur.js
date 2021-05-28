@@ -4,7 +4,6 @@ import {
   CardBody,
   Badge,
   Input,
-  Button,
   CardHeader,
   CardTitle,
   Row,
@@ -17,7 +16,6 @@ import Select from "react-select";
 import { history } from "../../history";
 import { FaCar, FaMotorcycle } from "react-icons/fa";
 import SweetAlert from "react-bootstrap-sweetalert";
-
 import DataTable from "react-data-table-component";
 import { Search, Edit, Eye } from "react-feather";
 import LivreurProcedureSignup from "./signup_procedures_livreurs";
@@ -37,7 +35,7 @@ const CustomHeader = (props) => {
             <Search size="15" />
           </div>
         </div>
-        <div style={{ marginLeft: "20px" }} className="add-new">
+        {/* <div style={{ marginLeft: "20px" }} className="add-new">
           <Button.Ripple
             onClick={() => {
               history.push("/livreur/modifier_livreur");
@@ -46,7 +44,7 @@ const CustomHeader = (props) => {
           >
             Ajouter un livreur
           </Button.Ripple>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -172,7 +170,7 @@ class Livreurs extends React.Component {
               className="cursor-pointer"
               size={20}
               onClick={() => {
-                history.push("/livreur/modifier_livreur", row);
+                history.push(`/livreur/modifier_livreur/${row.id}`);
               }}
             />
           </div>

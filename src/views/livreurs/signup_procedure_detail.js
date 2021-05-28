@@ -52,18 +52,18 @@ class SignUpProcedureDetails extends React.Component {
 
   handleAccept = async () => {
     try {
-      const response = await axios({
-        method: "post",
-        url: `/signup_procedures_livreurs/${this.state.row.signup_procedure_livreurs_id}/accept`,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-      });
-      // const response = await axios.post(
-      //   `/signup_procedures_livreurs/${this.state.row.signup_procedure_livreurs_id}/accept`,
-      // );
+      // const response = await axios({
+      //   method: "post",
+      //   url: `/signup_procedures_livreurs/${this.state.row.signup_procedure_livreurs_id}/accept`,
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Access-Control-Allow-Origin": "*",
+      //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      //   },
+      // });
+      const response = await axios.post(
+        `/signup_procedures_livreurs/${this.state.row.signup_procedure_livreurs_id}/accept`,
+      );
       console.log(response);
     } catch (err) {
       const error_message =

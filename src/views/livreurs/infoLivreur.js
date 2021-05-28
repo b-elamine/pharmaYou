@@ -18,92 +18,20 @@ import CommandesLivres from "./LivreurCommandesLivré";
 import {
   Building,
   Check2,
-  ListUl,
-  RecordCircleFill,
   Telephone,
   ArrowLeftCircleFill,
 } from "react-bootstrap-icons";
 import { FaRoad, FaUniversity, FaCar, FaMotorcycle } from "react-icons/fa";
 import { history } from "../../history";
 import axios from "../../axios";
-import PerfectScrollbar from "react-perfect-scrollbar";
+// import PerfectScrollbar from "react-perfect-scrollbar";
 import SweetAlert from "react-bootstrap-sweetalert";
-
-const CommentaireBlock = (props) => {
-  return (
-    <CardBody>
-      <div className="user-info text-truncate ml-xl-50 ml-0 mb-50">
-        <RecordCircleFill
-          size={16}
-          style={{
-            color: props.icon_color,
-            marginLeft: "0px",
-          }}
-        />
-        <span
-          title={props.block_type}
-          className="ml-2 font-weight-bold font-medium-2"
-        >
-          {props.block_type}
-        </span>
-      </div>
-      <small className="ml-3 font-small-2"> {props.block_note} </small>
-
-      <div className="d-flex mt-1 flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1 ml-3">
-        <div className="user-info text-truncate ml-xl-50 ml-0">
-          <span className=" font-weight-bold d-block text-bold-500 text-truncate mb-0 font-medium-2">
-            {props.name}
-          </span>
-        </div>
-      </div>
-    </CardBody>
-  );
-};
-
-const commentaires_notes = [
-  // {
-  //   id: 1,
-  //   type: "Commentaire interne",
-  //   commentaire: "Bon client",
-  //   image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-  //   nom: "Zongo meryouli",
-  // },
-  // {
-  //   id: 2,
-  //   type: "Commentaire interne",
-  //   commentaire: "Un client deyer ki tfou",
-  //   image: require("../../assets/img/portrait/small/avatar-s-1.jpg"),
-  //   nom: "Benssnan zakzouk",
-  // },
-  // {
-  //   id: 3,
-  //   type: "Note envoyé au client",
-  //   commentaire: "4 dose de brygabaline",
-  //   image: require("../../assets/img/portrait/small/avatar-s-3.jpg"),
-  //   nom: "Nadjet Boudouara",
-  // },
-  // {
-  //   id: 4,
-  //   type: "Note envoyé au client",
-  //   commentaire: "4 dose de brygabaline",
-  //   image: require("../../assets/img/portrait/small/avatar-s-2.jpg"),
-  //   nom: "Nadjet Boudouara",
-  // },
-  // {
-  //   id: 5,
-  //   type: "Commentaire interne",
-  //   commentaire: "Client ki soukour",
-  //   image: require("../../assets/img/portrait/small/avatar-s-5.jpg"),
-  //   nom: "Djaluidji Boufon",
-  // },
-];
 
 class LivreurInfo extends React.Component {
   state = {
     row: [],
-    commentaires_notes: [],
     errorAlert: false,
-    errorText: "Vérifier votre cnnexion",
+    errorText: "Vérifier votre connexion",
   };
 
   handleAlert = (state, value, text) => {
@@ -118,7 +46,6 @@ class LivreurInfo extends React.Component {
       );
       this.setState({
         row: response.data,
-        commentaires_notes: commentaires_notes,
       });
     } catch (err) {
       const error_message =
@@ -129,7 +56,25 @@ class LivreurInfo extends React.Component {
     }
   }
 
+  block = async (blocked) => {
+    try {
+      const response = await axios.patch(
+        `/livreurs/${this.props.match.params.id_livreur}?access_token=a`,
+        {
+          is_blocked: blocked,
+        }
+      );
+    } catch (err) {
+      const error_message =
+        err.message === "Network Error"
+          ? "Une erreur s'est produite."
+          : "Vérifiez votre connexion !";
+      this.handleAlert("errorAlert", true, error_message);
+    }
+  };
+
   render() {
+    console.log(this.state.row);
     return (
       <Card>
         <a
@@ -149,7 +94,7 @@ class LivreurInfo extends React.Component {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col lg="5">
+            <Col lg="6">
               <Media>
                 <Media className="mr-1" left href="#">
                   {/* <Media
@@ -171,18 +116,32 @@ class LivreurInfo extends React.Component {
                       tag="label"
                       className="mr-50 cursor-pointer"
                       color="primary"
-                      onClick = {()=>{
-                        history.push("/livreur/modifier_livreur");
-                      } }
+                      onClick={() => {
+                        history.push(
+                          `/livreur/modifier_livreur/${this.props.match.params.id_livreur}`
+                        );
+                      }}
                     >
                       Modifier
                     </Button.Ripple>
                     {!this.state.row.is_blocked ? (
-                      <Button.Ripple outline color="danger">
+                      <Button.Ripple
+                        outline
+                        color="danger"
+                        onClick={() => {
+                          this.block(1);
+                        }}
+                      >
                         Desactiver
                       </Button.Ripple>
                     ) : (
-                      <Button.Ripple outline color="success">
+                      <Button.Ripple
+                        outline
+                        color="success"
+                        onClick={() => {
+                          this.block(0);
+                        }}
+                      >
                         Activer
                       </Button.Ripple>
                     )}
@@ -190,7 +149,7 @@ class LivreurInfo extends React.Component {
                 </Media>
               </Media>
               <div
-                style={{ marginTop: "10px", marginLeft: "40px" }}
+                // style={{ marginTop: "10px", marginLeft: "40px" }}
                 className="d-flex flex-sm-row flex-column justify-content-start px-0"
               >
                 <Col lg="4" sm="2">
@@ -239,7 +198,7 @@ class LivreurInfo extends React.Component {
                         <DollarSign className="success" size={30} />
                       </div>
                     }
-                    stat={`${this.state.row.chiffre_affaire}`}
+                    stat={this.state.row.chiffre_affaire}
                     statTitle="Chiffre d'affaire"
                   />
                 </Col>
@@ -264,7 +223,11 @@ class LivreurInfo extends React.Component {
                         <Calendar className="primary" size={30} />
                       </div>
                     }
-                    stat="90"
+                    stat={
+                      this.state.row.tournees
+                        ? this.state.row.tournees.length
+                        : 0
+                    }
                     statTitle="Tournées effectués"
                   />
                 </Col>
@@ -275,30 +238,32 @@ class LivreurInfo extends React.Component {
               </div>
             </Col>
 
-            <Col xl="2" style={{ marginTop: "30px" }}>
-              <div className="d-flex">
-                <Check2 className="mr-1" size={14} />
-                <p className="font-weight-bold ">Status</p>
-              </div>
-              <div className="d-flex">
-                <FaRoad className="mr-1" size={14} />
-                <p className="font-weight-bold ">Vehicule</p>
-              </div>
-              <div className="d-flex">
-                <Building className="mr-1" size={14} />
-                <p className="font-weight-bold ">Siret</p>
-              </div>
-              <div className="d-flex">
-                <Telephone className="mr-1" size={14} />
-                <p className="font-weight-bold ">Contact</p>
-              </div>
-              <div className="d-flex">
-                <FaUniversity className="mr-1" size={14} />
-                <p className="font-weight-bold ">Iban</p>
-              </div>
-            </Col>
-            <Col xl="2" style={{ marginTop: "30px" }}>
-              {/* <Badge
+            <Col lg="6">
+              <div className="d-flex flex-sm-row flex-column justify-content-end px-0">
+              <Col xl="4" style={{ marginTop: "30px" }}>
+                <div className="d-flex">
+                  <Check2 className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Status</p>
+                </div>
+                <div className="d-flex">
+                  <FaRoad className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Vehicule</p>
+                </div>
+                <div className="d-flex">
+                  <Building className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Siret</p>
+                </div>
+                <div className="d-flex">
+                  <Telephone className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Contact</p>
+                </div>
+                <div className="d-flex">
+                  <FaUniversity className="mr-1" size={14} />
+                  <p className="font-weight-bold ">Iban</p>
+                </div>
+              </Col>
+              <Col xl="5" style={{ marginTop: "30px" }}>
+                {/* <Badge
                 className="text-truncate mb-1"
                 color={
                   this.state.row.status === "Desactivé"
@@ -309,67 +274,36 @@ class LivreurInfo extends React.Component {
                 }
                 pill
               > */}
-              {this.state.row.is_blocked ? <p>Désactivé</p> : <p>Actif</p>}
-              {/* </Badge> */}
+                {this.state.row.is_blocked ? <p>Désactivé</p> : <p>Actif</p>}
+                {/* </Badge> */}
 
-              <Badge
-                className="mb-1"
-                style={{ padding: "8" }}
-                color="warning"
-                pill
-              >
-                {this.state.row.vehicule === "voiture" ? (
-                  <FaCar size="14" style={{ marginRight: "5px" }} />
-                ) : (
-                  <FaMotorcycle size="14" style={{ marginRight: "5px" }} />
-                )}
-                {this.state.row.vehicule}
-              </Badge>
-              <p className="">
-                {this.state.row.siret ? this.state.row.siret : "Indéfinie"}
-              </p>
-              <p className="">
-                {this.state.row.telephone
-                  ? this.state.row.telephone
-                  : "Indéfinie"}
-              </p>
-              <p className="">
-                {this.state.row.iban ? this.state.row.iban : "Indéfinie"}
-              </p>
-            </Col>
-            {/* <Col lg="3">
-              <CardTitle className="font-small-4 light-secondary text-left ml-2 mt-1 font-weight-bold">
-                <ListUl className="mr-1" size={17} />
-                Historique commentaire et note du patient
-              </CardTitle>
-              <PerfectScrollbar
-                options={{
-                  wheelPropagation: false,
-                }}
-              >
-                <div style={{ height: "300px" }}>
-                  {this.state.commentaires_notes.length === 0 ? (
-                    <strong>Pas de commentaire pour l'instant</strong>
+                <Badge
+                  className="mb-1"
+                  style={{ padding: "8" }}
+                  color="warning"
+                  pill
+                >
+                  {this.state.row.vehicule === "voiture" ? (
+                    <FaCar size="14" style={{ marginRight: "5px" }} />
                   ) : (
-                    this.state.commentaires_notes.map((comment) => {
-                      const icon_color =
-                        comment.type === "Commentaire interne"
-                          ? "#fa680c"
-                          : "#28c76f";
-                      return (
-                        <CommentaireBlock
-                          key={comment.id}
-                          icon_color={icon_color}
-                          block_type={comment.type}
-                          block_note={comment.commentaire}
-                          name={comment.nom}
-                        />
-                      );
-                    })
+                    <FaMotorcycle size="14" style={{ marginRight: "5px" }} />
                   )}
-                </div>
-              </PerfectScrollbar>
-            </Col> */}
+                  {this.state.row.vehicule}
+                </Badge>
+                <p className="">
+                  {this.state.row.siret ? this.state.row.siret : "Indéfinie"}
+                </p>
+                <p className="">
+                  {this.state.row.telephone
+                    ? this.state.row.telephone
+                    : "Indéfinie"}
+                </p>
+                <p className="">
+                  {this.state.row.iban ? this.state.row.iban : "Indéfinie"}
+                </p>
+              </Col>
+              </div>
+            </Col>
           </Row>
           <SweetAlert
             error
@@ -379,8 +313,8 @@ class LivreurInfo extends React.Component {
           >
             <p className="sweet-alert-text">{this.state.errorText}</p>
           </SweetAlert>
-          <HistoriquePeiment />
-          <CommandesLivres />
+          <HistoriquePeiment data={this.state.row.payes} />
+          <CommandesLivres data={this.state.row.commandes} />
         </CardBody>
       </Card>
     );

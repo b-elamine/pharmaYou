@@ -11,7 +11,6 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "react-feather";
-import { InfoCircleFill } from "react-bootstrap-icons";
 const CustomHeader = (props) => {
   return (
     <div className="d-flex flex-row-reverse">
