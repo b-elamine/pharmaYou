@@ -295,129 +295,6 @@ class stats extends React.Component {
     date: "",
   };
 
-  // fetching_data = async () => {
-  //   const statistiques = await axios.get("/statistiques_ca?access_token=a");
-  //   const statistiques2 = await axios.get("/statistiques?access_token=a");
-  //   const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
-  //   const statistiques_ca_professionnels =
-  //   statistiques.data.statistiques_ca_professionnels;
-  //   let today = new Date();
-  //   let date =
-  //     today.getDate() +
-  //     "-" +
-  //     parseInt(today.getMonth() + 1) +
-  //     "-" +
-  //     today.getFullYear();
-
-  //   const new_horizontal_chart_1 = {
-  //     options: {
-  //       chart: {
-  //         ...this.state.horizontal_Chart1.options.chart,
-  //       },
-  //       colors: this.state.horizontal_Chart1.options.colors,
-  //       plotOptions: {
-  //         ...this.state.horizontal_Chart1.options.plotOptions,
-  //       },
-  //       dataLabels: {
-  //         ...this.state.horizontal_Chart1.options.dataLabels,
-  //       },
-  //       legend: {
-  //         ...this.state.horizontal_Chart1.options.legend,
-  //       },
-  //       xaxis: {
-  //         categories: Object.keys(statistiques_ca_par),
-  //       },
-  //     },
-  //     series: [
-  //       {
-  //         data: Object.values(statistiques_ca_par),
-  //       },
-  //     ],
-  //   };
-
-  //   const new_horizontal_chart_2 = {
-  //     options: {
-  //       chart: {
-  //         ...this.state.horizontal_Chart2.options.chart,
-  //       },
-  //       colors: this.state.horizontal_Chart2.options.colors,
-  //       plotOptions: {
-  //         ...this.state.horizontal_Chart2.options.plotOptions,
-  //       },
-  //       dataLabels: {
-  //         ...this.state.horizontal_Chart2.options.dataLabels,
-  //       },
-  //       legend: {
-  //         ...this.state.horizontal_Chart2.options.legend,
-  //       },
-  //       xaxis: {
-  //         categories: Object.keys(statistiques_ca_professionnels),
-  //       },
-  //     },
-  //     series: [
-  //       {
-  //         data: Object.values(statistiques_ca_professionnels),
-  //       },
-  //     ],
-  //   };
-  //   this.setState((prev_state, props) => {
-  //     return {
-  //       //setting Last 2 horizontal charts values
-
-  //       horizontal_Chart1: new_horizontal_chart_1,
-  //       horizontal_Chart2: new_horizontal_chart_2,
-
-  //       //setting first card statistics
-
-  //       statistiques_particuliers:
-  //         statistiques2.data.statistiques_particuliers.jour,
-  //       statistiques_pro: statistiques2.data.statistiques_professionnels.jour,
-  //       pro_chart_bar: {
-  //         ...prev_state.pro_chart_bar,
-  //         series: [
-  //           prev_state.pro_chart_bar.series,
-  //           {
-  //             data: statistiques2.data.statistiques_professionnels.jour
-  //               .n_commandes_plot,
-  //           },
-  //         ],
-  //       },
-  //       pro_chart_line: {
-  //         ...prev_state.pro_chart_line,
-  //         series: [
-  //           prev_state.pro_chart_line.series,
-  //           {
-  //             data: statistiques2.data.statistiques_professionnels.jour
-  //               .chiffre_daffaire_plot,
-  //           },
-  //         ],
-  //       },
-  //       particular_chart_bar: {
-  //         ...prev_state.particular_chart_bar,
-  //         series: [
-  //           prev_state.particular_chart_bar.series,
-  //           {
-  //             data: statistiques2.data.statistiques_particuliers.jour
-  //               .n_commandes_plot,
-  //           },
-  //         ],
-  //       },
-  //       particular_chart_line: {
-  //         ...prev_state.particular_chart_line,
-  //         series: [
-  //           prev_state.particular_chart_line.series,
-  //           {
-  //             data: statistiques2.data.statistiques_particuliers.jour
-  //               .chiffre_daffaire_plot,
-  //           },
-  //         ],
-  //       },
-  //       stats_objet: statistiques2.data,
-  //       date: date,
-  //     };
-  //   });
-  // };
-
   modifierStatePro = async (e) => {
     const typePro = e;
     const statistiques = await axios.get("/statistiques_ca?access_token=a");
@@ -704,17 +581,19 @@ class stats extends React.Component {
               height: "15rem",
               padding: "2rem",
               marginBottom: "35px",
+              // overflowX :"scroll"
             }}
           >
             <div style={{ width: "40%" }}>
               <Row noGutters="false">
                 <Col>
                   <div
-                    className="align-items-center justify-content-center d-flex"
+                    className="d-flex flex-sm-row align-items-center justify-content-center d-flex"
                     style={{
                       backgroundColor: "#ffe3d8",
                       borderRadius: "18px",
                       width: "80%",
+                      minWidth:"12rem",
                       height: "11rem",
                     }}
                   >
@@ -747,11 +626,12 @@ class stats extends React.Component {
                 </Col>
                 <Col>
                   <div
-                    className="align-items-center justify-content-center d-flex"
+                    className="d-flex flex-sm-row align-items-center justify-content-center d-flex"
                     style={{
                       backgroundColor: "#ffe3d8",
                       borderRadius: "18px",
                       width: "80%",
+                      minWidth:"12rem",
                       height: "11rem",
                     }}
                   >
