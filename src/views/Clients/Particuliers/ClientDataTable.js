@@ -1,5 +1,10 @@
 import React from "react";
-import { Card, CardBody, Input, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Input,
+  // Button
+} from "reactstrap";
 import DataTable from "react-data-table-component";
 import { history } from "../../../history";
 import { withRouter } from "react-router-dom";
@@ -15,13 +20,6 @@ import {
 const CustomHeader = (props) => {
   return (
     <div className="d-flex flex-row-reverse">
-      <div className="add-new">
-        {props.add_new ? (
-          <Button.Ripple onClick={props.add_new} color="primary ml-75 text-bold-500">
-            Ajouter Client
-          </Button.Ripple>
-        ) : null}
-      </div>
       <div className="position-relative has-icon-left mb-1">
         <Input value={props.value} onChange={(e) => props.handleFilter(e)} />
         <div className="form-control-position">
@@ -66,12 +64,12 @@ class ClientDataTable extends React.Component {
           item.name.toLowerCase().startsWith(value.toLowerCase()) ||
           item.type.toLowerCase().startsWith(value.toLowerCase()) ||
           item.email.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.origine.toLowerCase().startsWith(value.toLowerCase()) ;
+          item.origine.toLowerCase().startsWith(value.toLowerCase());
         let includesCondition =
           item.name.toLowerCase().includes(value.toLowerCase()) ||
           item.email.toLowerCase().includes(value.toLowerCase()) ||
           item.origine.toLowerCase().includes(value.toLowerCase()) ||
-          item.type.toLowerCase().startsWith(value.toLowerCase()) ;
+          item.type.toLowerCase().startsWith(value.toLowerCase());
 
         if (startsWithCondition) {
           return startsWithCondition;
@@ -90,18 +88,14 @@ class ClientDataTable extends React.Component {
     if (value.length) {
       filteredData = data.filter((item) => {
         let startsWithCondition =
-          item.name
-            .toLowerCase()
-            .startsWith(value.toLowerCase()) ||
+          item.name.toLowerCase().startsWith(value.toLowerCase()) ||
           item.date.toLowerCase().startsWith(value.toLowerCase()) ||
           item.type.toLowerCase().startsWith(value.toLowerCase()) ||
           item.email.toLowerCase().startsWith(value.toLowerCase()) ||
           item.origine.toLowerCase().startsWith(value.toLowerCase()) ||
           item.ville.toLowerCase().startsWith(value.toLowerCase());
         let includesCondition =
-        item.name
-            .toLowerCase()
-            .includes(value.toLowerCase()) ||
+          item.name.toLowerCase().includes(value.toLowerCase()) ||
           item.email.toLowerCase().includes(value.toLowerCase()) ||
           item.origine.toLowerCase().includes(value.toLowerCase()) ||
           item.type.toLowerCase().startsWith(value.toLowerCase()) ||

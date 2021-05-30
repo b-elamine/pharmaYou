@@ -269,9 +269,9 @@ class QuatriemeSection extends React.Component {
             placeholder="Notes"
             className="ml-2"
             style={{ width: "95%" }}
-            value={this.state.note_patient}
+            value={this.props.note_patient}
             onChange={(e) => {
-              this.note_patient_input_handle_change(e.target.value);
+              this.props.note_patient_input_handle_change(e.target.value);
             }}
             
           />
@@ -280,7 +280,7 @@ class QuatriemeSection extends React.Component {
               <Button
                 className="mt-2 bg-success text-white float-right mr-2 p-75  mb-2"
                 onClick={() => {
-                  this.add_note_handler();
+                  this.props.save();
                 }}
               >
                 Envoyer
@@ -449,7 +449,7 @@ class QuatriemeSection extends React.Component {
               this.props.save();
             }}
           >
-            Sauvgarder
+            Sauvegarder
           </Button>
           <br></br>
           <br></br>

@@ -710,7 +710,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      Ordonnances
                       <br />
                       pro en attente <br />
                     </p>
@@ -736,7 +736,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
+                      Ordonnances <br />
                       pro livrés <br />
                     </p>
                   </div>
@@ -788,7 +788,7 @@ class stats extends React.Component {
                     >
                       moyenne par
                       <br />
-                      commande
+                      ordonnance
                       <br />
                     </p>
                   </div>
@@ -886,7 +886,7 @@ class stats extends React.Component {
                               fontSize: "14px",
                             }}
                           >
-                            Commandes professionnelles
+                            Ordonnances professionnelles
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
                             <b>{}</b>
@@ -982,7 +982,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      Ordonnances
                       <br />
                       pro en attente <br />
                     </p>
@@ -1006,7 +1006,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
+                      Ordonnances <br />
                       pro livrés <br />
                     </p>
                   </div>
@@ -1054,7 +1054,7 @@ class stats extends React.Component {
                     >
                       moyenne par
                       <br />
-                      commande
+                      ordonnance
                       <br />
                     </p>
                   </div>

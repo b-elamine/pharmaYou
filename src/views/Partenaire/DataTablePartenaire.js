@@ -16,12 +16,6 @@ import Partenaire from "./Partenaire";
 const CustomHeader = (props) => {
   return (
     <div className="d-flex flex-row-reverse">
-      <div className="add-new">
-          <Button.Ripple onClick={props.add_new} color="primary ml-75 text-bold-500">
-            Ajouter Partenaire
-          </Button.Ripple>
-        
-      </div>
       <div className="position-relative has-icon-left mb-1">
         <Input value={props.value} onChange={(e) => props.handleFilter(e)} />
         <div className="form-control-position">

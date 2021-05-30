@@ -28,6 +28,7 @@ class ComposeEmail extends React.Component {
       // if (!commande_id) {
       //   return alert("l'identifiant de la commande est invalide.");
       // }
+      
       const response = await externalAxios.get(
         `/commandes/${commande_id}/mettre_en_attente_form?access_token=a`
       );
@@ -97,16 +98,16 @@ class ComposeEmail extends React.Component {
 
   Valider = async () => {
     try {
-      const tournees = {
-        tournee_id: this.state.selectedTournée.id,
-        date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
-        plage_debut: this.state.selectedTournée.start.getHours(),
-        plage_fin: this.state.selectedTournée.end.getHours(),
-      };
+      // const tournees = {
+      //   tournee_id: this.state.selectedTournée.id,
+      //   date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
+      //   plage_debut: this.state.selectedTournée.start.getHours(),
+      //   plage_fin: this.state.selectedTournée.end.getHours(),
+      // };
       const response = await axios.post(
         `commandes/${this.props.ordonnance.id}/mettre_en_attente?access_token=a`,
         {
-          tournees: tournees,
+          tournee_id: this.state.selectedTournée.id,
           default_message: {
             email_title: this.state.email_title,
             email_text: this.state.email_text,

@@ -60,10 +60,18 @@ class LivreurInfo extends React.Component {
     try {
       const response = await axios.patch(
         `/livreurs/${this.props.match.params.id_livreur}?access_token=a`,
-        {
+        { 
           is_blocked: blocked,
         }
       );
+      this.setState((prev_state,props)=> {
+        return {
+          row : {
+            ...prev_state.row,
+            is_blocked : blocked
+          }
+        }
+      })
     } catch (err) {
       const error_message =
         err.message === "Network Error"
