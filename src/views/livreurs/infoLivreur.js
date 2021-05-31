@@ -64,6 +64,9 @@ class LivreurInfo extends React.Component {
           is_blocked: blocked,
         }
       );
+      this.setState({
+        is_blocked : blocked
+      })
     } catch (err) {
       const error_message =
         err.message === "Network Error"
