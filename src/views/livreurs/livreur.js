@@ -117,7 +117,7 @@ class Livreurs extends React.Component {
           <Badge
             className="text-truncate"
             color={
-              row.status === "Desactivé" ? "light-danger" : "light-success"
+              row.status === "Désactiver" ? "light-danger" : "light-success"
             }
             pill
           >
@@ -191,8 +191,8 @@ class Livreurs extends React.Component {
   async componentDidMount() {
     try {
       const response = await axios.get("/livreurs?access_token=a");
-      let data = []
-      if (response.data.livreurs !== undefined){
+      let data = [];
+      if (response.data.livreurs !== undefined) {
         data = response.data.livreurs.map((item) => {
           return {
             id: item.livreur_id,
@@ -200,13 +200,13 @@ class Livreurs extends React.Component {
             email: item.email,
             vehicule: item.vehicule,
             date: item.created_at,
-            status: item.is_blocked ? "Desactivé" : "Actif",
+            status: item.is_blocked ? "Désactiver" : "Actif",
             commandes_livrés: item.n_commandes,
             balance: item.balance_paiement,
             revenue: item.chiffre_affaire,
           };
         });
-      }else{
+      } else {
         data = response.data.map((item) => {
           return {
             id: item.livreur_id,
@@ -214,14 +214,13 @@ class Livreurs extends React.Component {
             email: item.email,
             vehicule: item.vehicule,
             date: item.created_at,
-            status: item.is_blocked ? "Desactivé" : "Actif",
+            status: item.is_blocked  ? "Désactiver" : "Actif",
             commandes_livrés: item.n_commandes,
             balance: item.balance_paiement,
             revenue: item.chiffre_affaire,
           };
         });
       }
-
       this.setState({
         data,
       });
@@ -416,10 +415,10 @@ class Livreurs extends React.Component {
         </Card>
         <Card>
           <CardHeader>
-              <h3>demandes d'inscription de livreurs</h3>
+            <h3>demandes d'inscription de livreurs</h3>
           </CardHeader>
           <CardBody>
-          <LivreurProcedureSignup/>
+            <LivreurProcedureSignup />
           </CardBody>
         </Card>
       </div>

@@ -12,7 +12,8 @@ class stats extends React.Component {
   state = {
     errorAlert: false,
     errorText: "Vérifier votre connexion",
-    view : "jour",
+    viewPro : "jour",
+    viewParticular : "jour",
     pro_chart_bar: {
       series: [
         {
@@ -294,131 +295,8 @@ class stats extends React.Component {
     date: "",
   };
 
-  // fetching_data = async () => {
-  //   const statistiques = await axios.get("/statistiques_ca?access_token=a");
-  //   const statistiques2 = await axios.get("/statistiques?access_token=a");
-  //   const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
-  //   const statistiques_ca_professionnels =
-  //   statistiques.data.statistiques_ca_professionnels;
-  //   let today = new Date();
-  //   let date =
-  //     today.getDate() +
-  //     "-" +
-  //     parseInt(today.getMonth() + 1) +
-  //     "-" +
-  //     today.getFullYear();
-
-  //   const new_horizontal_chart_1 = {
-  //     options: {
-  //       chart: {
-  //         ...this.state.horizontal_Chart1.options.chart,
-  //       },
-  //       colors: this.state.horizontal_Chart1.options.colors,
-  //       plotOptions: {
-  //         ...this.state.horizontal_Chart1.options.plotOptions,
-  //       },
-  //       dataLabels: {
-  //         ...this.state.horizontal_Chart1.options.dataLabels,
-  //       },
-  //       legend: {
-  //         ...this.state.horizontal_Chart1.options.legend,
-  //       },
-  //       xaxis: {
-  //         categories: Object.keys(statistiques_ca_par),
-  //       },
-  //     },
-  //     series: [
-  //       {
-  //         data: Object.values(statistiques_ca_par),
-  //       },
-  //     ],
-  //   };
-
-  //   const new_horizontal_chart_2 = {
-  //     options: {
-  //       chart: {
-  //         ...this.state.horizontal_Chart2.options.chart,
-  //       },
-  //       colors: this.state.horizontal_Chart2.options.colors,
-  //       plotOptions: {
-  //         ...this.state.horizontal_Chart2.options.plotOptions,
-  //       },
-  //       dataLabels: {
-  //         ...this.state.horizontal_Chart2.options.dataLabels,
-  //       },
-  //       legend: {
-  //         ...this.state.horizontal_Chart2.options.legend,
-  //       },
-  //       xaxis: {
-  //         categories: Object.keys(statistiques_ca_professionnels),
-  //       },
-  //     },
-  //     series: [
-  //       {
-  //         data: Object.values(statistiques_ca_professionnels),
-  //       },
-  //     ],
-  //   };
-  //   this.setState((prev_state, props) => {
-  //     return {
-  //       //setting Last 2 horizontal charts values
-
-  //       horizontal_Chart1: new_horizontal_chart_1,
-  //       horizontal_Chart2: new_horizontal_chart_2,
-
-  //       //setting first card statistics
-
-  //       statistiques_particuliers:
-  //         statistiques2.data.statistiques_particuliers.jour,
-  //       statistiques_pro: statistiques2.data.statistiques_professionnels.jour,
-  //       pro_chart_bar: {
-  //         ...prev_state.pro_chart_bar,
-  //         series: [
-  //           prev_state.pro_chart_bar.series,
-  //           {
-  //             data: statistiques2.data.statistiques_professionnels.jour
-  //               .n_commandes_plot,
-  //           },
-  //         ],
-  //       },
-  //       pro_chart_line: {
-  //         ...prev_state.pro_chart_line,
-  //         series: [
-  //           prev_state.pro_chart_line.series,
-  //           {
-  //             data: statistiques2.data.statistiques_professionnels.jour
-  //               .chiffre_daffaire_plot,
-  //           },
-  //         ],
-  //       },
-  //       particular_chart_bar: {
-  //         ...prev_state.particular_chart_bar,
-  //         series: [
-  //           prev_state.particular_chart_bar.series,
-  //           {
-  //             data: statistiques2.data.statistiques_particuliers.jour
-  //               .n_commandes_plot,
-  //           },
-  //         ],
-  //       },
-  //       particular_chart_line: {
-  //         ...prev_state.particular_chart_line,
-  //         series: [
-  //           prev_state.particular_chart_line.series,
-  //           {
-  //             data: statistiques2.data.statistiques_particuliers.jour
-  //               .chiffre_daffaire_plot,
-  //           },
-  //         ],
-  //       },
-  //       stats_objet: statistiques2.data,
-  //       date: date,
-  //     };
-  //   });
-  // };
-
-  modifierState = async (e) => {
-    const type = e;
+  modifierStatePro = async (e) => {
+    const typePro = e;
     const statistiques = await axios.get("/statistiques_ca?access_token=a");
     const statistiques2 = await axios.get("/statistiques?access_token=a");
     const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
@@ -486,22 +364,19 @@ class stats extends React.Component {
       this.setState((prev_state, props) => {
         return {
           //setting Last 2 horizontal charts values
-          view : type,
+          viewPro : typePro,
           horizontal_Chart1: new_horizontal_chart_1,
           horizontal_Chart2: new_horizontal_chart_2,
 
           //setting first card statistics
-
-        statistiques_particuliers:
-          statistiques2.data.statistiques_particuliers[`${type}`],
         statistiques_pro:
-          statistiques2.data.statistiques_professionnels[`${type}`],
+          statistiques2.data.statistiques_professionnels[`${typePro}`],
         pro_chart_bar: {
           ...prev_state.pro_chart_bar,
           series: [
             prev_state.pro_chart_bar.series,
             {
-              data: statistiques2.data.statistiques_professionnels[`${type}`]
+              data: statistiques2.data.statistiques_professionnels[`${typePro}`]
                 .n_commandes_plot,
             },
           ],
@@ -511,27 +386,7 @@ class stats extends React.Component {
           series: [
             prev_state.pro_chart_line.series,
             {
-              data: statistiques2.data.statistiques_professionnels[`${type}`]
-                .chiffre_daffaire_plot,
-            },
-          ],
-        },
-        particular_chart_bar: {
-          ...prev_state.particular_chart_bar,
-          series: [
-            prev_state.particular_chart_bar.series,
-            {
-              data: statistiques2.data.statistiques_particuliers[`${type}`]
-                .n_commandes_plot
-            }
-          ],
-        },
-        particular_chart_line: {
-          ...prev_state.particular_chart_line,
-          series: [
-            prev_state.particular_chart_line.series,
-            {
-              data: statistiques2.data.statistiques_particuliers[`${type}`]
+              data: statistiques2.data.statistiques_professionnels[`${typePro}`]
                 .chiffre_daffaire_plot,
             },
           ],
@@ -541,11 +396,115 @@ class stats extends React.Component {
       };
       
     });
-    console.log(type)
+    console.log(typePro)
+  };
+  modifierStateParticular = async (e) => {
+    const typeParticular = e;
+    const statistiques = await axios.get("/statistiques_ca?access_token=a");
+    const statistiques2 = await axios.get("/statistiques?access_token=a");
+    const statistiques_ca_par = statistiques.data.statistiques_ca_particuliers;
+    const statistiques_ca_professionnels = statistiques.data.statistiques_ca_professionnels;
+    console.log(statistiques2.data)
+    let today = new Date();
+    let date =
+      today.getDate() +
+      "-" +
+      parseInt(today.getMonth() + 1) +
+      "-" +
+      today.getFullYear();
+
+      const new_horizontal_chart_1 = {
+        options: {
+          chart: {
+            ...this.state.horizontal_Chart1.options.chart,
+          },
+          colors: this.state.horizontal_Chart1.options.colors,
+          plotOptions: {
+            ...this.state.horizontal_Chart1.options.plotOptions,
+          },
+          dataLabels: {
+            ...this.state.horizontal_Chart1.options.dataLabels,
+          },
+          legend: {
+            ...this.state.horizontal_Chart1.options.legend,
+          },
+          xaxis: {
+            categories: Object.keys(statistiques_ca_par),
+          },
+        },
+        series: [
+          {
+            data: Object.values(statistiques_ca_par),
+          },
+        ],
+      };
+
+      const new_horizontal_chart_2 = {
+        options: {
+          chart: {
+            ...this.state.horizontal_Chart2.options.chart,
+          },
+          colors: this.state.horizontal_Chart2.options.colors,
+          plotOptions: {
+            ...this.state.horizontal_Chart2.options.plotOptions,
+          },
+          dataLabels: {
+            ...this.state.horizontal_Chart2.options.dataLabels,
+          },
+          legend: {
+            ...this.state.horizontal_Chart2.options.legend,
+          },
+          xaxis: {
+            categories: Object.keys(statistiques_ca_professionnels),
+          },
+        },
+        series: [
+          {
+            data: Object.values(statistiques_ca_professionnels),
+          },
+        ],
+      };
+      this.setState((prev_state, props) => {
+        return {
+          //setting Last 2 horizontal charts values
+          viewParticular : typeParticular,
+          horizontal_Chart1: new_horizontal_chart_1,
+          horizontal_Chart2: new_horizontal_chart_2,
+
+          //setting first card statistics
+        statistiques_particuliers:
+          statistiques2.data.statistiques_particuliers[`${typeParticular}`],
+        particular_chart_bar: {
+          ...prev_state.particular_chart_bar,
+          series: [
+            prev_state.particular_chart_bar.series,
+            {
+              data: statistiques2.data.statistiques_particuliers[`${typeParticular}`]
+                .n_commandes_plot
+            }
+          ],
+        },
+        particular_chart_line: {
+          ...prev_state.particular_chart_line,
+          series: [
+            prev_state.particular_chart_line.series,
+            {
+              data: statistiques2.data.statistiques_particuliers[`${typeParticular}`]
+                .chiffre_daffaire_plot,
+            },
+          ],
+        },
+        stats_objet: statistiques2.data,
+        date: date,
+      };
+      
+    });
+    console.log(typeParticular)
   };
 
   componentDidMount() {
-    this.modifierState("jour");
+    this.modifierStateParticular("jour");
+    this.modifierStatePro("jour");
     window.setInterval(this.fetching_data, 60000);
   }
 
@@ -572,12 +531,12 @@ class stats extends React.Component {
                   <button
                     style={{ backgroundColor: "#ffc4ad" }}
                     className={`btn ${
-                      this.state.view === "mois"
+                      this.state.viewParticular === "mois"
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
                     onClick={() => {
-                      this.modifierState("mois");
+                      this.modifierStateParticular("mois");
                     }}
                   >
                     Mois
@@ -585,12 +544,12 @@ class stats extends React.Component {
                   <button
                     style={{ backgroundColor: "#ffc4ad" }}
                     className={`btn ${
-                      this.state.view === "semaine"
+                      this.state.viewParticular === "semaine"
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
                     onClick={() => {
-                      this.modifierState("semaine");
+                      this.modifierStateParticular("semaine");
                     }}
                   >
                     Semaine
@@ -598,12 +557,12 @@ class stats extends React.Component {
                   <button
                     style={{ backgroundColor: "#ffc4ad" }}
                     className={`btn ${
-                      this.state.view === "jour"
+                      this.state.viewParticular === "jour"
                         ? "btn-primary"
                         : "btn-outline-primary text-white"
                     }`}
                     onClick={() => {
-                      this.modifierState("jour");
+                      this.modifierStateParticular("jour");
                     }}
                   >
                     Jour
@@ -622,17 +581,19 @@ class stats extends React.Component {
               height: "15rem",
               padding: "2rem",
               marginBottom: "35px",
+              // overflowX :"scroll"
             }}
           >
             <div style={{ width: "40%" }}>
               <Row noGutters="false">
                 <Col>
                   <div
-                    className="align-items-center justify-content-center d-flex"
+                    className="d-flex flex-sm-row align-items-center justify-content-center d-flex"
                     style={{
                       backgroundColor: "#ffe3d8",
                       borderRadius: "18px",
                       width: "80%",
+                      minWidth:"12rem",
                       height: "11rem",
                     }}
                   >
@@ -665,11 +626,12 @@ class stats extends React.Component {
                 </Col>
                 <Col>
                   <div
-                    className="align-items-center justify-content-center d-flex"
+                    className="d-flex flex-sm-row align-items-center justify-content-center d-flex"
                     style={{
                       backgroundColor: "#ffe3d8",
                       borderRadius: "18px",
                       width: "80%",
+                      minWidth:"12rem",
                       height: "11rem",
                     }}
                   >
@@ -748,7 +710,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      Ordonnances
                       <br />
                       pro en attente <br />
                     </p>
@@ -774,7 +736,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
+                      Ordonnances <br />
                       pro livrés <br />
                     </p>
                   </div>
@@ -826,7 +788,7 @@ class stats extends React.Component {
                     >
                       moyenne par
                       <br />
-                      commande
+                      ordonnance
                       <br />
                     </p>
                   </div>
@@ -850,33 +812,39 @@ class stats extends React.Component {
                   <button
                     style={{ backgroundColor: "#a5c8fc" }}
                     className={`btn ${
-                      this.props.view === "month"
-                        ? "btn-primary"
-                        : "btn-outline-primary text-white"
+                      this.state.viewPro === "mois"
+                        ? "btn-warning"
+                        : "btn-outline-warning text-white"
                     }`}
-                    onClick={() => {}}
+                    onClick={() => {
+                      this.modifierStatePro("mois");
+                    }}
                   >
                     Mois
                   </button>
                   <button
                     style={{ backgroundColor: "#a5c8fc" }}
                     className={`btn ${
-                      this.props.view === "week"
-                        ? "btn-primary"
-                        : "btn-outline-primary text-white"
+                      this.state.viewPro === "semaine"
+                        ? "btn-warning"
+                        : "btn-outline-warning text-white"
                     }`}
-                    onClick={() => {}}
+                    onClick={() => {
+                      this.modifierStatePro("semaine");
+                    }}
                   >
                     Semaine
                   </button>
                   <button
                     style={{ backgroundColor: "#a5c8fc" }}
                     className={`btn ${
-                      this.props.view === "day"
-                        ? "btn-primary"
-                        : "btn-outline-primary text-white"
+                      this.state.viewPro === "jour"
+                        ? "btn-warning"
+                        : "btn-outline-warning text-white"
                     }`}
-                    onClick={() => {}}
+                    onClick={() => {
+                      this.modifierStatePro("jour");
+                    }}
                   >
                     Jour
                   </button>
@@ -918,7 +886,7 @@ class stats extends React.Component {
                               fontSize: "14px",
                             }}
                           >
-                            Commandes professionnelles
+                            Ordonnances professionnelles
                           </h5>
                           <h5 style={{ marginBottom: "-2rem" }}>
                             <b>{}</b>
@@ -1014,7 +982,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes
+                      Ordonnances
                       <br />
                       pro en attente <br />
                     </p>
@@ -1038,7 +1006,7 @@ class stats extends React.Component {
                         fontSize: "12px",
                       }}
                     >
-                      Commandes <br />
+                      Ordonnances <br />
                       pro livrés <br />
                     </p>
                   </div>
@@ -1086,7 +1054,7 @@ class stats extends React.Component {
                     >
                       moyenne par
                       <br />
-                      commande
+                      ordonnance
                       <br />
                     </p>
                   </div>

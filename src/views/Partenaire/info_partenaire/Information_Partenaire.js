@@ -30,7 +30,7 @@ class Partenaire_Info extends React.Component {
       const res = await axios.get(
         `users/${id_partenaire}?access_token=a&type=infirmier`
       );
-      console.log(res.data)
+      console.log(res.data);
       const partenaire = {
         name: `${res.data.nom} ${res.data.prenom}`,
         email: res.data.email,
@@ -39,8 +39,9 @@ class Partenaire_Info extends React.Component {
         ville: res.data.ville_livraison ? res.data.ville_livraison : "Paris",
         status: res.data.is_active ? "active" : "inactive",
         type: res.data.type,
-        nbr_ordo : res.data.n_commandes,
-        commandes : res.data.commandes,
+        nbr_ordo: res.data.n_commandes,
+        commandes: res.data.commandes,
+        n_patients: res.data.n_patients,
       };
       this.setState({
         row: partenaire,
@@ -49,12 +50,12 @@ class Partenaire_Info extends React.Component {
       alert(err.message);
     }
   };
-  componentDidMount(){
-    const id_partenaire = this.props.match.params.id_partenaire; 
-    this.fetcher_data(id_partenaire)
+  componentDidMount() {
+    const id_partenaire = this.props.match.params.id_partenaire;
+    this.fetcher_data(id_partenaire);
   }
   render() {
-    console.log(this.state.row.commandes)
+    console.log(this.state.row.commandes);
     return (
       <Card>
         <a
@@ -175,9 +176,12 @@ class Partenaire_Info extends React.Component {
                         <User className="primary" size={30} />
                       </div>
                     }
-                    stat="90"
+                    stat={
+                      this.state.row.n_patients ? this.state.row.n_patients : ""
+                    }
                     statTitle="Patients"
                   />
+                  {console.log(this.state.row.n_patients)}
                 </Col>
               </div>
             </div>

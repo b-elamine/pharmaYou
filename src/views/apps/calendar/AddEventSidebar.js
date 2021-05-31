@@ -33,7 +33,7 @@ class AddEvent extends React.Component {
   state = {
     title: "créneau de livraison",
     startDate: new Date(),
-    endDate: new Date(),
+    endDate: new Date().setTime(new Date().getTime() + 3600000),
     facturation: 1,
     renumeration: 1,
     label: null,
@@ -54,22 +54,24 @@ class AddEvent extends React.Component {
   };
   handleDateChange = (date) => {
     let dateN = new Date(date);
+    const end_date = new Date(this.state.endDate);
+    const start_date = new Date(this.state.endDate);
     this.setState({
       startDate: new Date(
         dateN.getFullYear(),
         dateN.getMonth(),
         dateN.getDate(),
-        this.state.startDate.getHours(),
-        this.state.startDate.getMinutes(),
-        this.state.startDate.getSeconds()
+        start_date.getHours(),
+        start_date.getMinutes(),
+        start_date.getSeconds()
       ),
       endDate: new Date(
         dateN.getFullYear(),
         dateN.getMonth(),
         dateN.getDate(),
-        this.state.endDate.getHours(),
-        this.state.endDate.getMinutes(),
-        this.state.endDate.getSeconds()
+        end_date.getHours(),
+        end_date.getMinutes(),
+        end_date.getSeconds()
       ),
     });
   };
@@ -87,43 +89,22 @@ class AddEvent extends React.Component {
   handleAddEvent = (id) => {
     this.props.handleSidebar(false);
     if (this.state.checked) {
-      let dateD = this.state.startDate;
-      let dateF = this.state.endDate;
-      for (let index = 0; index < 7; index++) {
-        if (index === 0) {
-          this.props.addEvent({
-            id: id + index,
-            title: this.state.title,
-            start: dateD.setDate(dateD.getDate()),
-            end: dateF.setDate(dateF.getDate()),
-            label:
-              this.state.label === null
-                ? "créneau_de_livraison"
-                : this.state.label,
-            allDay: this.state.allDay,
-            selectable: this.state.selectable,
-            facturation: this.state.facturation,
-            renumeration: this.state.renumeration,
-            editorState: this.state.editorState,
-          });
-        } else {
-          this.props.addEvent({
-            id: id + index,
-            title: this.state.title,
-            start: dateD.setDate(dateD.getDate() + 1),
-            end: dateF.setDate(dateF.getDate() + 1),
-            label:
-              this.state.label === null
-                ? "créneau_de_livraison"
-                : this.state.label,
-            allDay: this.state.allDay,
-            selectable: this.state.selectable,
-            facturation: this.state.facturation,
-            renumeration: this.state.renumeration,
-            editorState: this.state.editorState,
-          });
-        }
-      }
+      let dateD = new Date(this.state.startDate);
+      let dateF = new Date(this.state.endDate);
+      this.props.addEvent({
+        id: id,
+        title: this.state.title,
+        start: dateD.setDate(dateD.getDate()),
+        end: dateF.setDate(dateF.getDate()),
+        label:
+          this.state.label === null ? "créneau_de_livraison" : this.state.label,
+        allDay: this.state.allDay,
+        selectable: this.state.selectable,
+        facturation: this.state.facturation,
+        renumeration: this.state.renumeration,
+        editorState: this.state.editorState,
+        toute_la_semaine: 1,
+      });
     } else {
       this.props.addEvent({
         id: id,
@@ -137,12 +118,13 @@ class AddEvent extends React.Component {
         facturation: this.state.facturation,
         renumeration: this.state.renumeration,
         editorState: this.state.editorState,
+        toute_la_semaine: 0,
       });
     }
     this.setState({
       title: "créneau de livraison",
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: new Date().setTime(new Date().getTime() + 3600000),
       label: null,
       allDay: false,
       selectable: true,
@@ -166,7 +148,7 @@ class AddEvent extends React.Component {
           : new Date(nextProps.eventInfo.start),
       endDate:
         nextProps.eventInfo === null
-          ? new Date()
+          ? new Date().setTime(new Date().getTime() + 3600000)
           : new Date(nextProps.eventInfo.end),
       label: nextProps.eventInfo === null ? null : nextProps.eventInfo.label,
       allDay: nextProps.eventInfo === null ? false : nextProps.eventInfo.allDay,
@@ -294,7 +276,14 @@ class AddEvent extends React.Component {
                     className="form-control"
                     value={this.state.startDate}
                     onChange={(date) => {
-                      this.state.startDate.setTime(new Date(date).getTime());
+                      const new_date = new Date(date);
+                      const new_date_plus_1 = new Date(date).setTime(
+                        new_date.getTime() + 3600000
+                      );
+                      this.setState({
+                        startDate: new_date,
+                        endDate: new Date(new_date_plus_1),
+                      });
                     }}
                     options={{
                       enableTime: true,
@@ -320,7 +309,23 @@ class AddEvent extends React.Component {
                   className="form-control"
                   value={this.state.endDate}
                   onChange={(date) => {
-                    this.state.endDate.setTime(new Date(date).getTime());
+                    const new_date = new Date(date);
+                    const new_date_plus_1 = new Date(date).setTime(
+                      new_date.getTime() + 3600000
+                    );
+                    console.log(new_date_plus_1);
+                    if (new_date.getHours() > this.state.startDate.getHours()) {
+                      this.setState({
+                        endDate: new_date,
+                      });
+                    } else {
+                      this.setState({
+                        endDate: new Date(new_date_plus_1),
+                      });
+                      alert(
+                        "l'heure de la fin doit étre apres l'heure du debut"
+                      );
+                    }
                   }}
                   options={{
                     enableTime: true,
@@ -358,8 +363,6 @@ class AddEvent extends React.Component {
                 </span>
                 <NumericInput
                   min={0}
-                  step={0.1}
-                  precision={2}
                   value={this.state.facturation}
                   mobile
                   format={this.myFormat}
@@ -375,8 +378,6 @@ class AddEvent extends React.Component {
                 </span>
                 <NumericInput
                   min={0}
-                  step={0.1}
-                  precision={2}
                   value={this.state.renumeration}
                   mobile
                   format={this.myFormat}
@@ -430,6 +431,7 @@ class AddEvent extends React.Component {
                       renumeration: this.state.renumeration,
                       checked: this.state.checked,
                       editorState: this.state.editorState,
+                      toute_la_semaine: this.state.checked ? 1 : 0,
                     });
                 }}
               >

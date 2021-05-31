@@ -140,10 +140,10 @@ class Ordonnance extends Component {
           this.state.ordonnance.renouvellement_intervalle,
         renouvellement_nombre: this.state.ordonnance.renouvellement_nombre,
         nirpp: this.state.ordonnance.nirpp,
-        // expiration_date  : this.state.ordonnance.mutuelle.expiration_date,
-        // commentaire_interne : this.state.ordonnance.commentaire_interne,
-        // complement : this.state.ordonnance.complement,
-        cntenue: contenue,
+        mutuelle_expiration_date  : this.state.ordonnance.mutuelle.expiration_date,
+        note_admin : this.state.ordonnance.commentaire_interne,
+        contenue: contenue,
+        note_patient : this.state.note_patient
       };
       console.log(request_data);
       const res = await axios.patch(
@@ -255,12 +255,23 @@ class Ordonnance extends Component {
     this.setState({ [state]: value, errorText: text, scuccesAlert: type });
   };
 
+
+  note_patient_input_handle_change(value) {
+    this.setState((prev_state, props) => {
+      return {
+        ...prev_state, 
+        note_patient: value,
+      };
+    });
+  }
+
   fetcher_commande = async (id_commande) => {
     try {
       const response = await axios.get(
         `/commandes/${id_commande}?access_token=a`
       );
       const commande = response.data;
+      console.log(commande)
       const custom_commande = {
         ...commande,
         id: commande.commande_id,
@@ -309,13 +320,14 @@ class Ordonnance extends Component {
         CMU: commande.cmu,
         mutuelle: commande.mutuelle,
         vital: commande.vitale_ok,
-        commentaire_interne: commande.commentaire_interne
-          ? commande.commentaire_interne
+        commentaire_interne: commande.note_admin
+          ? commande.note_admin
           : "pas de commentaire",
       };
       this.setState({
         ordonnance: custom_commande,
         data_fetched: true,
+        note_patient : commande.note_patient,
       });
     } catch (err) {
       if (err.message.includes("Network")) {
@@ -508,6 +520,12 @@ class Ordonnance extends Component {
                   ? this.state.ordonnance.commentaire_interne
                   : ""
               }
+
+              note_patient_input_handle_change={(e)=> {
+                this.note_patient_input_handle_change(e)
+              }}
+              note_patient={this.state.note_patient ? this.state.note_patient : ""}
+
             />
             {/* {this.state.ordonnance.note_admin ? (
             <ForthSection
@@ -537,7 +555,6 @@ class Ordonnance extends Component {
                 this.state.ordonnance.historique
                   ? this.state.ordonnance.historique
                   : []
-                // commentaires_notes
               }
             />
           </Card>

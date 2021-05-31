@@ -47,45 +47,13 @@ class ComposeEmail extends React.Component {
         `/commandes/${this.props.ordonnance.id}/assigner_tournee_form?access_token=a`
       )
       .then((response) => {
-        const date = response.data.tournee_par_defaut.date.split("-");
-        const start = new Date(
-          date[0],
-          date[1] - 1,
-          date[2],
-          response.data.tournee_par_defaut.plage_debut + 1,
-          0,
-          0
-        );
-        const end = new Date(
-          date[0],
-          date[1] - 1,
-          date[2],
-          response.data.tournee_par_defaut.plage_fin + 1,
-          0,
-          0
-        );
-        const defaultData = {
-          id: response.data.tournee_par_defaut.tournee_id,
-          start: start,
-          end: end,
-          value: `${start.toISOString().split("T")[0]}  ${
-            start.toISOString().split("T")[1].split(":")[0]
-          }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-            end.toISOString().split("T")[1].split(":")[0]
-          }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-          label: `${start.toISOString().split("T")[0]}  ${
-            start.toISOString().split("T")[1].split(":")[0]
-          }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
-            end.toISOString().split("T")[1].split(":")[0]
-          }H:${end.toISOString().split("T")[1].split(":")[1]}`,
-        };
-        const data = response.data.tournees.map((item) => {
-          const date = item.date.split("-");
+        if (response.data.tournee_par_defaut) {
+          const date = response.data.tournee_par_defaut.date.split("-");
           const start = new Date(
             date[0],
             date[1] - 1,
             date[2],
-            item.plage_debut + 1,
+            response.data.tournee_par_defaut.plage_debut + 1,
             0,
             0
           );
@@ -93,12 +61,12 @@ class ComposeEmail extends React.Component {
             date[0],
             date[1] - 1,
             date[2],
-            item.plage_fin + 1,
+            response.data.tournee_par_defaut.plage_fin + 1,
             0,
             0
           );
-          return {
-            id: item.tournee_id,
+          const defaultData = {
+            id: response.data.tournee_par_defaut.tournee_id,
             start: start,
             end: end,
             value: `${start.toISOString().split("T")[0]}  ${
@@ -112,16 +80,52 @@ class ComposeEmail extends React.Component {
               end.toISOString().split("T")[1].split(":")[0]
             }H:${end.toISOString().split("T")[1].split(":")[1]}`,
           };
-        });
-        this.setState({
-          defaultTours: defaultData,
-          selectedTournée: defaultData,
-          tournées: data,
-          email_title: response.data.default_message.email_title,
-          email_text: response.data.default_message.email_text,
-          sms_text: response.data.default_message.sms_text,
-          push_text: response.data.default_message.push_text,
-        });
+          const data = response.data.tournees.map((item) => {
+            const date = item.date.split("-");
+            const start = new Date(
+              date[0],
+              date[1] - 1,
+              date[2],
+              item.plage_debut + 1,
+              0,
+              0
+            );
+            const end = new Date(
+              date[0],
+              date[1] - 1,
+              date[2],
+              item.plage_fin + 1,
+              0,
+              0
+            );
+            return {
+              id: item.tournee_id,
+              start: start,
+              end: end,
+              value: `${start.toISOString().split("T")[0]}  ${
+                start.toISOString().split("T")[1].split(":")[0]
+              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+                end.toISOString().split("T")[1].split(":")[0]
+              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+              label: `${start.toISOString().split("T")[0]}  ${
+                start.toISOString().split("T")[1].split(":")[0]
+              }H:${start.toISOString().split("T")[1].split(":")[1]} - ${
+                end.toISOString().split("T")[1].split(":")[0]
+              }H:${end.toISOString().split("T")[1].split(":")[1]}`,
+            };
+          });
+          this.setState({
+            defaultTours: defaultData,
+            selectedTournée: defaultData,
+            tournées: data,
+            email_title: response.data.default_message.email_title,
+            email_text: response.data.default_message.email_text,
+            sms_text: response.data.default_message.sms_text,
+            push_text: response.data.default_message.push_text,
+          });
+        } else {
+          alert("aucune tournée assignée !");
+        }
       })
       .catch((err) =>
         // alert(
@@ -146,16 +150,16 @@ class ComposeEmail extends React.Component {
 
   ValiderTournée = async () => {
     try {
-      const tournees = {
-        tournee_id: this.state.selectedTournée.id,
-        date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
-        plage_debut: this.state.selectedTournée.start.getHours(),
-        plage_fin: this.state.selectedTournée.end.getHours(),
-      };
+      // const tournees = {
+      //   tournee_id: this.state.selectedTournée.id,
+      //   date: `${this.state.selectedTournée.start.toISOString().split("T")[0]}`,
+      //   plage_debut: this.state.selectedTournée.start.getHours(),
+      //   plage_fin: this.state.selectedTournée.end.getHours(),
+      // };
       const response = await axios.post(
         `commandes/${this.props.ordonnance.id}/assigner_tournee?access_token=a`,
         {
-          tournee_id: tournees,
+          tournee_id: this.state.selectedTournée.id,
           default_message: {
             email_title: this.state.email_title,
             email_text: this.state.email_text,

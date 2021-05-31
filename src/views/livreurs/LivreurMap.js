@@ -34,7 +34,7 @@ class LivreursMap extends React.Component {
     this.setState({ [state]: value, errorText: text });
   };
 
-  async componentDidMount() {
+  fetchData = async () =>{
     try {
       const response = await axios.get("/livreurs?access_token=a");
       let data = [];
@@ -76,6 +76,13 @@ class LivreursMap extends React.Component {
     // socket.on("movelivreur", (currentresponse) => {
     //   update localisation
     // });
+
+  }
+
+  async componentDidMount() {
+    this.fetchData()
+    window.setInterval(this.fetchData, 5000);
+
   }
 
   render() {
