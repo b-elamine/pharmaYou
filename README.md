@@ -1,4 +1,2 @@
-# PharmaYou
-Dashboard pour le site web PharmaYou.
-Une pharmacie en ligne française autorisée par le Ministère de la Santé.
-
+### PharmaYou
+Multitask dashboard for a french pharmaceutical products state-approuved website.
